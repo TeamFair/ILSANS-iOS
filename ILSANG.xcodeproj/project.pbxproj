@@ -7,8 +7,13 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		607FCBD42BFA648000BB2D04 /* Tab.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FCBD32BFA648000BB2D04 /* Tab.swift */; };
+		607FCBD62BFA660C00BB2D04 /* MainTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FCBD52BFA660C00BB2D04 /* MainTabView.swift */; };
+		607FCBD82BFA681500BB2D04 /* ApprovalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FCBD72BFA681500BB2D04 /* ApprovalView.swift */; };
+		607FCBDD2BFA686700BB2D04 /* MyPageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FCBDC2BFA686700BB2D04 /* MyPageView.swift */; };
+		607FCBE22BFA6A8300BB2D04 /* Buttons.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FCBE12BFA6A8300BB2D04 /* Buttons.swift */; };
 		60B8B9E72BF9EEF1005F6DE3 /* ILSANGApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60B8B9E62BF9EEF1005F6DE3 /* ILSANGApp.swift */; };
-		60B8B9E92BF9EEF1005F6DE3 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60B8B9E82BF9EEF1005F6DE3 /* ContentView.swift */; };
+		60B8B9E92BF9EEF1005F6DE3 /* QuestView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60B8B9E82BF9EEF1005F6DE3 /* QuestView.swift */; };
 		60B8B9EB2BF9EEF3005F6DE3 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 60B8B9EA2BF9EEF3005F6DE3 /* Assets.xcassets */; };
 		60B8B9EE2BF9EEF3005F6DE3 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 60B8B9ED2BF9EEF3005F6DE3 /* Preview Assets.xcassets */; };
 		60B8B9F82BF9EEF3005F6DE3 /* ILSANGTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60B8B9F72BF9EEF3005F6DE3 /* ILSANGTests.swift */; };
@@ -35,9 +40,14 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		607FCBD32BFA648000BB2D04 /* Tab.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tab.swift; sourceTree = "<group>"; };
+		607FCBD52BFA660C00BB2D04 /* MainTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabView.swift; sourceTree = "<group>"; };
+		607FCBD72BFA681500BB2D04 /* ApprovalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApprovalView.swift; sourceTree = "<group>"; };
+		607FCBDC2BFA686700BB2D04 /* MyPageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageView.swift; sourceTree = "<group>"; };
+		607FCBE12BFA6A8300BB2D04 /* Buttons.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Buttons.swift; sourceTree = "<group>"; };
 		60B8B9E32BF9EEF1005F6DE3 /* ILSANG.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ILSANG.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		60B8B9E62BF9EEF1005F6DE3 /* ILSANGApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ILSANGApp.swift; sourceTree = "<group>"; };
-		60B8B9E82BF9EEF1005F6DE3 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		60B8B9E82BF9EEF1005F6DE3 /* QuestView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestView.swift; sourceTree = "<group>"; };
 		60B8B9EA2BF9EEF3005F6DE3 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		60B8B9ED2BF9EEF3005F6DE3 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		60B8B9F32BF9EEF3005F6DE3 /* ILSANGTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ILSANGTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -74,6 +84,67 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		607FCBD22BFA645100BB2D04 /* Router */ = {
+			isa = PBXGroup;
+			children = (
+				607FCBD32BFA648000BB2D04 /* Tab.swift */,
+				607FCBD52BFA660C00BB2D04 /* MainTabView.swift */,
+			);
+			path = Router;
+			sourceTree = "<group>";
+		};
+		607FCBD92BFA681800BB2D04 /* Quest */ = {
+			isa = PBXGroup;
+			children = (
+				60B8B9E82BF9EEF1005F6DE3 /* QuestView.swift */,
+			);
+			path = Quest;
+			sourceTree = "<group>";
+		};
+		607FCBDA2BFA681F00BB2D04 /* Approval */ = {
+			isa = PBXGroup;
+			children = (
+				607FCBD72BFA681500BB2D04 /* ApprovalView.swift */,
+			);
+			path = Approval;
+			sourceTree = "<group>";
+		};
+		607FCBDB2BFA682800BB2D04 /* MyPage */ = {
+			isa = PBXGroup;
+			children = (
+				607FCBDC2BFA686700BB2D04 /* MyPageView.swift */,
+			);
+			path = MyPage;
+			sourceTree = "<group>";
+		};
+		607FCBDE2BFA693F00BB2D04 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				60B8B9E62BF9EEF1005F6DE3 /* ILSANGApp.swift */,
+				607FCBD22BFA645100BB2D04 /* Router */,
+				607FCBD92BFA681800BB2D04 /* Quest */,
+				607FCBDA2BFA681F00BB2D04 /* Approval */,
+				607FCBDB2BFA682800BB2D04 /* MyPage */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		607FCBDF2BFA69E600BB2D04 /* Global */ = {
+			isa = PBXGroup;
+			children = (
+				607FCBE02BFA6A6100BB2D04 /* Component */,
+			);
+			path = Global;
+			sourceTree = "<group>";
+		};
+		607FCBE02BFA6A6100BB2D04 /* Component */ = {
+			isa = PBXGroup;
+			children = (
+				607FCBE12BFA6A8300BB2D04 /* Buttons.swift */,
+			);
+			path = Component;
+			sourceTree = "<group>";
+		};
 		60B8B9DA2BF9EEF1005F6DE3 = {
 			isa = PBXGroup;
 			children = (
@@ -142,8 +213,8 @@
 		60B8BA132BF9F07D005F6DE3 /* Sources */ = {
 			isa = PBXGroup;
 			children = (
-				60B8B9E62BF9EEF1005F6DE3 /* ILSANGApp.swift */,
-				60B8B9E82BF9EEF1005F6DE3 /* ContentView.swift */,
+				607FCBDF2BFA69E600BB2D04 /* Global */,
+				607FCBDE2BFA693F00BB2D04 /* Views */,
 			);
 			path = Sources;
 			sourceTree = "<group>";
@@ -279,8 +350,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				60B8B9E92BF9EEF1005F6DE3 /* ContentView.swift in Sources */,
+				607FCBE22BFA6A8300BB2D04 /* Buttons.swift in Sources */,
+				607FCBD82BFA681500BB2D04 /* ApprovalView.swift in Sources */,
+				607FCBD42BFA648000BB2D04 /* Tab.swift in Sources */,
+				60B8B9E92BF9EEF1005F6DE3 /* QuestView.swift in Sources */,
 				60B8B9E72BF9EEF1005F6DE3 /* ILSANGApp.swift in Sources */,
+				607FCBD62BFA660C00BB2D04 /* MainTabView.swift in Sources */,
+				607FCBDD2BFA686700BB2D04 /* MyPageView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
