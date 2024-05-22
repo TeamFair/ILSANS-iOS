@@ -22,6 +22,7 @@ struct MyPageView: View {
             //개인 프로필
             
             //Segmenet
+            MyPageSegmenet()
             
             //퀘스트 List
             
