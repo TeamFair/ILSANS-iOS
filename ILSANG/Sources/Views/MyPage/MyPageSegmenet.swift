@@ -17,13 +17,13 @@ struct MyPageSegmenet: View {
     var body: some View {
         HStack (spacing: 20) {
             ForEach(0..<items.count, id: \.self) { index in
-                Segmenet(sgmIcon: icons[index], sgmTitle: items[index], index: index, selectedIndex: $selectedIndex)
+                SegmenetStruct(sgmIcon: icons[index], sgmTitle: items[index], index: index, selectedIndex: $selectedIndex)
             }
         }
     }
 }
 
-struct Segmenet: View {
+struct SegmenetStruct: View {
     
     let sgmIcon: String
     let sgmTitle: String
