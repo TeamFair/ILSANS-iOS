@@ -20,6 +20,7 @@ struct MyPageView: View {
             }
             
             //개인 프로필
+            MyPageProfile()
             
             //Segmenet
             MyPageSegmenet()
@@ -27,6 +28,8 @@ struct MyPageView: View {
             //퀘스트 List
             MyPageList()
         }
+        //MARK: 추후 삭제 
+        .background(Color.gray100)
     }
 }
 

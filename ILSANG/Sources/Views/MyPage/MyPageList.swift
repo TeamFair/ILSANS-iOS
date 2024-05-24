@@ -52,7 +52,7 @@ struct ListStruct: View {
             VStack(alignment: .leading) {
                 Text(title)
                 Text(detail)
-                    .foregroundColor(Color.gray)
+                    .foregroundColor(.gray)
             }
             
             Spacer()
@@ -60,10 +60,10 @@ struct ListStruct: View {
             Text("+\(point)XP")
                 .foregroundColor(Color.blue)
         }
-        .padding(40)
+        .padding(20)
         .background(
             RoundedRectangle(cornerRadius: 12)
-                .foregroundColor(Color.white)
+                .foregroundColor(.white)
         )
     }
 }
