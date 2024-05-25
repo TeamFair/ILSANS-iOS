@@ -16,6 +16,7 @@
 		607FCBE72BFD12B100BB2D04 /* Quest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FCBE62BFD12B100BB2D04 /* Quest.swift */; };
 		607FCBE92BFE418600BB2D04 /* QuestViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FCBE82BFE418600BB2D04 /* QuestViewModel.swift */; };
 		607FCBEB2BFE44D900BB2D04 /* IconView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FCBEA2BFE44D900BB2D04 /* IconView.swift */; };
+		607FCC332C01AA7300BB2D04 /* SubmitAlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FCC322C01AA7300BB2D04 /* SubmitAlertView.swift */; };
 		60B8B9E72BF9EEF1005F6DE3 /* ILSANGApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60B8B9E62BF9EEF1005F6DE3 /* ILSANGApp.swift */; };
 		60B8B9E92BF9EEF1005F6DE3 /* QuestView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60B8B9E82BF9EEF1005F6DE3 /* QuestView.swift */; };
 		60B8B9EB2BF9EEF3005F6DE3 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 60B8B9EA2BF9EEF3005F6DE3 /* Assets.xcassets */; };
@@ -53,6 +54,7 @@
 		607FCBE62BFD12B100BB2D04 /* Quest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Quest.swift; sourceTree = "<group>"; };
 		607FCBE82BFE418600BB2D04 /* QuestViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestViewModel.swift; sourceTree = "<group>"; };
 		607FCBEA2BFE44D900BB2D04 /* IconView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IconView.swift; sourceTree = "<group>"; };
+		607FCC322C01AA7300BB2D04 /* SubmitAlertView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubmitAlertView.swift; sourceTree = "<group>"; };
 		60B8B9E32BF9EEF1005F6DE3 /* ILSANG.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ILSANG.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		60B8B9E62BF9EEF1005F6DE3 /* ILSANGApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ILSANGApp.swift; sourceTree = "<group>"; };
 		60B8B9E82BF9EEF1005F6DE3 /* QuestView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestView.swift; sourceTree = "<group>"; };
@@ -107,6 +109,7 @@
 				60B8B9E82BF9EEF1005F6DE3 /* QuestView.swift */,
 				607FCBE82BFE418600BB2D04 /* QuestViewModel.swift */,
 				607FCBE32BFD124900BB2D04 /* QuestItemView.swift */,
+				607FCC322C01AA7300BB2D04 /* SubmitAlertView.swift */,
 			);
 			path = Quest;
 			sourceTree = "<group>";
@@ -376,6 +379,7 @@
 				607FCBD42BFA648000BB2D04 /* Tab.swift in Sources */,
 				60B8B9E92BF9EEF1005F6DE3 /* QuestView.swift in Sources */,
 				60B8B9E72BF9EEF1005F6DE3 /* ILSANGApp.swift in Sources */,
+				607FCC332C01AA7300BB2D04 /* SubmitAlertView.swift in Sources */,
 				607FCBD62BFA660C00BB2D04 /* MainTabView.swift in Sources */,
 				607FCBE92BFE418600BB2D04 /* QuestViewModel.swift in Sources */,
 				607FCBE72BFD12B100BB2D04 /* Quest.swift in Sources */,
