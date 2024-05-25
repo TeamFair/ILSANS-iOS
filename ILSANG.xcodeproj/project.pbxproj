@@ -12,6 +12,10 @@
 		607FCBD82BFA681500BB2D04 /* ApprovalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FCBD72BFA681500BB2D04 /* ApprovalView.swift */; };
 		607FCBDD2BFA686700BB2D04 /* MyPageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FCBDC2BFA686700BB2D04 /* MyPageView.swift */; };
 		607FCBE22BFA6A8300BB2D04 /* Buttons.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FCBE12BFA6A8300BB2D04 /* Buttons.swift */; };
+		607FCBE42BFD124900BB2D04 /* QuestItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FCBE32BFD124900BB2D04 /* QuestItemView.swift */; };
+		607FCBE72BFD12B100BB2D04 /* Quest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FCBE62BFD12B100BB2D04 /* Quest.swift */; };
+		607FCBE92BFE418600BB2D04 /* QuestViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FCBE82BFE418600BB2D04 /* QuestViewModel.swift */; };
+		607FCBEB2BFE44D900BB2D04 /* IconView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FCBEA2BFE44D900BB2D04 /* IconView.swift */; };
 		60B8B9E72BF9EEF1005F6DE3 /* ILSANGApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60B8B9E62BF9EEF1005F6DE3 /* ILSANGApp.swift */; };
 		60B8B9E92BF9EEF1005F6DE3 /* QuestView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60B8B9E82BF9EEF1005F6DE3 /* QuestView.swift */; };
 		60B8B9EB2BF9EEF3005F6DE3 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 60B8B9EA2BF9EEF3005F6DE3 /* Assets.xcassets */; };
@@ -48,6 +52,10 @@
 		607FCBD72BFA681500BB2D04 /* ApprovalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApprovalView.swift; sourceTree = "<group>"; };
 		607FCBDC2BFA686700BB2D04 /* MyPageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageView.swift; sourceTree = "<group>"; };
 		607FCBE12BFA6A8300BB2D04 /* Buttons.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Buttons.swift; sourceTree = "<group>"; };
+		607FCBE32BFD124900BB2D04 /* QuestItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestItemView.swift; sourceTree = "<group>"; };
+		607FCBE62BFD12B100BB2D04 /* Quest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Quest.swift; sourceTree = "<group>"; };
+		607FCBE82BFE418600BB2D04 /* QuestViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestViewModel.swift; sourceTree = "<group>"; };
+		607FCBEA2BFE44D900BB2D04 /* IconView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IconView.swift; sourceTree = "<group>"; };
 		60B8B9E32BF9EEF1005F6DE3 /* ILSANG.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ILSANG.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		60B8B9E62BF9EEF1005F6DE3 /* ILSANGApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ILSANGApp.swift; sourceTree = "<group>"; };
 		60B8B9E82BF9EEF1005F6DE3 /* QuestView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestView.swift; sourceTree = "<group>"; };
@@ -103,6 +111,8 @@
 			isa = PBXGroup;
 			children = (
 				60B8B9E82BF9EEF1005F6DE3 /* QuestView.swift */,
+				607FCBE82BFE418600BB2D04 /* QuestViewModel.swift */,
+				607FCBE32BFD124900BB2D04 /* QuestItemView.swift */,
 			);
 			path = Quest;
 			sourceTree = "<group>";
@@ -141,6 +151,8 @@
 		607FCBDF2BFA69E600BB2D04 /* Global */ = {
 			isa = PBXGroup;
 			children = (
+				607FCBE52BFD129E00BB2D04 /* Model */,
+				607FCBE02BFA6A6100BB2D04 /* Component */,
 			);
 			path = Global;
 			sourceTree = "<group>";
@@ -149,8 +161,17 @@
 			isa = PBXGroup;
 			children = (
 				607FCBE12BFA6A8300BB2D04 /* Buttons.swift */,
+				607FCBEA2BFE44D900BB2D04 /* IconView.swift */,
 			);
 			path = Component;
+			sourceTree = "<group>";
+		};
+		607FCBE52BFD129E00BB2D04 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				607FCBE62BFD12B100BB2D04 /* Quest.swift */,
+			);
+			path = Model;
 			sourceTree = "<group>";
 		};
 		60B8B9DA2BF9EEF1005F6DE3 = {
@@ -362,13 +383,17 @@
 				607FCBE22BFA6A8300BB2D04 /* Buttons.swift in Sources */,
 				607FCBD82BFA681500BB2D04 /* ApprovalView.swift in Sources */,
 				A1BB60262BFE05B000AAADD4 /* MyPageSegmenet.swift in Sources */,
+				607FCBE42BFD124900BB2D04 /* QuestItemView.swift in Sources */,
 				607FCBD42BFA648000BB2D04 /* Tab.swift in Sources */,
 				60B8B9E92BF9EEF1005F6DE3 /* QuestView.swift in Sources */,
 				60B8B9E72BF9EEF1005F6DE3 /* ILSANGApp.swift in Sources */,
 				A1BB60282BFE129000AAADD4 /* MyPageList.swift in Sources */,
 				607FCBD62BFA660C00BB2D04 /* MainTabView.swift in Sources */,
 				A1BB602C2BFF145100AAADD4 /* MyPageProfile.swift in Sources */,
+				607FCBE92BFE418600BB2D04 /* QuestViewModel.swift in Sources */,
+				607FCBE72BFD12B100BB2D04 /* Quest.swift in Sources */,
 				607FCBDD2BFA686700BB2D04 /* MyPageView.swift in Sources */,
+				607FCBEB2BFE44D900BB2D04 /* IconView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
