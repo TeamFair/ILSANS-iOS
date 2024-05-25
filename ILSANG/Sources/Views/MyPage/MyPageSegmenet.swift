@@ -15,7 +15,7 @@ struct MyPageSegmenet: View {
     let icons = ["📜", "⛳️", "🎖️"]
     
     var body: some View {
-        HStack (spacing: 20) {
+        HStack (spacing: 10) {
             ForEach(0..<items.count, id: \.self) { index in
                 SegmenetStruct(sgmIcon: icons[index], sgmTitle: items[index], index: index, selectedIndex: $selectedIndex)
             }

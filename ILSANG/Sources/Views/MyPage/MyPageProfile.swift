@@ -34,9 +34,14 @@ struct MyPageProfile: View {
                     
                     // 경험치 Text
                     Text("1000XP")
+                        .font(.system(size: 13))
+                        .fontWeight(.bold)
+                        .foregroundColor(.accentColor)
                 }
         
-                Text("다음 레벨까지 1050XP 남았어요!")            }
+                Text("다음 레벨까지 1050XP 남았어요!")      
+                    .foregroundColor(.gray300)
+            }
         }
         .padding(18)
         .background(
@@ -96,7 +101,7 @@ struct ProfileImageView: View {
     }
 }
 
-//MARK: 공용으로 이동
+//MARK: 공용으로 이동?
 struct ProgressBar: View {
     
     var userXP : Int
@@ -111,7 +116,8 @@ struct ProgressBar: View {
         GeometryReader { geometry in
             ZStack(alignment: .leading) {
                 Rectangle()
-                    .frame(width: geometry.size.width, height: 10)
+                    .frame(width: geometry.size.width, height: 11)
+                    .cornerRadius(6)
                     .opacity(0.3)
                     .foregroundColor(.gray100)
                 
@@ -121,6 +127,7 @@ struct ProgressBar: View {
                                    geometry.size.width),
                         height: 10
                     )
+                    .cornerRadius(6)
                 //MARK: 게이지 별 디자인 요청
                     .foregroundColor(.accentColor)
             }

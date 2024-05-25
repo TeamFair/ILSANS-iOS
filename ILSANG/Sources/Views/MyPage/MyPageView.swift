@@ -15,6 +15,7 @@ struct MyPageView: View {
             //프로필 제목
             HStack {
                 Text("내 프로필")
+                    .font(.system(size: 21))
                 Spacer()
                 Image(systemName: "gearshape")
             }
@@ -28,7 +29,8 @@ struct MyPageView: View {
             //퀘스트 List
             MyPageList()
         }
-        //MARK: 추후 삭제 
+        .padding(21)
+        //MARK: 추후 삭제
         .background(Color.gray100)
     }
 }

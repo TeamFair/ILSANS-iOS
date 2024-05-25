@@ -29,7 +29,6 @@ struct MyPageList: View {
                 }
             }
             .frame(maxWidth: .infinity, maxHeight: .infinity)
-            .padding(10)
         } else {
             VStack {
                 Text("Coming Soon!")
