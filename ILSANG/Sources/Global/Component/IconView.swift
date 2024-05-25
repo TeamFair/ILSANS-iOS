@@ -8,12 +8,16 @@
 import SwiftUI
 
 struct IconView: View {
+    let iconWidth: CGFloat
     let size: IconSize
     let icon: ImageResource
     let color: IconColor
     
     var body: some View {
         Image(icon)
+            .resizable()
+            .scaledToFit()
+            .frame(width: iconWidth)
             .foregroundStyle(color.fgColor)
             .frame(width: size.value, height: size.value)
             .background(
@@ -46,11 +50,11 @@ enum IconColor {
     var fgColor: Color {
         switch self {
         case .red:
-            return .red
+            return .subRed
         case .green:
-            return .green
+            return .subGreen
         case .blue:
-            return .blue
+            return .subBlue
         case .gray:
             return .gray300
         }
