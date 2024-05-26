@@ -8,6 +8,14 @@
 import SwiftUI
 
 struct MyPageView: View {
+    
+    @State var testData: [QuestDetail] = [
+        QuestDetail(questTitle: "Title1", questDetail: "Detail1", questXP: 50, status: .QUEST),
+        QuestDetail(questTitle: "Title2", questDetail: "Detail2", questXP: 100, status: .ACTIVITY)
+       ]
+    
+    @State var segmenetSelect = 0
+    
     var body: some View {
         
         VStack {
@@ -24,10 +32,10 @@ struct MyPageView: View {
             MyPageProfile()
             
             //Segmenet
-            MyPageSegmenet()
+            MyPageSegmenet(selectedIndex: $segmenetSelect)
             
             //퀘스트 List
-            MyPageList()
+            MyPageList(data: $testData, segmenetSelect: $segmenetSelect)
         }
         .padding(21)
         //MARK: 추후 삭제

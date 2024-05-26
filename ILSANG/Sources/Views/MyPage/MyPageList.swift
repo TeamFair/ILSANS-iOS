@@ -9,31 +9,37 @@ import SwiftUI
 //MARK: 색상 폰트 변경 요청
 struct MyPageList: View {
     
-    @State var isData: Bool = true
-    @State var testData = [["Title1", "Detail1", 50],["Title2", "Detail2", 100]]
+    @Binding var data: [QuestDetail]
+    @Binding var segmenetSelect : Int
     
     var body: some View {
         
-        if isData {
-            VStack (alignment: .leading){
-                Text("최근 활동 순")
-                    .foregroundColor(Color.gray300)
-                //Data List
-                ScrollView {
-                    ForEach(testData.indices, id: \.self) { index in
-                        ListStruct(title: testData[index][0] as! String, detail: testData[index][1] as! String, point: testData[index][2] as! Int)
-                    }
-                }
-                .refreshable {
-                    //데이터 리프레시
-                }
-            }
-            .frame(maxWidth: .infinity, maxHeight: .infinity)
-        } else {
+        let item = data.filter{$0.status == convertStatus(idx: segmenetSelect)}
+        
+        if item.isEmpty {
             VStack {
                 Text("Coming Soon!")
                     .multilineTextAlignment(.center)
                     .foregroundColor(Color.gray)
+                    .refreshable {
+                        // 데이터 리프레시
+                    }
+                    .frame(maxWidth: .infinity, maxHeight: .infinity)
+            }
+        } else {
+            VStack(alignment: .leading) {
+                Text("최근 활동 순")
+                    .foregroundColor(Color.gray)
+                
+                // Data List
+                ScrollView {
+                    ForEach(item, id: \.self) { Data in
+                        ListStruct(title: Data.questTitle, detail: Data.questDetail, point: Data.questXP)
+                    }
+                }
+                .refreshable {
+                    // 데이터 리프레시
+                }
             }
             .frame(maxWidth: .infinity, maxHeight: .infinity)
         }
@@ -67,6 +73,18 @@ struct ListStruct: View {
     }
 }
 
-#Preview {
-    MyPageList()
+extension MyPageList {
+    //Status로 변경
+    private func convertStatus(idx: Int) -> SegmenetStatus{
+        switch idx {
+        case 0:
+            return .QUEST
+        case 1:
+            return .ACTIVITY
+        case 2:
+            return .BADGE
+        default:
+            return .QUEST
+        }
+    }
 }

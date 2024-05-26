@@ -9,7 +9,7 @@ import SwiftUI
 
 struct MyPageSegmenet: View {
     
-    @State private var selectedIndex = 0
+    @Binding var selectedIndex: Int
     
     let items = ["퀘스트", "활동", "뱃지"]
     let icons = ["📜", "⛳️", "🎖️"]
@@ -52,8 +52,4 @@ struct SegmenetStruct: View {
             selectedIndex = index
         }
     }
-}
-
-#Preview {
-    MyPageSegmenet()
 }
