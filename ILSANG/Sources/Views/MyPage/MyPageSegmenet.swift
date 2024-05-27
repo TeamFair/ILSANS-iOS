@@ -1,5 +1,5 @@
 //
-//  MyPageSegmenet.swift
+//  MyPageSegment.swift
 //  ILSANG
 //
 //  Created by Kim Andrew on 5/22/24.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct MyPageSegmenet: View {
+struct MyPageSegment: View {
     
     @Binding var selectedIndex: Int
     

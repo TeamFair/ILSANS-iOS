@@ -32,7 +32,7 @@ struct MyPageView: View {
             MyPageProfile()
             
             //Segmenet
-            MyPageSegmenet(selectedIndex: $segmenetSelect)
+            MyPageSegment(selectedIndex: $segmenetSelect)
             
             //퀘스트 List
             MyPageList(data: $testData, segmenetSelect: $segmenetSelect)
