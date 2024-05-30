@@ -31,6 +31,7 @@
 		A196286D2C0859820037C53A /* TermsAndPolicyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A196286C2C0859820037C53A /* TermsAndPolicyView.swift */; };
 		A196286F2C0859910037C53A /* DeleteAccountView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A196286E2C0859910037C53A /* DeleteAccountView.swift */; };
 		A19628722C085C120037C53A /* 24.06_일상_이용약관.pdf in Resources */ = {isa = PBXBuildFile; fileRef = A19628712C085C120037C53A /* 24.06_일상_이용약관.pdf */; };
+		A19628752C08648C0037C53A /* NavigationTitleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A19628742C08648C0037C53A /* NavigationTitleView.swift */; };
 		A1BB60262BFE05B000AAADD4 /* MyPageSegmenet.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1BB60252BFE05B000AAADD4 /* MyPageSegmenet.swift */; };
 		A1BB60282BFE129000AAADD4 /* MyPageList.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1BB60272BFE129000AAADD4 /* MyPageList.swift */; };
 		A1BB602C2BFF145100AAADD4 /* MyPageProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1BB602B2BFF145100AAADD4 /* MyPageProfile.swift */; };
@@ -83,6 +84,7 @@
 		A196286C2C0859820037C53A /* TermsAndPolicyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TermsAndPolicyView.swift; sourceTree = "<group>"; };
 		A196286E2C0859910037C53A /* DeleteAccountView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteAccountView.swift; sourceTree = "<group>"; };
 		A19628712C085C120037C53A /* 24.06_일상_이용약관.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; name = "24.06_일상_이용약관.pdf"; path = "../../../../../../Downloads/24.06_일상_이용약관.pdf"; sourceTree = "<group>"; };
+		A19628742C08648C0037C53A /* NavigationTitleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationTitleView.swift; sourceTree = "<group>"; };
 		A1BB60252BFE05B000AAADD4 /* MyPageSegmenet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageSegmenet.swift; sourceTree = "<group>"; };
 		A1BB60272BFE129000AAADD4 /* MyPageList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageList.swift; sourceTree = "<group>"; };
 		A1BB602B2BFF145100AAADD4 /* MyPageProfile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageProfile.swift; sourceTree = "<group>"; };
@@ -169,6 +171,7 @@
 		607FCBDF2BFA69E600BB2D04 /* Global */ = {
 			isa = PBXGroup;
 			children = (
+				A19628732C08647F0037C53A /* View */,
 				607FCBE52BFD129E00BB2D04 /* Model */,
 			);
 			path = Global;
@@ -294,6 +297,14 @@
 				A19628712C085C120037C53A /* 24.06_일상_이용약관.pdf */,
 			);
 			path = PDF;
+			sourceTree = "<group>";
+		};
+		A19628732C08647F0037C53A /* View */ = {
+			isa = PBXGroup;
+			children = (
+				A19628742C08648C0037C53A /* NavigationTitleView.swift */,
+			);
+			path = View;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -433,6 +444,7 @@
 				607FCBD82BFA681500BB2D04 /* ApprovalView.swift in Sources */,
 				A1BB60262BFE05B000AAADD4 /* MyPageSegmenet.swift in Sources */,
 				A1BB602E2C022A9900AAADD4 /* UserData.swift in Sources */,
+				A19628752C08648C0037C53A /* NavigationTitleView.swift in Sources */,
 				A196286F2C0859910037C53A /* DeleteAccountView.swift in Sources */,
 				A19628622C0763F90037C53A /* ChangeNickNameView.swift in Sources */,
 				607FCBE42BFD124900BB2D04 /* QuestItemView.swift in Sources */,

@@ -9,14 +9,47 @@ import SwiftUI
 import PDFKit
 
 struct TermsAndPolicyView: View {
-    
-    let pdfUrl = Bundle.main.url(forResource: "24.06_일상_이용약관", withExtension: "pdf")!
+    @Environment(\.dismiss) var dismiss
+    @State private var isToggle: Bool = false
     
     var body: some View {
-        NavigationView {
-            PDFKitView(url: pdfUrl)
+        VStack(spacing: 0) {
+            NavigationTitleView(title: "약관 및 정책") {
+                dismiss()
+            }
+            
+            List {
+                HStack {
+                    VStack(alignment: .leading, spacing: 4) {
+                        Text("서비스 이용약관")
+                            .foregroundColor(.black)
+
+                        Text("2024.02.01")
+                            .foregroundColor(Color.gray300)
+                    }
+                    
+                    Spacer()
+                    
+                    Button {
+                        withAnimation {
+                            isToggle.toggle()
+                        }
+                    } label: {
+                        Image(systemName: isToggle ? "chevron.down" : "chevron.up")
+                            .foregroundColor(Color.gray200)
+                    }
+                }
+                .frame(height: 48)
+                
+                if isToggle {
+                    Text(contract)
+                        .listRowBackground(Color.clear)
+                }
+            }
+            .listStyle(.plain)
         }
-        .navigationTitle("약관 및 정책")
+        .background(Color.white)
+        .navigationBarBackButtonHidden()
     }
 }
 

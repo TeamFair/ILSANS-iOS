@@ -9,20 +9,29 @@ import SwiftUI
 
 struct SettingView: View {
     
+    
+    @Environment(\.dismiss) var dismiss
+    
     private let settingList: [Setting] = [
-        Setting(title: "고객센터", arrow: true, subInfo: nil),
-        Setting(title: "약관 및 정책", arrow: true, subInfo: nil),
-        Setting(title: "현재 버전", arrow: false, subInfo: "v.0.0.1"),
-        Setting(title: "로그아웃", arrow: false, subInfo: nil),
-        Setting(title: "회원 탈퇴", arrow: true, subInfo: nil)
+        Setting(title: "고객센터",titleColor: false, arrow: true, subInfo: nil),
+        Setting(title: "약관 및 정책",titleColor: false, arrow: true, subInfo: nil),
+        Setting(title: "현재 버전",titleColor: false, arrow: false, subInfo: "v.0.0.1"),
+        Setting(title: "로그아웃",titleColor: false, arrow: false, subInfo: nil),
+        Setting(title: "회원 탈퇴",titleColor: true, arrow: true, subInfo: nil)
        ]
     
     var body: some View {
-        NavigationView {
+        VStack {
+            
+            NavigationTitleView(title: "설정") {
+                dismiss()
+            }
+            
             List(settingList) { item in
                 ZStack(alignment: .leading) {
                     HStack {
                         Text(item.title)
+                            .foregroundColor(item.titleColor ? Color.red : Color.black)
                         Spacer()
                         Text(item.subInfo ?? "")
                             .foregroundColor(.gray200)

@@ -8,8 +8,28 @@
 import SwiftUI
 
 struct CustomerServiceView: View {
+    @Environment(\.dismiss) var dismiss
+    
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        VStack(spacing: 0) {
+            NavigationTitleView(title: "고객센터") {
+                dismiss()
+            }
+            
+            List {
+                NavigationLink {
+                    //
+                } label: {
+                    Text("자주 묻는 질문")
+                }
+                
+                Text("이메일주소: findtastyquest@gmail.com")
+            }
+            .listRowBackground(Color.white)
+            .listStyle(.plain)
+        }
+        .frame(maxWidth: .infinity)
+        .navigationBarBackButtonHidden()
     }
 }
 
