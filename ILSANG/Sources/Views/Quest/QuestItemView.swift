@@ -87,8 +87,8 @@ struct QuestItemView: View {
 
 #Preview {
     VStack {
-        QuestItemView(quest: Quest(missionImage: .checkmark, missionTitle: "아메리카노 5잔 마시기", missionCompany: "이디야커피", reward: 50, status: .ACTIVE))
-        QuestItemView(quest: Quest(missionImage: .checkmark, missionTitle: "아메리카노 15잔 마시기", missionCompany: "이디야커피", reward: 50, status: .INACTIVE))
+        QuestItemView(quest: Quest(id: "12", missionImage: .checkmark, missionTitle: "아메리카노 5잔 마시기", missionCompany: "이디야커피", reward: 50, status: .ACTIVE))
+        QuestItemView(quest: Quest(id: "13", missionImage: .checkmark, missionTitle: "아메리카노 15잔 마시기", missionCompany: "이디야커피", reward: 50, status: .INACTIVE))
     }
 }
 
