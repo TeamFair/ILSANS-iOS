@@ -57,6 +57,7 @@ struct ChangeNickNameView: View {
             //MARK: 디버깅용 기능
                 .onTapGesture { isSame.toggle() }
         }
+        .navigationBarBackButtonHidden()
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .padding(20)
     }
