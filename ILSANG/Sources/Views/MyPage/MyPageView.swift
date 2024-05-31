@@ -15,31 +15,36 @@ struct MyPageView: View {
        ]
     
     @State var segmenetSelect = 0
+    @State private var isSettingsViewActive = false
     
     var body: some View {
-        
-        VStack {
-            
-            //프로필 제목
-            HStack {
-                Text("내 프로필")
-                    .font(.system(size: 21))
-                Spacer()
-                Image(systemName: "gearshape")
+        NavigationView {
+            VStack {
+                
+                //프로필 제목
+                HStack {
+                    Text("내 프로필")
+                        .font(.system(size: 21))
+                    Spacer()
+                    
+                    NavigationLink(destination: SettingView()) {
+                        Image(systemName: "gearshape")
+                    }
+                }
+                
+                //개인 프로필
+                MyPageProfile()
+                
+                //Segmenet
+                MyPageSegment(selectedIndex: $segmenetSelect)
+                
+                //퀘스트 List
+                MyPageList(data: $testData, segmenetSelect: $segmenetSelect)
             }
-            
-            //개인 프로필
-            MyPageProfile()
-            
-            //Segmenet
-            MyPageSegment(selectedIndex: $segmenetSelect)
-            
-            //퀘스트 List
-            MyPageList(data: $testData, segmenetSelect: $segmenetSelect)
+            .padding(21)
+            //MARK: 추후 삭제
+            .background(Color.gray100)
         }
-        .padding(21)
-        //MARK: 추후 삭제
-        .background(Color.gray100)
     }
 }
 
