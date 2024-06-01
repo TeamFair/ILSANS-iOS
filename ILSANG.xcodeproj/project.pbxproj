@@ -24,6 +24,7 @@
 		60B8BA022BF9EEF3005F6DE3 /* ILSANGUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60B8BA012BF9EEF3005F6DE3 /* ILSANGUITests.swift */; };
 		60B8BA042BF9EEF3005F6DE3 /* ILSANGUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60B8BA032BF9EEF3005F6DE3 /* ILSANGUITestsLaunchTests.swift */; };
 		60B8BA112BF9EF50005F6DE3 /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 60B8BA102BF9EF50005F6DE3 /* Launch Screen.storyboard */; };
+		A1868C442C09B6C50020BF16 /* DetailQuestview.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1868C432C09B6C50020BF16 /* DetailQuestview.swift */; };
 		A19628622C0763F90037C53A /* ChangeNickNameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A19628612C0763F90037C53A /* ChangeNickNameView.swift */; };
 		A19628652C076D7B0037C53A /* SettingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A19628642C076D7B0037C53A /* SettingView.swift */; };
 		A19628692C0775A70037C53A /* Setting.swift in Sources */ = {isa = PBXBuildFile; fileRef = A19628682C0775A70037C53A /* Setting.swift */; };
@@ -77,6 +78,7 @@
 		60B8BA032BF9EEF3005F6DE3 /* ILSANGUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ILSANGUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		60B8BA102BF9EF50005F6DE3 /* Launch Screen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = "Launch Screen.storyboard"; sourceTree = "<group>"; };
 		60B8BA142BF9F354005F6DE3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		A1868C432C09B6C50020BF16 /* DetailQuestview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailQuestview.swift; sourceTree = "<group>"; };
 		A19628612C0763F90037C53A /* ChangeNickNameView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangeNickNameView.swift; sourceTree = "<group>"; };
 		A19628642C076D7B0037C53A /* SettingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingView.swift; sourceTree = "<group>"; };
 		A19628682C0775A70037C53A /* Setting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Setting.swift; sourceTree = "<group>"; };
@@ -131,6 +133,7 @@
 				60B8B9E82BF9EEF1005F6DE3 /* QuestView.swift */,
 				607FCBE82BFE418600BB2D04 /* QuestViewModel.swift */,
 				607FCBE32BFD124900BB2D04 /* QuestItemView.swift */,
+				A1868C432C09B6C50020BF16 /* DetailQuestview.swift */,
 			);
 			path = Quest;
 			sourceTree = "<group>";
@@ -448,6 +451,7 @@
 				A196286F2C0859910037C53A /* DeleteAccountView.swift in Sources */,
 				A19628622C0763F90037C53A /* ChangeNickNameView.swift in Sources */,
 				607FCBE42BFD124900BB2D04 /* QuestItemView.swift in Sources */,
+				A1868C442C09B6C50020BF16 /* DetailQuestview.swift in Sources */,
 				607FCBD42BFA648000BB2D04 /* Tab.swift in Sources */,
 				60B8B9E92BF9EEF1005F6DE3 /* QuestView.swift in Sources */,
 				60B8B9E72BF9EEF1005F6DE3 /* ILSANGApp.swift in Sources */,

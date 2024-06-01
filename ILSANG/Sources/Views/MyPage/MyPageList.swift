@@ -34,7 +34,9 @@ struct MyPageList: View {
                 // Data List
                 ScrollView {
                     ForEach(item, id: \.self) { Data in
-                        ListStruct(title: Data.questTitle, detail: Data.questDetail, point: Data.questXP)
+                        NavigationLink(destination: DetailQuestview()) {
+                            ListStruct(title: Data.questTitle, detail: Data.questDetail, point: Data.questXP)
+                        }
                     }
                 }
                 .refreshable {
