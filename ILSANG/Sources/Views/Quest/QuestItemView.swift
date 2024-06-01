@@ -54,10 +54,10 @@ struct QuestItemView: View {
             Group {
                 switch quest.status {
                 case .ACTIVE:
-                    IconView(size: .small, icon: .arrowDown, color: .gray)
+                    IconView(iconWidth: 12, size: .small, icon: .arrowDown, color: .gray)
                 case .INACTIVE:
                     VStack(spacing: 7) {
-                        IconView(size: .small, icon: .check, color: .green)
+                        IconView(iconWidth: 13, size: .small, icon: .check, color: .green)
                         Text("적립완료")
                             .font(.system(size: 10, weight: .bold))
                             .multilineTextAlignment(.center)
