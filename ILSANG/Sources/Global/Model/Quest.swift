@@ -8,6 +8,7 @@
 import UIKit
 
 struct Quest {
+    let id: String
     let missionImage: UIImage
     let missionTitle: String
     let missionCompany: String
@@ -17,6 +18,7 @@ struct Quest {
 
 extension Quest {
     static let mockData: Quest = Quest(
+        id: "11",
         missionImage: .checkmark,
         missionTitle: "아메리카노 15잔 마시기",
         missionCompany: "이디야커피",
@@ -26,6 +28,7 @@ extension Quest {
     
     static let mockDataList: [Quest] = [
         Quest(
+            id: "12",
             missionImage: .checkmark,
             missionTitle: "아메리카노 15잔 마시기",
             missionCompany: "이디야커피",
@@ -33,6 +36,7 @@ extension Quest {
             status: .ACTIVE
         ),
         Quest(
+            id: "13",
             missionImage: .checkmark,
             missionTitle: "카페라떼 1잔 마시기",
             missionCompany: "투썸플레이스",

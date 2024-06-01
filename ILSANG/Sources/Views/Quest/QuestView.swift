@@ -22,6 +22,9 @@ struct QuestView: View {
                 .presentationDetents([.height(540)])
                 .presentationDragIndicator(.visible)
         }
+        .fullScreenCover(isPresented: $vm.showSubmitRouterView) {
+            SubmitRouterView(selectedQuestId: vm.selectedQuest.id)
+        }
     }
 }
 
@@ -92,8 +95,7 @@ extension QuestView {
                 .padding(.bottom, 26)
 
             PrimaryButton(title: "퀘스트 인증하기") {
-                // TODO: 카메라 연결
-                print("tapped")
+                vm.tappedQuestApprovalBtn()
             }
         }
         .foregroundStyle(.gray400)
