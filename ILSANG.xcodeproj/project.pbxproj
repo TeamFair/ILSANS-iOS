@@ -37,6 +37,7 @@
 		A1BB60282BFE129000AAADD4 /* MyPageList.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1BB60272BFE129000AAADD4 /* MyPageList.swift */; };
 		A1BB602C2BFF145100AAADD4 /* MyPageProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1BB602B2BFF145100AAADD4 /* MyPageProfile.swift */; };
 		A1BB602E2C022A9900AAADD4 /* UserData.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1BB602D2C022A9900AAADD4 /* UserData.swift */; };
+		A1FEAD9F2C0B36D700B76324 /* SubmitAlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1FEAD9E2C0B36D700B76324 /* SubmitAlertView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -91,6 +92,7 @@
 		A1BB60272BFE129000AAADD4 /* MyPageList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageList.swift; sourceTree = "<group>"; };
 		A1BB602B2BFF145100AAADD4 /* MyPageProfile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageProfile.swift; sourceTree = "<group>"; };
 		A1BB602D2C022A9900AAADD4 /* UserData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserData.swift; sourceTree = "<group>"; };
+		A1FEAD9E2C0B36D700B76324 /* SubmitAlertView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SubmitAlertView.swift; path = ../../../../../../../Downloads/SubmitAlertView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -132,6 +134,7 @@
 			children = (
 				60B8B9E82BF9EEF1005F6DE3 /* QuestView.swift */,
 				607FCBE82BFE418600BB2D04 /* QuestViewModel.swift */,
+				A1FEAD9E2C0B36D700B76324 /* SubmitAlertView.swift */,
 				607FCBE32BFD124900BB2D04 /* QuestItemView.swift */,
 				A1868C432C09B6C50020BF16 /* DetailQuestview.swift */,
 			);
@@ -449,6 +452,7 @@
 				A1BB602E2C022A9900AAADD4 /* UserData.swift in Sources */,
 				A19628752C08648C0037C53A /* NavigationTitleView.swift in Sources */,
 				A196286F2C0859910037C53A /* DeleteAccountView.swift in Sources */,
+				A1FEAD9F2C0B36D700B76324 /* SubmitAlertView.swift in Sources */,
 				A19628622C0763F90037C53A /* ChangeNickNameView.swift in Sources */,
 				607FCBE42BFD124900BB2D04 /* QuestItemView.swift in Sources */,
 				A1868C442C09B6C50020BF16 /* DetailQuestview.swift in Sources */,
