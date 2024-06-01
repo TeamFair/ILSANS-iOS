@@ -10,8 +10,8 @@ import SwiftUI
 struct MyPageView: View {
     
     @State var testData: [QuestDetail] = [
-        QuestDetail(questTitle: "Title1", questDetail: "Detail1", questXP: 50, status: .QUEST),
-        QuestDetail(questTitle: "Title2", questDetail: "Detail2", questXP: 100, status: .ACTIVITY)
+        QuestDetail(questTitle: "Title1", questImage: nil, questDetail: "Detail1", questLike: 50, questDate: "2023.03.03",questXP: 3,status: .QUEST),
+        QuestDetail(questTitle: "Title2", questImage: nil, questDetail: "Detail2", questLike: 100, questDate: "2023.03.06",questXP: 3,status: .QUEST)
        ]
     
     @State var segmenetSelect = 0

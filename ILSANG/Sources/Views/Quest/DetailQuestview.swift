@@ -11,8 +11,7 @@ struct DetailQuestview: View {
     
     @Environment(\.dismiss) var dismiss
     
-    @State private var uiImage: UIImage? = nil
-    @Binding var QuestData : Quest
+    let QuestData : QuestDetail
     
     var body: some View {
         
@@ -21,8 +20,7 @@ struct DetailQuestview: View {
         }
         
         ZStack {
-           // if let missionImage = QuestData.missionImage {
-                if let missionImage = uiImage {
+            if let missionImage = QuestData.questImage {
                 Image(uiImage: missionImage)
                     .resizable()
                     .aspectRatio(contentMode: .fit)
@@ -38,21 +36,21 @@ struct DetailQuestview: View {
                 Spacer()
                 
                 VStack(alignment: .leading) {
-                    Text(QuestData.missionTitle)
+                    Text(QuestData.questTitle)
                         .font(.headline)
                         .padding(.bottom, 1)
                     
                     HStack {
-                        Text("조회수 1,302회")
+                        Text(QuestData.questDetail)
                         Spacer()
-                        Text("좋아요 12개")
+                        Text(QuestData.questDate)
                     }
                     .font(.subheadline)
                     .foregroundColor(.gray)
                     
                     Spacer()
                     
-                    Text("2024.05.06")
+                    Text("\(QuestData.questLike) 개")
                         .font(.subheadline)
                         .foregroundColor(.gray)
                 }
