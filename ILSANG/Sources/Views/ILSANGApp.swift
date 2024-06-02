@@ -9,9 +9,20 @@ import SwiftUI
 
 @main
 struct ILSANGApp: App {
+    init() {
+        setTabBarAppearance()
+    }
+    
     var body: some Scene {
         WindowGroup {
             MainTabView()
         }
+    }
+    
+    func setTabBarAppearance() {
+        let appearance = UITabBarAppearance()
+        appearance.configureWithOpaqueBackground()
+        appearance.shadowColor = .grayDD
+        UITabBar.appearance().scrollEdgeAppearance = appearance
     }
 }
