@@ -23,8 +23,10 @@ struct MyPageProfile: View {
                     Text("Name")
                     
                     // 이름 수정 버튼
-                    Image(systemName: "pencil.circle")
-                        .foregroundColor(Color.accentColor)
+                    NavigationLink(destination: ChangeNickNameView()) {
+                        Image(systemName: "pencil.circle")
+                            .foregroundColor(Color.accentColor)
+                    }
                 }
                 
                 HStack {

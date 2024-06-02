@@ -17,9 +17,13 @@ struct UserData {
     let userQuest: [QuestDetail]
 }
 
-struct QuestDetail : Hashable {
+struct QuestDetail: Identifiable, Hashable {
+    let id = UUID()
     let questTitle: String
+    let questImage: UIImage?
     let questDetail: String
+    let questLike: Int
+    let questDate: String
     let questXP: Int
     let status: SegmenetStatus
 }
