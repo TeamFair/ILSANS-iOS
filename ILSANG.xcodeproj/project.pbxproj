@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		606C87AF2C0B9B8C002D5C3E /* ApprovalImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 606C87AE2C0B9B8C002D5C3E /* ApprovalImageView.swift */; };
 		607FCBD42BFA648000BB2D04 /* Tab.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FCBD32BFA648000BB2D04 /* Tab.swift */; };
 		607FCBD62BFA660C00BB2D04 /* MainTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FCBD52BFA660C00BB2D04 /* MainTabView.swift */; };
 		607FCBD82BFA681500BB2D04 /* ApprovalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FCBD72BFA681500BB2D04 /* ApprovalView.swift */; };
@@ -17,6 +18,7 @@
 		607FCBE92BFE418600BB2D04 /* QuestViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FCBE82BFE418600BB2D04 /* QuestViewModel.swift */; };
 		607FCBEB2BFE44D900BB2D04 /* IconView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FCBEA2BFE44D900BB2D04 /* IconView.swift */; };
 		607FCC332C01AA7300BB2D04 /* SubmitAlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FCC322C01AA7300BB2D04 /* SubmitAlertView.swift */; };
+		60943FE62C0A38FB00C8A714 /* ApprovalViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60943FE52C0A38FB00C8A714 /* ApprovalViewModel.swift */; };
 		60B8B9E72BF9EEF1005F6DE3 /* ILSANGApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60B8B9E62BF9EEF1005F6DE3 /* ILSANGApp.swift */; };
 		60B8B9E92BF9EEF1005F6DE3 /* QuestView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60B8B9E82BF9EEF1005F6DE3 /* QuestView.swift */; };
 		60B8B9EB2BF9EEF3005F6DE3 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 60B8B9EA2BF9EEF3005F6DE3 /* Assets.xcassets */; };
@@ -49,6 +51,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		606C87AE2C0B9B8C002D5C3E /* ApprovalImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApprovalImageView.swift; sourceTree = "<group>"; };
 		607FCBD32BFA648000BB2D04 /* Tab.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tab.swift; sourceTree = "<group>"; };
 		607FCBD52BFA660C00BB2D04 /* MainTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabView.swift; sourceTree = "<group>"; };
 		607FCBD72BFA681500BB2D04 /* ApprovalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApprovalView.swift; sourceTree = "<group>"; };
@@ -59,6 +62,7 @@
 		607FCBE82BFE418600BB2D04 /* QuestViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestViewModel.swift; sourceTree = "<group>"; };
 		607FCBEA2BFE44D900BB2D04 /* IconView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IconView.swift; sourceTree = "<group>"; };
 		607FCC322C01AA7300BB2D04 /* SubmitAlertView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubmitAlertView.swift; sourceTree = "<group>"; };
+		60943FE52C0A38FB00C8A714 /* ApprovalViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApprovalViewModel.swift; sourceTree = "<group>"; };
 		60B8B9E32BF9EEF1005F6DE3 /* ILSANG.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ILSANG.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		60B8B9E62BF9EEF1005F6DE3 /* ILSANGApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ILSANGApp.swift; sourceTree = "<group>"; };
 		60B8B9E82BF9EEF1005F6DE3 /* QuestView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestView.swift; sourceTree = "<group>"; };
@@ -126,6 +130,8 @@
 			isa = PBXGroup;
 			children = (
 				607FCBD72BFA681500BB2D04 /* ApprovalView.swift */,
+				606C87AE2C0B9B8C002D5C3E /* ApprovalImageView.swift */,
+				60943FE52C0A38FB00C8A714 /* ApprovalViewModel.swift */,
 			);
 			path = Approval;
 			sourceTree = "<group>";
@@ -390,6 +396,8 @@
 				A1BB60262BFE05B000AAADD4 /* MyPageSegmenet.swift in Sources */,
 				A1BB602E2C022A9900AAADD4 /* UserData.swift in Sources */,
 				607FCBE42BFD124900BB2D04 /* QuestItemView.swift in Sources */,
+				606C87AF2C0B9B8C002D5C3E /* ApprovalImageView.swift in Sources */,
+				60943FE62C0A38FB00C8A714 /* ApprovalViewModel.swift in Sources */,
 				607FCBD42BFA648000BB2D04 /* Tab.swift in Sources */,
 				60B8B9E92BF9EEF1005F6DE3 /* QuestView.swift in Sources */,
 				60B8B9E72BF9EEF1005F6DE3 /* ILSANGApp.swift in Sources */,
