@@ -22,7 +22,7 @@ struct ILSANGApp: App {
     func setTabBarAppearance() {
         let appearance = UITabBarAppearance()
         appearance.configureWithOpaqueBackground()
-        appearance.shadowColor = .grayDD
+        appearance.shadowColor = UIColor(.grayDD)
         UITabBar.appearance().scrollEdgeAppearance = appearance
     }
 }

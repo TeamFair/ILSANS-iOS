@@ -50,7 +50,7 @@ enum IconColor {
     var fgColor: Color {
         switch self {
         case .red:
-            return .red
+            return .subRed
         case .green:
             return .subGreen
         case .blue:
