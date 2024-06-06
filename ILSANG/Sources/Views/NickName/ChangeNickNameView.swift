@@ -13,7 +13,7 @@ struct ChangeNickNameView: View {
     @State private var name: String = ""
     @State private var isSame : Bool = false
     @State private var isSaved : Bool = false
-    @State private var showAlret : Bool = false
+    @State private var showAlert : Bool = false
     
     var body: some View {
         
@@ -21,7 +21,7 @@ struct ChangeNickNameView: View {
             if !isSaved {
                 dismiss()
             } else {
-                showAlret.toggle()
+                showAlert.toggle()
             }
         }
         
@@ -66,7 +66,7 @@ struct ChangeNickNameView: View {
         .navigationBarBackButtonHidden()
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .padding(20)
-        .alert(isPresented: $showAlret) {
+        .alert(isPresented: $showAlert) {
             let firstButton = Alert.Button.default(Text("확인")) {
                 print("primary button pressed")
             }
