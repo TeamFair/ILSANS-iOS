@@ -12,11 +12,17 @@ struct ChangeNickNameView: View {
     
     @State private var name: String = ""
     @State private var isSame : Bool = false
+    @State private var isSaved : Bool = false
+    @State private var showAlert : Bool = false
     
     var body: some View {
         
-        NavigationTitleView(title: "고객센터") {
-            dismiss()
+        NavigationTitleView(title: "정보 수정") {
+            if !isSaved {
+                dismiss()
+            } else {
+                showAlert.toggle()
+            }
         }
         
         VStack (alignment: .leading){
@@ -60,6 +66,17 @@ struct ChangeNickNameView: View {
         .navigationBarBackButtonHidden()
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .padding(20)
+        .alert(isPresented: $showAlert) {
+            let firstButton = Alert.Button.default(Text("확인")) {
+                print("primary button pressed")
+            }
+            let secondButton = Alert.Button.cancel(Text("취소")) {
+                print("secondary button pressed")
+            }
+            return Alert(title: Text("닉네임 변경을 취소할까요?"),
+                         message: Text("변경을 완료하지 않으면\n프로필이 저장되지 않습니다."),
+                         primaryButton: firstButton, secondaryButton: secondButton)
+        }
     }
 }
 
