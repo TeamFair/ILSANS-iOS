@@ -10,7 +10,7 @@ import _AuthenticationServices_SwiftUI
 
 struct AppleLoginButtonView: View {
     
-    @EnvironmentObject var userService: UserService
+    //@EnvironmentObject var userService: UserService
             
     var body: some View {
         SignInWithAppleButton { (request) in
@@ -24,7 +24,7 @@ struct AppleLoginButtonView: View {
                         print("error with credential")
                         return
                     }
-                    await userService.login(appleCredential: credential, email: userService.userEmail)
+                    //await userService.login(appleCredential: credential, email: userService.userEmail)
                 }
             case .failure(let error):
                 print(error.localizedDescription)

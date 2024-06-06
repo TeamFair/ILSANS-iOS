@@ -12,11 +12,15 @@ struct LoginView: View {
     @State var isVisitor: Bool = false
     
     var kakaoButtonAction: () -> Void {
-        { Task { await userService.loginWithKakao() } }
+        {
+            //MARK: 로그인 기능 구현
+        }
     }
     
     var googleButtonAction: () -> Void {
-        { Task { await userService.loginWithGoogle() } }
+        {
+            //MARK: 로그인 기능 구현
+        }
     }
     
     var body: some View {
@@ -26,7 +30,7 @@ struct LoginView: View {
                 .frame(width: 80, height: 80)
                 .aspectRatio(contentMode: .fit)
                 .frame(width: 124, height: 124)
-                .background(Color.Primary)
+                .background(Color.accentColor)
                 .cornerRadius(36)
                 .padding(.bottom, 128)
             
@@ -34,7 +38,7 @@ struct LoginView: View {
                 KakaoLoginButtonView(buttonAction: kakaoButtonAction)
                 GoogleLoginButtonView(buttonAction: googleButtonAction)
                 AppleLoginButtonView()
-                    .environmentObject(userService)
+                    //.environmentObject(userService)
                 
 #if DEBUG
                 Button {
@@ -59,7 +63,7 @@ struct LoginView: View {
         }
         .frame(maxHeight: .infinity)
         .ignoresSafeArea()
-        .background(Color.White)
+        .background(Color.white)
         .accentColor(.black)
         .navigationBarBackButtonHidden()
         .navigationDestination(isPresented: $isVisitor) {

@@ -48,6 +48,7 @@
 		A1AB3D692C1141B3001EB9D8 /* KakaoLoginButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1AB3D662C1141B3001EB9D8 /* KakaoLoginButtonView.swift */; };
 		A1AB3D6A2C1141B3001EB9D8 /* AppleLoginButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1AB3D672C1141B3001EB9D8 /* AppleLoginButtonView.swift */; };
 		A1AB3D6C2C1142AA001EB9D8 /* LoginButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1AB3D6B2C1142AA001EB9D8 /* LoginButton.swift */; };
+		A1AB3D6E2C117569001EB9D8 /* Color.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1AB3D6D2C117569001EB9D8 /* Color.swift */; };
 		A1BB60262BFE05B000AAADD4 /* MyPageSegmenet.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1BB60252BFE05B000AAADD4 /* MyPageSegmenet.swift */; };
 		A1BB60282BFE129000AAADD4 /* MyPageList.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1BB60272BFE129000AAADD4 /* MyPageList.swift */; };
 		A1BB602C2BFF145100AAADD4 /* MyPageProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1BB602B2BFF145100AAADD4 /* MyPageProfile.swift */; };
@@ -118,6 +119,7 @@
 		A1AB3D662C1141B3001EB9D8 /* KakaoLoginButtonView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KakaoLoginButtonView.swift; sourceTree = "<group>"; };
 		A1AB3D672C1141B3001EB9D8 /* AppleLoginButtonView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppleLoginButtonView.swift; sourceTree = "<group>"; };
 		A1AB3D6B2C1142AA001EB9D8 /* LoginButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginButton.swift; sourceTree = "<group>"; };
+		A1AB3D6D2C117569001EB9D8 /* Color.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Color.swift; sourceTree = "<group>"; };
 		A1BB60252BFE05B000AAADD4 /* MyPageSegmenet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageSegmenet.swift; sourceTree = "<group>"; };
 		A1BB60272BFE129000AAADD4 /* MyPageList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageList.swift; sourceTree = "<group>"; };
 		A1BB602B2BFF145100AAADD4 /* MyPageProfile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageProfile.swift; sourceTree = "<group>"; };
@@ -235,6 +237,7 @@
 			children = (
 				A19628732C08647F0037C53A /* View */,
 				607FCBE52BFD129E00BB2D04 /* Model */,
+				A1AB3D6D2C117569001EB9D8 /* Color.swift */,
 			);
 			path = Global;
 			sourceTree = "<group>";
@@ -527,6 +530,7 @@
 				A196286F2C0859910037C53A /* DeleteAccountView.swift in Sources */,
 				A1AB3D6A2C1141B3001EB9D8 /* AppleLoginButtonView.swift in Sources */,
 				A1FEAD9F2C0B36D700B76324 /* SubmitAlertView.swift in Sources */,
+				A1AB3D6E2C117569001EB9D8 /* Color.swift in Sources */,
 				A1AB3D682C1141B3001EB9D8 /* GoogleLoginButtonView.swift in Sources */,
 				A19628622C0763F90037C53A /* ChangeNickNameView.swift in Sources */,
 				605DA0C92C07097F00CC9450 /* ImagePreviewButton.swift in Sources */,
