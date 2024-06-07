@@ -13,9 +13,15 @@ struct ILSANGApp: App {
         setTabBarAppearance()
     }
     
+    @State private var isLogin: Bool = false
+    
     var body: some Scene {
         WindowGroup {
-            MainTabView()
+            if !isLogin {
+                LoginView(isLogin: $isLogin)
+            } else {
+                MainTabView()
+            }
         }
     }
     

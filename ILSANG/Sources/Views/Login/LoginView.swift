@@ -9,6 +9,8 @@ import SwiftUI
 
 struct LoginView: View {
     
+    @Binding var isLogin : Bool
+    
     @State var isVisitor: Bool = false
     
     var kakaoButtonAction: () -> Void {
@@ -30,7 +32,7 @@ struct LoginView: View {
                 .frame(width: 80, height: 80)
                 .aspectRatio(contentMode: .fit)
                 .frame(width: 124, height: 124)
-                .background(Color.accentColor)
+                .background(Color.accent)
                 .cornerRadius(36)
                 .padding(.bottom, 128)
             
@@ -38,28 +40,14 @@ struct LoginView: View {
                 KakaoLoginButtonView(buttonAction: kakaoButtonAction)
                 GoogleLoginButtonView(buttonAction: googleButtonAction)
                 AppleLoginButtonView()
-                    //.environmentObject(userService)
+                //.environmentObject(userService)
                 
-#if DEBUG
-                Button {
-                    Task { 
-                        //await userService.loginWithTest()
-                    }
-                } label: {
-                    Text("테스트 로그인")
-                }
-#endif
+                //MARK: 실제 로그인이 아니고 뷰만 이동합니다.
+                //await userService.loginWithTest()
+                Text("테스트 로그인")
+                    .onTapGesture { isLogin.toggle() }
             }
             .padding(.bottom, 25)
-            
-            Button {
-                isVisitor = true
-            } label: {
-                Text("로그인 없이 둘러보기")
-                    .font(.system(size: 12))
-                    .foregroundColor(.gray)
-                    .underline()
-            }
         }
         .frame(maxHeight: .infinity)
         .ignoresSafeArea()
@@ -72,6 +60,3 @@ struct LoginView: View {
     }
 }
 
-#Preview {
-    LoginView()
-}
