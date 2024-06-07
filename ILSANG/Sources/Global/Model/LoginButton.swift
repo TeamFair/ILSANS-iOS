@@ -38,11 +38,11 @@ enum LoginButton {
     var fontName: String {
         switch self {
         case .kakao:
-            return "AppleSDGothicNeoR00"
+            return "AppleSDGothicNeoR"
         case .google:
             return "Roboto-Medium"
         case .apple:
-            return "SFProDisplay-Medium"
+            return "SFPRODISPLAYREGULAR"
         }
     }
     

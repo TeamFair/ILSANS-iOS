@@ -26,7 +26,7 @@ struct GoogleLoginButtonView: View {
             .padding(.horizontal, 18)
             .padding(.vertical, 16)
             .background(
-                RoundedRectangle(cornerRadius: 50)
+                RoundedRectangle(cornerRadius: 16)
                     .stroke(style: .init(lineWidth: 1))
                     .foregroundStyle(Color.gray200)
             )

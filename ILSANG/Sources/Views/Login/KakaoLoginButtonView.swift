@@ -20,7 +20,7 @@ struct KakaoLoginButtonView: View {
                 Spacer()
                 Text(LoginButton.kakao.labelText)
                     .foregroundColor(LoginButton.kakao.accentColor)
-                    .font(.custom("AppleSDGothicNeoR00", size: 14))
+                    .font(.custom("AppleSDGothicNeoR", size: 14))
                 
                 Spacer()
             }
@@ -28,7 +28,7 @@ struct KakaoLoginButtonView: View {
             .padding(.vertical, 16)
             .frame(width: 270, height: 50)
             .background(
-                RoundedRectangle(cornerRadius: 25)
+                RoundedRectangle(cornerRadius: 16)
                     .fill(LoginButton.kakao.backgroundColor)
             )
         }

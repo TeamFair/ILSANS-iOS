@@ -41,7 +41,7 @@ struct AppleLoginButtonView: View {
                 Spacer()
                 Text(LoginButton.apple.labelText)
                     .foregroundColor(LoginButton.apple.accentColor)
-                    .font(.custom("SFProDisplay-Medium", size: 14))
+                    .font(.custom("SFPRODISPLAYREGULAR", size: 14))
                 Spacer()
             }
             .padding(.horizontal, 18)
@@ -49,6 +49,6 @@ struct AppleLoginButtonView: View {
             .background(LoginButton.apple.backgroundColor)
             .allowsHitTesting(false)
         }
-        .clipShape(RoundedRectangle(cornerRadius: 25))
+        .clipShape(RoundedRectangle(cornerRadius: 16))
     }
 }
