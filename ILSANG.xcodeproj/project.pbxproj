@@ -124,7 +124,6 @@
 		A1BB60272BFE129000AAADD4 /* MyPageList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageList.swift; sourceTree = "<group>"; };
 		A1BB602B2BFF145100AAADD4 /* MyPageProfile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageProfile.swift; sourceTree = "<group>"; };
 		A1BB602D2C022A9900AAADD4 /* UserData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserData.swift; sourceTree = "<group>"; };
-		A1EB63382C132AB800B63F9C /* AppleSDGothicNeoR.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = AppleSDGothicNeoR.otf; sourceTree = "<group>"; };
 		A1EB63392C132AC100B63F9C /* Roboto-Medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Roboto-Medium.ttf"; sourceTree = "<group>"; };
 		A1EB633A2C132B0800B63F9C /* SFPRODISPLAYREGULAR.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = SFPRODISPLAYREGULAR.otf; sourceTree = "<group>"; };
 		A1FEAD9E2C0B36D700B76324 /* SubmitAlertView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SubmitAlertView.swift; sourceTree = "<group>"; };
@@ -392,7 +391,6 @@
 		A1EB63342C132A3B00B63F9C /* Fonts */ = {
 			isa = PBXGroup;
 			children = (
-				A1EB63382C132AB800B63F9C /* AppleSDGothicNeoR.otf */,
 				A1EB63392C132AC100B63F9C /* Roboto-Medium.ttf */,
 				A1EB633A2C132B0800B63F9C /* SFPRODISPLAYREGULAR.otf */,
 			);
