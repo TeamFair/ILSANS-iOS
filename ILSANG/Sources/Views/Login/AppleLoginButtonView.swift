@@ -41,7 +41,7 @@ struct AppleLoginButtonView: View {
                 Spacer()
                 Text(LoginButton.apple.labelText)
                     .foregroundColor(LoginButton.apple.accentColor)
-                    .font(.custom("SFPRODISPLAYREGULAR", size: 14))
+                    .font(.custom(LoginButton.apple.fontName, size: 14))
                 Spacer()
             }
             .padding(.horizontal, 18)

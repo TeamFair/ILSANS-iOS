@@ -20,7 +20,7 @@ struct GoogleLoginButtonView: View {
                 Spacer()
                 Text(LoginButton.google.labelText)
                     .foregroundColor(LoginButton.google.accentColor)
-                    .font(.custom("Roboto-Medium", size: 14))
+                    .font(.custom(LoginButton.google.fontName, size: 14))
                 Spacer()
             }
             .padding(.horizontal, 18)

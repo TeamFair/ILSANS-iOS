@@ -20,7 +20,7 @@ struct KakaoLoginButtonView: View {
                 Spacer()
                 Text(LoginButton.kakao.labelText)
                     .foregroundColor(LoginButton.kakao.accentColor)
-                    .font(.custom("AppleSDGothicNeoR", size: 14))
+                    .font(.custom(LoginButton.kakao.fontName, size: 14))
                 
                 Spacer()
             }
