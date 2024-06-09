@@ -14,9 +14,15 @@ struct QuestView: View {
         VStack(alignment: .leading, spacing: 0) {
             headerView
             
-            scrollView
+            questListView
         }
+        .frame(maxWidth: .infinity, alignment: .leading)
         .background(Color.background)
+        .overlay {
+            if vm.isCurrentListEmpty {
+                emptyView
+            }
+        }
         .sheet(isPresented: $vm.showQuestSheet) {
             questSheetView
                 .presentationDetents([.height(540)])
@@ -37,7 +43,7 @@ extension QuestView {
                 } label: {
                     Text(status.headerText)
                         .foregroundColor(status == vm.selectedHeader ? .gray400 : .gray200)
-                        .font(.system(size: 21, weight: status == vm.selectedHeader ? .bold : .regular))
+                        .font(.system(size: 21, weight: .bold))
                         .frame(height: 30)
                 }
             }
@@ -45,19 +51,40 @@ extension QuestView {
         .padding(.horizontal, 20)
     }
     
-    private var scrollView: some View {
+    private var questListView: some View {
         ScrollView {
             VStack(spacing: 14) {
-                ForEach(vm.questList, id: \.missionTitle) { quest in
-                    Button {
-                        vm.tappedQuestBtn(quest: quest)
-                    } label: {
+                switch vm.selectedHeader {
+                case .ACTIVE:
+                    ForEach(vm.activeQuestList, id: \.id) { quest in
+                        Button {
+                            vm.tappedQuestBtn(quest: quest)
+                        } label: {
+                            QuestItemView(quest: quest)
+                        }
+                    }
+                case .INACTIVE:
+                    ForEach(vm.inactiveQuestList, id: \.id) { quest in
                         QuestItemView(quest: quest)
                     }
                 }
             }
             .padding(.top, 17)
+            .padding(.bottom, 20)
         }
+    }
+    
+    private var emptyView: some View {
+        VStack(spacing: 16) {
+            Text(vm.selectedHeader.emptyTitle)
+                .foregroundStyle(.gray400)
+                .font(.system(size: 21, weight: .bold))
+            Text(vm.selectedHeader.emptySubTitle)
+                .foregroundStyle(.gray300)
+                .font(.system(size: 17, weight: .medium))
+                .lineSpacing(6)
+        }
+        .multilineTextAlignment(.center)
     }
     
     private var questSheetView: some View {

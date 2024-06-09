@@ -26,7 +26,7 @@ extension Quest {
         status: .ACTIVE
     )
     
-    static let mockDataList: [Quest] = [
+    static let mockActiveDataList: [Quest] = [
         Quest(
             id: "12",
             missionImage: .checkmark,
@@ -34,6 +34,25 @@ extension Quest {
             missionCompany: "이디야커피",
             reward: 50,
             status: .ACTIVE
+        ),
+        Quest(
+            id: "13",
+            missionImage: .checkmark,
+            missionTitle: "카페라떼 1잔 마시기",
+            missionCompany: "투썸플레이스",
+            reward: 150,
+            status: .ACTIVE
+        )
+    ]
+    
+    static let mockInactiveDataList: [Quest] = [
+        Quest(
+            id: "12",
+            missionImage: .checkmark,
+            missionTitle: "아메리카노 15잔 마시기",
+            missionCompany: "이디야커피",
+            reward: 50,
+            status: .INACTIVE
         ),
         Quest(
             id: "13",
@@ -56,6 +75,24 @@ enum QuestStatus: String, CaseIterable {
             "퀘스트"
         case .INACTIVE:
             "완료"
+        }
+    }
+    
+    var emptyTitle: String {
+        switch self {
+        case .ACTIVE:
+            "퀘스트를 모두 완료하셨어요!"
+        case .INACTIVE:
+            "완료된 퀘스트가 없어요"
+        }
+    }
+    
+    var emptySubTitle: String {
+        switch self {
+        case .ACTIVE:
+            "상상할 수 없는 퀘스트를 준비 중이니\n다음 업데이트를 기대해 주세요!"
+        case .INACTIVE:
+            "퀘스트를 수행하러 가볼까요?"
         }
     }
 }
