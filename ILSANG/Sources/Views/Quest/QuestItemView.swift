@@ -38,7 +38,7 @@ struct QuestItemView: View {
                         .offset(x: 20, y: 2)
                 }
             
-            VStack(alignment: .leading, spacing: 3){
+            VStack(alignment: .leading, spacing: 4){
                 Text(quest.missionTitle)
                     .font(.system(size: 15, weight: .bold))
                     .foregroundColor(.black)
@@ -48,6 +48,7 @@ struct QuestItemView: View {
                     .foregroundColor(.gray)
             }
             .opacity(quest.status == .ACTIVE ? 1.0 : 0.2)
+            .padding(.top, 6)
             
             Spacer()
             
