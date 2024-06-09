@@ -53,7 +53,7 @@ extension QuestView {
     
     private var questListView: some View {
         ScrollView {
-            VStack(spacing: 14) {
+            VStack(spacing: 12) {
                 switch vm.selectedHeader {
                 case .ACTIVE:
                     ForEach(vm.activeQuestList, id: \.id) { quest in
@@ -70,7 +70,7 @@ extension QuestView {
                 }
             }
             .padding(.top, 17)
-            .padding(.bottom, 20)
+            .padding(.bottom, 72)
         }
     }
     
