@@ -15,7 +15,7 @@ struct MainTabView: View {
             ForEach(Tab.allCases, id: \.self) { tab in
                 createTabView(for: tab)
                     .tabItem {
-                        Image(systemName: tab == selectedTab ? (tab.icon + ".fill") : tab.icon)
+                        Image(tab == selectedTab ? tab.selectedIcon: tab.icon)
                         Text(tab.title)
                     }
                     .tag(tab)

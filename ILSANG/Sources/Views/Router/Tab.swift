@@ -13,12 +13,16 @@ enum Tab: CaseIterable {
     var icon: String {
         switch self {
         case .quest:
-            return "play"
+            return "quest"
         case .approval:
-            return "play"
+            return "approval.circle"
         case .mypage:
-            return "play"
+            return "profile"
         }
+    }
+    
+    var selectedIcon: String {
+        icon + ".fill"
     }
     
     var title: String {
