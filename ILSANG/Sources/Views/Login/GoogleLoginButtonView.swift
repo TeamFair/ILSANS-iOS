@@ -25,12 +25,14 @@ struct GoogleLoginButtonView: View {
             }
             .padding(.horizontal, 18)
             .padding(.vertical, 16)
+            .frame(width: 270, height: 50)
             .background(
                 RoundedRectangle(cornerRadius: 16)
-                    .stroke(style: .init(lineWidth: 1))
+                    .strokeBorder(lineWidth: 1)
                     .foregroundStyle(Color.gray200)
+                    .background(LoginButton.google.backgroundColor)
+                    .cornerRadius(16, corners: .allCorners)
             )
-            .frame(width: 270, height: 50)
         }
     }
 }
