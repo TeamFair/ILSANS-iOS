@@ -20,7 +20,7 @@ struct QuestView: View {
         .background(Color.background)
         .overlay {
             if vm.isCurrentListEmpty {
-                emptyView
+                questListEmptyView
             }
         }
         .sheet(isPresented: $vm.showQuestSheet) {
@@ -74,7 +74,7 @@ extension QuestView {
         }
     }
     
-    private var emptyView: some View {
+    private var questListEmptyView: some View {
         VStack(spacing: 16) {
             Text(vm.selectedHeader.emptyTitle)
                 .foregroundStyle(.gray400)
