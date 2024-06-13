@@ -69,7 +69,10 @@ struct DeleteAccountView: View {
                             Text("안내사항을 모두 확인하였으며, 이에 동의합니다.")
                                 .font(.system(size: 15))
                                 .foregroundColor(Color.gray400)
+                            
+                            Spacer()
                         }
+                        .padding(.horizontal, 21)
                     }
                     .padding(.bottom, 20)
                 
