@@ -21,11 +21,14 @@ struct MyPageProfile: View {
                 HStack {
                     //유저 이름
                     Text("Name")
+                        .foregroundColor(.gray400)
+                        .fontWeight(.bold)
                     
                     // 이름 수정 버튼
                     NavigationLink(destination: ChangeNickNameView()) {
-                        Image(systemName: "pencil.circle")
-                            .foregroundColor(Color.accentColor)
+                        Image("SettingPencil")
+                            .resizable()
+                            .frame(width: 18, height: 18)
                     }
                 }
                 
@@ -41,7 +44,8 @@ struct MyPageProfile: View {
                         .foregroundColor(.accentColor)
                 }
         
-                Text("다음 레벨까지 1050XP 남았어요!")      
+                Text("다음 레벨까지 1050XP 남았어요!")
+                    .font(.system(size: 13))
                     .foregroundColor(.gray300)
             }
         }
@@ -75,10 +79,9 @@ struct ProfileImageView: View {
                         .overlay(Circle().stroke(Color.accentColor, lineWidth: 2))
                 } else {
                     //커스텀 이미지가 존재하지 않을 경우
-                    Image(systemName: "person.crop.circle.fill")
+                    Image("profile.circle")
                         .resizable()
                         .frame(width: 57, height: 57)
-                        .foregroundColor(Color.accentColor)
                 }
                 
                 Spacer()

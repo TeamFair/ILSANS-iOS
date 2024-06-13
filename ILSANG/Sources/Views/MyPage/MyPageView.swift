@@ -25,10 +25,12 @@ struct MyPageView: View {
                 HStack {
                     Text("내 프로필")
                         .font(.system(size: 21))
+                        .fontWeight(.bold)
+                        .foregroundColor(.gray400)
                     Spacer()
                     
                     NavigationLink(destination: SettingView()) {
-                        Image(systemName: "gearshape")
+                        Image("Setting")
                     }
                 }
                 
