@@ -36,14 +36,18 @@ struct DeleteAccountView: View {
                     
                     Text("일상 탈퇴 전 확인하세요!")
                         .foregroundColor(.black)
+                        .font(.system(size: 23))
+                        .fontWeight(.bold)
                         .padding(.bottom, 11)
 
                     Text("탈퇴하시면 모든 데이터는 복구가 불가능합니다.")
+                        .font(.system(size: 15))
                         .foregroundColor(Color.gray400)
                         .padding(.bottom, 35)
 
                     
                     Text("• 진행 및 완료된 모든 퀘스트 내용이 삭제됩니다.\n• 사장님이 관리하는 단골 데이터에서 삭제됩니다.")
+                        .font(.system(size: 14))
                         .foregroundColor(Color.gray400)
                         .multilineTextAlignment(.leading)
                         .lineSpacing(4)
@@ -63,6 +67,7 @@ struct DeleteAccountView: View {
                                 .frame(width: 22, height: 22)
                                 .scaledToFit()
                             Text("안내사항을 모두 확인하였으며, 이에 동의합니다.")
+                                .font(.system(size: 15))
                                 .foregroundColor(Color.gray400)
                         }
                     }
