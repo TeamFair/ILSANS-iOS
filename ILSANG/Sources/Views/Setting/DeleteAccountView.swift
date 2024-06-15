@@ -46,7 +46,7 @@ struct DeleteAccountView: View {
                         .padding(.bottom, 35)
 
                     
-                    Text("• 진행 및 완료된 모든 퀘스트 내용이 삭제됩니다.\n• 사장님이 관리하는 단골 데이터에서 삭제됩니다.")
+                    Text("• 진행 및 완료된 모든 퀘스트 내용이 삭제됩니다.\n• 경험치 및 레벨은 복구가 불가합니다.")
                         .font(.system(size: 14))
                         .foregroundColor(Color.gray400)
                         .multilineTextAlignment(.leading)
