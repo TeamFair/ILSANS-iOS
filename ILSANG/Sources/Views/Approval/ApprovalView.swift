@@ -31,6 +31,9 @@ struct ApprovalView: View {
                 .blur(radius: 30, opaque: true)
                 .background(Color.black.opacity(0.2))
         )
+        .task {
+            await vm.getEmoji(challengeId: "CH00000100")
+        }
     }
     
     /// 퀘스트 타이틀  + 퀘스트 인증 이미지

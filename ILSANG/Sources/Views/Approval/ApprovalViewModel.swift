@@ -12,6 +12,18 @@ class ApprovalViewModel: ObservableObject {
     @Published var idx = 0
     @Published var isScrolling = false
     
+    private let emojiNetwork = EmojiNetwork()
+    
+    func getEmoji(challengeId: String) async {
+        let res = await emojiNetwork.getEmoji(challengeId: challengeId)
+        switch res {
+        case .success(let model):
+            print(model.data)
+        case .failure(let error):
+            print(error.localizedDescription)
+        }
+    }
+    
     func tappedRecommendBtn(recommend: Bool) {
         // TODO: API 요청 - itemList[idx].questId, recommend
     }
