@@ -29,6 +29,8 @@ struct MyPageList: View {
         } else {
             VStack(alignment: .leading) {
                 Text("최근 활동 순")
+                    .font(.system(size: 13))
+                    .fontWeight(.medium)
                     .foregroundColor(Color.gray)
                 
                 // Data List
@@ -58,14 +60,19 @@ struct ListStruct: View {
         HStack {
             VStack(alignment: .leading) {
                 Text(title)
+                    .font(.system(size: 15))
+                    .fontWeight(.bold)
+                    .foregroundColor(.black)
                 Text(detail)
+                    .font(.system(size: 13))
                     .foregroundColor(.gray)
             }
             
             Spacer()
             
             Text("+\(point)XP")
-                .foregroundColor(Color.blue)
+                .fontWeight(.semibold)
+                .foregroundColor(Color.accentColor)
         }
         .padding(20)
         .background(

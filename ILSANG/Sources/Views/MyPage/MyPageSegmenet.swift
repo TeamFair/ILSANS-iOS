@@ -20,6 +20,7 @@ struct MyPageSegment: View {
                 SegmenetStruct(sgmIcon: icons[index], sgmTitle: items[index], index: index, selectedIndex: $selectedIndex)
             }
         }
+        .padding(.vertical, 16)
     }
 }
 
@@ -40,13 +41,15 @@ struct SegmenetStruct: View {
                 .cornerRadius(12)
                 .shadow(color: .black.opacity(0.2), radius: 2, x: 0, y: 2)
             
-            HStack {
+            HStack (alignment: .center){
                 Text(sgmIcon)
+                    .font(.system(size: 14))
+                
                 Text(sgmTitle)
+                    .font(.system(size: 14))
                     .fontWeight(.bold)
                     .foregroundColor(selectedIndex == index ? Color.white : Color.gray300)
             }
-            .padding()
         }
         .onTapGesture {
             selectedIndex = index
