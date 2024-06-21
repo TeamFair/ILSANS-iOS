@@ -22,7 +22,7 @@ struct ApprovalView: View {
         .ignoresSafeArea()
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .background(
-            Image(vm.itemList[vm.idx].image)
+            Image(uiImage: vm.itemList[vm.currentIdx].image ?? .logo)
                 .resizable()
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
                 .ignoresSafeArea()
@@ -39,7 +39,7 @@ struct ApprovalView: View {
     /// 퀘스트 타이틀  + 퀘스트 인증 이미지
     private var itemView: some View {
         VStack(spacing: 14) {
-            Text(vm.itemList[vm.idx].title)
+            Text(vm.itemList[vm.currentIdx].title)
                 .font(.system(size: 16, weight: .bold))
                 .foregroundStyle(.gray400)
                 .frame(height: 45)

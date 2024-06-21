@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct ApprovalImageView: View {
-    let image: String
+    let image: UIImage
     let width: CGFloat
     let height: CGFloat
     let nickname: String
@@ -16,7 +16,7 @@ struct ApprovalImageView: View {
     let showProfile: Bool
     
     var body: some View {
-        Image(image)
+        Image(uiImage: image)
             .resizable()
             .scaledToFill()
             .frame(width: width, height: height)
