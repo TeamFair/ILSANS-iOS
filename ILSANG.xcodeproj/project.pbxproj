@@ -60,6 +60,10 @@
 		A1BB602C2BFF145100AAADD4 /* MyPageProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1BB602B2BFF145100AAADD4 /* MyPageProfile.swift */; };
 		A1BB602E2C022A9900AAADD4 /* UserData.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1BB602D2C022A9900AAADD4 /* UserData.swift */; };
 		A1FEAD9F2C0B36D700B76324 /* SubmitAlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1FEAD9E2C0B36D700B76324 /* SubmitAlertView.swift */; };
+		A1FF916E2C250C3B00F03E4B /* CustomerNetwork.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1FF916D2C250C3B00F03E4B /* CustomerNetwork.swift */; };
+		A1FF91702C25119200F03E4B /* XPNetwork.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1FF916F2C25119200F03E4B /* XPNetwork.swift */; };
+		A1FF91722C257E9A00F03E4B /* Customer.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1FF91712C257E9A00F03E4B /* Customer.swift */; };
+		A1FF91742C257F6400F03E4B /* XP.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1FF91732C257F6400F03E4B /* XP.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -138,6 +142,10 @@
 		A1EB63392C132AC100B63F9C /* Roboto-Medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Roboto-Medium.ttf"; sourceTree = "<group>"; };
 		A1EB633A2C132B0800B63F9C /* SFPRODISPLAYREGULAR.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = SFPRODISPLAYREGULAR.otf; sourceTree = "<group>"; };
 		A1FEAD9E2C0B36D700B76324 /* SubmitAlertView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SubmitAlertView.swift; sourceTree = "<group>"; };
+		A1FF916D2C250C3B00F03E4B /* CustomerNetwork.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomerNetwork.swift; sourceTree = "<group>"; };
+		A1FF916F2C25119200F03E4B /* XPNetwork.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XPNetwork.swift; sourceTree = "<group>"; };
+		A1FF91712C257E9A00F03E4B /* Customer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Customer.swift; sourceTree = "<group>"; };
+		A1FF91732C257F6400F03E4B /* XP.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XP.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -170,6 +178,8 @@
 			isa = PBXGroup;
 			children = (
 				600211E72C1EED40000CC02E /* Emoji.swift */,
+				A1FF91712C257E9A00F03E4B /* Customer.swift */,
+				A1FF91732C257F6400F03E4B /* XP.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -209,6 +219,8 @@
 			children = (
 				600211EF2C1EF3F5000CC02E /* Base */,
 				600211ED2C1EEF91000CC02E /* EmojiNetwork.swift */,
+				A1FF916D2C250C3B00F03E4B /* CustomerNetwork.swift */,
+				A1FF916F2C25119200F03E4B /* XPNetwork.swift */,
 			);
 			path = Network;
 			sourceTree = "<group>";
@@ -579,6 +591,7 @@
 				A196286B2C0859730037C53A /* CustomerServiceView.swift in Sources */,
 				607FCBE22BFA6A8300BB2D04 /* Buttons.swift in Sources */,
 				605DA0CF2C07118900CC9450 /* SubmitRouterView.swift in Sources */,
+				A1FF91742C257F6400F03E4B /* XP.swift in Sources */,
 				607FCBD82BFA681500BB2D04 /* ApprovalView.swift in Sources */,
 				A1AB3D692C1141B3001EB9D8 /* KakaoLoginButtonView.swift in Sources */,
 				A1BB60262BFE05B000AAADD4 /* MyPageSegmenet.swift in Sources */,
@@ -590,6 +603,7 @@
 				A1AB3D6A2C1141B3001EB9D8 /* AppleLoginButtonView.swift in Sources */,
 				600211EC2C1EEED7000CC02E /* APIManager.swift in Sources */,
 				A1FEAD9F2C0B36D700B76324 /* SubmitAlertView.swift in Sources */,
+				A1FF916E2C250C3B00F03E4B /* CustomerNetwork.swift in Sources */,
 				A1AB3D6E2C117569001EB9D8 /* Color.swift in Sources */,
 				A1AB3D682C1141B3001EB9D8 /* GoogleLoginButtonView.swift in Sources */,
 				A19628622C0763F90037C53A /* ChangeNickNameView.swift in Sources */,
@@ -602,6 +616,7 @@
 				60943FE62C0A38FB00C8A714 /* ApprovalViewModel.swift in Sources */,
 				A1868C442C09B6C50020BF16 /* DetailQuestview.swift in Sources */,
 				607FCBD42BFA648000BB2D04 /* Tab.swift in Sources */,
+				A1FF91722C257E9A00F03E4B /* Customer.swift in Sources */,
 				60B8B9E92BF9EEF1005F6DE3 /* QuestView.swift in Sources */,
 				60B8B9E72BF9EEF1005F6DE3 /* ILSANGApp.swift in Sources */,
 				A1AB3D6C2C1142AA001EB9D8 /* LoginButton.swift in Sources */,
@@ -615,6 +630,7 @@
 				600211EE2C1EEF91000CC02E /* EmojiNetwork.swift in Sources */,
 				607FCBD62BFA660C00BB2D04 /* MainTabView.swift in Sources */,
 				605DA0D12C0711CA00CC9450 /* CameraView.swift in Sources */,
+				A1FF91702C25119200F03E4B /* XPNetwork.swift in Sources */,
 				A1BB602C2BFF145100AAADD4 /* MyPageProfile.swift in Sources */,
 				607FCBE92BFE418600BB2D04 /* QuestViewModel.swift in Sources */,
 				607FCBE72BFD12B100BB2D04 /* Quest.swift in Sources */,
