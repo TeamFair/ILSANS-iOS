@@ -12,7 +12,59 @@ class ApprovalViewModel: ObservableObject {
     @Published var currentIdx = 0
     @Published var isScrolling = false
     
-    private let emojiNetwork = EmojiNetwork()
+    private let imageNetwork: ImageNetwork
+    private let emojiNetwork: EmojiNetwork
+    
+    init(imageNetwork: ImageNetwork, emojiNetwork: EmojiNetwork) {
+        self.imageNetwork = imageNetwork
+        self.emojiNetwork = emojiNetwork
+    }
+    
+    @MainActor
+    func getChallengesWithImage(page: Int) async {
+        let challenges = getChallenges(page: page)
+        
+        if page == 0 {
+            itemList = []
+        } else {
+            // TODO: 도전내역 API 연결 시 += 연산으로 수정
+            itemList = challenges
+        }
+        
+        await withTaskGroup(of: (Int, UIImage?).self) { group in
+            for (index, challenge) in challenges.enumerated() {
+                group.addTask {
+                    let image = await self.getImage(imageId: challenge.imageId)
+                    return (index, image)
+                }
+            }
+            
+            for await (index, image) in group {
+                if let image = image {
+                    if page == 0 {
+                        itemList[index].image = image
+                    } else {
+                        itemList[itemList.count - challenges.count + index].image = image
+                    }
+                }
+            }
+        }
+    }
+    
+    private func getChallenges(page: Int) -> [ApprovalViewModelItem] {
+        // TODO: Get Challenges API 연결
+        return itemList
+    }
+    
+    private func getImage(imageId: String) async -> UIImage? {
+        let res = await imageNetwork.getImage(imageId: imageId)
+        switch res {
+        case .success(let uiImage):
+            return uiImage
+        case .failure:
+            return nil
+        }
+    }
     
     func getEmoji(challengeId: String) async {
         let res = await emojiNetwork.getEmoji(challengeId: challengeId)
