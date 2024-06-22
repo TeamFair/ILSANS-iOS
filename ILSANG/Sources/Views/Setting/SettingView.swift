@@ -38,8 +38,11 @@ struct SettingView: View {
                     }
                     if item.title == "로그아웃" {
                         Button(action: {
-                            // 로그아웃 함수 호출
-                            
+                            Task {
+                                // 로그아웃 함수 호출
+                                let result = await LogoutNetwork().getLogout()
+                                print(result)
+                            }
                         }) {
                             EmptyView()
                         }
