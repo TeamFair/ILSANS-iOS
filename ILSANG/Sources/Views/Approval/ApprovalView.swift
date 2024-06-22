@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct ApprovalView: View {
-    @StateObject var vm = ApprovalViewModel()
+    @StateObject var vm = ApprovalViewModel(imageNetwork: ImageNetwork(), emojiNetwork: EmojiNetwork())
         
     private let viewWidth = UIScreen.main.bounds.width - 40
     private let viewHeight = UIScreen.main.bounds.height
@@ -22,7 +22,7 @@ struct ApprovalView: View {
         .ignoresSafeArea()
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .background(
-            Image(vm.itemList[vm.idx].image)
+            Image(uiImage: vm.itemList[vm.currentIdx].image ?? .logo)
                 .resizable()
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
                 .ignoresSafeArea()
@@ -32,6 +32,7 @@ struct ApprovalView: View {
                 .background(Color.black.opacity(0.2))
         )
         .task {
+            await vm.getChallengesWithImage(page: 0)
             await vm.getEmoji(challengeId: "CH00000100")
         }
     }
@@ -39,7 +40,7 @@ struct ApprovalView: View {
     /// 퀘스트 타이틀  + 퀘스트 인증 이미지
     private var itemView: some View {
         VStack(spacing: 14) {
-            Text(vm.itemList[vm.idx].title)
+            Text(vm.itemList[vm.currentIdx].title)
                 .font(.system(size: 16, weight: .bold))
                 .foregroundStyle(.gray400)
                 .frame(height: 45)
@@ -53,16 +54,17 @@ struct ApprovalView: View {
             
             ZStack(alignment: .bottom) {
                 ForEach(vm.itemList.reversed(), id: \.id) { story in
-                    let diff: Int = abs(story.id - vm.idx)
+                    let idx = vm.itemList.firstIndex { $0.id == story.id }
+                    let diff: Int = abs(idx! - vm.currentIdx)
                     ApprovalImageView(
-                        image: story.image,
+                        image: story.image ?? .logo,
                         width: abs(viewWidth - 40 * CGFloat(diff)),
                         height: (viewHeight / 2) - CGFloat(diff) * 26,
                         nickname:story.nickname,
                         time: story.time,
                         showProfile: diff <= 1
                     )
-                    .opacity(vm.calculateOpacity(id: story.id))
+                    .opacity(vm.calculateOpacity(itemIndex: idx!))
                     .offset(y: diff <= 2 ? CGFloat(diff) * 26 : 50)
                     .offset(y: story.offset)
                 }
