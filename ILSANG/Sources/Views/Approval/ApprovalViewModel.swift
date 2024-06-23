@@ -9,7 +9,11 @@ import SwiftUI
 
 class ApprovalViewModel: ObservableObject {
     @Published var itemList = ApprovalViewModelItem.mockData
-    @Published var currentIdx = 0
+    @Published var currentIdx = 0 {
+        didSet {
+            Task { await getEmoji(challengeId: "6c62b58f-f264-4e3b-af89-96ea122193b7") }
+        }
+    }
     @Published var isScrolling = false
     @Published var emoji: Emoji?
     
@@ -67,18 +71,54 @@ class ApprovalViewModel: ObservableObject {
         }
     }
     
-    func getEmoji(challengeId: String) async {
-        let res = await emojiNetwork.getEmoji(challengeId: challengeId)
-        switch res {
-        case .success(let model):
-            print(model.data)
-        case .failure(let error):
-            print(error.localizedDescription)
+    /// 업데이트할 이모지 타입에 따라 이전 이모지 상태의 반대로 서버에 업데이트를 요청하고,
+    /// 서버 업데이트가 성공하면 로컬 상태를 업데이트합니다.
+    /// - Parameter emojiType: 업데이트할 이모지의 유형 (like 또는 hate).
+    func updateEmojiWithPrev(emojiType: EmojiType) async {
+        guard let prevEmoji = self.emoji else { return }
+        
+        let wasPrevEmojiActive: Bool
+        switch emojiType {
+        case .like:
+            wasPrevEmojiActive = prevEmoji.isLike
+        case .hate:
+            wasPrevEmojiActive = prevEmoji.isHate
+        }
+        
+        // TODO: 현재 인덱스의 challengeId로 수정
+        let challengeId = "86efe988-2acc-4add-99a5-06e414d04dfa"
+        
+        let isServerUpdateSuccessful = await updateEmojiStatus(challengeId: challengeId, emojiType: emojiType, prevEmojiActive: wasPrevEmojiActive)
+        
+        if isServerUpdateSuccessful {
+            switch emojiType {
+            case .like:
+                self.emoji?.isLike.toggle()
+            case .hate:
+                self.emoji?.isHate.toggle()
+            }
         }
     }
     
-    func tappedRecommendBtn(recommend: Bool) {
-        // TODO: API 요청 - itemList[idx].questId, recommend
+    private func updateEmojiStatus(challengeId: String, emojiType: EmojiType, prevEmojiActive: Bool) async -> Bool {
+        var updateSucceeded = false
+        if prevEmojiActive {
+            updateSucceeded = await emojiNetwork.deleteEmoji(emojiId: "emj000")
+        } else {
+            updateSucceeded = await emojiNetwork.postEmoji(challengeId: challengeId, emojiType: emojiType)
+        }
+        return updateSucceeded
+    }
+    
+    @MainActor
+    func getEmoji(challengeId: String) async {
+        let getEmojiResult = await emojiNetwork.getEmoji(challengeId: challengeId)
+        switch getEmojiResult {
+        case .success(let model):
+            self.emoji = model.data
+        case .failure:
+            self.emoji = nil
+        }
     }
     
     func handleDragChange(_ value: DragGesture.Value) {

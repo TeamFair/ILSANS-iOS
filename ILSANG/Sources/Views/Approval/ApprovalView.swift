@@ -32,8 +32,8 @@ struct ApprovalView: View {
                 .background(Color.black.opacity(0.2))
         )
         .task {
-            await vm.getChallengesWithImage(page: 0)
-            await vm.getEmoji(challengeId: "CH00000100")
+            await vm.getChallengesWithImage(page: 1)
+            await vm.getEmoji(challengeId: "86efe988-2acc-4add-99a5-06e414d04dfa")
         }
     }
     
@@ -98,12 +98,12 @@ struct ApprovalView: View {
     private var recommendButtons: some View {
         HStack(spacing: 78) {
             Button {
-                vm.tappedRecommendBtn(recommend: false)
+                Task { await vm.updateEmojiWithPrev(emojiType: .hate) }
             } label: {
                 emojiButton(imageName: "hand.thumbsdown.fill", active: vm.emoji?.isLike ?? false)
             }
             Button {
-                vm.tappedRecommendBtn(recommend: true)
+                Task { await vm.updateEmojiWithPrev(emojiType: .like) }
             } label: {
                 emojiButton(imageName: "hand.thumbsup.fill", active: vm.emoji?.isLike ?? true)
             }
