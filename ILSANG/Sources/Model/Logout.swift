@@ -14,5 +14,5 @@ struct LogoutModel: Decodable {
 }
 
 struct Logout: Decodable {
-    let mok: String
+    let mok: String?
 }
