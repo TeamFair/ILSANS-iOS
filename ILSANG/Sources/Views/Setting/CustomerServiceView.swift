@@ -33,7 +33,7 @@ struct CustomerServiceView: View {
             .padding(.vertical, 26)
             .background(.white)
             .onTapGesture {
-                openInsragram()
+                openInstagram()
             }
             
             Spacer()
@@ -41,12 +41,12 @@ struct CustomerServiceView: View {
         }
         .frame(maxWidth: .infinity)
         //MARK: 색상 변경시 수정
-        .background(Color.gray100)
+        .background(Color.background)
         .navigationBarBackButtonHidden()
     }
 }
 
-private func openInsragram() {
+private func openInstagram() {
     //고객센터 인스타 URL
     let appURL = URL(string: "instagram://user?username=1sang.official")!
     let webURL = URL(string: "https://www.instagram.com/1sang.official?igsh=MXM3YTB1ZXp5aDFzOQ%3D%3D&utm_source=qr")!
