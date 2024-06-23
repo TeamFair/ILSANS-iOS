@@ -32,8 +32,8 @@ struct ApprovalView: View {
                 .background(Color.black.opacity(0.2))
         )
         .task {
-            await vm.getChallengesWithImage(page: 0)
-            await vm.getEmoji(challengeId: "CH00000100")
+            await vm.getChallengesWithImage(page: 1)
+            await vm.getEmoji(challengeId: "86efe988-2acc-4add-99a5-06e414d04dfa")
         }
     }
     
@@ -98,17 +98,30 @@ struct ApprovalView: View {
     private var recommendButtons: some View {
         HStack(spacing: 78) {
             Button {
-                vm.tappedRecommendBtn(recommend: false)
+                Task { await vm.updateEmojiWithPrev(emojiType: .hate) }
             } label: {
-                Image(.unlike)
+                emojiButton(imageName: "hand.thumbsdown.fill", active: vm.emoji?.isLike ?? false)
             }
             Button {
-                vm.tappedRecommendBtn(recommend: true)
+                Task { await vm.updateEmojiWithPrev(emojiType: .like) }
             } label: {
-                Image(.like)
+                emojiButton(imageName: "hand.thumbsup.fill", active: vm.emoji?.isLike ?? false)
             }
         }
         .padding(.top, 72)
+    }
+    
+    private func emojiButton(imageName: String, active: Bool) -> some View {
+        Image(systemName: imageName)
+            .resizable()
+            .frame(width: 24, height: 24)
+            .foregroundStyle(.white)
+            .opacity(active ? 1 : 0.7)
+            .frame(width: 69, height: 69)
+            .background(
+             Circle()
+                .foregroundStyle(.white.opacity(active ? 0.2 : 0.1))
+            )
     }
     
     private var dragGesture: some Gesture {
