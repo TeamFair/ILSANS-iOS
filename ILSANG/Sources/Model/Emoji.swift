@@ -13,6 +13,6 @@ struct EmojiModel: Decodable {
 }
 
 struct Emoji: Decodable {
-    let isLike: Bool
-    let isHate: Bool
+    var isLike: Bool
+    var isHate: Bool
 }

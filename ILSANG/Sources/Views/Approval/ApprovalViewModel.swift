@@ -11,6 +11,7 @@ class ApprovalViewModel: ObservableObject {
     @Published var itemList = ApprovalViewModelItem.mockData
     @Published var currentIdx = 0
     @Published var isScrolling = false
+    @Published var emoji: Emoji?
     
     private let imageNetwork: ImageNetwork
     private let emojiNetwork: EmojiNetwork

@@ -100,15 +100,28 @@ struct ApprovalView: View {
             Button {
                 vm.tappedRecommendBtn(recommend: false)
             } label: {
-                Image(.unlike)
+                emojiButton(imageName: "hand.thumbsdown.fill", active: vm.emoji?.isLike ?? false)
             }
             Button {
                 vm.tappedRecommendBtn(recommend: true)
             } label: {
-                Image(.like)
+                emojiButton(imageName: "hand.thumbsup.fill", active: vm.emoji?.isLike ?? true)
             }
         }
         .padding(.top, 72)
+    }
+    
+    private func emojiButton(imageName: String, active: Bool) -> some View {
+        Image(systemName: imageName)
+            .resizable()
+            .frame(width: 24, height: 24)
+            .foregroundStyle(.white)
+            .opacity(active ? 1 : 0.7)
+            .frame(width: 69, height: 69)
+            .background(
+             Circle()
+                .foregroundStyle(.white.opacity(active ? 0.2 : 0.1))
+            )
     }
     
     private var dragGesture: some Gesture {
