@@ -105,7 +105,7 @@ struct ApprovalView: View {
             Button {
                 Task { await vm.updateEmojiWithPrev(emojiType: .like) }
             } label: {
-                emojiButton(imageName: "hand.thumbsup.fill", active: vm.emoji?.isLike ?? true)
+                emojiButton(imageName: "hand.thumbsup.fill", active: vm.emoji?.isLike ?? false)
             }
         }
         .padding(.top, 72)
