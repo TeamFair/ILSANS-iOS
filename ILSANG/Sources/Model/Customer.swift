@@ -8,7 +8,7 @@
 import Foundation
 
 struct CustomerModel: Decodable {
-    let data: Customer
+    let data: Customer?
     let status: String
     let message: String
 }

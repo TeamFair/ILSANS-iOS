@@ -9,19 +9,17 @@ import Foundation
 import Alamofire
 
 final class CustomerNetwork {
-    private let url = APIManager.makeURL(CustomerTarget(path: "user/"))
+    private let url = APIManager.makeURL(CustomerTarget(path: "user"))
     
-    func getCustomer(userId: String) async -> Result<CustomerModel,Error> {
-        let parameters: Parameters = ["userId": userId]
-        return await Network.requestData(url: url + userId, method: .get, parameters: parameters, withToken: true)
+    func getCustomer() async -> Result<CustomerModel,Error> {
+        return await Network.requestData(url: url, method: .get, parameters: nil, withToken: true)
     }
     
-    func putCustomer() {
-        
+    func putCustomer(nickname: String) async -> Result<CustomerModel,Error> {
+        let parameters: Parameters = ["nickname": nickname]
+        return await Network.requestData(url: url, method: .put, parameters: parameters, withToken: true)
     }
     
-    func deleteCustomer() {
-        
-    }
+    func deleteCustomer() {}
     
 }
