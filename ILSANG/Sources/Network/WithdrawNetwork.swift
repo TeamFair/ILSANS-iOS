@@ -15,9 +15,4 @@ final class WithdrawNetwork {
         
         return await Network.requestData(url: url, method: .get, parameters: nil, withToken: true)
     }
-    
-    func postWithdraw() {}
-    
-    func deletewithdraw() {}
-    
 }
