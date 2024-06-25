@@ -15,12 +15,4 @@ final class XPNetwork {
         let parameters: Parameters = ["userId": userId, "title": title,"page": page, "size": size]
         return await Network.requestData(url: url + "", method: .get, parameters: parameters, withToken: true)
     }
-    
-    func postXP() {
-        
-    }
-    
-    func deleteXP() {
-        
-    }
 }

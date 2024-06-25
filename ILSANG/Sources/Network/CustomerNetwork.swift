@@ -27,7 +27,4 @@ final class CustomerNetwork {
             return false
         }
     }
-    
-    func deleteCustomer() {}
-    
 }

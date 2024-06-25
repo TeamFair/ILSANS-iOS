@@ -44,7 +44,6 @@ struct ChangeNickNameView: View {
                     )
                 
                 TextField("닉네임을 입력하세요", text: $name)
-                
                     .padding(14)
             }
             
