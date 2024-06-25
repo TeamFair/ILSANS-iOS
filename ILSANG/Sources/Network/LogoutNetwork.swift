@@ -14,9 +14,4 @@ final class LogoutNetwork {
     func getLogout() async -> Result<Logout, Error> {
         return await Network.requestData(url: url, method: .get, parameters: nil, withToken: true)
     }
-    
-    func postLogout() {}
-    
-    func deleteLogout() {}
-    
 }
