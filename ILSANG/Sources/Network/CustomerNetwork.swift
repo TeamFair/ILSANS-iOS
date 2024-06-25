@@ -15,9 +15,17 @@ final class CustomerNetwork {
         return await Network.requestData(url: url, method: .get, parameters: nil, withToken: true)
     }
     
-    func putCustomer(nickname: String) async -> Result<CustomerModel,Error> {
+    func putCustomer(nickname: String) async -> Bool {
         let parameters: Parameters = ["nickname": nickname]
-        return await Network.requestData(url: url, method: .put, parameters: parameters, withToken: true)
+        let res: Result<Response<CustomerModel>, Error> = await Network.requestData(url: url, method: .put, parameters: parameters, withToken: true)
+        
+        switch res {
+        case.success:
+            return true
+            
+        case.failure:
+            return false
+        }
     }
     
     func deleteCustomer() {}

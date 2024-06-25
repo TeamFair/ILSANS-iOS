@@ -32,14 +32,14 @@ struct ILSANGApp: App {
         appearance.stackedItemPositioning = .centered
         UITabBar.appearance().scrollEdgeAppearance = appearance
     }
-    
-    public func Log<T>(_ object: T?, filename: String = #file, line: Int = #line, funcName: String = #function) {
-    #if DEBUG
-        if let obj = object {
-            print("\(filename.components(separatedBy: "/").last ?? "")(\(line)) : \(funcName) : \(obj)")
-        } else {
-            print("\(filename.components(separatedBy: "/").last ?? "")(\(line)) : \(funcName) : nil")
-        }
-    #endif
+}
+
+public func Log<T>(_ object: T?, filename: String = #file, line: Int = #line, funcName: String = #function) {
+#if DEBUG
+    if let obj = object {
+        print("\(filename.components(separatedBy: "/").last ?? "")(\(line)) : \(funcName) : \(obj)")
+    } else {
+        print("\(filename.components(separatedBy: "/").last ?? "")(\(line)) : \(funcName) : nil")
     }
+#endif
 }

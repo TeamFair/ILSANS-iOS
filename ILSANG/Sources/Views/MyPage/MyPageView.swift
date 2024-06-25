@@ -45,7 +45,7 @@ struct MyPageView: View {
             }
             .padding(21)
             //MARK: 추후 삭제
-            .background(Color.gray100)
+            .background(Color.background)
         }
     }
 }
