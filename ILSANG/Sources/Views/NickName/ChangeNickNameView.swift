@@ -60,25 +60,30 @@ struct ChangeNickNameView: View {
                 .cornerRadius(12)
                 .disabled(!isSame)
             //MARK: 디버깅용 기능
-                .onTapGesture { isSame.toggle() }
+                .onTapGesture { 
+                    showAlert.toggle()
+                }
         }
         .navigationBarBackButtonHidden()
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .padding(20)
         .alert(isPresented: $showAlert) {
             let firstButton = Alert.Button.default(Text("확인")) {
-                print("primary button pressed")
+                Task {
+                    if await CustomerNetwork().putCustomer(nickname: name) {
+                        showAlert = false
+                    } else {
+                        isSame = false
+                        showAlert = false
+                    }
+                }
             }
             let secondButton = Alert.Button.cancel(Text("취소")) {
-                print("secondary button pressed")
+                showAlert = false
             }
             return Alert(title: Text("닉네임 변경을 취소할까요?"),
                          message: Text("변경을 완료하지 않으면\n프로필이 저장되지 않습니다."),
                          primaryButton: firstButton, secondaryButton: secondButton)
         }
     }
-}
-
-#Preview {
-    ChangeNickNameView()
 }
