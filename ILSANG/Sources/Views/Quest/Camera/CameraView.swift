@@ -17,6 +17,14 @@ struct CameraView: View {
             .overlay(alignment: .bottom) {
                 bottomView
             }
+            .overlay(alignment: .topLeading) {
+                Button {
+                    dismiss()
+                } label: {
+                    DismissButton()
+                        .padding()
+                }
+            }
             .ignoresSafeArea()
             .opacity(viewModel.shutterEffect ? 0 : 1)
             .task {
