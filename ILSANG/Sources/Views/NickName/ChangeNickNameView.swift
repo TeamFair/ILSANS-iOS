@@ -80,10 +80,8 @@ struct ChangeNickNameView: View {
         .alert(isPresented: $showAlert) {
             let firstButton = Alert.Button.default(Text("확인")) {
                 Task {
+                    //닉네임 변경 시도
                     if await CustomerNetwork().putCustomer(nickname: name) {
-                        showAlert = false
-                    } else {
-                        isSame = false
                         showAlert = false
                     }
                 }
