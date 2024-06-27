@@ -45,6 +45,17 @@ struct ChangeNickNameView: View {
                 
                 TextField("닉네임을 입력하세요", text: $name)
                     .padding(14)
+                    .onChange(of: name) { _ in
+                        Task {
+                            //중복되는 아이디가 있거나 서버 연결에 문제 있을 경우
+                            if await CustomerNetwork().putCustomer(nickname: name) {
+                                isSame = true
+                            } else {
+                                //중복되는 아이디가 없을 경우
+                                isSame = false
+                            }
+                        }
+                    }
             }
             
             Text("입력하신 닉네임은 이미 사용중이에요.\n다른 닉네임을 입력해주세요")
@@ -58,11 +69,10 @@ struct ChangeNickNameView: View {
                 .frame(maxWidth: .infinity ,maxHeight: 50)
                 .background(Color.accentColor)
                 .cornerRadius(12)
-                .disabled(!isSame)
-            //MARK: 디버깅용 기능
-                .onTapGesture { 
+                .onTapGesture {
                     showAlert.toggle()
                 }
+                .disabled(!isSame && name.isEmpty)
         }
         .navigationBarBackButtonHidden()
         .frame(maxWidth: .infinity, maxHeight: .infinity)
