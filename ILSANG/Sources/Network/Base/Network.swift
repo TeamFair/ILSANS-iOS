@@ -33,8 +33,8 @@ final class Network {
         return components?.url
     }
     
-    private static func buildHeaders(withToken: Bool) -> HTTPHeaders {
-        var headers: HTTPHeaders = ["accept": "application/json", "Content-Type": "application/json"]
+    private static func buildHeaders(withToken: Bool, contentType: ContentType = .json) -> HTTPHeaders {
+        var headers: HTTPHeaders = ["accept": "application/json", "Content-Type": contentType.toString]
         if withToken {
             headers.add(.authorization(APIManager.authDevelopToken))
         }
@@ -96,8 +96,80 @@ final class Network {
         }
     }
     
+    static func postImage(url: String, image: UIImage, withToken: Bool) async -> Result<ImageEntity, Error> {
+        guard let fullPath = buildURL(url: url) else {
+            return .failure(NetworkError.invalidURL)
+        }
+        
+        let headers = buildHeaders(withToken: withToken, contentType: .multipart)
+        
+        let jpgImageData = image.jpegData(compressionQuality: 0.2) ?? Data()
+        let response = await AF.upload(multipartFormData: { multipartFormData in
+            multipartFormData.append(jpgImageData,
+                                     withName: "file",
+                                     fileName: "image.png",
+                                     mimeType: "image/jpeg")
+        }, to: url, method: .post, headers: headers)
+            .serializingDecodable(Response<ImageEntity>.self)
+            .response
+        
+        switch response.result {
+        case .success(let res):
+            if let statusCode = response.response?.statusCode {
+                return handleStatusCode(statusCode, data: res.data)
+            } else {
+                return .failure(NetworkError.unknownError)
+            }
+        case .failure(let error):
+            return .failure(NetworkError.requestFailed(error.localizedDescription))
+        }
+    }
+    
+    private static func handleStatusCode<T>(_ statusCode: Int, data: T?) -> Result<T, Error> {
+        switch statusCode {
+        case 200..<300:
+            if let data = data {
+                return .success(data)
+            } else {
+                return .failure(NetworkError.unknownError)
+            }
+        case 400..<500:
+            return .failure(NetworkError.clientError)
+        case 500..<600:
+            return .failure(NetworkError.serverError)
+        default:
+            return .failure(NetworkError.unknownStatusCode(statusCode))
+        }
+    }
+}
+
+extension Network {
+    enum ContentType {
+        case json
+        case multipart
+        
+        var toString: String {
+            switch self {
+            case .json:
+                "application/json"
+            case .multipart:
+                "multipart/form-data"
+            }
+        }
+    }
+    
     enum NetworkError: Error {
         case invalidURL
         case invalidImageData
+        case clientError
+        case serverError
+        case requestFailed(String)
+        case unknownError
+        case unknownStatusCode(Int)
     }
+}
+
+struct ImageEntity: Codable {
+    var imageId: String
+    var location: String
 }
