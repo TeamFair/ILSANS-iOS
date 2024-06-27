@@ -168,8 +168,3 @@ extension Network {
         case unknownStatusCode(Int)
     }
 }
-
-struct ImageEntity: Codable {
-    var imageId: String
-    var location: String
-}

@@ -10,8 +10,9 @@ import AVFoundation
 
 struct CameraView: View {
     @StateObject var viewModel = CameraViewModel()
-    @Binding var selectedImage: Image?
-    
+    @ObservedObject var submitViewModel: SubmitRouterViewModel
+    @Environment(\.dismiss) var dismiss
+
     var body: some View {
         viewModel.cameraPreview
             .overlay(alignment: .bottom) {
@@ -55,7 +56,7 @@ struct CameraView: View {
     private var bottomView: some View {
         HStack {
             /// 이미지 프리뷰 - 앨범 선택
-            ImagePreviewButton(selectedImage: $selectedImage)
+            ImagePreviewButton(submitViewModel: submitViewModel)
              
             Spacer()
             
@@ -64,7 +65,7 @@ struct CameraView: View {
                 viewModel.capturePhoto()
                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
                     if let myImage = viewModel.recentImage {
-                        selectedImage = Image(uiImage: myImage)
+                        self.submitViewModel.selectedImage = myImage
                     }
                 }
             } label: {
@@ -116,5 +117,5 @@ struct CameraPreviewView: UIViewRepresentable {
 }
 
 #Preview {
-    CameraView(selectedImage: .constant(Image(.arrowDown)))
+    CameraView(submitViewModel: SubmitRouterViewModel(selectedQuestId: ""))
 }
