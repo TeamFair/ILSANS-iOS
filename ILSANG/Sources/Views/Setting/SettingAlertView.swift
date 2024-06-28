@@ -9,21 +9,17 @@ import SwiftUI
 
 struct SettingAlertView: View {
     
-    var AlertTitle: String
-    var AlertSubTitle: String?
-    
-    var AlertDisagree: String
-    var AlertAgree: String
+    var alertStatus: AlertStatus
     
     var body: some View {
         VStack (alignment: .center, spacing: 6) {
-            Text(AlertTitle)
+            Text(alertStatus.title)
                 .font(.system(size: 18))
                 .fontWeight(.bold)
                 .foregroundColor(.black)
             
-            if (AlertSubTitle != nil) {
-                Text(AlertSubTitle ?? "")
+            if (alertStatus.subtitle != nil) {
+                Text(alertStatus.subtitle ?? "")
                     .font(.system(size: 13))
                     .multilineTextAlignment(.center)
                     .foregroundColor(Color.gray)
@@ -31,7 +27,7 @@ struct SettingAlertView: View {
             }
             
             HStack (spacing: 10) {
-                Text(AlertDisagree)
+                Text(alertStatus.disagree)
                     .font(.system(size: 16))
                     .fontWeight(.semibold)
                     .foregroundColor(.black)
@@ -39,7 +35,7 @@ struct SettingAlertView: View {
                     .background(.gray100)
                     .cornerRadius(12)
                 
-                Text(AlertAgree)
+                Text(alertStatus.agree)
                     .font(.system(size: 16))
                     .fontWeight(.semibold)
                     .foregroundColor(.white)
@@ -60,10 +56,56 @@ struct SettingAlertView: View {
     }
 }
 
+enum AlertStatus {
+    case NickName
+    case Logout
+    case Withdrawal
+    
+    var title: String {
+        switch self {
+        case .NickName:
+            "닉네임 변경을 취소할까요?"
+        case .Logout:
+            "로그아웃 하시겠어요?"
+        case .Withdrawal:
+            "정말 탈퇴하시겠어요?"
+        }
+    }
+    
+    var subtitle: String? {
+        switch self {
+        case .NickName:
+            "변경을 완료하지 않으면\n프로필이 저장되지 않습니다."
+        case .Logout:
+            nil
+        case .Withdrawal:
+            "확인 시 일상 계정이 영구적으로 삭제되며,\n모든 데이터는 복구가 불가능합니다."
+        }
+    }
+    
+    var disagree: String {
+        switch self {
+        case .NickName,.Withdrawal:
+            "취소"
+        case .Logout:
+            "아니요"
+        }
+    }
+    
+    var agree: String {
+        switch self {
+        case .NickName,.Withdrawal:
+            "확인"
+        case .Logout:
+            "예"
+        }
+    }
+}
+
 #Preview {
     VStack{
-        SettingAlertView(AlertTitle: "닉네임 변경을 취소할까요?", AlertSubTitle: "변경을 완료하지 않으면\n프로필이 저장되지 않습니다.",AlertDisagree: "취소",AlertAgree: "확인")
-        SettingAlertView(AlertTitle: "로그아웃 하시겠어요?", AlertSubTitle: nil,AlertDisagree: "아니요",AlertAgree: "예")
-        SettingAlertView(AlertTitle: "정말 탈퇴하시겠어요?", AlertSubTitle: "확인 시 일상 계정이 영구적으로 삭제되며,\n모든 데이터는 복구가 불가능합니다.",AlertDisagree: "취소",AlertAgree: "확인")
+        SettingAlertView(alertStatus: .Logout)
+        SettingAlertView(alertStatus: .NickName)
+        SettingAlertView(alertStatus: .Withdrawal)
     }
 }
