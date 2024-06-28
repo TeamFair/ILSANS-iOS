@@ -57,6 +57,7 @@ struct SettingAlertView: View {
         .cornerRadius(24)
         .shadow(color: Color.black.opacity(0.1), radius: 10, x: 0, y: 5)
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
+        .background(.black.opacity(0.5))
     }
 }
 

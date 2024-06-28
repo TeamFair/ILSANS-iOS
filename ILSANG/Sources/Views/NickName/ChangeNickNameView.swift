@@ -71,7 +71,6 @@ struct ChangeNickNameView: View {
             
             if showAlert {
                 SettingAlertView(alertStatus: .NickName,onCancel: {showAlert = false}, onConfirm: {dismiss()})
-                    .background(.black.opacity(0.5))
             }
         }
     }

@@ -62,10 +62,11 @@ struct DeleteAccountView: View {
                         isChecked.toggle()
                     } label: {
                         HStack(spacing: 8) {
-                            Image(systemName: isChecked ? "checkmark.circle.fill" : "checkmark.circle")
+                            Image(systemName: isChecked ? "checkmark.circle.fill" : "circle")
                                 .resizable()
                                 .frame(width: 22, height: 22)
                                 .scaledToFit()
+                                .foregroundColor(isChecked ? Color.accentColor : Color.gray300)
                             Text("안내사항을 모두 확인하였으며, 이에 동의합니다.")
                                 .font(.system(size: 15))
                                 .foregroundColor(Color.gray400)
@@ -77,7 +78,6 @@ struct DeleteAccountView: View {
                     .padding(.bottom, 20)
                 
                     Button {
-                        print("pushed")
                         delAlert.toggle()
                     } label: {
                         Text("탈퇴하기")
@@ -87,12 +87,6 @@ struct DeleteAccountView: View {
                             .frame(maxWidth: .infinity)
                             .background(isChecked ? Color.accentColor : Color.gray300)
                             .cornerRadius(12)
-                            .onTapGesture {
-                                Task {
-                                    let result = await WithdrawNetwork().getWithdraw()
-                                    print(result)
-                                }
-                            }
                     }
                     .padding(.horizontal, 20).padding(.bottom, 42)
                     .disabled(!isChecked)
@@ -102,6 +96,13 @@ struct DeleteAccountView: View {
                         }
                     }
                 }
+            }
+            
+            if delAlert {
+                SettingAlertView(alertStatus: .Withdrawal,onCancel: {delAlert = false}, onConfirm: { Task {
+                    let result = await WithdrawNetwork().getWithdraw()
+                    print(result)
+                }})
             }
         }
         .frame(maxWidth: .infinity)
