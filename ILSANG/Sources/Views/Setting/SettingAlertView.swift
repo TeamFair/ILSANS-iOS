@@ -10,6 +10,8 @@ import SwiftUI
 struct SettingAlertView: View {
     
     var alertStatus: AlertStatus
+    var onCancel: (() -> Void?)? = nil
+    var onConfirm: (() -> Void?)? = nil
     
     var body: some View {
         VStack (alignment: .center, spacing: 6) {
@@ -34,6 +36,7 @@ struct SettingAlertView: View {
                     .frame(maxWidth: 140, maxHeight: 50)
                     .background(.gray100)
                     .cornerRadius(12)
+                    .onTapGesture { self.onCancel?() }
                 
                 Text(alertStatus.agree)
                     .font(.system(size: 16))
@@ -42,6 +45,7 @@ struct SettingAlertView: View {
                     .frame(maxWidth: 140, maxHeight: 50)
                     .background(.accent)
                     .cornerRadius(12)
+                    .onTapGesture { self.onConfirm?() }
                 
             }
             .padding(.top, 20)
@@ -104,8 +108,8 @@ enum AlertStatus {
 
 #Preview {
     VStack{
-        SettingAlertView(alertStatus: .Logout)
-        SettingAlertView(alertStatus: .NickName)
-        SettingAlertView(alertStatus: .Withdrawal)
+        SettingAlertView(alertStatus: .Logout,onCancel: {print("Yes")},onConfirm: {print("NO")})
+        SettingAlertView(alertStatus: .NickName,onCancel: {print("Yes")},onConfirm: {print("NO")})
+        SettingAlertView(alertStatus: .Withdrawal,onCancel: {print("Yes")},onConfirm: {print("NO")})
     }
 }
