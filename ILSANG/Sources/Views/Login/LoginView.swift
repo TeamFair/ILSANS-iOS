@@ -25,7 +25,7 @@ struct LoginView: View {
     
     var body: some View {
         VStack(spacing: 84) {
-            Image(.logo)
+            Image(.loginLogo)
             
             VStack(spacing: 16) {
                 KakaoLoginButtonView(buttonAction: kakaoButtonAction)
@@ -41,7 +41,7 @@ struct LoginView: View {
         }
         .padding(.top, 90)
         .frame(maxWidth: .infinity, maxHeight: .infinity)
-        .background(Color.primaryPurple)
+        .background(.white)
         .navigationBarBackButtonHidden()
     }
 }
