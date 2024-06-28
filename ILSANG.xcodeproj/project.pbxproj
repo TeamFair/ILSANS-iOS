@@ -43,6 +43,7 @@
 		60B8BA022BF9EEF3005F6DE3 /* ILSANGUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60B8BA012BF9EEF3005F6DE3 /* ILSANGUITests.swift */; };
 		60B8BA042BF9EEF3005F6DE3 /* ILSANGUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60B8BA032BF9EEF3005F6DE3 /* ILSANGUITestsLaunchTests.swift */; };
 		60B8BA112BF9EF50005F6DE3 /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 60B8BA102BF9EF50005F6DE3 /* Launch Screen.storyboard */; };
+		A142E0312C2D9F37004395F8 /* SettingAlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A142E0302C2D9F37004395F8 /* SettingAlertView.swift */; };
 		A1868C442C09B6C50020BF16 /* DetailQuestview.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1868C432C09B6C50020BF16 /* DetailQuestview.swift */; };
 		A18EB9B02C26B61C00405D56 /* WithdrawNetwork.swift in Sources */ = {isa = PBXBuildFile; fileRef = A18EB9AF2C26B61C00405D56 /* WithdrawNetwork.swift */; };
 		A18EB9B22C26B62E00405D56 /* LogoutNetwork.swift in Sources */ = {isa = PBXBuildFile; fileRef = A18EB9B12C26B62E00405D56 /* LogoutNetwork.swift */; };
@@ -125,6 +126,7 @@
 		60B8BA032BF9EEF3005F6DE3 /* ILSANGUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ILSANGUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		60B8BA102BF9EF50005F6DE3 /* Launch Screen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = "Launch Screen.storyboard"; sourceTree = "<group>"; };
 		60B8BA142BF9F354005F6DE3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		A142E0302C2D9F37004395F8 /* SettingAlertView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingAlertView.swift; sourceTree = "<group>"; };
 		A1868C432C09B6C50020BF16 /* DetailQuestview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailQuestview.swift; sourceTree = "<group>"; };
 		A18EB9AF2C26B61C00405D56 /* WithdrawNetwork.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WithdrawNetwork.swift; sourceTree = "<group>"; };
 		A18EB9B12C26B62E00405D56 /* LogoutNetwork.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogoutNetwork.swift; sourceTree = "<group>"; };
@@ -416,6 +418,7 @@
 				A196286A2C0859730037C53A /* CustomerServiceView.swift */,
 				A196286C2C0859820037C53A /* TermsAndPolicyView.swift */,
 				A196286E2C0859910037C53A /* DeleteAccountView.swift */,
+				A142E0302C2D9F37004395F8 /* SettingAlertView.swift */,
 			);
 			path = Setting;
 			sourceTree = "<group>";
@@ -600,6 +603,7 @@
 				605DA0CF2C07118900CC9450 /* SubmitRouterView.swift in Sources */,
 				607FCBD82BFA681500BB2D04 /* ApprovalView.swift in Sources */,
 				A1AB3D692C1141B3001EB9D8 /* KakaoLoginButtonView.swift in Sources */,
+				A142E0312C2D9F37004395F8 /* SettingAlertView.swift in Sources */,
 				A1BB60262BFE05B000AAADD4 /* MyPageSegmenet.swift in Sources */,
 				605DA0D62C07123400CC9450 /* View++.swift in Sources */,
 				A1BB602E2C022A9900AAADD4 /* UserData.swift in Sources */,

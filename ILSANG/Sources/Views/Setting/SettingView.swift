@@ -47,6 +47,7 @@ struct SettingView: View {
                             EmptyView()
                         }
                         .opacity(item.arrow ? 1 : 0)
+                        
                     } else if item.title == "현재 버전" {
                         HStack {
                             Spacer()
