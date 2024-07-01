@@ -87,6 +87,12 @@ struct DeleteAccountView: View {
                             .frame(maxWidth: .infinity)
                             .background(isChecked ? Color.accentColor : Color.gray300)
                             .cornerRadius(12)
+                            .onTapGesture {
+                                Task {
+                                    let result = await WithdrawNetwork().getWithdraw()
+                                    print(result)
+                                }
+                            }
                     }
                     .padding(.horizontal, 20).padding(.bottom, 42)
                     .disabled(!isChecked)

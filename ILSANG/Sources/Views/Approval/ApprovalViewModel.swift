@@ -8,10 +8,14 @@
 import SwiftUI
 
 class ApprovalViewModel: ObservableObject {
-    @Published var itemList = ApprovalViewModelItem.mockData
+    @Published var itemList: [ApprovalViewModelItem] = []
     @Published var currentIdx = 0 {
         didSet {
-            Task { await getEmoji(challengeId: "6c62b58f-f264-4e3b-af89-96ea122193b7") }
+            Task {
+                if !itemList.isEmpty {
+                    await getEmoji(challengeId: itemList[currentIdx].id)
+                }
+            }
         }
     }
     @Published var isScrolling = false
@@ -19,21 +23,22 @@ class ApprovalViewModel: ObservableObject {
     
     private let imageNetwork: ImageNetwork
     private let emojiNetwork: EmojiNetwork
+    private let challengeNetwork: ChallengeNetwork
     
-    init(imageNetwork: ImageNetwork, emojiNetwork: EmojiNetwork) {
+    init(imageNetwork: ImageNetwork, emojiNetwork: EmojiNetwork, challengeNetwork: ChallengeNetwork) {
         self.imageNetwork = imageNetwork
         self.emojiNetwork = emojiNetwork
+        self.challengeNetwork = challengeNetwork
     }
     
     @MainActor
     func getChallengesWithImage(page: Int) async {
-        let challenges = getChallenges(page: page)
+        let challenges = await getRandomChallenges(page: page)
         
         if page == 0 {
-            itemList = []
-        } else {
-            // TODO: 도전내역 API 연결 시 += 연산으로 수정
             itemList = challenges
+        } else {
+            itemList += challenges
         }
         
         await withTaskGroup(of: (Int, UIImage?).self) { group in
@@ -56,9 +61,14 @@ class ApprovalViewModel: ObservableObject {
         }
     }
     
-    private func getChallenges(page: Int) -> [ApprovalViewModelItem] {
-        // TODO: Get Challenges API 연결
-        return itemList
+    private func getRandomChallenges(page: Int) async -> [ApprovalViewModelItem] {
+        let res = await challengeNetwork.getRandomChallenges(page: page)
+        switch res {
+        case .success(let success):
+            return success.content.map { ApprovalViewModelItem.init(challenge: $0) }
+        case .failure:
+            return []
+        }
     }
     
     private func getImage(imageId: String) async -> UIImage? {
@@ -173,13 +183,34 @@ class ApprovalViewModel: ObservableObject {
 }
 
 struct ApprovalViewModelItem: Identifiable {
-    var id = UUID()
+    let id: String
     var title: String
     var image: UIImage?
     var imageId: String
     var offset: CGFloat
     var nickname: String
     var time: String
+    
+    init(id: String = UUID().uuidString, title: String, image: UIImage? = nil, imageId: String, offset: CGFloat, nickname: String, time: String) {
+        self.id = id
+        self.title = title
+        self.image = image
+        self.imageId = imageId
+        self.offset = offset
+        self.nickname = nickname
+        self.time = time
+    }
+    
+    // TODO: 백 수정 시 time 계산 적용
+    init(challenge: Challenge) {
+        self.id = challenge.challengeId
+        self.title = challenge.quest.missions.first?.title ?? ""
+        self.image = nil
+        self.imageId = challenge.receiptImageId
+        self.offset = 0
+        self.nickname = challenge.userNickName
+        self.time = "3시간 전"
+    }
     
     static var mockData = [
         ApprovalViewModelItem(title: "바닐라라떼마시기", imageId: "IMRE2024061314275774", offset: 0, nickname: "일상1", time: "3시간 전"),
