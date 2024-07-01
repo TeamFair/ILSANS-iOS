@@ -44,14 +44,18 @@ struct SubmitStatusComponent: View {
                 .padding(.bottom, 15)
             
             Text(status.title)
-                .foregroundColor(.gray400)
+                .foregroundColor(.gray500)
                 .font(.system(size: 17, weight: .bold))
                 .padding(.bottom, 9)
             
-            Text(status.subtitle)
-                .foregroundColor(.gray300)
-                .font(.system(size: 15, weight: .regular))
-                .padding(.bottom, 4)
+            HStack(spacing: 0) {
+                Text(status.subtitle)
+                    .foregroundColor(.gray400)
+                    .font(.system(size: 15, weight: .regular))
+                Text(status.emoticon)
+                    .font(.system(size: 12))
+            }
+            .padding(.bottom, 4)
             
             PrimaryButton(title: "확인") {
                 action()
@@ -89,7 +93,16 @@ enum SubmitStatus {
         case .submit, .complete:
             ""
         case .fail:
-            "다시 시도해보세요🥲"
+            "다시 시도해보세요"
+        }
+    }
+    
+    var emoticon: String {
+        switch self {
+        case .submit, .complete:
+            ""
+        case .fail:
+            "🥲"
         }
     }
     
