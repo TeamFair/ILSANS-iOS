@@ -17,7 +17,7 @@ final class ImageNetwork {
     }
     
     func postImage(image: UIImage) async -> Result<ImageEntity, Error> {
-        let url = url + "?type=RECEIPT"
-        return await Network.postImage(url: url, image: image, withToken: true)
+        let parameters: Parameters = ["type": "RECEIPT"]
+        return await Network.postImage(url: url, image: image, withToken: true, parameters: parameters)
     }
 }

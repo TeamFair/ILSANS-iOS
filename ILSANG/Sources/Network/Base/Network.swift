@@ -10,6 +10,9 @@ import Foundation
 import UIKit
 
 final class Network {
+    static let retryLimit = 3
+    static let retryDelay: TimeInterval = 1
+    static let requestTimeout: TimeInterval = 30
     
     private static func buildURL(url: String, parameters: Parameters? = nil, page: Int? = nil, size: Int? = nil) -> URL? {
         var components = URLComponents(string: url)
@@ -96,33 +99,58 @@ final class Network {
         }
     }
     
-    static func postImage(url: String, image: UIImage, withToken: Bool) async -> Result<ImageEntity, Error> {
-        guard let fullPath = buildURL(url: url) else {
+    static func postImage(url: String, image: UIImage, withToken: Bool, parameters: Parameters) async -> Result<ImageEntity, Error> {
+        guard let fullPath = buildURL(url: url, parameters: parameters) else {
             return .failure(NetworkError.invalidURL)
         }
         
         let headers = buildHeaders(withToken: withToken, contentType: .multipart)
         
-        let jpgImageData = image.jpegData(compressionQuality: 0.2) ?? Data()
-        let response = await AF.upload(multipartFormData: { multipartFormData in
-            multipartFormData.append(jpgImageData,
-                                     withName: "file",
-                                     fileName: "image.png",
-                                     mimeType: "image/jpeg")
-        }, to: url, method: .post, headers: headers)
-            .serializingDecodable(Response<ImageEntity>.self)
-            .response
+        var urlRequest = URLRequest(url: fullPath)
+        urlRequest.method = .post
+        urlRequest.headers = headers
+        urlRequest.timeoutInterval = requestTimeout
         
-        switch response.result {
-        case .success(let res):
-            if let statusCode = response.response?.statusCode {
-                return handleStatusCode(statusCode, data: res.data)
-            } else {
-                return .failure(NetworkError.unknownError)
+        // 이미지 압축 & 다운샘플링
+        var uiImage = image
+        var currentCompressionQuality: CGFloat = 0.5
+        if image.size.width > 3000 || image.size.height > 3000 {
+            guard let downSampledImage = image.downSample(scale: 0.8) else {
+                return .failure(NetworkError.invalidImageData)
             }
-        case .failure(let error):
-            return .failure(NetworkError.requestFailed(error.localizedDescription))
+            uiImage = downSampledImage
         }
+        
+        // 이미지 업로드 실패 시 currentCompressionQuality 줄이면서 retryLimit만큼 재시도
+        for attempt in 1...self.retryLimit {
+            let imageData = uiImage.jpegData(compressionQuality: currentCompressionQuality) ?? Data()
+            
+            let response = await AF.upload(multipartFormData: { multipartFormData in
+                multipartFormData.append(imageData,
+                                         withName: "file",
+                                         fileName: "image.png",
+                                         mimeType: "image/jpeg")
+            }, with: urlRequest)
+                .serializingDecodable(Response<ImageEntity>.self)
+                .response
+            
+            switch response.result {
+            case .success(let res):
+                if let statusCode = response.response?.statusCode {
+                    return handleStatusCode(statusCode, data: res.data)
+                } else {
+                    return .failure(NetworkError.unknownError)
+                }
+            case .failure(let error):
+                if attempt < retryLimit {
+                    try? await Task.sleep(nanoseconds: UInt64(self.retryDelay * 1_000_000_000))
+                    currentCompressionQuality = (currentCompressionQuality * 5) / 10
+                } else {
+                    return .failure(NetworkError.requestFailed(error.localizedDescription))
+                }
+            }
+        }
+        return .failure(NetworkError.unknownError)
     }
     
     private static func handleStatusCode<T>(_ statusCode: Int, data: T?) -> Result<T, Error> {
