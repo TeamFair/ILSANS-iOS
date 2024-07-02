@@ -19,29 +19,40 @@ struct ApprovalView: View {
     
     var body: some View {
         VStack(spacing: 0) {
-            itemView
-            recommendButtons
+            switch vm.viewStatus {
+            case .error:
+                networkErrorView
+            case .loading:
+                ProgressView()
+            case .loaded:
+                itemView
+                recommendButtons
+            }
         }
         .padding(.horizontal, 20)
-        .ignoresSafeArea()
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .background(
             Group {
-                if !vm.itemList.isEmpty {
-                    Image(uiImage: vm.itemList[vm.currentIdx].image ?? .appleLogo)
-                        .resizable()
-                        .frame(maxWidth: .infinity, maxHeight: .infinity)
-                        .ignoresSafeArea()
-                        .scaledToFill()
-                        .scaleEffect(1.4)
-                        .blur(radius: 30, opaque: true)
-                        .background(Color.black.opacity(0.2))
+                switch vm.viewStatus {
+                case .error, .loading:
+                    Color.background
+                case .loaded:
+                    if !vm.itemList.isEmpty {
+                        Image(uiImage: vm.itemList[vm.currentIdx].image ?? .logo)
+                            .resizable()
+                            .frame(maxWidth: .infinity, maxHeight: .infinity)
+                            .ignoresSafeArea()
+                            .scaledToFill()
+                            .scaleEffect(1.4)
+                            .blur(radius: 30, opaque: true)
+                            .background(Color.black.opacity(0.2))
+                    }
                 }
             }
         )
+        .ignoresSafeArea()
         .task {
-            await vm.getChallengesWithImage(page: 0)
-            await vm.getEmoji(challengeId: "86efe988-2acc-4add-99a5-06e414d04dfa")
+            await vm.getData()
         }
     }
     
@@ -145,6 +156,17 @@ struct ApprovalView: View {
              Circle()
                 .foregroundStyle(.white.opacity(active ? 0.2 : 0.1))
             )
+    }
+    
+    private var networkErrorView: some View {
+        ErrorView(
+            systemImageName: "wifi.exclamationmark",
+            title: "네트워크 연결 상태를 확인해주세요",
+            subTitle: "네트워크 연결 상태가 좋지 않아\n퀘스트를 불러올 수 없어요 ",
+            emoticon: "🥲"
+        ) {
+            Task { await vm.getData() }
+        }
     }
     
     private var dragGesture: some Gesture {

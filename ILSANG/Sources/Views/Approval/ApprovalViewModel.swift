@@ -7,7 +7,15 @@
 
 import SwiftUI
 
-class ApprovalViewModel: ObservableObject {
+final class ApprovalViewModel: ObservableObject {
+    // TODO: 페이지네이션 시 ViewStatus 고려 필요
+    enum ViewStatus {
+        case error
+        case loading
+        case loaded
+    }
+    
+    @Published var viewStatus: ViewStatus = .loading
     @Published var itemList: [ApprovalViewModelItem] = []
     @Published var currentIdx = 0 {
         didSet {
@@ -29,6 +37,19 @@ class ApprovalViewModel: ObservableObject {
         self.imageNetwork = imageNetwork
         self.emojiNetwork = emojiNetwork
         self.challengeNetwork = challengeNetwork
+    }
+    
+    func getData() async {
+        await changeViewStatus(.loading)
+        await getChallengesWithImage(page: 0)
+        // TODO: 현재 인덱스의 challengeId로 수정
+        await getEmoji(challengeId: "86efe988-2acc-4add-99a5-06e414d04dfa")
+        await changeViewStatus(.loaded)
+    }
+    
+    @MainActor
+    func changeViewStatus(_ viewStatus: ViewStatus) {
+        self.viewStatus = viewStatus
     }
     
     @MainActor
