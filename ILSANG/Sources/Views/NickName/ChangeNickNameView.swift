@@ -37,16 +37,20 @@ struct ChangeNickNameView: View {
                             .frame(maxWidth: .infinity,maxHeight: 50)
                             .background(.gray100)
                             .cornerRadius(12)
-                        //틀렸을때 테두리
-                            .overlay(
-                                RoundedRectangle(cornerRadius: 12)
-                                    .stroke(isSame ? Color.red : Color.clear, lineWidth: 3)
-                                    .cornerRadius(12)
-                            )
-                        
-                        TextField("닉네임을 입력하세요", text: $name)
-                        
-                            .padding(14)
+                    )
+                
+                TextField("닉네임을 입력하세요", text: $name)
+                    .padding(14)
+                    .onChange(of: name) { _ in
+                        Task {
+                            //중복되는 아이디가 있거나 서버 연결에 문제 있을 경우
+                            if await CustomerNetwork().putCustomer(nickname: name) {
+                                isSame = true
+                            } else {
+                                //중복되는 아이디가 없을 경우
+                                isSame = false
+                            }
+                        }
                     }
                     
                     Text("입력하신 닉네임은 이미 사용중이에요.\n다른 닉네임을 입력해주세요")
@@ -69,13 +73,34 @@ struct ChangeNickNameView: View {
                 .padding(20)
             }
             
-            if showAlert {
-                SettingAlertView(alertType: .NickName,onCancel: {showAlert = false}, onConfirm: {dismiss()})
+            Text("변경 완료")
+                .foregroundColor(.white)
+                .frame(maxWidth: .infinity ,maxHeight: 50)
+                .background(Color.accentColor)
+                .cornerRadius(12)
+                .onTapGesture {
+                    showAlert.toggle()
+                }
+                .disabled(!isSame && name.isEmpty)
+        }
+        .navigationBarBackButtonHidden()
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .padding(20)
+        .alert(isPresented: $showAlert) {
+            let firstButton = Alert.Button.default(Text("확인")) {
+                Task {
+                    //닉네임 변경 시도
+                    if await CustomerNetwork().putCustomer(nickname: name) {
+                        showAlert = false
+                    }
+                }
             }
+            let secondButton = Alert.Button.cancel(Text("취소")) {
+                showAlert = false
+            }
+            return Alert(title: Text("닉네임 변경을 취소할까요?"),
+                         message: Text("변경을 완료하지 않으면\n프로필이 저장되지 않습니다."),
+                         primaryButton: firstButton, secondaryButton: secondButton)
         }
     }
-}
-
-#Preview {
-    ChangeNickNameView()
 }
