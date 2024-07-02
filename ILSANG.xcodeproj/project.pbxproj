@@ -67,9 +67,9 @@
 		A1BB602E2C022A9900AAADD4 /* UserData.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1BB602D2C022A9900AAADD4 /* UserData.swift */; };
 		A1F770642C2AABCE00DB24A0 /* MypageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1F770632C2AABCE00DB24A0 /* MypageViewModel.swift */; };
 		A1FEAD9F2C0B36D700B76324 /* SubmitAlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1FEAD9E2C0B36D700B76324 /* SubmitAlertView.swift */; };
-		A1FF916E2C250C3B00F03E4B /* CustomerNetwork.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1FF916D2C250C3B00F03E4B /* CustomerNetwork.swift */; };
+		A1FF916E2C250C3B00F03E4B /* UserNetwork.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1FF916D2C250C3B00F03E4B /* UserNetwork.swift */; };
 		A1FF91702C25119200F03E4B /* XPNetwork.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1FF916F2C25119200F03E4B /* XPNetwork.swift */; };
-		A1FF91722C257E9A00F03E4B /* Customer.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1FF91712C257E9A00F03E4B /* Customer.swift */; };
+		A1FF91722C257E9A00F03E4B /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1FF91712C257E9A00F03E4B /* User.swift */; };
 		A1FF91742C257F6400F03E4B /* XP.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1FF91732C257F6400F03E4B /* XP.swift */; };
 /* End PBXBuildFile section */
 
@@ -156,9 +156,9 @@
 		A1EB633A2C132B0800B63F9C /* SFPRODISPLAYREGULAR.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = SFPRODISPLAYREGULAR.otf; sourceTree = "<group>"; };
 		A1F770632C2AABCE00DB24A0 /* MypageViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MypageViewModel.swift; sourceTree = "<group>"; };
 		A1FEAD9E2C0B36D700B76324 /* SubmitAlertView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SubmitAlertView.swift; sourceTree = "<group>"; };
-		A1FF916D2C250C3B00F03E4B /* CustomerNetwork.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomerNetwork.swift; sourceTree = "<group>"; };
+		A1FF916D2C250C3B00F03E4B /* UserNetwork.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserNetwork.swift; sourceTree = "<group>"; };
 		A1FF916F2C25119200F03E4B /* XPNetwork.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XPNetwork.swift; sourceTree = "<group>"; };
-		A1FF91712C257E9A00F03E4B /* Customer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Customer.swift; sourceTree = "<group>"; };
+		A1FF91712C257E9A00F03E4B /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		A1FF91732C257F6400F03E4B /* XP.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XP.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -192,7 +192,7 @@
 			isa = PBXGroup;
 			children = (
 				600211E72C1EED40000CC02E /* Emoji.swift */,
-				A1FF91712C257E9A00F03E4B /* Customer.swift */,
+				A1FF91712C257E9A00F03E4B /* User.swift */,
 				A1FF91732C257F6400F03E4B /* XP.swift */,
 				A18EB9B32C26B6C200405D56 /* Logout.swift */,
 				A18EB9B52C26B6D100405D56 /* Withdraw.swift */,
@@ -236,7 +236,7 @@
 			children = (
 				600211EF2C1EF3F5000CC02E /* Base */,
 				600211ED2C1EEF91000CC02E /* EmojiNetwork.swift */,
-				A1FF916D2C250C3B00F03E4B /* CustomerNetwork.swift */,
+				A1FF916D2C250C3B00F03E4B /* UserNetwork.swift */,
 				A1FF916F2C25119200F03E4B /* XPNetwork.swift */,
 				A18EB9B12C26B62E00405D56 /* LogoutNetwork.swift */,
 				A18EB9AF2C26B61C00405D56 /* WithdrawNetwork.swift */,
@@ -626,7 +626,7 @@
 				A1AB3D6A2C1141B3001EB9D8 /* AppleLoginButtonView.swift in Sources */,
 				600211EC2C1EEED7000CC02E /* APIManager.swift in Sources */,
 				A1FEAD9F2C0B36D700B76324 /* SubmitAlertView.swift in Sources */,
-				A1FF916E2C250C3B00F03E4B /* CustomerNetwork.swift in Sources */,
+				A1FF916E2C250C3B00F03E4B /* UserNetwork.swift in Sources */,
 				A1AB3D6E2C117569001EB9D8 /* Color.swift in Sources */,
 				A1AB3D682C1141B3001EB9D8 /* GoogleLoginButtonView.swift in Sources */,
 				A19628622C0763F90037C53A /* ChangeNickNameView.swift in Sources */,
@@ -642,7 +642,7 @@
 				A18EB9B02C26B61C00405D56 /* WithdrawNetwork.swift in Sources */,
 				A1868C442C09B6C50020BF16 /* DetailQuestview.swift in Sources */,
 				607FCBD42BFA648000BB2D04 /* Tab.swift in Sources */,
-				A1FF91722C257E9A00F03E4B /* Customer.swift in Sources */,
+				A1FF91722C257E9A00F03E4B /* User.swift in Sources */,
 				60B8B9E92BF9EEF1005F6DE3 /* QuestView.swift in Sources */,
 				60B8B9E72BF9EEF1005F6DE3 /* ILSANGApp.swift in Sources */,
 				A1AB3D6C2C1142AA001EB9D8 /* LoginButton.swift in Sources */,

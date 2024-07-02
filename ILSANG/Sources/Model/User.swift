@@ -1,5 +1,5 @@
 //
-//  Customer.swift
+//  UserModel.swift
 //  ILSANG
 //
 //  Created by Kim Andrew on 6/21/24.
@@ -7,13 +7,13 @@
 
 import Foundation
 
-struct CustomerModel: Decodable {
-    let data: Customer?
+struct UserModel: Decodable {
+    let data: User?
     let status: String
     let message: String
 }
 
-struct Customer: Decodable {
+struct User: Decodable {
     let status: String
     let nickname: String
     let couponCount: Int
