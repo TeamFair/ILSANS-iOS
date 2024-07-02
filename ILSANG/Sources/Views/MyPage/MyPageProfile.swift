@@ -9,7 +9,7 @@ import SwiftUI
 
 struct MyPageProfile: View {
     
-    
+    @StateObject var vm = MypageViewModel(customerNetwork: CustomerNetwork())
     
     var body: some View {
         HStack {
@@ -20,7 +20,7 @@ struct MyPageProfile: View {
             VStack (alignment: .leading) {
                 HStack {
                     //유저 이름
-                    Text("Name")
+                    Text(vm.CustomerData?.nickname ?? "닉네임")
                         .foregroundColor(.gray400)
                         .fontWeight(.bold)
                     
@@ -34,11 +34,11 @@ struct MyPageProfile: View {
                 
                 HStack {
                     // 프로그레스 바
-                    ProgressBar(userXP: 40, levelXP: 100)
+                    ProgressBar(userXP: vm.CustomerData?.xpPoint ?? 40, levelXP: 100)
                         .frame(height: 10)
                     
                     // 경험치 Text
-                    Text("1000XP")
+                    Text(String(vm.CustomerData?.xpPoint ?? 1300)+"XP")
                         .font(.system(size: 13))
                         .fontWeight(.bold)
                         .foregroundColor(.accentColor)
@@ -54,6 +54,11 @@ struct MyPageProfile: View {
             RoundedRectangle(cornerRadius: 12)
                 .foregroundColor(Color.white)
         )
+        .onAppear{
+            Task {
+                await vm.getCustomer()
+            }
+        }
     }
 }
 
