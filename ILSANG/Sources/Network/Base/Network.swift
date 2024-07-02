@@ -63,7 +63,7 @@ final class Network {
         }
         
         let response = await request.validate(statusCode: 200..<300)
-            .serializingDecodable(T.self)
+            .serializingDecodable(T.self, emptyResponseCodes: [200])
             .response
         
         switch response.result {
