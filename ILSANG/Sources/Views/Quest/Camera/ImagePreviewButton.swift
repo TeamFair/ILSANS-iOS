@@ -19,8 +19,9 @@ struct ImagePreviewButton: View {
     @State private var loadState = PreviewLoadState.unknown
     
     @State var selectedItem: PhotosPickerItem?
-    @Binding var selectedImage: Image?
-
+    
+    @ObservedObject var submitViewModel: SubmitRouterViewModel
+    
     var body: some View {
         PhotosPicker(selection: $selectedItem, matching: .images,photoLibrary: .shared()) {
             switch loadState {
@@ -46,8 +47,8 @@ struct ImagePreviewButton: View {
         }
         .onChange(of: selectedItem) { newItem in
             Task {
-                if let image = try? await newItem?.loadTransferable(type: Image.self) {
-                    selectedImage = image
+                if let imageDataTransferable = try? await newItem?.loadTransferable(type: ImageDataTransferable.self) {
+                    self.submitViewModel.selectedImage = imageDataTransferable.uiImage
                 }
             }
         }
@@ -73,6 +74,20 @@ struct ImagePreviewButton: View {
     }
 }
 
+struct ImageDataTransferable: Transferable {
+    let imageData: Data
+
+    static var transferRepresentation: some TransferRepresentation {
+        DataRepresentation(importedContentType: .image) { data in
+            return ImageDataTransferable(imageData: data)
+        }
+    }
+    
+    var uiImage: UIImage? {
+        return UIImage(data: imageData)
+    }
+}
+
 #Preview {
-    ImagePreviewButton(selectedImage: .constant(Image(.arrowDown)))
+    ImagePreviewButton(submitViewModel: SubmitRouterViewModel(selectedImage: nil, selectedQuestId: ""))
 }

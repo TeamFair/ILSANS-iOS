@@ -8,25 +8,57 @@
 import SwiftUI
 
 struct SubmitAlertView: View {
-    @State var status: SubmitStatus
+    @ObservedObject var vm: SubmitAlertViewModel
+    @Environment(\.dismiss) var dismiss
     
     var body: some View {
+        ZStack {
+            if vm.showSubmitAlertView {
+                Color.black.opacity(0.7).ignoresSafeArea()
+                
+                SubmitStatusComponent(status: vm.submitStatus) {
+                    vm.showSubmitAlertView = false
+                    if vm.submitStatus == .complete {
+                        dismiss()
+                    }
+                }
+                .task {
+                    await vm.postChallengeWithImage()
+                }
+            }
+        }
+        .onDisappear {
+            vm.showSubmitAlertView = false
+        }
+    }
+}
+
+struct SubmitStatusComponent: View {
+    let status: SubmitStatus
+    var action: () -> ()
+
+    var body: some View {
+        
         VStack(spacing: 0) {
             IconView(iconWidth: status.iconWidth, size: .medium, icon: status.icon, color: status.color)
                 .padding(.bottom, 15)
-
+            
             Text(status.title)
-                .foregroundColor(.gray400)
+                .foregroundColor(.gray500)
                 .font(.system(size: 17, weight: .bold))
                 .padding(.bottom, 9)
-
-            Text(status.subtitle)
-                .foregroundColor(.gray300)
-                .font(.system(size: 15, weight: .regular))
-                .padding(.bottom, 4)
-
+            
+            HStack(spacing: 0) {
+                Text(status.subtitle)
+                    .foregroundColor(.gray400)
+                    .font(.system(size: 15, weight: .regular))
+                Text(status.emoticon)
+                    .font(.system(size: 12))
+            }
+            .padding(.bottom, 4)
+            
             PrimaryButton(title: "확인") {
-                print("close")
+                action()
             }
             .padding(16)
             .opacity(status == .submit ? 0 : 1)
@@ -61,7 +93,16 @@ enum SubmitStatus {
         case .submit, .complete:
             ""
         case .fail:
-            "다시 시도해보세요🥲"
+            "다시 시도해보세요"
+        }
+    }
+    
+    var emoticon: String {
+        switch self {
+        case .submit, .complete:
+            ""
+        case .fail:
+            "🥲"
         }
     }
     
@@ -101,9 +142,9 @@ enum SubmitStatus {
 
 #Preview {
     VStack {
-        SubmitAlertView(status: .complete)
-        SubmitAlertView(status: .fail)
-        SubmitAlertView(status: .submit)
+        SubmitStatusComponent(status: .submit, action: {})
+        SubmitStatusComponent(status: .fail, action: {})
+        SubmitStatusComponent(status: .complete, action: {})
     }
     .frame(maxWidth: .infinity, maxHeight: .infinity)
     .background(Color.secondary)
