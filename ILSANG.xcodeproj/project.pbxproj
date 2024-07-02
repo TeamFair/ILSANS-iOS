@@ -43,6 +43,8 @@
 		60B8BA022BF9EEF3005F6DE3 /* ILSANGUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60B8BA012BF9EEF3005F6DE3 /* ILSANGUITests.swift */; };
 		60B8BA042BF9EEF3005F6DE3 /* ILSANGUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60B8BA032BF9EEF3005F6DE3 /* ILSANGUITestsLaunchTests.swift */; };
 		60B8BA112BF9EF50005F6DE3 /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 60B8BA102BF9EF50005F6DE3 /* Launch Screen.storyboard */; };
+		60C6B4D52C2C565700926C0E /* ChallengeNetwork.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60C6B4D42C2C565700926C0E /* ChallengeNetwork.swift */; };
+		60C6B4D72C2C569800926C0E /* Challenge.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60C6B4D62C2C569800926C0E /* Challenge.swift */; };
 		A1868C442C09B6C50020BF16 /* DetailQuestview.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1868C432C09B6C50020BF16 /* DetailQuestview.swift */; };
 		A18EB9B02C26B61C00405D56 /* WithdrawNetwork.swift in Sources */ = {isa = PBXBuildFile; fileRef = A18EB9AF2C26B61C00405D56 /* WithdrawNetwork.swift */; };
 		A18EB9B22C26B62E00405D56 /* LogoutNetwork.swift in Sources */ = {isa = PBXBuildFile; fileRef = A18EB9B12C26B62E00405D56 /* LogoutNetwork.swift */; };
@@ -130,6 +132,8 @@
 		60B8BA032BF9EEF3005F6DE3 /* ILSANGUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ILSANGUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		60B8BA102BF9EF50005F6DE3 /* Launch Screen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = "Launch Screen.storyboard"; sourceTree = "<group>"; };
 		60B8BA142BF9F354005F6DE3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		60C6B4D42C2C565700926C0E /* ChallengeNetwork.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChallengeNetwork.swift; sourceTree = "<group>"; };
+		60C6B4D62C2C569800926C0E /* Challenge.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Challenge.swift; sourceTree = "<group>"; };
 		A1868C432C09B6C50020BF16 /* DetailQuestview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailQuestview.swift; sourceTree = "<group>"; };
 		A18EB9AF2C26B61C00405D56 /* WithdrawNetwork.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WithdrawNetwork.swift; sourceTree = "<group>"; };
 		A18EB9B12C26B62E00405D56 /* LogoutNetwork.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogoutNetwork.swift; sourceTree = "<group>"; };
@@ -194,6 +198,7 @@
 				600211E72C1EED40000CC02E /* Emoji.swift */,
 				A1FF91712C257E9A00F03E4B /* User.swift */,
 				A1FF91732C257F6400F03E4B /* XP.swift */,
+				60C6B4D62C2C569800926C0E /* Challenge.swift */,
 				A18EB9B32C26B6C200405D56 /* Logout.swift */,
 				A18EB9B52C26B6D100405D56 /* Withdraw.swift */,
 			);
@@ -241,6 +246,7 @@
 				A18EB9B12C26B62E00405D56 /* LogoutNetwork.swift */,
 				A18EB9AF2C26B61C00405D56 /* WithdrawNetwork.swift */,
 				603F040A2C2416D2008A2332 /* ImageNetwork.swift */,
+				60C6B4D42C2C565700926C0E /* ChallengeNetwork.swift */,
 			);
 			path = Network;
 			sourceTree = "<group>";
@@ -644,8 +650,10 @@
 				607FCBD42BFA648000BB2D04 /* Tab.swift in Sources */,
 				A1FF91722C257E9A00F03E4B /* User.swift in Sources */,
 				60B8B9E92BF9EEF1005F6DE3 /* QuestView.swift in Sources */,
+				60C6B4D72C2C569800926C0E /* Challenge.swift in Sources */,
 				60B8B9E72BF9EEF1005F6DE3 /* ILSANGApp.swift in Sources */,
 				A1AB3D6C2C1142AA001EB9D8 /* LoginButton.swift in Sources */,
+				60C6B4D52C2C565700926C0E /* ChallengeNetwork.swift in Sources */,
 				A19628652C076D7B0037C53A /* SettingView.swift in Sources */,
 				607FCC332C01AA7300BB2D04 /* SubmitAlertView.swift in Sources */,
 				606292D82C19E70A0098B6D2 /* Network.swift in Sources */,
