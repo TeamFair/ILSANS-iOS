@@ -25,7 +25,8 @@ struct NavigationTitleView: View {
                     }
                 }
             }
-            .foregroundColor(.black)
+            .foregroundColor(.gray500)
+            .font(.system(size: 17, weight: .bold))
             .padding(.horizontal, 20)
             .frame(height: 45)
             .background(Color.white)
@@ -41,13 +42,14 @@ struct SeparatorView: View {
         Rectangle()
             .frame(maxWidth: .infinity)
             .frame(height: 0.5)
-            .foregroundStyle(Color.gray100)
+            .foregroundStyle(Color.grayDD)
     }
 }
 
 struct DismissButton: View {
     var body: some View {
         Image(systemName: "chevron.left")
-            .foregroundColor(.black)
+            .foregroundColor(.gray500)
+            .font(.custom("SFPRODISPLAYREGULAR", size: 22))
     }
 }
