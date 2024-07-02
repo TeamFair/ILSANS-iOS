@@ -18,7 +18,7 @@ class MypageViewModel: ObservableObject {
     }
     
     @MainActor
-    func getCustomer() async {
+    func getUser() async {
         let res = await userNetwork.getUser()
         
         switch res {

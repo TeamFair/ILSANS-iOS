@@ -56,7 +56,7 @@ struct MyPageProfile: View {
         )
         .onAppear{
             Task {
-                await vm.getCustomer()
+                await vm.getUser()
             }
         }
     }
