@@ -50,45 +50,56 @@ struct ApprovalView: View {
         Group {
             if !vm.itemList.isEmpty {
                 VStack(spacing: 14) {
-                    Text(vm.itemList[vm.currentIdx].title)
-                        .font(.system(size: 16, weight: .bold))
-                        .foregroundStyle(.gray400)
-                        .frame(height: 45)
-                        .frame(width: viewWidth - 20, alignment: .leading)
-                        .padding(.leading, 16)
-                        .background(
-                            RoundedRectangle(cornerRadius: 12)
-                                .foregroundStyle(.white)
-                        )
-                        .zIndex(1)
-                    
-                    ZStack(alignment: .bottom) {
-                        ForEach(vm.itemList.reversed(), id: \.id) { story in
-                            let idx = vm.itemList.firstIndex { $0.id == story.id }
-                            let diff: Int = abs(idx! - vm.currentIdx)
-                            ApprovalImageView(
-                                image: story.image ?? .logo,
-                                width: abs(viewWidth - 40 * CGFloat(diff)),
-                                height: (viewHeight / 2) - CGFloat(diff) * 26,
-                                nickname:story.nickname,
-                                time: story.time,
-                                showProfile: diff <= 1
-                            )
-                            .opacity(vm.calculateOpacity(itemIndex: idx!))
-                            .offset(y: diff <= 2 ? CGFloat(diff) * 26 : 50)
-                            .offset(y: story.offset)
-                        }
-                        .gesture(dragGesture)
-                    }
-                    .mask(alignment: .top) {
-                        maskArea
-                    }
+                    itemTitleView
+                    imageListView
                 }
                 .shadow(color: .shadowFF.opacity(0.25), radius: 20, x: 0, y: 12)
             }
         }
     }
     
+    private var itemTitleView: some View {
+        Text(vm.itemList[vm.currentIdx].title)
+            .font(.system(size: 16, weight: .bold))
+            .foregroundStyle(.gray400)
+            .frame(height: 45)
+            .frame(width: viewWidth - 20, alignment: .leading)
+            .padding(.leading, 16)
+            .background(
+                RoundedRectangle(cornerRadius: 12)
+                    .foregroundStyle(.white)
+            )
+            .zIndex(1)
+    }
+    
+    private var imageListView: some View {
+        ZStack(alignment: .bottom) {
+            ForEach(vm.itemList.reversed(), id: \.id) { item in
+                let idx = vm.itemList.firstIndex { $0.id == item.id }
+                let diff: Int = abs(idx! - vm.currentIdx)
+                imageView(for: item, diff: diff)
+            }
+            .gesture(dragGesture)
+        }
+        .mask(alignment: .top) {
+            maskArea
+        }
+    }
+    
+    private func imageView(for item: ApprovalViewModelItem, diff: Int) -> some View {
+        ApprovalImageView(
+            image: item.image ?? .loginLogo,
+            width: abs(viewWidth - 40 * CGFloat(diff)),
+            height: (viewHeight / 2) - CGFloat(diff) * 26,
+            nickname: item.nickname,
+            time: item.time,
+            showProfile: diff <= 1
+        )
+        .opacity(vm.calculateOpacity(itemIndex: vm.itemList.firstIndex { $0.id == item.id }!))
+        .offset(y: diff <= 2 ? CGFloat(diff) * 26 : 50)
+        .offset(y: item.offset)
+    }
+        
     /// 이미지 스크롤 시 상단 마스크
     private var maskArea: some View {
         VStack(spacing: 0) {

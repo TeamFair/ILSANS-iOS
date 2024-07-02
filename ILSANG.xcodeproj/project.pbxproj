@@ -75,7 +75,6 @@
 		A1C6422A2C33F55A004954CA /* QuestNetwork.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1C642292C33F55A004954CA /* QuestNetwork.swift */; };
 		A1C6422C2C33F5C4004954CA /* Quest.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1C6422B2C33F5C4004954CA /* Quest.swift */; };
 		A1F770642C2AABCE00DB24A0 /* MypageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1F770632C2AABCE00DB24A0 /* MypageViewModel.swift */; };
-		A1FEAD9F2C0B36D700B76324 /* SubmitAlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1FEAD9E2C0B36D700B76324 /* SubmitAlertView.swift */; };
 		A1FF916E2C250C3B00F03E4B /* UserNetwork.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1FF916D2C250C3B00F03E4B /* UserNetwork.swift */; };
 		A1FF91702C25119200F03E4B /* XPNetwork.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1FF916F2C25119200F03E4B /* XPNetwork.swift */; };
 		A1FF91722C257E9A00F03E4B /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1FF91712C257E9A00F03E4B /* User.swift */; };
@@ -173,7 +172,6 @@
 		A1EB63392C132AC100B63F9C /* Roboto-Medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Roboto-Medium.ttf"; sourceTree = "<group>"; };
 		A1EB633A2C132B0800B63F9C /* SFPRODISPLAYREGULAR.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = SFPRODISPLAYREGULAR.otf; sourceTree = "<group>"; };
 		A1F770632C2AABCE00DB24A0 /* MypageViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MypageViewModel.swift; sourceTree = "<group>"; };
-		A1FEAD9E2C0B36D700B76324 /* SubmitAlertView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SubmitAlertView.swift; sourceTree = "<group>"; };
 		A1FF916D2C250C3B00F03E4B /* UserNetwork.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserNetwork.swift; sourceTree = "<group>"; };
 		A1FF916F2C25119200F03E4B /* XPNetwork.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XPNetwork.swift; sourceTree = "<group>"; };
 		A1FF91712C257E9A00F03E4B /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
@@ -670,7 +668,6 @@
 				A1C6422C2C33F5C4004954CA /* Quest.swift in Sources */,
 				A1AB3D6A2C1141B3001EB9D8 /* AppleLoginButtonView.swift in Sources */,
 				600211EC2C1EEED7000CC02E /* APIManager.swift in Sources */,
-				A1FEAD9F2C0B36D700B76324 /* SubmitAlertView.swift in Sources */,
 				A1FF916E2C250C3B00F03E4B /* UserNetwork.swift in Sources */,
 				A1AB3D6E2C117569001EB9D8 /* Color.swift in Sources */,
 				A1AB3D682C1141B3001EB9D8 /* GoogleLoginButtonView.swift in Sources */,
