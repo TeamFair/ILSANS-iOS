@@ -185,14 +185,4 @@ extension Network {
             }
         }
     }
-    
-    enum NetworkError: Error {
-        case invalidURL
-        case invalidImageData
-        case clientError
-        case serverError
-        case requestFailed(String)
-        case unknownError
-        case unknownStatusCode(Int)
-    }
 }
