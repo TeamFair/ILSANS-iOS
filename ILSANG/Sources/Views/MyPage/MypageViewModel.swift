@@ -11,10 +11,12 @@ class MypageViewModel: ObservableObject {
     @Published var userData: User?
     
     private let userNetwork: UserNetwork
+    private let questNetwork: QuestNetwork
     
-    init(userData: User? = nil, userNetwork: UserNetwork) {
+    init(userData: User? = nil, userNetwork: UserNetwork, questNetwork: QuestNetwork) {
         self.userData = userData
         self.userNetwork = userNetwork
+        self.questNetwork = questNetwork
     }
     
     @MainActor

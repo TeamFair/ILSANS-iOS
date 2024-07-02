@@ -9,12 +9,10 @@ import Foundation
 import Alamofire
 
 final class QuestNetwork {
-    private let network: Network
     private let UncompletedUrl: String
     private let CompletedUrl: String
     
-    init(network: Network, UncompletedUrl: String = APIManager.makeURL(CustomerTarget(path: "")), CompletedUrl: String = APIManager.makeURL(CustomerTarget(path: ""))) {
-        self.network = network
+    init(UncompletedUrl: String = APIManager.makeURL(CustomerTarget(path: "")), CompletedUrl: String = APIManager.makeURL(CustomerTarget(path: ""))) {
         self.UncompletedUrl = UncompletedUrl
         self.CompletedUrl = CompletedUrl
     }
