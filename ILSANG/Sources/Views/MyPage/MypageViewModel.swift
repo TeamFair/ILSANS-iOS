@@ -8,26 +8,26 @@
 import Foundation
 
 class MypageViewModel: ObservableObject {
-    @Published var CustomerData: Customer?
+    @Published var userData: User?
     
-    private let customerNetwork: CustomerNetwork
+    private let userNetwork: UserNetwork
     
-    init(CustomerData: Customer? = nil, customerNetwork: CustomerNetwork) {
-        self.CustomerData = CustomerData
-        self.customerNetwork = customerNetwork
+    init(userData: User? = nil, userNetwork: UserNetwork) {
+        self.userData = userData
+        self.userNetwork = userNetwork
     }
     
     @MainActor
     func getCustomer() async {
-        let res = await customerNetwork.getCustomer()
+        let res = await userNetwork.getUser()
         
         switch res {
         case .success(let model):
-            self.CustomerData = model.data
+            self.userData = model.data
             Log(model.data)
             
         case .failure:
-            self.CustomerData = nil
+            self.userData = nil
         }
     }
 }
