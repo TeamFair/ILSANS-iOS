@@ -15,7 +15,7 @@ struct SettingView: View {
     private let settingList: [Setting] = [
         Setting(title: "고객센터",titleColor: false, arrow: true, subInfo: nil),
         Setting(title: "약관 및 정책",titleColor: false, arrow: true, subInfo: nil),
-        Setting(title: "현재 버전",titleColor: false, arrow: false, subInfo: nil),
+        Setting(title: "현재 버전",titleColor: false, arrow: false, subInfo: "v.0.0.1"),
         Setting(title: "로그아웃",titleColor: false, arrow: false, subInfo: nil),
         Setting(title: "회원 탈퇴",titleColor: true, arrow: true, subInfo: nil)
        ]
@@ -47,11 +47,7 @@ struct SettingView: View {
                             .opacity(item.arrow ? 1 : 0)
                             
                         } else if item.title == "현재 버전" {
-                            HStack {
                                 Spacer()
-                                Text("v.0.0.1")
-                                    .foregroundColor(.gray200)
-                            }
                         }else {
                             NavigationLink(destination: destinationView(for: item)) {
                                 EmptyView()
@@ -65,7 +61,7 @@ struct SettingView: View {
             .navigationBarBackButtonHidden()
             
             if logoutAlert {
-                SettingAlertView(alertStatus: .Logout,onCancel: {logoutAlert = false}, onConfirm: {Task {
+                SettingAlertView(alertType: .Logout,onCancel: {logoutAlert = false}, onConfirm: {Task {
                     // 로그아웃 함수 호출
                     let result = await LogoutNetwork().getLogout()
                     print(result)

@@ -70,7 +70,7 @@ struct ChangeNickNameView: View {
             }
             
             if showAlert {
-                SettingAlertView(alertStatus: .NickName,onCancel: {showAlert = false}, onConfirm: {dismiss()})
+                SettingAlertView(alertType: .NickName,onCancel: {showAlert = false}, onConfirm: {dismiss()})
             }
         }
     }

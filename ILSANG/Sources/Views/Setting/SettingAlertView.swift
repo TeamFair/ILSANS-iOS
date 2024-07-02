@@ -9,19 +9,19 @@ import SwiftUI
 
 struct SettingAlertView: View {
     
-    var alertStatus: AlertStatus
+    var alertType: AlertType
     var onCancel: (() -> Void?)? = nil
     var onConfirm: (() -> Void?)? = nil
     
     var body: some View {
         VStack (alignment: .center, spacing: 6) {
-            Text(alertStatus.title)
+            Text(alertType.title)
                 .font(.system(size: 18))
                 .fontWeight(.bold)
                 .foregroundColor(.black)
             
-            if (alertStatus.subtitle != nil) {
-                Text(alertStatus.subtitle ?? "")
+            if (alertType.subtitle != nil) {
+                Text(alertType.subtitle ?? "")
                     .font(.system(size: 13))
                     .multilineTextAlignment(.center)
                     .foregroundColor(Color.gray)
@@ -29,7 +29,7 @@ struct SettingAlertView: View {
             }
             
             HStack (spacing: 10) {
-                Text(alertStatus.disagree)
+                Text(alertType.disagree)
                     .font(.system(size: 16))
                     .fontWeight(.semibold)
                     .foregroundColor(.black)
@@ -38,7 +38,7 @@ struct SettingAlertView: View {
                     .cornerRadius(12)
                     .onTapGesture { self.onCancel?() }
                 
-                Text(alertStatus.agree)
+                Text(alertType.agree)
                     .font(.system(size: 16))
                     .fontWeight(.semibold)
                     .foregroundColor(.white)
@@ -61,7 +61,7 @@ struct SettingAlertView: View {
     }
 }
 
-enum AlertStatus {
+enum AlertType {
     case NickName
     case Logout
     case Withdrawal
@@ -109,8 +109,8 @@ enum AlertStatus {
 
 #Preview {
     VStack{
-        SettingAlertView(alertStatus: .Logout,onCancel: {print("Yes")},onConfirm: {print("NO")})
-        SettingAlertView(alertStatus: .NickName,onCancel: {print("Yes")},onConfirm: {print("NO")})
-        SettingAlertView(alertStatus: .Withdrawal,onCancel: {print("Yes")},onConfirm: {print("NO")})
+        SettingAlertView(alertType: .Logout,onCancel: {print("Yes")},onConfirm: {print("NO")})
+        SettingAlertView(alertType: .NickName,onCancel: {print("Yes")},onConfirm: {print("NO")})
+        SettingAlertView(alertType: .Withdrawal,onCancel: {print("Yes")},onConfirm: {print("NO")})
     }
 }

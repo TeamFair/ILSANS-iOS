@@ -62,11 +62,11 @@ struct DeleteAccountView: View {
                         isChecked.toggle()
                     } label: {
                         HStack(spacing: 8) {
-                            Image(systemName: isChecked ? "checkmark.circle.fill" : "circle")
+                            Image(systemName: isChecked ? "checkmark.circle" : "circle")
                                 .resizable()
                                 .frame(width: 22, height: 22)
                                 .scaledToFit()
-                                .foregroundColor(isChecked ? Color.accentColor : Color.gray300)
+                                .foregroundColor(isChecked ? Color.accentColor : Color.gray200)
                             Text("안내사항을 모두 확인하였으며, 이에 동의합니다.")
                                 .font(.system(size: 15))
                                 .foregroundColor(Color.gray400)
@@ -99,7 +99,7 @@ struct DeleteAccountView: View {
             }
             
             if delAlert {
-                SettingAlertView(alertStatus: .Withdrawal,onCancel: {delAlert = false}, onConfirm: { Task {
+                SettingAlertView(alertType: .Withdrawal,onCancel: {delAlert = false}, onConfirm: { Task {
                     let result = await WithdrawNetwork().getWithdraw()
                     print(result)
                 }})
