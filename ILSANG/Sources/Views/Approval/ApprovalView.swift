@@ -28,7 +28,7 @@ struct ApprovalView: View {
         .background(
             Group {
                 if !vm.itemList.isEmpty {
-                    Image(uiImage: vm.itemList[vm.currentIdx].image ?? .logo)
+                    Image(uiImage: vm.itemList[vm.currentIdx].image ?? .appleLogo)
                         .resizable()
                         .frame(maxWidth: .infinity, maxHeight: .infinity)
                         .ignoresSafeArea()
