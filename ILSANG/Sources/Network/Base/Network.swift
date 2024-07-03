@@ -63,7 +63,7 @@ final class Network {
         }
         
         let response = await request.validate(statusCode: 200..<300)
-            .serializingDecodable(T.self)
+            .serializingDecodable(T.self, emptyResponseCodes: [200])
             .response
         
         switch response.result {
@@ -184,15 +184,5 @@ extension Network {
                 "multipart/form-data"
             }
         }
-    }
-    
-    enum NetworkError: Error {
-        case invalidURL
-        case invalidImageData
-        case clientError
-        case serverError
-        case requestFailed(String)
-        case unknownError
-        case unknownStatusCode(Int)
     }
 }

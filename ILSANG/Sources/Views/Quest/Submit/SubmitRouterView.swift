@@ -40,7 +40,7 @@ struct SubmitRouterView: View {
         }
         .background(Color.white)
         .overlay {
-            SubmitAlertView(vm: SubmitAlertViewModel(selectedImage: vm.selectedImage, selectedQuestId: vm.selectedQuestId, imageNetwork: ImageNetwork(), showSubmitAlertView: vm.showSubmitAlertView))
+            SubmitAlertView(vm: SubmitAlertViewModel(selectedImage: vm.selectedImage, selectedQuestId: vm.selectedQuestId, imageNetwork: ImageNetwork(), challengeNetwork: ChallengeNetwork(), showSubmitAlertView: vm.showSubmitAlertView))
         }
     }
 }

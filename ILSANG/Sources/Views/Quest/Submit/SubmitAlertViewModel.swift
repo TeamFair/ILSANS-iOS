@@ -13,13 +13,15 @@ class SubmitAlertViewModel: ObservableObject {
     @Published var showSubmitAlertView: Bool
     
     private let imageNetwork: ImageNetwork
+    private let challengeNetwork: ChallengeNetwork
 
     let selectedQuestId: String
     
-    init(selectedImage: UIImage? = nil, selectedQuestId: String, imageNetwork: ImageNetwork, showSubmitAlertView: Bool) {
+    init(selectedImage: UIImage? = nil, selectedQuestId: String, imageNetwork: ImageNetwork, challengeNetwork: ChallengeNetwork, showSubmitAlertView: Bool) {
         self.selectedImage = selectedImage
         self.selectedQuestId = selectedQuestId
         self.imageNetwork = imageNetwork
+        self.challengeNetwork = challengeNetwork
         self.showSubmitAlertView = showSubmitAlertView
     }
     
@@ -56,7 +58,12 @@ class SubmitAlertViewModel: ObservableObject {
     }
     
     private func postChallenge(imageId: String) async -> Bool {
-        // TODO: 도전내역 POST API 연결
-        return true
+        let res = await challengeNetwork.postChallenge(questId: selectedQuestId, imageId: imageId)
+        switch res {
+        case .success:
+            return true
+        case .failure:
+            return false
+        }
     }
 }
