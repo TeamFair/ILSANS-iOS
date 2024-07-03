@@ -30,6 +30,8 @@ struct ChangeNickNameView: View {
                 VStack (alignment: .leading){
                     //설명
                     Text("새로운 닉네임을 입력하세요")
+                        .font(.system(size: 17, weight: .bold))
+                        .foregroundColor(.gray500)
                     
                     //닉네임 입력란
                     ZStack {

@@ -19,12 +19,11 @@ struct MyPageProfile: View {
                 
                 // 프로필 상세
                 VStack (alignment: .leading) {
-                        //유저 이름
-                        Text(vm.userData?.nickname ?? "닉네임")
-                            .foregroundColor(.gray500)
-                            .fontWeight(.bold)
-                            .underline(true, color: .gray300)
-                            .multilineTextAlignment(.leading)
+                    //유저 이름
+                    Text(vm.userData?.nickname ?? "닉네임")
+                        .font(.system(size: 16, weight: .bold))
+                        .underline(true, color: .gray300)
+                        .multilineTextAlignment(.leading)
                     
                     HStack {
                         // 프로그레스 바
@@ -40,7 +39,7 @@ struct MyPageProfile: View {
                     
                     Text("다음 레벨까지 1050XP 남았어요!")
                         .font(.system(size: 13))
-                        .foregroundColor(.gray400)
+                        .foregroundColor(.gray500)
                 }
             }
             .padding(18)
@@ -48,10 +47,8 @@ struct MyPageProfile: View {
                 RoundedRectangle(cornerRadius: 12)
                     .foregroundColor(Color.white)
             )
-            .onAppear{
-                Task {
-                    await vm.getUser()
-                }
+            .task {
+                await vm.getUser()
             }
         }
     }

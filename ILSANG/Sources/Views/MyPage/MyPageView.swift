@@ -31,6 +31,7 @@ struct MyPageView: View {
                     
                     NavigationLink(destination: SettingView()) {
                         Image("Setting")
+                            .foregroundColor(.gray300)
                     }
                 }
                 
