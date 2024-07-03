@@ -26,11 +26,12 @@ struct MyPageView: View {
                     Text("내 프로필")
                         .font(.system(size: 21))
                         .fontWeight(.bold)
-                        .foregroundColor(.gray400)
+                        .foregroundColor(.gray500)
                     Spacer()
                     
                     NavigationLink(destination: SettingView()) {
                         Image("Setting")
+                            .foregroundColor(.gray300)
                     }
                 }
                 
