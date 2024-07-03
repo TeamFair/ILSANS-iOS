@@ -91,15 +91,19 @@ struct ProfileImageView: View {
                 
                 Spacer()
                 
-                Text("LEVEL \(Level)")
-                    .font(.system(size: 11))
+                Text("Lv. \(Level)")
+                    .font(.system(size: 13))
                     .fontWeight(.bold)
-                    .foregroundColor(Color.accentColor)
-                    .padding(.horizontal, 6)
+                    .foregroundColor(Color.accent)
+                    .padding(.horizontal, 14.5)
                     .padding(.vertical, 4)
-                //TODO: 색상 변경 요청
-                    .background(Color(red: 0.95, green: 0.91, blue: 0.99))
+                    .background(.white)
                     .cornerRadius(6)
+                    .overlay(
+                        RoundedRectangle(cornerRadius: 20)
+                            .inset(by: 0.5)
+                            .stroke(.accent, lineWidth: 1)
+                    )
             }
         }
         .frame(height: 68)
