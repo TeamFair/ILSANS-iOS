@@ -12,51 +12,46 @@ struct MyPageProfile: View {
     @StateObject var vm = MypageViewModel(userNetwork: UserNetwork())
     
     var body: some View {
-        HStack {
-            //프로필
-            ProfileImageView(profileImage: nil, level: 3)
-            
-            // 프로필 상세
-            VStack (alignment: .leading) {
-                HStack {
-                    //유저 이름
-                    Text(vm.userData?.nickname ?? "닉네임")
-                        .foregroundColor(.gray400)
-                        .fontWeight(.bold)
-                    
-                    // 이름 수정 버튼
-                    NavigationLink(destination: ChangeNickNameView()) {
-                        Image("SettingPencil")
-                            .resizable()
-                            .frame(width: 18, height: 18)
-                    }
-                }
+        NavigationLink(destination: ChangeNickNameView()) {
+            HStack {
+                //프로필
+                ProfileImageView(profileImage: nil, level: 3)
                 
-                HStack {
-                    // 프로그레스 바
-                    ProgressBar(userXP: vm.userData?.xpPoint ?? 40, levelXP: 100)
-                        .frame(height: 10)
+                // 프로필 상세
+                VStack (alignment: .leading) {
+                        //유저 이름
+                        Text(vm.userData?.nickname ?? "닉네임")
+                            .foregroundColor(.gray500)
+                            .fontWeight(.bold)
+                            .underline(true, color: .gray300)
+                            .multilineTextAlignment(.leading)
                     
-                    // 경험치 Text
-                    Text(String(vm.userData?.xpPoint ?? 1300)+"XP")
+                    HStack {
+                        // 프로그레스 바
+                        ProgressBar(userXP: vm.userData?.xpPoint ?? 40, levelXP: 100)
+                            .frame(height: 10)
+                        
+                        // 경험치 Text
+                        Text(String(vm.userData?.xpPoint ?? 1300)+"XP")
+                            .font(.system(size: 13))
+                            .fontWeight(.bold)
+                            .foregroundColor(.accentColor)
+                    }
+                    
+                    Text("다음 레벨까지 1050XP 남았어요!")
                         .font(.system(size: 13))
-                        .fontWeight(.bold)
-                        .foregroundColor(.accentColor)
+                        .foregroundColor(.gray400)
                 }
-        
-                Text("다음 레벨까지 1050XP 남았어요!")
-                    .font(.system(size: 13))
-                    .foregroundColor(.gray300)
             }
-        }
-        .padding(18)
-        .background(
-            RoundedRectangle(cornerRadius: 12)
-                .foregroundColor(Color.white)
-        )
-        .onAppear{
-            Task {
-                await vm.getUser()
+            .padding(18)
+            .background(
+                RoundedRectangle(cornerRadius: 12)
+                    .foregroundColor(Color.white)
+            )
+            .onAppear{
+                Task {
+                    await vm.getUser()
+                }
             }
         }
     }
