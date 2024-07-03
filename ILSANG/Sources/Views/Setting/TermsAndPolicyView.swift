@@ -43,12 +43,13 @@ struct TermsAndPolicyView: View {
                 
                 if isToggle {
                     Text(contract)
+                        .font(Font.custom("Pretendard", size: 15))
                         .listRowBackground(Color.clear)
                 }
             }
             .listStyle(.plain)
         }
-        .background(Color.white)
+        .background(Color.background)
         .navigationBarBackButtonHidden()
     }
 }
