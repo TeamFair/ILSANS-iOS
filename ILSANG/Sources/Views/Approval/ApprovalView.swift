@@ -72,7 +72,7 @@ struct ApprovalView: View {
     private var itemTitleView: some View {
         Text(vm.itemList[vm.currentIdx].title)
             .font(.system(size: 16, weight: .bold))
-            .foregroundStyle(.gray400)
+            .foregroundStyle(.gray500)
             .frame(height: 45)
             .frame(width: viewWidth - 20, alignment: .leading)
             .padding(.leading, 16)
@@ -134,7 +134,7 @@ struct ApprovalView: View {
             Button {
                 Task { await vm.updateEmojiWithPrev(emojiType: .hate) }
             } label: {
-                emojiButton(imageName: "hand.thumbsdown.fill", active: vm.emoji?.isLike ?? false)
+                emojiButton(imageName: "hand.thumbsdown.fill", active: vm.emoji?.isHate ?? false)
             }
             Button {
                 Task { await vm.updateEmojiWithPrev(emojiType: .like) }
@@ -150,11 +150,11 @@ struct ApprovalView: View {
             .resizable()
             .frame(width: 24, height: 24)
             .foregroundStyle(.white)
-            .opacity(active ? 1 : 0.7)
+            .opacity(active ? 1 : 0.3)
             .frame(width: 69, height: 69)
             .background(
              Circle()
-                .foregroundStyle(.white.opacity(active ? 0.2 : 0.1))
+                .foregroundStyle(.white.opacity(active ? 0.3 : 0.1))
             )
     }
     
