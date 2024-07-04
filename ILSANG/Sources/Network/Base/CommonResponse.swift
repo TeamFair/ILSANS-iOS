@@ -5,6 +5,8 @@
 //  Created by Lee Jinhee on 6/22/24.
 //
 
+import Alamofire
+
 struct Response<T: Decodable>: Decodable {
     let data: T
     let errorStatus: String?
@@ -42,5 +44,12 @@ struct ResponseWithoutData: Decodable {
         self.errMessage = errMessage
         self.status = status
         self.message = message
+    }
+}
+
+/// 200번 코드에 서버 응답값이 없는 경우 사용
+struct ResponseWithEmpty: Decodable, EmptyResponse {
+    static func emptyValue() -> ResponseWithEmpty {
+        return ResponseWithEmpty.init()
     }
 }

@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct ChangeNickNameView: View {
+    
     @Environment(\.dismiss) var dismiss
     
     @State private var name: String = ""
@@ -29,6 +30,8 @@ struct ChangeNickNameView: View {
                 VStack (alignment: .leading){
                     //설명
                     Text("새로운 닉네임을 입력하세요")
+                        .font(.system(size: 17, weight: .bold))
+                        .foregroundColor(.gray500)
                     
                     //닉네임 입력란
                     ZStack {
@@ -57,55 +60,40 @@ struct ChangeNickNameView: View {
                                     }
                                 }
                             }
-                        
-                        Text("입력하신 닉네임은 이미 사용중이에요.\n다른 닉네임을 입력해주세요")
-                            .opacity(isSame ? 1 : 0)
-                            .foregroundColor(.red)
-                        
-                        Spacer()
-                        
-                        Text("변경 완료")
-                            .foregroundColor(.white)
-                            .frame(maxWidth: .infinity ,maxHeight: 50)
-                            .background(Color.accentColor)
-                            .cornerRadius(12)
-                            .disabled(!isSame)
-                        //MARK: 디버깅용 기능
-                            .onTapGesture { isSame.toggle() }
                     }
-                    .navigationBarBackButtonHidden()
-                    .frame(maxWidth: .infinity, maxHeight: .infinity)
-                    .padding(20)
-                }
-                
-                Text("변경 완료")
-                    .foregroundColor(.white)
-                    .frame(maxWidth: .infinity ,maxHeight: 50)
-                    .background(Color.accentColor)
-                    .cornerRadius(12)
-                    .onTapGesture {
-                        showAlert.toggle()
-                    }
-                    .disabled(!isSame && name.isEmpty)
-            }
-            .navigationBarBackButtonHidden()
-            .frame(maxWidth: .infinity, maxHeight: .infinity)
-            .padding(20)
-            .alert(isPresented: $showAlert) {
-                let firstButton = Alert.Button.default(Text("확인")) {
-                    Task {
-                        //닉네임 변경 시도
-                        if await UserNetwork().putUser(nickname: name) {
-                            showAlert = false
+                    
+                    Text("입력하신 닉네임은 이미 사용중이에요.\n다른 닉네임을 입력해주세요")
+                        .opacity(isSame ? 1 : 0)
+                        .foregroundColor(.red)
+                    
+                    Spacer()
+                    
+                    
+                    Text("변경 완료")
+                        .foregroundColor(.white)
+                        .frame(maxWidth: .infinity ,maxHeight: 50)
+                        .background(Color.accentColor)
+                        .cornerRadius(12)
+                        .onTapGesture {
+                            Task {
+                                //중복되는 아이디가 있거나 서버 연결에 문제 있을 경우
+                                if await UserNetwork().putUser(nickname: name) {
+                                    isSame = true
+                                    //MARK: 이름 변경되었을때 뷰 확인
+                                } else {
+                                    //중복되는 아이디가 없을 경우
+                                    isSame = false
+                                }
+                            }
                         }
-                    }
+                        .disabled(!isSame && name.isEmpty)
                 }
-                let secondButton = Alert.Button.cancel(Text("취소")) {
-                    showAlert = false
-                }
-                return Alert(title: Text("닉네임 변경을 취소할까요?"),
-                             message: Text("변경을 완료하지 않으면\n프로필이 저장되지 않습니다."),
-                             primaryButton: firstButton, secondaryButton: secondButton)
+                .navigationBarBackButtonHidden()
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
+                .padding(20)
+            }
+            if showAlert {
+                SettingAlertView(alertType: .NickName,onCancel: {showAlert = false}, onConfirm: {dismiss()})
             }
         }
     }

@@ -39,7 +39,6 @@ struct SegmenetStruct: View {
                 .frame(width: 111, height: 38)
                 .background(selectedIndex == index ? Color.accentColor : Color.white)
                 .cornerRadius(12)
-                .shadow(color: .black.opacity(0.2), radius: 2, x: 0, y: 2)
             
             HStack (alignment: .center){
                 Text(sgmIcon)
@@ -48,7 +47,7 @@ struct SegmenetStruct: View {
                 Text(sgmTitle)
                     .font(.system(size: 14))
                     .fontWeight(.bold)
-                    .foregroundColor(selectedIndex == index ? Color.white : Color.gray300)
+                    .foregroundColor(selectedIndex == index ? Color.white : Color.gray500)
             }
         }
         .onTapGesture {
