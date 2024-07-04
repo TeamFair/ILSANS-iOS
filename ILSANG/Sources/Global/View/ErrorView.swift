@@ -8,13 +8,14 @@
 import SwiftUI
 
 /// emoticon 사용할 경우 subtitle 텍스트 끝에 띄어쓰기를 추가해야 공백이 생깁니다.
+/// 버튼을 포함하고 액션을 추가하려면, buttonAction 파라미터를 사용하여 정의합니다.
 struct ErrorView: View {
     var systemImageName: String? = nil
     let title: String
     let subTitle: String
-    let emoticon: String?
-    
-    let action: () -> ()
+    var emoticon: String? = nil
+    var showButton: Bool = true
+    var buttonAction: (() -> ())? = nil
     
     var body: some View {
         VStack(spacing: 0) {
@@ -42,10 +43,11 @@ struct ErrorView: View {
             .lineSpacing(5)
             
             PrimaryButton(title: "다시 시도") {
-                action()
+                buttonAction?()
             }
             .frame(width: 152)
             .padding(.top, 46)
+            .opacity(showButton ? 1 : 0)
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
     }
