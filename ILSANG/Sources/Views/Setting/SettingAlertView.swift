@@ -9,50 +9,46 @@ import SwiftUI
 
 struct SettingAlertView: View {
     
-    var alertType: AlertType
+    let alertType: AlertType
     var onCancel: (() -> Void?)? = nil
     var onConfirm: (() -> Void?)? = nil
     
     var body: some View {
-        VStack (alignment: .center, spacing: 6) {
+        VStack(spacing: 0) {
             Text(alertType.title)
-                .font(.system(size: 18))
-                .fontWeight(.bold)
+                .font(.system(size: 18, weight: .bold))
                 .foregroundColor(.black)
             
-            if (alertType.subtitle != nil) {
-                Text(alertType.subtitle ?? "")
+            if let subtitle = alertType.subtitle {
+                Text(subtitle)
                     .font(.system(size: 13))
+                    .lineSpacing(4)
                     .multilineTextAlignment(.center)
-                    .foregroundColor(Color.gray)
-                    .padding(.horizontal, 16)
+                    .foregroundColor(Color.gray500)
+                    .padding(.top, 6)
             }
             
-            HStack (spacing: 10) {
+            HStack(spacing: 10) {
                 Text(alertType.disagree)
-                    .font(.system(size: 16))
-                    .fontWeight(.semibold)
-                    .foregroundColor(.black)
+                    .font(.system(size: 16, weight: .semibold))
+                    .foregroundColor(.gray500)
                     .frame(maxWidth: 140, maxHeight: 50)
-                    .background(.gray100)
+                    .background(Color.background)
                     .cornerRadius(12)
                     .onTapGesture { self.onCancel?() }
                 
                 Text(alertType.agree)
-                    .font(.system(size: 16))
-                    .fontWeight(.semibold)
+                    .font(.system(size: 16, weight: .semibold))
                     .foregroundColor(.white)
                     .frame(maxWidth: 140, maxHeight: 50)
                     .background(.accent)
                     .cornerRadius(12)
                     .onTapGesture { self.onConfirm?() }
-                
             }
             .padding(.top, 20)
         }
-        .padding(.horizontal, 16)
+        .padding([.horizontal, .bottom], 16)
         .padding(.top, 28)
-        .padding(.bottom, 16)
         .background(.white)
         .cornerRadius(24)
         .shadow(color: Color.black.opacity(0.1), radius: 10, x: 0, y: 5)
