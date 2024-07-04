@@ -21,7 +21,7 @@ struct PrimaryButton: View {
                 .frame(height: 50)
                 .font(.system(size: 16, weight: .semibold))
                 .foregroundStyle(.white)
-                .background(buttonAble ? Color.accentColor: Color.gray)
+                .background(buttonAble ? Color.accentColor: Color.gray300)
                 .cornerRadius(12)
         }
         .disabled(!buttonAble)
