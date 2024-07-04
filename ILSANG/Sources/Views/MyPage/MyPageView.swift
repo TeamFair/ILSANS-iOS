@@ -56,6 +56,9 @@ struct MyPageView: View {
             
             QuestList = vm.QuestList!
             UncompletedQuestList = vm.UncompletedQuestList!
+            
+            Log(QuestList)
+            Log(UncompletedQuestList)
         }
     }
 }
