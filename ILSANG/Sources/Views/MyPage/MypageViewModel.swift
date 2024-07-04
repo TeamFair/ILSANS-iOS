@@ -9,6 +9,8 @@ import Foundation
 
 class MypageViewModel: ObservableObject {
     @Published var userData: User?
+    @Published var QuestList: [QuestData]?
+    @Published var UncompletedQuestList: [QuestData]?
     
     private let userNetwork: UserNetwork
     private let questNetwork: QuestNetwork
@@ -30,6 +32,28 @@ class MypageViewModel: ObservableObject {
             
         case .failure:
             self.userData = nil
+        }
+    }
+    
+    @MainActor
+    func getQuest(page: Int) async {
+        let Uncompleted = await questNetwork.getUncompletedQuest(page: page)
+        let Completed = await questNetwork.getCompletedQuest(page: page)
+        
+        switch Uncompleted {
+        case .success(let model):
+            self.UncompletedQuestList = model.data
+            
+        case .failure:
+            self.UncompletedQuestList = nil
+        }
+        
+        switch Completed {
+        case .success(let model):
+            self.QuestList = model.data
+            
+        case .failure:
+            self.QuestList = nil
         }
     }
 }

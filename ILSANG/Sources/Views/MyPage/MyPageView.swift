@@ -17,7 +17,9 @@ struct MyPageView: View {
     @StateObject var vm: MypageViewModel = MypageViewModel(userNetwork: UserNetwork(), questNetwork: QuestNetwork())
     @State var segmenetSelect = 0
     @State private var isSettingsViewActive = false
-    @State var QuestList: [AWSQuest]
+    
+    @State var QuestList: [QuestData]
+    @State var UncompletedQuestList: [QuestData]
     
     var body: some View {
         NavigationView {
@@ -47,22 +49,13 @@ struct MyPageView: View {
                 MyPageList(data: $testData, segmenetSelect: $segmenetSelect)
             }
             .padding(21)
-            //MARK: 추후 삭제
             .background(Color.background)
         }
-        .onAppear{
-            switch segmenetSelect {
-            case 0:
-                QuestList = vm.q
-            case 1:
-                
-            case 2:
-                
-            }
+        .task {
+            await vm.getQuest(page: 0)
+            
+            QuestList = vm.QuestList!
+            UncompletedQuestList = vm.UncompletedQuestList!
         }
     }
-}
-
-#Preview {
-    MyPageView()
 }
