@@ -18,8 +18,8 @@ struct MyPageView: View {
     @State var segmenetSelect = 0
     @State private var isSettingsViewActive = false
     
-    @State var QuestList: [QuestData]
-    @State var UncompletedQuestList: [QuestData]
+    @State var questList: [QuestData]
+    @State var uncompletedQuestList: [QuestData]
     
     var body: some View {
         NavigationView {
@@ -54,11 +54,11 @@ struct MyPageView: View {
         .task {
             await vm.getQuest(page: 0)
             
-            QuestList = vm.QuestList!
-            UncompletedQuestList = vm.UncompletedQuestList!
+            questList = vm.QuestList!
+            uncompletedQuestList = vm.uncompletedQuestList!
             
-            Log(QuestList)
-            Log(UncompletedQuestList)
+            Log(questList)
+            Log(uncompletedQuestList)
         }
     }
 }

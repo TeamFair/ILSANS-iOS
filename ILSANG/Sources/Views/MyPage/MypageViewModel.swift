@@ -10,7 +10,7 @@ import Foundation
 class MypageViewModel: ObservableObject {
     @Published var userData: User?
     @Published var QuestList: [QuestData]?
-    @Published var UncompletedQuestList: [QuestData]?
+    @Published var uncompletedQuestList: [QuestData]?
     
     private let userNetwork: UserNetwork
     private let questNetwork: QuestNetwork
@@ -42,10 +42,10 @@ class MypageViewModel: ObservableObject {
         
         switch Uncompleted {
         case .success(let model):
-            self.UncompletedQuestList = model.data
+            self.uncompletedQuestList = model.data
             
         case .failure:
-            self.UncompletedQuestList = nil
+            self.uncompletedQuestList = nil
         }
         
         switch Completed {
