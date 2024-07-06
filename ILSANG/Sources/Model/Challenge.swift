@@ -16,6 +16,7 @@ struct Challenge: Codable {
     let challengeId, userNickName: String
     let quest: QuestEntity
     let receiptImageId, status: String
+    let createdAt: String
     let likeCnt, hateCnt: Int
 }
 

@@ -53,7 +53,18 @@ final class ApprovalViewModel: ObservableObject {
     
     @MainActor
     func getChallengesWithImage(page: Int) async {
-        let challenges = await getRandomChallenges(page: page)
+        var challenges = await getRandomChallenges(page: page)
+
+        // 중복된 id 제거
+        var seenIDs = Set<String>()
+        challenges = challenges.filter { challenge in
+            if seenIDs.contains(challenge.id) {
+                return false
+            } else {
+                seenIDs.insert(challenge.id)
+                return true
+            }
+        }
         
         if page == 0 {
             itemList = challenges
@@ -248,7 +259,6 @@ struct ApprovalViewModelItem: Identifiable {
         self.time = time
     }
     
-    // TODO: 백 수정 시 time 계산 적용
     init(challenge: Challenge) {
         self.id = challenge.challengeId
         self.title = challenge.quest.missions.first?.title ?? ""
@@ -256,7 +266,7 @@ struct ApprovalViewModelItem: Identifiable {
         self.imageId = challenge.receiptImageId
         self.offset = 0
         self.nickname = challenge.userNickName
-        self.time = "3시간 전"
+        self.time = challenge.createdAt.timeAgoSinceDate()
     }
     
     static var mockData = [
