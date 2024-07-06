@@ -17,7 +17,7 @@ final class APIManager {
     #endif
     
     ///개발용 토큰
-    static let authDevelopToken =  "eyJhbGciOiJIUzI1NiJ9.eyJ1c2VySWQiOiJjODc3NzlkNi01YTc4LTQ2OTUtOGYxMy1lMDMxZjk1NTVkOTYiLCJ1c2VyVHlwZSI6IkNVU1RPTUVSIn0.DKQYepBPsqstv6nmeQPOvPjwAHdbtnFlASqrhd20uh4"
+    static let authDevelopToken =    "eyJhbGciOiJIUzI1NiJ9.eyJ1c2VySWQiOiJhMTFjNDQxMS0xOTU0LTRiMWEtYjg0Ny0zYWY4NjU5MTNiM2YiLCJ1c2VyVHlwZSI6IkNVU1RPTUVSIn0.tM8UzimEvBVOH3hC-Put8J3iVU-QAeXlteRmcFjFHus"
     
     static func makeURL(_ target: APITarget) -> String {
         baseURL + ":" + port + "/api/" + target.type + "/" + target.path
