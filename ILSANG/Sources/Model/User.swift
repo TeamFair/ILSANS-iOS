@@ -7,12 +7,6 @@
 
 import Foundation
 
-struct UserModel: Decodable {
-    let data: User?
-    let status: String
-    let message: String
-}
-
 struct User: Decodable {
     let status: String
     let nickname: String
