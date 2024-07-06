@@ -6,6 +6,8 @@
 //
 
 struct Emoji: Decodable {
+    var likeId: String?
     var isLike: Bool
+    var hateId: String?
     var isHate: Bool
 }
