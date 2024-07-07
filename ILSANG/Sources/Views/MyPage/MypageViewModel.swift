@@ -9,7 +9,7 @@ import Foundation
 
 class MypageViewModel: ObservableObject {
     @Published var userData: User?
-    @Published var QuestList: [Challenge]?
+    @Published var ChallengeList: [Challenge]?
     
     private let userNetwork: UserNetwork
     private let questNetwork: ChallengeNetwork
@@ -40,10 +40,10 @@ class MypageViewModel: ObservableObject {
         
         switch Data {
         case .success(let model):
-            self.QuestList = model.data
+            self.ChallengeList = model.data
         
         case .failure:
-            self.QuestList = nil
+            self.ChallengeList = nil
         }
     }
 }
