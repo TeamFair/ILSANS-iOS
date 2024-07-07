@@ -38,16 +38,15 @@ struct QuestItemView: View {
                         .offset(x: 20, y: 2)
                 }
             
-            VStack(alignment: .leading, spacing: 4){
+            VStack(alignment: .leading, spacing: 4) {
                 Text(quest.missionTitle)
                     .font(.system(size: 15, weight: .bold))
                     .foregroundColor(.black)
 
                 Text(quest.missionCompany)
                     .font(.system(size: 13, weight: .regular))
-                    .foregroundColor(.gray)
+                    .foregroundColor(.gray400)
             }
-            .opacity(quest.status == .ACTIVE ? 1.0 : 0.2)
             .padding(.top, 6)
             
             Spacer()
@@ -60,7 +59,7 @@ struct QuestItemView: View {
                     VStack(spacing: 7) {
                         IconView(iconWidth: 13, size: .small, icon: .check, color: .green)
                         Text("적립완료")
-                            .font(.system(size: 10, weight: .bold))
+                            .font(.system(size: 12, weight: .semibold))
                             .multilineTextAlignment(.center)
                             .foregroundColor(.green)
                     }

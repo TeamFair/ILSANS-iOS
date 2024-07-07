@@ -31,22 +31,22 @@ struct SegmenetStruct: View {
     let index: Int
     @Binding var selectedIndex: Int
     
-    //MARK: 색상 변경
     var body: some View {
         ZStack {
             Rectangle()
                 .foregroundColor(.clear)
-                .frame(width: 111, height: 38)
+                .frame(height: 38)
+                .frame(maxWidth: .infinity)
                 .background(selectedIndex == index ? Color.accentColor : Color.white)
                 .cornerRadius(12)
             
-            HStack (alignment: .center){
+            HStack(alignment: .center, spacing: 4) {
                 Text(sgmIcon)
-                    .font(.system(size: 14))
+                    .font(.system(size: 11))
                 
                 Text(sgmTitle)
                     .font(.system(size: 14))
-                    .fontWeight(.bold)
+                    .fontWeight(.semibold)
                     .foregroundColor(selectedIndex == index ? Color.white : Color.gray500)
             }
         }

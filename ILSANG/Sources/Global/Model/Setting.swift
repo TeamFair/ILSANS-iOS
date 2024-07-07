@@ -5,15 +5,26 @@
 //  Created by Kim Andrew on 5/29/24.
 //
 
-import Foundation
+import SwiftUI
 
+///arrow가 False일때 subInfo 작성
 struct Setting : Identifiable {
-    //arrow가 False일때 subInfo 작성
     let id = UUID()
     let title: String
-    let titleColor: Bool
-    let arrow: Bool
-    let subInfo: String?
+    let titleColor: Color
+    let type: SettingType
+    
+    init(title: String, titleColor: Color = .gray500, type: SettingType) {
+        self.title = title
+        self.titleColor = titleColor
+        self.type = type
+    }
+}
+
+enum SettingType {
+    case navigate
+    case alert
+    case info(String)
 }
 
 let contract = """
