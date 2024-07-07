@@ -14,8 +14,11 @@ struct MyPageView: View {
         QuestDetail(questTitle: "Title2", questImage: nil, questDetail: "Detail2", questLike: 100, questDate: "2023.03.06",questXP: 3,status: .QUEST)
        ]
     
+    @StateObject var vm: MypageViewModel = MypageViewModel(userNetwork: UserNetwork(), questNetwork: ChallengeNetwork())
     @State var segmenetSelect = 0
     @State private var isSettingsViewActive = false
+    
+    @State var questList: [Challenge]
     
     var body: some View {
         NavigationView {
@@ -45,12 +48,13 @@ struct MyPageView: View {
                 MyPageList(data: $testData, segmenetSelect: $segmenetSelect)
             }
             .padding(21)
-            //MARK: 추후 삭제
             .background(Color.background)
         }
+        .task {
+            await vm.getQuest(page: 0)
+            questList = vm.QuestList!
+            
+            Log(questList)
+        }
     }
-}
-
-#Preview {
-    MyPageView()
 }
