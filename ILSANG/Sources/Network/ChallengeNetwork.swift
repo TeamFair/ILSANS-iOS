@@ -33,20 +33,9 @@ final class ChallengeNetwork {
             "receiptImageId": imageId
         ]
         
-        guard let jsonData = convertToJsonData(dictionary: bodyData) else {
+        guard let jsonData = bodyData.convertToJsonData() else {
             return .failure(NetworkError.requestFailed("Fail to convert data"))
         }
         return await Network.requestData(url: url+"challenge", method: .post, parameters: nil, body: jsonData, withToken: true)
-    }
-    
-    /// Dictionary를 JSON 데이터로 변환하는 함수
-    func convertToJsonData(dictionary: [String: Any]) -> Data? {
-        do {
-            let jsonData = try JSONSerialization.data(withJSONObject: dictionary, options: [])
-            return jsonData
-        } catch {
-            print("JSON Convert Error: \(error.localizedDescription)")
-            return nil
-        }
     }
 }
