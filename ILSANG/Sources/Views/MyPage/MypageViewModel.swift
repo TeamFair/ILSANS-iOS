@@ -9,15 +9,18 @@ import Foundation
 
 class MypageViewModel: ObservableObject {
     @Published var userData: User?
+    @Published var ChallengeList: [Challenge]?
     @Published var questXp: [XP]?
     
     private let userNetwork: UserNetwork
+    private let questNetwork: ChallengeNetwork
     private let xpNetwork: XPNetwork
     
-    init(userData: User? = nil, userNetwork: UserNetwork, xpNetwork: XPNetwork) {
+    init(userData: User? = nil, userNetwork: UserNetwork, xpNetwork: XPNetwork, questNetwork: ChallengeNetwork) {
         self.userData = userData
         self.userNetwork = userNetwork
         self.xpNetwork = xpNetwork
+        self.questNetwork = questNetwork
     }
     
     @MainActor
@@ -45,6 +48,20 @@ class MypageViewModel: ObservableObject {
             
         case .failure:
             self.questXp = nil
+            
+        }
+    }
+    
+    @MainActor
+    func getQuest(page: Int) async {
+        let Data = await questNetwork.getChallenges(page: page)
+        
+        switch Data {
+        case .success(let model):
+            self.ChallengeList = model.data
+        
+        case .failure:
+            self.ChallengeList = nil
         }
     }
 }
