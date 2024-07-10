@@ -14,7 +14,7 @@ struct MyPageView: View {
         QuestDetail(questTitle: "Title2", questImage: nil, questDetail: "Detail2", questLike: 100, questDate: "2023.03.06",questXP: 3,status: .QUEST)
        ]
     
-    @StateObject var vm: MypageViewModel = MypageViewModel(userNetwork: UserNetwork(), questNetwork: ChallengeNetwork())
+    @StateObject var vm: MypageViewModel = MypageViewModel(userNetwork: UserNetwork(), xpNetwork: XPNetwork(), questNetwork: ChallengeNetwork())
     @State var segmenetSelect = 0
     @State private var isSettingsViewActive = false
     
@@ -52,7 +52,7 @@ struct MyPageView: View {
         }
         .task {
             await vm.getQuest(page: 0)
-            questList = vm.QuestList!
+            questList = vm.ChallengeList!
             
             Log(questList)
         }

@@ -64,6 +64,30 @@ class MypageViewModel: ObservableObject {
             self.ChallengeList = nil
         }
     }
+    
+    func convertXPtoLv(XP: Int) -> Int {
+        var totalXP = 0
+        var level = 0
+        
+        while totalXP <= XP {
+            level += 1
+            totalXP += 50 * level
+        }
+        
+        return level - 1
+    }
+    
+    func xpForNextLv(XP: Int) -> String {
+        let currentLevel = convertXPtoLv(XP: XP)
+        let nextLevel = currentLevel + 1
+        var totalXP = 0
+        
+        for n in 1...nextLevel {
+            totalXP += 50 * n
+        }
+        
+        return String( totalXP - XP )
+    }
 }
 
 struct MypageViewModelItem: Identifiable {
