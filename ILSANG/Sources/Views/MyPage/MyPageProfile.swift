@@ -23,6 +23,7 @@ struct MyPageProfile: View {
                     Text(vm.userData?.nickname ?? "닉네임")
                         .font(.system(size: 16, weight: .bold))
                         .underline(true, color: .gray300)
+                        .foregroundStyle(.gray500)
                         .multilineTextAlignment(.leading)
                     
                     HStack {
@@ -95,7 +96,7 @@ struct ProfileImageView: View {
                     .padding(.horizontal, 14.5)
                     .padding(.vertical, 4)
                     .background(.white)
-                    .cornerRadius(6)
+                    .cornerRadius(20)
                     .overlay(
                         RoundedRectangle(cornerRadius: 20)
                             .inset(by: 0.5)
