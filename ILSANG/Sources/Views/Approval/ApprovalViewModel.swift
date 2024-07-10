@@ -42,7 +42,9 @@ final class ApprovalViewModel: ObservableObject {
     func getData() async {
         await changeViewStatus(.loading)
         await getChallengesWithImage(page: 0)
-        await getEmoji(challengeId: itemList[currentIdx].id)
+        if !itemList.isEmpty {
+            await getEmoji(challengeId: itemList[currentIdx].id)
+        }
         await changeViewStatus(.loaded)
     }
     

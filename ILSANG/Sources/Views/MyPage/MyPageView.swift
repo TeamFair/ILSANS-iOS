@@ -15,11 +15,9 @@ struct MyPageView: View {
        ]
     
     @StateObject var vm: MypageViewModel = MypageViewModel(userNetwork: UserNetwork(), questNetwork: ChallengeNetwork())
-    @State var segmenetSelect = 0
+    @State var segmentSelect = 0
     @State private var isSettingsViewActive = false
-    
-    @State var questList: [Challenge]
-    
+        
     var body: some View {
         NavigationView {
             VStack(spacing: 0) {
@@ -52,9 +50,6 @@ struct MyPageView: View {
         }
         .task {
             await vm.getQuest(page: 0)
-            questList = vm.QuestList!
-            
-            Log(questList)
         }
     }
 }
