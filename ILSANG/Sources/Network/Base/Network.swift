@@ -39,7 +39,8 @@ final class Network {
     private static func buildHeaders(withToken: Bool, contentType: ContentType = .json) -> HTTPHeaders {
         var headers: HTTPHeaders = ["accept": "application/json", "Content-Type": contentType.toString]
         if withToken {
-            headers.add(.authorization(APIManager.authDevelopToken))
+            let token = UserService.shared.authToken
+            headers.add(.authorization(token))
         }
         return headers
     }
