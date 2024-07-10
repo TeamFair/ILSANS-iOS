@@ -42,8 +42,9 @@ final class ApprovalViewModel: ObservableObject {
     func getData() async {
         await changeViewStatus(.loading)
         await getChallengesWithImage(page: 0)
-        // TODO: 현재 인덱스의 challengeId로 수정
-        await getEmoji(challengeId: "86efe988-2acc-4add-99a5-06e414d04dfa")
+        if !itemList.isEmpty {
+            await getEmoji(challengeId: itemList[currentIdx].id)
+        }
         await changeViewStatus(.loaded)
     }
     
@@ -54,7 +55,18 @@ final class ApprovalViewModel: ObservableObject {
     
     @MainActor
     func getChallengesWithImage(page: Int) async {
-        let challenges = await getRandomChallenges(page: page)
+        var challenges = await getRandomChallenges(page: page)
+
+        // 중복된 id 제거
+        var seenIDs = Set<String>()
+        challenges = challenges.filter { challenge in
+            if seenIDs.contains(challenge.id) {
+                return false
+            } else {
+                seenIDs.insert(challenge.id)
+                return true
+            }
+        }
         
         if page == 0 {
             itemList = challenges
@@ -105,38 +117,65 @@ final class ApprovalViewModel: ObservableObject {
     /// 업데이트할 이모지 타입에 따라 이전 이모지 상태의 반대로 서버에 업데이트를 요청하고,
     /// 서버 업데이트가 성공하면 로컬 상태를 업데이트합니다.
     /// - Parameter emojiType: 업데이트할 이모지의 유형 (like 또는 hate).
-    func updateEmojiWithPrev(emojiType: EmojiType) async {
+    @MainActor func updateEmojiWithPrev(emojiType: EmojiType) async {
         guard let prevEmoji = self.emoji else { return }
         
         let wasPrevEmojiActive: Bool
+        var emojiId: String? = nil
+
         switch emojiType {
         case .like:
             wasPrevEmojiActive = prevEmoji.isLike
+            if let prevLikeId = prevEmoji.likeId {
+                emojiId = prevLikeId
+            }
         case .hate:
             wasPrevEmojiActive = prevEmoji.isHate
+            if let prevHateId = prevEmoji.hateId {
+                emojiId = prevHateId
+            }
         }
         
-        // TODO: 현재 인덱스의 challengeId로 수정
-        let challengeId = "86efe988-2acc-4add-99a5-06e414d04dfa"
-        
-        let isServerUpdateSuccessful = await updateEmojiStatus(challengeId: challengeId, emojiType: emojiType, prevEmojiActive: wasPrevEmojiActive)
+        let challengeId = itemList[currentIdx].id
+        let isServerUpdateSuccessful = await updateEmojiStatus(challengeId: challengeId, emojiType: emojiType, emojiId: emojiId, prevEmojiActive: wasPrevEmojiActive)
         
         if isServerUpdateSuccessful {
             switch emojiType {
             case .like:
                 self.emoji?.isLike.toggle()
+                if let emoji = self.emoji, !emoji.isLike {
+                    self.emoji?.likeId = nil
+                }
             case .hate:
                 self.emoji?.isHate.toggle()
+                if let emoji = self.emoji, !emoji.isHate {
+                    self.emoji?.hateId = nil
+                }
             }
         }
     }
     
-    private func updateEmojiStatus(challengeId: String, emojiType: EmojiType, prevEmojiActive: Bool) async -> Bool {
+    /// 이모지 등록하면 emojiid받아와서 현재 Emoji에 넣어줌
+    @MainActor
+    private func updateEmojiStatus(challengeId: String, emojiType: EmojiType, emojiId: String?, prevEmojiActive: Bool) async -> Bool {
         var updateSucceeded = false
         if prevEmojiActive {
-            updateSucceeded = await emojiNetwork.deleteEmoji(emojiId: "emj000")
+            guard let emojiId = emojiId else { return false }
+            updateSucceeded = await emojiNetwork.deleteEmoji(emojiId: emojiId)
         } else {
-            updateSucceeded = await emojiNetwork.postEmoji(challengeId: challengeId, emojiType: emojiType)
+            let res = await emojiNetwork.postEmoji(challengeId: challengeId, emojiType: emojiType)
+            switch res {
+            case .success(let emojiId):
+                switch emojiType {
+                case .like:
+                    self.emoji?.likeId = emojiId
+                case .hate:
+                    self.emoji?.hateId = emojiId
+                }
+                updateSucceeded = true
+            case .failure:
+                updateSucceeded = false
+            }
         }
         return updateSucceeded
     }
@@ -222,7 +261,6 @@ struct ApprovalViewModelItem: Identifiable {
         self.time = time
     }
     
-    // TODO: 백 수정 시 time 계산 적용
     init(challenge: Challenge) {
         self.id = challenge.challengeId
         self.title = challenge.quest.missions.first?.title ?? ""
@@ -230,7 +268,7 @@ struct ApprovalViewModelItem: Identifiable {
         self.imageId = challenge.receiptImageId
         self.offset = 0
         self.nickname = challenge.userNickName
-        self.time = "3시간 전"
+        self.time = challenge.createdAt.timeAgoSinceDate()
     }
     
     static var mockData = [

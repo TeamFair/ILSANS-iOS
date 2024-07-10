@@ -10,6 +10,7 @@ import Foundation
 class MypageViewModel: ObservableObject {
     @Published var userData: User?
     @Published var challengeList: [Challenge] = []
+    @Published var questXp: [XP]?
     
     private let userNetwork: UserNetwork
     private let questNetwork: ChallengeNetwork

@@ -37,6 +37,8 @@
 		607FCBE92BFE418600BB2D04 /* QuestViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FCBE82BFE418600BB2D04 /* QuestViewModel.swift */; };
 		607FCBEB2BFE44D900BB2D04 /* IconView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FCBEA2BFE44D900BB2D04 /* IconView.swift */; };
 		607FCC332C01AA7300BB2D04 /* SubmitAlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FCC322C01AA7300BB2D04 /* SubmitAlertView.swift */; };
+		608EBF9F2C39C17F00B862CC /* Dictionary++.swift in Sources */ = {isa = PBXBuildFile; fileRef = 608EBF9E2C39C17F00B862CC /* Dictionary++.swift */; };
+		608EBFA12C39C5BB00B862CC /* String++.swift in Sources */ = {isa = PBXBuildFile; fileRef = 608EBFA02C39C5BB00B862CC /* String++.swift */; };
 		60943FE62C0A38FB00C8A714 /* ApprovalViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60943FE52C0A38FB00C8A714 /* ApprovalViewModel.swift */; };
 		60B8B9E72BF9EEF1005F6DE3 /* ILSANGApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60B8B9E62BF9EEF1005F6DE3 /* ILSANGApp.swift */; };
 		60B8B9E92BF9EEF1005F6DE3 /* QuestView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60B8B9E82BF9EEF1005F6DE3 /* QuestView.swift */; };
@@ -130,6 +132,8 @@
 		607FCBE82BFE418600BB2D04 /* QuestViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestViewModel.swift; sourceTree = "<group>"; };
 		607FCBEA2BFE44D900BB2D04 /* IconView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IconView.swift; sourceTree = "<group>"; };
 		607FCC322C01AA7300BB2D04 /* SubmitAlertView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubmitAlertView.swift; sourceTree = "<group>"; };
+		608EBF9E2C39C17F00B862CC /* Dictionary++.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Dictionary++.swift"; sourceTree = "<group>"; };
+		608EBFA02C39C5BB00B862CC /* String++.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String++.swift"; sourceTree = "<group>"; };
 		60943FE52C0A38FB00C8A714 /* ApprovalViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApprovalViewModel.swift; sourceTree = "<group>"; };
 		60B8B9E32BF9EEF1005F6DE3 /* ILSANG.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ILSANG.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		60B8B9E62BF9EEF1005F6DE3 /* ILSANGApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ILSANGApp.swift; sourceTree = "<group>"; };
@@ -238,9 +242,11 @@
 		605DA0D42C07122200CC9450 /* Extension */ = {
 			isa = PBXGroup;
 			children = (
+				608EBF9E2C39C17F00B862CC /* Dictionary++.swift */,
 				605DA0D52C07123400CC9450 /* View++.swift */,
 				6060B2E92C08947B0083944D /* Image++.swift */,
 				6044B71C2C32B6A4002C13A0 /* UIImage++.swift */,
+				608EBFA02C39C5BB00B862CC /* String++.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -699,12 +705,14 @@
 				60B8B9E92BF9EEF1005F6DE3 /* QuestView.swift in Sources */,
 				60C6B4D72C2C569800926C0E /* Challenge.swift in Sources */,
 				60B8B9E72BF9EEF1005F6DE3 /* ILSANGApp.swift in Sources */,
+				608EBF9F2C39C17F00B862CC /* Dictionary++.swift in Sources */,
 				A1C6422A2C33F55A004954CA /* QuestNetwork.swift in Sources */,
 				A1AB3D6C2C1142AA001EB9D8 /* LoginButton.swift in Sources */,
 				60C6B4D52C2C565700926C0E /* ChallengeNetwork.swift in Sources */,
 				A19628652C076D7B0037C53A /* SettingView.swift in Sources */,
 				607FCC332C01AA7300BB2D04 /* SubmitAlertView.swift in Sources */,
 				606292D82C19E70A0098B6D2 /* Network.swift in Sources */,
+				608EBFA12C39C5BB00B862CC /* String++.swift in Sources */,
 				600211EA2C1EEE6D000CC02E /* APITarget.swift in Sources */,
 				A1BB60282BFE129000AAADD4 /* MyPageList.swift in Sources */,
 				A196286D2C0859820037C53A /* TermsAndPolicyView.swift in Sources */,
@@ -904,7 +912,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 0.0.3;
 				PRODUCT_BUNDLE_IDENTIFIER = com.ilsang240615;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
@@ -943,7 +951,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 0.0.3;
 				PRODUCT_BUNDLE_IDENTIFIER = com.ilsang240615;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";

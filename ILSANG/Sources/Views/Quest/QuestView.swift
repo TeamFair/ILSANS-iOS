@@ -43,12 +43,13 @@ extension QuestView {
                     vm.selectedHeader = status
                 } label: {
                     Text(status.headerText)
-                        .foregroundColor(status == vm.selectedHeader ? .gray400 : .gray200)
+                        .foregroundColor(status == vm.selectedHeader ? .gray500 : .gray300)
                         .font(.system(size: 21, weight: .bold))
                         .frame(height: 30)
                 }
             }
         }
+        .frame(height: 50)
         .padding(.horizontal, 20)
     }
     
@@ -70,22 +71,16 @@ extension QuestView {
                     }
                 }
             }
-            .padding(.top, 17)
+            .padding(.top, 6)
             .padding(.bottom, 72)
         }
     }
     
     private var questListEmptyView: some View {
-        VStack(spacing: 16) {
-            Text(vm.selectedHeader.emptyTitle)
-                .foregroundStyle(.gray400)
-                .font(.system(size: 21, weight: .bold))
-            Text(vm.selectedHeader.emptySubTitle)
-                .foregroundStyle(.gray300)
-                .font(.system(size: 17, weight: .medium))
-                .lineSpacing(6)
-        }
-        .multilineTextAlignment(.center)
+        ErrorView(
+            title: vm.selectedHeader.emptyTitle,
+            subTitle: vm.selectedHeader.emptySubTitle
+        )
     }
     
     private var questSheetView: some View {
@@ -113,20 +108,21 @@ extension QuestView {
                 .foregroundStyle(.primaryPurple)
                 .background(
                     RoundedRectangle(cornerRadius: 14)
-                        .foregroundStyle(.gray100)
+                        .foregroundStyle(.primary100.opacity(0.5))
                 )
                 .padding(.bottom, 15)
             
             Text("퀘스트를 수행하셨나요?\n인증 후 포인트를 적립받으세요")
                 .font(.system(size: 14, weight: .regular))
                 .multilineTextAlignment(.center)
+                .lineSpacing(4)
                 .padding(.bottom, 26)
 
             PrimaryButton(title: "퀘스트 인증하기") {
                 vm.tappedQuestApprovalBtn()
             }
         }
-        .foregroundStyle(.gray400)
+        .foregroundStyle(.gray500)
         .padding(20)
     }
 }

@@ -14,7 +14,7 @@ struct TermsAndPolicyView: View {
     
     var body: some View {
         VStack(spacing: 0) {
-            NavigationTitleView(title: "약관 및 정책") {
+            NavigationTitleView(title: "약관 및 정책", isSeparatorHidden: true) {
                 dismiss()
             }
             
@@ -22,10 +22,10 @@ struct TermsAndPolicyView: View {
                 HStack {
                     VStack(alignment: .leading, spacing: 4) {
                         Text("서비스 이용약관")
-                            .foregroundColor(.black)
+                            .foregroundColor(.gray500)
 
                         Text("2024.02.01")
-                            .foregroundColor(Color.gray300)
+                            .foregroundColor(.gray300)
                     }
                     
                     Spacer()

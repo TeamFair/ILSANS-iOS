@@ -9,81 +9,89 @@ import SwiftUI
 
 struct SettingView: View {
     
-    
     @Environment(\.dismiss) var dismiss
-    
-    private let settingList: [Setting] = [
-        Setting(title: "고객센터",titleColor: false, arrow: true, subInfo: nil),
-        Setting(title: "약관 및 정책",titleColor: false, arrow: true, subInfo: nil),
-        Setting(title: "현재 버전",titleColor: false, arrow: false, subInfo: "v.0.0.1"),
-        Setting(title: "로그아웃",titleColor: false, arrow: false, subInfo: nil),
-        Setting(title: "회원 탈퇴",titleColor: true, arrow: true, subInfo: nil)
-       ]
-    
     @State private var logoutAlert = false
     
+    private let settingList: [Setting] = [
+        Setting(title: "고객센터", type: .navigate),
+        Setting(title: "약관 및 정책", type: .navigate),
+        Setting(title: "현재 버전", type: .info("v.0.0.1")),
+        Setting(title: "로그아웃", type: .alert),
+        Setting(title: "회원 탈퇴", titleColor: .subRed, type: .navigate)
+    ]
+    
     var body: some View {
-        ZStack {
-            VStack {
-                NavigationTitleView(title: "설정") {
-                    dismiss()
-                }
-                
-                List(settingList) { item in
-                    ZStack(alignment: .leading) {
-                        HStack {
-                            Text(item.title)
-                                .foregroundColor(item.titleColor ? Color.red : Color.black)
-                            Spacer()
-                            Text(item.subInfo ?? "")
-                                .foregroundColor(.gray200)
+        VStack(spacing: 0) {
+            NavigationTitleView(title: "설정", isSeparatorHidden: true) {
+                dismiss()
+            }
+            
+            List(settingList) { item in
+                Group {
+                    switch item.type {
+                    case .navigate:
+                        NavigationLink(destination: destinationView(for: item)) {
+                            settingListItemView(title: item.title, titleColor: item.titleColor)
                         }
-                        if item.title == "로그아웃" {
-                            Button(action: {
-                                logoutAlert.toggle()
-                            }) {
-                                EmptyView()
-                            }
-                            .opacity(item.arrow ? 1 : 0)
-                            
-                        } else if item.title == "현재 버전" {
-                                Spacer()
-                        }else {
-                            NavigationLink(destination: destinationView(for: item)) {
-                                EmptyView()
-                            }
-                            .opacity(item.arrow ? 1 : 0)
+                    case .alert:
+                        Button {
+                            logoutAlert.toggle()
+                        } label: {
+                            settingListItemView(title: item.title, titleColor: item.titleColor)
                         }
+                    case .info(let subInfo):
+                        settingListItemView(title: item.title, titleColor: item.titleColor, subInfo: subInfo)
                     }
                 }
-                .listStyle(.plain)
+                .listRowSeparator(.hidden)
             }
-            .navigationBarBackButtonHidden()
-            
+            .listStyle(.plain)
+        }
+        .navigationBarBackButtonHidden()
+        .overlay {
             if logoutAlert {
-                SettingAlertView(alertType: .Logout,onCancel: {logoutAlert = false}, onConfirm: {Task {
-                    // 로그아웃 함수 호출
-                    let result = await LogoutNetwork().getLogout()
-                    print(result)
-                }})
+                SettingAlertView(
+                    alertType: .Logout,
+                    onCancel: { logoutAlert = false },
+                    onConfirm: {
+                        Task {
+                            // 로그아웃 함수 호출
+                            let result = await LogoutNetwork().getLogout()
+                            print(result)
+                        }
+                    }
+                )
             }
         }
     }
     
+    private func settingListItemView(title: String, titleColor: Color, subInfo: String = "") -> some View {
+        HStack {
+            Text(title)
+                .font(.system(size: 17, weight: .bold))
+                .foregroundColor(titleColor)
+            Spacer()
+            Text(subInfo)
+                .font(.system(size: 17, weight: .regular))
+                .foregroundColor(.gray200)
+        }
+        .frame(height: 36)
+    }
+    
     //특정 Setting에 따라서 뷰를 다르게 호출
     @ViewBuilder
-       private func destinationView(for item: Setting) -> some View {
-           switch item.title {
-           case "고객센터":
-               CustomerServiceView()
-           case "약관 및 정책":
-               TermsAndPolicyView()
-           case "회원 탈퇴":
-               DeleteAccountView()
-           default:
-               Text(item.subInfo ?? "")
-           }
-       }
+    private func destinationView(for item: Setting) -> some View {
+        switch item.title {
+        case "고객센터":
+            CustomerServiceView()
+        case "약관 및 정책":
+            TermsAndPolicyView()
+        case "회원 탈퇴":
+            DeleteAccountView()
+        default:
+            Text("")
+        }
+    }
 }
 
 #Preview {

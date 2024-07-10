@@ -19,7 +19,7 @@ struct DeleteAccountView: View {
             Color.white.ignoresSafeArea()
             
             VStack(spacing: 0) {
-                NavigationTitleView(title: "회원 탈퇴") {
+                NavigationTitleView(title: "회원 탈퇴", isSeparatorHidden: true) {
                     dismiss()
                 }
                 

@@ -16,13 +16,18 @@ struct Challenge: Codable {
     let challengeId, userNickName: String
     let quest: QuestEntity
     let receiptImageId, status: String
+    let createdAt: String
     let likeCnt, hateCnt: Int
 }
 
 /// 서버에서 사용되는 Quest Entity
 struct QuestEntity: Codable {
     let questId: String
+    let missionTitle: String
+    let rewardTitle: String
     let missions: [Mission]
+    let status: String
+    let expireDate: String?
 }
 
 struct Mission: Codable {

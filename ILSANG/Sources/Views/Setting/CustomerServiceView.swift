@@ -13,7 +13,7 @@ struct CustomerServiceView: View {
     
     var body: some View {
         VStack(spacing: 0) {
-            NavigationTitleView(title: "고객센터") {
+            NavigationTitleView(title: "고객센터", isSeparatorHidden: true) {
                 dismiss()
             }
             
