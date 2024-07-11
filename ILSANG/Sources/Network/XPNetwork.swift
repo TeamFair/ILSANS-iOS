@@ -11,7 +11,7 @@ import Alamofire
 final class XPNetwork {
     private let url = APIManager.makeURL(CustomerTarget(path: "xp"))
     
-    func getXP(userId: String, title: String, page: Int, size: Int) async -> Result<XP,Error> {
+    func getXP(userId: String, title: String, page: Int) async -> Result<XP,Error> {
         let parameters: Parameters = ["userId": userId, "title": title,"page": page]
         return await Network.requestData(url: url + "", method: .get, parameters: parameters, withToken: true)
     }

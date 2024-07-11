@@ -15,12 +15,12 @@ struct MyPageProfile: View {
         NavigationLink(destination: ChangeNickNameView()) {
             HStack {
                 //프로필
-                ProfileImageView(profileImage: nil, level: vm.convertXPtoLv(XP: vm.userData?.xpPoint ?? 3))
+                ProfileImageView(profileImage: nil, level: vm.convertXPtoLv(XP: vm.userData?.xpPoint ?? 9))
                 
                 // 프로필 상세
                 VStack (alignment: .leading) {
                     //유저 이름
-                    Text(vm.userData?.nickname ?? "닉네임")
+                    Text(vm.userData?.nickname ?? "김일상123")
                         .font(.system(size: 16, weight: .bold))
                         .underline(true, color: .gray300)
                         .foregroundStyle(.gray500)
@@ -32,13 +32,13 @@ struct MyPageProfile: View {
                             .frame(height: 10)
                         
                         // 경험치 Text
-                        Text(String(vm.userData?.xpPoint ?? 1300)+"XP")
+                        Text(String(vm.userData?.xpPoint ?? 1250)+"XP")
                             .font(.system(size: 13))
                             .fontWeight(.bold)
                             .foregroundColor(.accentColor)
                     }
                     
-                    Text("다음 레벨까지 \(vm.xpForNextLv(XP:  vm.userData?.xpPoint ?? 1300))XP 남았어요!")
+                    Text("다음 레벨까지 \(vm.xpForNextLv(XP:  vm.userData?.xpPoint ?? 1000))XP 남았어요!")
                         .font(.system(size: 13))
                         .foregroundColor(.gray500)
                 }

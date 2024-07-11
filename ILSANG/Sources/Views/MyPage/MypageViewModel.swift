@@ -39,7 +39,7 @@ class MypageViewModel: ObservableObject {
     
     @MainActor
     func getxpLog(userId: String, title: String, page: Int) async {
-        let res = await xpNetwork.getXP(userId: userId, title: title, page: page, size: 10)
+        let res = await xpNetwork.getXP(userId: userId, title: title, page: page)
         
         switch res {
         case .success(let model):
