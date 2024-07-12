@@ -20,7 +20,7 @@ struct MyPageProfile: View {
                 // 프로필 상세
                 VStack (alignment: .leading) {
                     //유저 이름
-                    Text(vm.userData?.nickname ?? "김일상123")
+                    Text(vm.userData?.nickname ?? "일상73079405")
                         .font(.system(size: 16, weight: .bold))
                         .underline(true, color: .gray300)
                         .foregroundStyle(.gray500)
@@ -28,17 +28,17 @@ struct MyPageProfile: View {
                     
                     HStack {
                         // 프로그레스 바
-                        ProgressBar(userXP: vm.userData?.xpPoint ?? 40, levelXP: 100)
+                        ProgressBar(userXP: vm.userData?.xpPoint ?? 0, levelXP: 100)
                             .frame(height: 10)
                         
                         // 경험치 Text
-                        Text(String(vm.userData?.xpPoint ?? 1250)+"XP")
+                        Text(String(vm.userData?.xpPoint ?? 0)+"XP")
                             .font(.system(size: 13))
                             .fontWeight(.bold)
                             .foregroundColor(.accentColor)
                     }
                     
-                    Text("다음 레벨까지 \(vm.xpForNextLv(XP:  vm.userData?.xpPoint ?? 1000))XP 남았어요!")
+                    Text("다음 레벨까지 \(vm.xpForNextLv(XP:  vm.userData?.xpPoint ?? 50))XP 남았어요!")
                         .font(.system(size: 13))
                         .foregroundColor(.gray500)
                 }
