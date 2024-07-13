@@ -35,4 +35,13 @@ extension String {
         
         return formattedDate
     }
+    
+    /// 서버에서 보내주는 값을 1,000 형태로 포맷 변경
+    /// 천의 자리 배수에 ","을 추가합니다. "1,000,000" 형식
+    func formatNumberInText() -> String {
+        guard let num = Int(self) else { return self }
+        let numberFormatter = NumberFormatter()
+        numberFormatter.numberStyle = .decimal
+        return numberFormatter.string(from: NSNumber(value: num)) ?? ""
+    }
 }

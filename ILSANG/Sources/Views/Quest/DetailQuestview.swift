@@ -35,24 +35,24 @@ struct DetailQuestview: View {
             VStack {
                 Spacer()
                 
-                VStack(alignment: .leading) {
-                    Text(QuestData.questTitle)
-                        .font(.headline)
-                        .padding(.bottom, 1)
-                    
-                    HStack {
-                        Text(QuestData.questDetail)
-                        Spacer()
-                        Text(QuestData.questDate)
+                HStack() {
+                    VStack (alignment: .leading) {
+                        Text(QuestData.questTitle)
+                            .font(.headline)
+                            .padding(.bottom, 1)
+                        
+                        Text("조회수 \((QuestData.questXP).description.formatNumberInText())회 | 좋아요 \(QuestData.questLike)개")
+                            .font(.subheadline)
+                            .foregroundColor(.gray)
                     }
-                    .font(.subheadline)
-                    .foregroundColor(.gray)
                     
                     Spacer()
                     
-                    Text("\(QuestData.questLike) 개")
-                        .font(.subheadline)
-                        .foregroundColor(.gray)
+                    VStack{
+                        Text(QuestData.questDate)
+                            .font(.subheadline)
+                            .foregroundColor(.gray)
+                    }
                 }
                 .padding()
                 .frame(maxWidth: .infinity, maxHeight: 80)
