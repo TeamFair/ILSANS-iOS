@@ -26,10 +26,24 @@ struct DetailQuestview: View {
                     .aspectRatio(contentMode: .fit)
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
             } else {
-                Text("이미지를 불러오는 중...")
-                    .onAppear {
-                        // 이미지가 없을 시 재시도 로직
-                    }
+                VStack (alignment: .center,spacing: 6) {
+                    Text("챌린지 정보를 불러오지 못했어요")
+                        .font(.system(size: 21, weight: .bold))
+                    
+                    Text("챌린지 정보를 불러오는 데 실패했어요.\n인터넷 연결 상태 확인 후 다시 시도해주세요.")
+                        .multilineTextAlignment(.center)
+                        .font(.system(size: 17, weight: .medium))
+                        .foregroundColor(.gray)
+                    
+                    Spacer()
+                        .frame(height: 35)
+                    
+                    PrimaryButton(title: "다시 시도", action: {print("tapped")})
+                        .frame(width: 151)
+                    
+                }
+                .frame(maxWidth: .infinity,maxHeight: .infinity)
+                .background(Color.background)
             }
             
             VStack {
