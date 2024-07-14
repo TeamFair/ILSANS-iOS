@@ -10,13 +10,16 @@ import Foundation
 class MypageViewModel: ObservableObject {
     @Published var userData: User?
     @Published var challengeList: [Challenge] = []
+    @Published var questXp: [XP]?
     
     private let userNetwork: UserNetwork
     private let questNetwork: ChallengeNetwork
+    private let xpNetwork: XPNetwork
     
-    init(userData: User? = nil, userNetwork: UserNetwork, questNetwork: ChallengeNetwork) {
+    init(userData: User? = nil, userNetwork: UserNetwork, xpNetwork: XPNetwork, questNetwork: ChallengeNetwork) {
         self.userData = userData
         self.userNetwork = userNetwork
+        self.xpNetwork = xpNetwork
         self.questNetwork = questNetwork
     }
     
@@ -35,6 +38,21 @@ class MypageViewModel: ObservableObject {
     }
     
     @MainActor
+    func getxpLog(userId: String, title: String, page: Int) async {
+        let res = await xpNetwork.getXP(userId: userId, title: title, page: page)
+        
+        switch res {
+        case .success(let model):
+            self.questXp = [model]
+            Log(questXp)
+            
+        case .failure:
+            self.questXp = nil
+            
+        }
+    }
+    
+    @MainActor
     func getQuest(page: Int) async {
         let Data = await questNetwork.getChallenges(page: page)
         
@@ -46,6 +64,30 @@ class MypageViewModel: ObservableObject {
         case .failure:
             self.challengeList = []
         }
+    }
+    
+    func convertXPtoLv(XP: Int) -> Int {
+        var totalXP = 0
+        var level = 0
+        
+        while totalXP <= XP {
+            level += 1
+            totalXP += 50 * level
+        }
+        
+        return level - 1
+    }
+    
+    func xpForNextLv(XP: Int) -> String {
+        let currentLevel = convertXPtoLv(XP: XP)
+        let nextLevel = currentLevel + 1
+        var totalXP = 0
+        
+        for n in 1...nextLevel {
+            totalXP += 50 * n
+        }
+        
+        return String( totalXP - XP )
     }
 }
 
