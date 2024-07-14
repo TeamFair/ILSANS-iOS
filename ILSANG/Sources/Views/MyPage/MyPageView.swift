@@ -14,10 +14,11 @@ struct MyPageView: View {
         QuestDetail(questTitle: "Title2", questImage: nil, questDetail: "Detail2", questLike: 100, questDate: "2023.03.06",questXP: 3,status: .QUEST)
        ]
     
-    @StateObject var vm: MypageViewModel = MypageViewModel(userNetwork: UserNetwork(), questNetwork: ChallengeNetwork())
+    @StateObject var vm: MypageViewModel = MypageViewModel(userNetwork: UserNetwork(),xpNetwork: XPNetwork(), questNetwork: ChallengeNetwork())
     @State var segmentSelect = 0
     @State private var isSettingsViewActive = false
-        
+    
+    
     var body: some View {
         NavigationView {
             VStack(spacing: 0) {
@@ -50,6 +51,7 @@ struct MyPageView: View {
         }
         .task {
             await vm.getQuest(page: 0)
+            Log(vm.challengeList)
         }
     }
 }
