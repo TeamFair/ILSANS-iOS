@@ -51,7 +51,11 @@ struct MyPageView: View {
         }
         .task {
             await vm.getQuest(page: 0)
-            Log(vm.challengeList)
+            
+            if segmentSelect == 1 {
+                //MARK: 로그인 후 유저 연동
+                await vm.getxpLog(userId: "string", title: "string", page: 1)
+            }
         }
     }
 }
