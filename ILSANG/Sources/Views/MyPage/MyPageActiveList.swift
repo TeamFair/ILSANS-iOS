@@ -9,6 +9,8 @@ import SwiftUI
 
 struct MyPageActiveList: View {
     
+    @StateObject var vm: MypageViewModel = MypageViewModel(userNetwork: UserNetwork(),xpNetwork: XPNetwork(), questNetwork: ChallengeNetwork(), imageNetwork: ImageNetwork())
+    
     @Binding var activeData: [XPContent]
     
     var body: some View {
@@ -41,7 +43,7 @@ struct MyPageActiveList: View {
                     }
                 }
                 .refreshable {
-                    // 데이터 리프레시
+                    await vm.getxpLog(userId: "string", title: "string", page: 1)
                 }
             }
             .frame(maxWidth: .infinity, maxHeight: .infinity)

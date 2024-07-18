@@ -9,6 +9,8 @@ import SwiftUI
 //MARK: 색상 폰트 변경 요청
 struct MyPageQuestList: View {
     
+    @StateObject var vm: MypageViewModel = MypageViewModel(userNetwork: UserNetwork(),xpNetwork: XPNetwork(), questNetwork: ChallengeNetwork(), imageNetwork: ImageNetwork())
+    
     @Binding var questData: [Challenge]
     
     var body: some View {
@@ -33,7 +35,7 @@ struct MyPageQuestList: View {
                 }
             }
             .refreshable {
-                // 데이터 리프레시
+                await vm.getQuest(page: 0)
             }
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
