@@ -10,8 +10,11 @@ import SwiftUI
 struct DetailQuestview: View {
     
     @Environment(\.dismiss) var dismiss
+    @StateObject var vm: MypageViewModel = MypageViewModel(userNetwork: UserNetwork(),xpNetwork: XPNetwork(), questNetwork: ChallengeNetwork(), imageNetwork: ImageNetwork())
     
-    let QuestData : QuestDetail
+    @State private var missionImage: UIImage? = nil
+    
+    let QuestData : Challenge
     
     var body: some View {
         
@@ -20,7 +23,7 @@ struct DetailQuestview: View {
         }
         
         ZStack {
-            if let missionImage = QuestData.questImage {
+            if let missionImage = missionImage {
                 Image(uiImage: missionImage)
                     .resizable()
                     .aspectRatio(contentMode: .fit)
@@ -46,36 +49,40 @@ struct DetailQuestview: View {
                 .background(Color.background)
             }
             
-            VStack {
-                Spacer()
-                
-                HStack() {
-                    VStack (alignment: .leading) {
-                        Text(QuestData.questTitle)
-                            .font(.headline)
-                            .padding(.bottom, 1)
-                        
-//                        Text("조회수 \((QuestData.questXP).description.formatNumberInText())회 | 좋아요 \(QuestData.questLike)개")
-                        Text("좋아요 \(QuestData.questLike)개")
-                            .font(.subheadline)
-                            .foregroundColor(.gray)
-                    }
-                    
+            if let missionImage = missionImage {
+                VStack {
                     Spacer()
                     
-                    VStack{
-                        Text(QuestData.questDate)
-                            .font(.subheadline)
-                            .foregroundColor(.gray)
+                    HStack() {
+                        VStack (alignment: .leading) {
+                            Text(QuestData.quest.missionTitle)
+                                .font(.headline)
+                                .padding(.bottom, 1)
+                            
+                            Text("좋아요 \(QuestData.likeCnt)개")
+                                .font(.subheadline)
+                                .foregroundColor(.gray)
+                        }
+                        
+                        Spacer()
+                        
+                        VStack{
+                            Text(QuestData.quest.expireDate ?? "")
+                                .font(.subheadline)
+                                .foregroundColor(.gray)
+                        }
                     }
+                    .padding()
+                    .frame(maxWidth: .infinity, maxHeight: 80)
+                    .background(Color(.systemGray6))
+                    .cornerRadius(10)
+                    .shadow(radius: 5)
+                    .padding()
                 }
-                .padding()
-                .frame(maxWidth: .infinity, maxHeight: 80)
-                .background(Color(.systemGray6))
-                .cornerRadius(10)
-                .shadow(radius: 5)
-                .padding()
-            }
+            } 
+        }
+        .task {
+            missionImage = await vm.getImage(imageId: QuestData.challengeId)
         }
         .navigationBarBackButtonHidden()
     }

@@ -13,7 +13,6 @@ struct MyPageActiveList: View {
     
     var body: some View {
         
-        
         if activeData.isEmpty {
             VStack {
                 Text("Coming Soon!")

@@ -12,42 +12,31 @@ struct MyPageQuestList: View {
     @Binding var questData: [Challenge]
     
     var body: some View {
-        
-        if questData.isEmpty {
-            VStack {
-                Text("Coming Soon!")
-                    .font(.system(size: 17))
-                    .fontWeight(.medium)
-                    .foregroundColor(.gray400)
-                    .multilineTextAlignment(.center)
-                    .refreshable {
-                        // 데이터 리프레시
-                    }
-                    .frame(maxWidth: .infinity, maxHeight: .infinity)
-            }
-        } else {
-            VStack(alignment: .leading) {
-                Text("최근 활동 순")
+
+        VStack(alignment: .leading) {
+            HStack {
+                Text("수행한 챌린지")
                     .font(.system(size: 14))
                     .fontWeight(.medium)
                     .foregroundColor(.gray400)
                 
-                // Data List
-                ScrollView {
-                    VStack(spacing: 12) {
-                        ForEach(questData) { Data in
-                            NavigationLink(destination: DetailQuestview(QuestData: Data.quest)) {
-                                ListStruct(title: Data.questTitle, detail: Data.questDetail, point: Data.questXP)
-                            }
+                Spacer()
+            }
+            // Data List
+            ScrollView {
+                VStack(spacing: 12) {
+                    ForEach(questData) { Data in
+                        NavigationLink(destination: DetailQuestview(QuestData: Data)) {
+                            ListStruct(title: Data.quest.missionTitle, detail: Data.quest.expireDate ?? "", point: nil)
                         }
                     }
                 }
-                .refreshable {
-                    // 데이터 리프레시
-                }
             }
-            .frame(maxWidth: .infinity, maxHeight: .infinity)
+            .refreshable {
+                // 데이터 리프레시
+            }
         }
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
     }
 }
 

@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import UIKit
 
 class MypageViewModel: ObservableObject {
     @Published var userData: User?
@@ -14,13 +15,15 @@ class MypageViewModel: ObservableObject {
     
     private let userNetwork: UserNetwork
     private let questNetwork: ChallengeNetwork
+    private let imageNetwork: ImageNetwork
     private let xpNetwork: XPNetwork
     
-    init(userData: User? = nil, userNetwork: UserNetwork, xpNetwork: XPNetwork, questNetwork: ChallengeNetwork) {
+    init(userData: User? = nil, userNetwork: UserNetwork, xpNetwork: XPNetwork, questNetwork: ChallengeNetwork, imageNetwork: ImageNetwork) {
         self.userData = userData
         self.userNetwork = userNetwork
         self.xpNetwork = xpNetwork
         self.questNetwork = questNetwork
+        self.imageNetwork = imageNetwork
     }
     
     @MainActor
@@ -62,7 +65,7 @@ class MypageViewModel: ObservableObject {
             Log(self.challengeList)
 
         case .failure:
-            self.challengeList = []
+            self.challengeList = nil
         }
     }
     
@@ -88,6 +91,17 @@ class MypageViewModel: ObservableObject {
         }
         
         return String( totalXP - XP )
+    }
+    
+    @MainActor
+     func getImage(imageId: String) async -> UIImage? {
+        let res = await imageNetwork.getImage(imageId: imageId)
+        switch res {
+        case .success(let uiImage):
+            return uiImage
+        case .failure:
+            return nil
+        }
     }
 }
 
