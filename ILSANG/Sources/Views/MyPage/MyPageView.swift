@@ -44,7 +44,15 @@ struct MyPageView: View {
                 MyPageSegment(selectedIndex: $segmentSelect)
                 
                 // 퀘스트/활동/뱃지 리스트
-                MyPageList(data: $testData, segmentSelect: $segmentSelect)
+                switch segmentSelect {
+                case 0:
+                    MyPageQuestList(questData: $vm.challengeList?)
+                case 1:
+                    MyPageActiveList(activeData: $vm.questXp?)
+                case 2:
+                    //뱃지 구현후 적용
+                    MyPageBadgeList(badgeData: nil)
+                }
             }
             .padding(.horizontal, 20)
             .background(Color.background)

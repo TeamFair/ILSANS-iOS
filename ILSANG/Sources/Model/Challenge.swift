@@ -5,6 +5,8 @@
 //  Created by Lee Jinhee on 6/26/24.
 //
 
+import Foundation
+
 // TODO: ResponseWithPage와 응답 형식 통일 요청 후 수정
 // MARK: - ICH004 에서 사용되는 모델
 struct RandomChallengeList: Codable {
@@ -12,7 +14,8 @@ struct RandomChallengeList: Codable {
     let last: Bool?
 }
 
-struct Challenge: Codable {
+struct Challenge: Codable, Identifiable {
+    var id = UUID()
     let challengeId, userNickName: String
     let quest: QuestEntity
     let receiptImageId, status: String

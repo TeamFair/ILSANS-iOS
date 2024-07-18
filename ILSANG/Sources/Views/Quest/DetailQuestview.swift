@@ -55,7 +55,8 @@ struct DetailQuestview: View {
                             .font(.headline)
                             .padding(.bottom, 1)
                         
-                        Text("조회수 \((QuestData.questXP).description.formatNumberInText())회 | 좋아요 \(QuestData.questLike)개")
+//                        Text("조회수 \((QuestData.questXP).description.formatNumberInText())회 | 좋아요 \(QuestData.questLike)개")
+                        Text("좋아요 \(QuestData.questLike)개")
                             .font(.subheadline)
                             .foregroundColor(.gray)
                     }

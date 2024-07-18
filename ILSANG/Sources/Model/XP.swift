@@ -20,7 +20,8 @@ struct XP: Decodable {
     let message: String
 }
 
-struct XPContent: Decodable {
+struct XPContent: Decodable, Identifiable {
+    var id = UUID()
     let recordId: Int
     let title: String
     let xpPoint: Int

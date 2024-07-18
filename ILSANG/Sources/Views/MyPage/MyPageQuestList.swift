@@ -1,5 +1,5 @@
 //
-//  MyPageList.swift
+//  MyPageQuestList.swift
 //  ILSANG
 //
 //  Created by Kim Andrew on 5/22/24.
@@ -7,16 +7,13 @@
 
 import SwiftUI
 //MARK: 색상 폰트 변경 요청
-struct MyPageList: View {
+struct MyPageQuestList: View {
     
-    @Binding var data: [QuestDetail]
-    @Binding var segmentSelect : Int
+    @Binding var questData: [Challenge]
     
     var body: some View {
         
-        let item = data.filter{$0.status == convertStatus(idx: segmentSelect)}
-        
-        if item.isEmpty {
+        if questData.isEmpty {
             VStack {
                 Text("Coming Soon!")
                     .font(.system(size: 17))
@@ -38,8 +35,8 @@ struct MyPageList: View {
                 // Data List
                 ScrollView {
                     VStack(spacing: 12) {
-                        ForEach(item) { Data in
-                            NavigationLink(destination: DetailQuestview(QuestData: Data)) {
+                        ForEach(questData) { Data in
+                            NavigationLink(destination: DetailQuestview(QuestData: Data.quest)) {
                                 ListStruct(title: Data.questTitle, detail: Data.questDetail, point: Data.questXP)
                             }
                         }
@@ -58,7 +55,7 @@ struct ListStruct: View {
     
     let title: String
     let detail: String
-    let point: Int
+    let point: Int?
     
     var body: some View {
         HStack {
@@ -73,9 +70,11 @@ struct ListStruct: View {
             
             Spacer()
             
-            Text("+\(point)XP")
-                .font(.system(size: 17, weight: .semibold))
-                .foregroundColor(Color.accentColor)
+            if (point != nil) {
+                Text("+\(point ?? 0)XP")
+                    .font(.system(size: 17, weight: .semibold))
+                    .foregroundColor(Color.accentColor)
+            }
         }
         .padding(20)
         .background(
@@ -85,7 +84,7 @@ struct ListStruct: View {
     }
 }
 
-extension MyPageList {
+extension MyPageQuestList {
     //Status로 변경
     private func convertStatus(idx: Int) -> SegmenetStatus{
         switch idx {

@@ -9,8 +9,8 @@ import Foundation
 
 class MypageViewModel: ObservableObject {
     @Published var userData: User?
-    @Published var challengeList: [Challenge] = []
-    @Published var questXp: [XP]?
+    @Published var challengeList: [Challenge]?
+    @Published var questXp: [XPContent]?
     
     private let userNetwork: UserNetwork
     private let questNetwork: ChallengeNetwork
@@ -43,7 +43,7 @@ class MypageViewModel: ObservableObject {
         
         switch res {
         case .success(let model):
-            self.questXp = [model]
+            self.questXp = [model.data]
             Log(questXp)
             
         case .failure:
