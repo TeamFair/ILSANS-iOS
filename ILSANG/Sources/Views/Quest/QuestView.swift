@@ -78,6 +78,9 @@ extension QuestView {
             .padding(.bottom, 72)
         }
         .frame(maxWidth: .infinity)
+        .refreshable {
+            await vm.loadQuestListWithImage(page: 0, status: vm.selectedHeader)
+        }
         .overlay {
             if vm.isCurrentListEmpty {
                 questListEmptyView
@@ -89,7 +92,9 @@ extension QuestView {
         ErrorView(
             title: vm.selectedHeader.emptyTitle,
             subTitle: vm.selectedHeader.emptySubTitle
-        )
+        ) {
+            Task { await vm.loadInitialData() }
+        }
     }
     
     private var networkErrorView: some View {
@@ -98,7 +103,9 @@ extension QuestView {
             title: "네트워크 연결 상태를 확인해주세요",
             subTitle: "네트워크 연결 상태가 좋지 않아\n퀘스트를 불러올 수 없어요 ",
             emoticon: "🥲"
-        )
+        ) {
+            Task { await vm.loadInitialData() }
+        }
     }
     
     private var questSheetView: some View {
