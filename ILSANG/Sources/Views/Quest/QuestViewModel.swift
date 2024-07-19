@@ -34,6 +34,8 @@ class QuestViewModel: ObservableObject {
             return itemListByStatus[.completed, default: []].isEmpty
         }
     }
+    var isCompletedQuestPageable: Bool = false
+    var isUncompletedQuestPageable: Bool = false
     
     private let imageNetwork: ImageNetwork
     private let questNetwork: QuestNetwork
@@ -106,9 +108,21 @@ class QuestViewModel: ObservableObject {
         
         switch result {
         case .success(let response):
+            let hasMorePages = (page + 1) * response.size < response.total
+            setPageableStatus(status: status, hasMorePages: hasMorePages)
             return response.data.map { QuestViewModelItem(quest: $0) }
         case .failure:
+            setPageableStatus(status: status, hasMorePages: false)
             return []
+        }
+    }
+    
+    private func setPageableStatus(status: QuestStatus, hasMorePages: Bool) {
+        switch status {
+        case .uncompleted:
+            isUncompletedQuestPageable = hasMorePages
+        case .completed:
+            isCompletedQuestPageable = hasMorePages
         }
     }
     

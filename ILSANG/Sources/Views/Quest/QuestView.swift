@@ -67,10 +67,32 @@ extension QuestView {
                             QuestItemView(quest: quest, status: .uncompleted)
                         }
                     }
-                  
+                    if vm.isUncompletedQuestPageable {
+                        ProgressView()
+                            .onAppear {
+                                Task {
+                                    await vm.loadQuestListWithImage(
+                                        page: vm.itemListByStatus[.uncompleted, default: []].count / 10,
+                                        status: .uncompleted
+                                    )
+                                }
+                            }
+                    }
+                    
                 case .completed:
                     ForEach(vm.itemListByStatus[.completed, default: []], id: \.id) { quest in
                         QuestItemView(quest: quest, status: .completed)
+                    }
+                    if vm.isCompletedQuestPageable {
+                        ProgressView()
+                            .onAppear {
+                                Task {
+                                    await vm.loadQuestListWithImage(
+                                        page: vm.itemListByStatus[.completed, default: []].count / 10,
+                                        status: .completed
+                                    )
+                                }
+                            }
                     }
                 }
             }
