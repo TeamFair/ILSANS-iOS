@@ -14,26 +14,29 @@ struct NavigationTitleView: View {
     var action: (() -> Void?)? = nil
     
     var body: some View {
-        Text(title)
-            .frame(maxWidth: .infinity)
-            .overlay(alignment: .leading) {
-                if !isDismissButtonHidden {
-                    Button {
-                        self.action?()
-                    } label: {
-                        DismissButton()
+        VStack (spacing: 0) {
+            Text(title)
+                .frame(maxWidth: .infinity)
+                .overlay(alignment: .leading) {
+                    if !isDismissButtonHidden {
+                        Button {
+                            self.action?()
+                        } label: {
+                            DismissButton()
+                        }
                     }
                 }
+                .foregroundColor(.gray500)
+                .font(.system(size: 17, weight: .bold))
+                .padding(.horizontal, 20)
+                .frame(height: 45)
+                .background(Color.white)
+            
+            if !isSeparatorHidden {
+                SeparatorView()
             }
-            .foregroundColor(.gray500)
-            .font(.system(size: 17, weight: .bold))
-            .padding(.horizontal, 20)
-            .frame(height: 45)
-            .background(Color.white)
-        
-        if !isSeparatorHidden {
-            SeparatorView()
         }
+        .padding(.bottom, -8)
     }
 }
 

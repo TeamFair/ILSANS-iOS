@@ -49,7 +49,7 @@ struct DetailQuestview: View {
                 .background(Color.background)
             }
             
-            if let missionImage = missionImage {
+            if missionImage != nil {
                 VStack {
                     Spacer()
                     

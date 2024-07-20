@@ -54,8 +54,8 @@ struct MyPageView: View {
                 switch segmentSelect {
                 case 0:
                     if let questData = vm.challengeList {
-                        //MyPageQuestList(questData: .constant(testData))
-                        MyPageQuestList(questData: .constant(questData))
+                        MyPageQuestList(questData: .constant(testData))
+                        //MyPageQuestList(questData: .constant(questData))
                     } else {
                         emptyView()
                     }
@@ -63,8 +63,8 @@ struct MyPageView: View {
                     if let activeData = vm.questXp {
                         MyPageActiveList(activeData: .constant(activeData))
                     } else {
-                        //MyPageActiveList(activeData: .constant(activeTestData))
-                        emptyView()
+                        MyPageActiveList(activeData: .constant(activeTestData))
+                        //emptyView()
                     }
                 case 2:
                     emptyView()
