@@ -18,7 +18,7 @@ struct DetailQuestview: View {
     
     var body: some View {
         
-        NavigationTitleView(title: "퀘스트 정보") {
+        NavigationTitleView(title: "챌린지 정보") {
             dismiss()
         }
         
@@ -36,7 +36,7 @@ struct DetailQuestview: View {
                     Text("챌린지 정보를 불러오는 데 실패했어요.\n인터넷 연결 상태 확인 후 다시 시도해주세요.")
                         .multilineTextAlignment(.center)
                         .font(.system(size: 17, weight: .medium))
-                        .foregroundColor(.gray)
+                        .foregroundColor(.gray400)
                     
                     Spacer()
                         .frame(height: 35)
@@ -61,7 +61,7 @@ struct DetailQuestview: View {
                             
                             Text("좋아요 \(QuestData.likeCnt)개")
                                 .font(.subheadline)
-                                .foregroundColor(.gray)
+                                .foregroundColor(.gray500)
                         }
                         
                         Spacer()
@@ -69,12 +69,12 @@ struct DetailQuestview: View {
                         VStack{
                             Text(QuestData.quest.expireDate ?? "")
                                 .font(.subheadline)
-                                .foregroundColor(.gray)
+                                .foregroundColor(.gray400)
                         }
                     }
                     .padding()
                     .frame(maxWidth: .infinity, maxHeight: 80)
-                    .background(Color(.systemGray6))
+                    .background(Color(.gray300))
                     .cornerRadius(10)
                     .shadow(radius: 5)
                     .padding()
@@ -82,7 +82,7 @@ struct DetailQuestview: View {
             } 
         }
         .task {
-            missionImage = await vm.getImage(imageId: QuestData.challengeId)
+            missionImage = await vm.getImage(imageId: QuestData.receiptImageId)
         }
         .navigationBarBackButtonHidden()
     }
