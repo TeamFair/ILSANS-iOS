@@ -41,7 +41,12 @@ struct DetailQuestview: View {
                     Spacer()
                         .frame(height: 35)
                     
-                    PrimaryButton(title: "다시 시도", action: {print("tapped")})
+                    PrimaryButton(title: "다시 시도",
+                                  action: {
+                        Task {
+                            missionImage = await vm.getImage(imageId: QuestData.receiptImageId)
+                        }
+                    })
                         .frame(width: 151)
                     
                 }
