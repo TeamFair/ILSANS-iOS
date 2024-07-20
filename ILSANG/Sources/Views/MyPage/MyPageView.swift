@@ -67,8 +67,10 @@ struct MyPageView: View {
                         emptyView()
                     }
                 case 2:
+                    emptyView()
+                    
                     // 뱃지 구현후 적용
-                    MyPageBadgeList(badgeData: .constant([]))
+                    //MyPageBadgeList(badgeData: .constant([]))
                 default:
                     emptyView()
                 }
