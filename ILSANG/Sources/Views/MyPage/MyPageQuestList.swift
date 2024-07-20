@@ -74,19 +74,3 @@ struct ListStruct: View {
         )
     }
 }
-
-extension MyPageQuestList {
-    //Status로 변경
-    private func convertStatus(idx: Int) -> SegmenetStatus{
-        switch idx {
-        case 0:
-            return .QUEST
-        case 1:
-            return .ACTIVITY
-        case 2:
-            return .BADGE
-        default:
-            return .QUEST
-        }
-    }
-}
