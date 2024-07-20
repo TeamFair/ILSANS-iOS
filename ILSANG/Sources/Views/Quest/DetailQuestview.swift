@@ -67,7 +67,7 @@ struct DetailQuestview: View {
                         Spacer()
                         
                         VStack{
-                            Text(QuestData.quest.expireDate ?? "")
+                            Text(QuestData.createdAt)
                                 .font(.subheadline)
                                 .foregroundColor(.gray400)
                         }
