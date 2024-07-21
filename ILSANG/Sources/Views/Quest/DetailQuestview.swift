@@ -29,29 +29,12 @@ struct DetailQuestview: View {
                     .aspectRatio(contentMode: .fit)
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
             } else {
-                VStack (alignment: .center,spacing: 6) {
-                    Text("챌린지 정보를 불러오지 못했어요")
-                        .font(.system(size: 21, weight: .bold))
-                    
-                    Text("챌린지 정보를 불러오는 데 실패했어요.\n인터넷 연결 상태 확인 후 다시 시도해주세요.")
-                        .multilineTextAlignment(.center)
-                        .font(.system(size: 17, weight: .medium))
-                        .foregroundColor(.gray400)
-                    
-                    Spacer()
-                        .frame(height: 35)
-                    
-                    PrimaryButton(title: "다시 시도",
-                                  action: {
-                        Task {
-                            missionImage = await vm.getImage(imageId: QuestData.receiptImageId)
-                        }
-                    })
-                        .frame(width: 151)
-                    
+                ErrorView(title: "챌린지 정보를 불러오지 못했어요", subTitle: "챌린지 정보를 불러오는 데 실패했어요.\n인터넷 연결 상태 확인 후 다시 시도해주세요."){
+                    Task {
+                        missionImage = await vm.getImage(imageId: QuestData.receiptImageId)
+                    }
                 }
-                .frame(maxWidth: .infinity,maxHeight: .infinity)
-                .background(Color.background)
+                    .background(Color.background)
             }
             
             if missionImage != nil {
