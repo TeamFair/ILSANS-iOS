@@ -29,7 +29,7 @@ struct MyPageActiveList: View {
                 }
             }
             .refreshable {
-                await vm.getxpLog(userId: "string", title: "string", page: 1)
+                await vm.getxpLog(userId: "string", title: "string", page: 1, size: 10)
             }
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)

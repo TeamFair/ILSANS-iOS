@@ -13,7 +13,7 @@ struct XPModel: Decodable {
 
 struct XP: Decodable {
     let size: Int
-    let data: XPContent
+    let data: [XPContent]
     let total: Int
     let page: Int
     let status: String

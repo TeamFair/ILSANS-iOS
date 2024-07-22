@@ -80,7 +80,7 @@ struct MyPageView: View {
         }
         .task {
             await vm.getQuest(page: 0)
-            await vm.getxpLog(userId: "string", title: "string", page: 1)
+            await vm.getxpLog(userId: "string", title: "string", page: 1, size: 10)
         }
     }
 }

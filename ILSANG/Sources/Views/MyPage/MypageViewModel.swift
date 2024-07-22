@@ -37,21 +37,22 @@ class MypageViewModel: ObservableObject {
             
         case .failure:
             self.userData = nil
+            Log(res)
         }
     }
     
     @MainActor
-    func getxpLog(userId: String, title: String, page: Int) async {
-        let res = await xpNetwork.getXP(userId: userId, title: title, page: page)
+    func getxpLog(userId: String, title: String, page: Int, size: Int) async {
+        let res = await xpNetwork.getXP(userId: userId, title: title, page: page, size: 10)
         
         switch res {
         case .success(let model):
-            self.questXp = [model.data]
+            self.questXp = model.data
             Log(questXp)
             
         case .failure:
             self.questXp = nil
-            
+            Log(res)
         }
     }
     
