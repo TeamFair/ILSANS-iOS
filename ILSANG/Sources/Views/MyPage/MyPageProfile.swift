@@ -28,7 +28,7 @@ struct MyPageProfile: View {
                     
                     HStack {
                         // 프로그레스 바
-                        ProgressBar(userXP: vm.userData?.xpPoint ?? 0, levelXP: 100)
+                        ProgressBar(userXP: vm.userData?.xpPoint ?? 0, levelXP: vm.xpForNextLevel(currentXP: vm.userData?.xpPoint ?? 100))
                             .frame(height: 10)
                         
                         // 경험치 Text

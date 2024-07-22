@@ -82,6 +82,18 @@ class MypageViewModel: ObservableObject {
         return level - 1
     }
     
+    func xpForNextLevel(currentXP: Int) -> Int {
+        let currentLevel = convertXPtoLv(XP: currentXP)
+        let nextLevel = currentLevel + 1
+        var totalXPForNextLevel = 0
+        
+        for n in 1...nextLevel {
+            totalXPForNextLevel += 50 * n
+        }
+        
+        return totalXPForNextLevel - currentXP
+    }
+    
     func xpForNextLv(XP: Int) -> String {
         let currentLevel = convertXPtoLv(XP: XP)
         let nextLevel = currentLevel + 1
