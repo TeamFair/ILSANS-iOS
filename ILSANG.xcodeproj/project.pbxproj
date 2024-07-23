@@ -39,12 +39,13 @@
 		607FCBDD2BFA686700BB2D04 /* MyPageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FCBDC2BFA686700BB2D04 /* MyPageView.swift */; };
 		607FCBE22BFA6A8300BB2D04 /* Buttons.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FCBE12BFA6A8300BB2D04 /* Buttons.swift */; };
 		607FCBE42BFD124900BB2D04 /* QuestItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FCBE32BFD124900BB2D04 /* QuestItemView.swift */; };
-		607FCBE72BFD12B100BB2D04 /* Quest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FCBE62BFD12B100BB2D04 /* Quest.swift */; };
+		607FCBE72BFD12B100BB2D04 /* QuestViewModelItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FCBE62BFD12B100BB2D04 /* QuestViewModelItem.swift */; };
 		607FCBE92BFE418600BB2D04 /* QuestViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FCBE82BFE418600BB2D04 /* QuestViewModel.swift */; };
 		607FCBEB2BFE44D900BB2D04 /* IconView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FCBEA2BFE44D900BB2D04 /* IconView.swift */; };
 		607FCC332C01AA7300BB2D04 /* SubmitAlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FCC322C01AA7300BB2D04 /* SubmitAlertView.swift */; };
 		608EBF9F2C39C17F00B862CC /* Dictionary++.swift in Sources */ = {isa = PBXBuildFile; fileRef = 608EBF9E2C39C17F00B862CC /* Dictionary++.swift */; };
 		608EBFA12C39C5BB00B862CC /* String++.swift in Sources */ = {isa = PBXBuildFile; fileRef = 608EBFA02C39C5BB00B862CC /* String++.swift */; };
+		60924DC92C48C00E00221072 /* Quest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60924DC82C48C00E00221072 /* Quest.swift */; };
 		60943FE62C0A38FB00C8A714 /* ApprovalViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60943FE52C0A38FB00C8A714 /* ApprovalViewModel.swift */; };
 		60B8B9E72BF9EEF1005F6DE3 /* ILSANGApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60B8B9E62BF9EEF1005F6DE3 /* ILSANGApp.swift */; };
 		60B8B9E92BF9EEF1005F6DE3 /* QuestView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60B8B9E82BF9EEF1005F6DE3 /* QuestView.swift */; };
@@ -140,12 +141,13 @@
 		607FCBDC2BFA686700BB2D04 /* MyPageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageView.swift; sourceTree = "<group>"; };
 		607FCBE12BFA6A8300BB2D04 /* Buttons.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Buttons.swift; sourceTree = "<group>"; };
 		607FCBE32BFD124900BB2D04 /* QuestItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestItemView.swift; sourceTree = "<group>"; };
-		607FCBE62BFD12B100BB2D04 /* Quest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Quest.swift; sourceTree = "<group>"; };
+		607FCBE62BFD12B100BB2D04 /* QuestViewModelItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestViewModelItem.swift; sourceTree = "<group>"; };
 		607FCBE82BFE418600BB2D04 /* QuestViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestViewModel.swift; sourceTree = "<group>"; };
 		607FCBEA2BFE44D900BB2D04 /* IconView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IconView.swift; sourceTree = "<group>"; };
 		607FCC322C01AA7300BB2D04 /* SubmitAlertView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubmitAlertView.swift; sourceTree = "<group>"; };
 		608EBF9E2C39C17F00B862CC /* Dictionary++.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Dictionary++.swift"; sourceTree = "<group>"; };
 		608EBFA02C39C5BB00B862CC /* String++.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String++.swift"; sourceTree = "<group>"; };
+		60924DC82C48C00E00221072 /* Quest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Quest.swift; sourceTree = "<group>"; };
 		60943FE52C0A38FB00C8A714 /* ApprovalViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApprovalViewModel.swift; sourceTree = "<group>"; };
 		60B8B9E32BF9EEF1005F6DE3 /* ILSANG.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ILSANG.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		60B8B9E62BF9EEF1005F6DE3 /* ILSANGApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ILSANGApp.swift; sourceTree = "<group>"; };
@@ -233,6 +235,7 @@
 				60C6B4D62C2C569800926C0E /* Challenge.swift */,
 				A18EB9B32C26B6C200405D56 /* Logout.swift */,
 				A18EB9B52C26B6D100405D56 /* Withdraw.swift */,
+				60924DC82C48C00E00221072 /* Quest.swift */,
 				6011891E2C3E94380070F2AD /* AuthUser.swift */,
 			);
 			path = Model;
@@ -313,6 +316,7 @@
 			children = (
 				60B8B9E82BF9EEF1005F6DE3 /* QuestView.swift */,
 				607FCBE82BFE418600BB2D04 /* QuestViewModel.swift */,
+				607FCBE62BFD12B100BB2D04 /* QuestViewModelItem.swift */,
 				607FCBE32BFD124900BB2D04 /* QuestItemView.swift */,
 				A1868C432C09B6C50020BF16 /* DetailQuestview.swift */,
 				60C6B4DD2C2D046000926C0E /* Submit */,
@@ -380,7 +384,6 @@
 		607FCBE52BFD129E00BB2D04 /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				607FCBE62BFD12B100BB2D04 /* Quest.swift */,
 				A1BB602D2C022A9900AAADD4 /* UserData.swift */,
 				A19628682C0775A70037C53A /* Setting.swift */,
 				A1AB3D6B2C1142AA001EB9D8 /* LoginButton.swift */,
@@ -396,7 +399,6 @@
 				60B8B9F62BF9EEF3005F6DE3 /* ILSANGTests */,
 				60B8BA002BF9EEF3005F6DE3 /* ILSANGUITests */,
 				60B8B9E42BF9EEF1005F6DE3 /* Products */,
-				A1C642282C33F4A3004954CA /* Recovered References */,
 			);
 			sourceTree = "<group>";
 		};
@@ -530,13 +532,6 @@
 				A1AB3D662C1141B3001EB9D8 /* KakaoLoginButtonView.swift */,
 			);
 			path = Login;
-			sourceTree = "<group>";
-		};
-		A1C642282C33F4A3004954CA /* Recovered References */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = "Recovered References";
 			sourceTree = "<group>";
 		};
 		A1EB63342C132A3B00B63F9C /* Fonts */ = {
@@ -686,6 +681,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				60924DC92C48C00E00221072 /* Quest.swift in Sources */,
 				A196286B2C0859730037C53A /* CustomerServiceView.swift in Sources */,
 				A18EB9B42C26B6C200405D56 /* Logout.swift in Sources */,
 				607FCBE22BFA6A8300BB2D04 /* Buttons.swift in Sources */,
@@ -755,7 +751,7 @@
 				A1BB602C2BFF145100AAADD4 /* MyPageProfile.swift in Sources */,
 				607FCBE92BFE418600BB2D04 /* QuestViewModel.swift in Sources */,
 				60C6B4E12C2D1C0100926C0E /* SubmitAlertViewModel.swift in Sources */,
-				607FCBE72BFD12B100BB2D04 /* Quest.swift in Sources */,
+				607FCBE72BFD12B100BB2D04 /* QuestViewModelItem.swift in Sources */,
 				A19628692C0775A70037C53A /* Setting.swift in Sources */,
 				607FCBDD2BFA686700BB2D04 /* MyPageView.swift in Sources */,
 				607FCBEB2BFE44D900BB2D04 /* IconView.swift in Sources */,
