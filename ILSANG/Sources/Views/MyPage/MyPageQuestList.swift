@@ -9,7 +9,7 @@ import SwiftUI
 //MARK: 색상 폰트 변경 요청
 struct MyPageQuestList: View {
     
-    @StateObject var vm: MypageViewModel = MypageViewModel(userNetwork: UserNetwork(),xpNetwork: XPNetwork(), questNetwork: ChallengeNetwork(), imageNetwork: ImageNetwork())
+    @ObservedObject var vm: MypageViewModel = MypageViewModel(userNetwork: UserNetwork(),xpNetwork: XPNetwork(), questNetwork: ChallengeNetwork(), imageNetwork: ImageNetwork())
     
     @Binding var questData: [Challenge]
     
@@ -27,9 +27,9 @@ struct MyPageQuestList: View {
             // Data List
             ScrollView {
                 VStack(spacing: 12) {
-                    ForEach(questData) { Data in
+                    ForEach(questData, id: \.challengeId) { Data in
                         NavigationLink(destination: DetailQuestview(QuestData: Data)) {
-                            ListStruct(title: Data.quest.missionTitle, detail: Data.quest.expireDate ?? "", point: nil)
+                            ListStruct(title: Data.quest.missionTitle, detail: Data.createdAt ?? "", point: nil)
                         }
                     }
                 }

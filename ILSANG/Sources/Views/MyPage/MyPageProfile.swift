@@ -9,7 +9,7 @@ import SwiftUI
 
 struct MyPageProfile: View {
     
-    @StateObject var vm = MypageViewModel(userNetwork: UserNetwork(),xpNetwork: XPNetwork(), questNetwork: ChallengeNetwork(), imageNetwork: ImageNetwork())
+    @ObservedObject var vm = MypageViewModel(userNetwork: UserNetwork(),xpNetwork: XPNetwork(), questNetwork: ChallengeNetwork(), imageNetwork: ImageNetwork())
     
     var body: some View {
         NavigationLink(destination: ChangeNickNameView()) {
@@ -28,7 +28,7 @@ struct MyPageProfile: View {
                     
                     HStack {
                         // 프로그레스 바
-                        ProgressBar(userXP: vm.userData?.xpPoint ?? 0, levelXP: vm.xpForNextLevel(currentXP: vm.userData?.xpPoint ?? 100))
+                        ProgressBar(userXP: vm.userData?.xpPoint ?? 0, levelXP: vm.xpForNextLv(XP: vm.userData?.xpPoint ?? 100))
                             .frame(height: 10)
                         
                         // 경험치 Text

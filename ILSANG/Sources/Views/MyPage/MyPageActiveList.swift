@@ -9,7 +9,7 @@ import SwiftUI
 
 struct MyPageActiveList: View {
     
-    @StateObject var vm: MypageViewModel = MypageViewModel(userNetwork: UserNetwork(),xpNetwork: XPNetwork(), questNetwork: ChallengeNetwork(), imageNetwork: ImageNetwork())
+    @ObservedObject var vm: MypageViewModel = MypageViewModel(userNetwork: UserNetwork(),xpNetwork: XPNetwork(), questNetwork: ChallengeNetwork(), imageNetwork: ImageNetwork())
     
     @Binding var activeData: [XPContent]
     
@@ -32,7 +32,7 @@ struct MyPageActiveList: View {
                 }
             }
             .refreshable {
-                await vm.getxpLog(userId: "string", title: "string", page: 1, size: 10)
+                await vm.getxpLog(userId: "string", title: "string", page: 0, size: 10)
             }
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)

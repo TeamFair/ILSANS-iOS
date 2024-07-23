@@ -14,8 +14,7 @@ struct RandomChallengeList: Codable {
     let last: Bool?
 }
 
-struct Challenge: Codable, Identifiable {
-    var id = UUID()
+struct Challenge: Codable {
     let challengeId, userNickName: String
     let quest: QuestEntity
     let receiptImageId, status: String
