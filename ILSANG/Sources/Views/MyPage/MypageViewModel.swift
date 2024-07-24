@@ -6,21 +6,24 @@
 //
 
 import Foundation
+import UIKit
 
 class MypageViewModel: ObservableObject {
     @Published var userData: User?
-    @Published var challengeList: [Challenge] = []
-    @Published var questXp: [XP]?
+    @Published var challengeList: [Challenge]?
+    @Published var questXp: [XPContent]?
     
     private let userNetwork: UserNetwork
     private let questNetwork: ChallengeNetwork
+    private let imageNetwork: ImageNetwork
     private let xpNetwork: XPNetwork
     
-    init(userData: User? = nil, userNetwork: UserNetwork, xpNetwork: XPNetwork, questNetwork: ChallengeNetwork) {
+    init(userData: User? = nil, userNetwork: UserNetwork, xpNetwork: XPNetwork, questNetwork: ChallengeNetwork, imageNetwork: ImageNetwork) {
         self.userData = userData
         self.userNetwork = userNetwork
         self.xpNetwork = xpNetwork
         self.questNetwork = questNetwork
+        self.imageNetwork = imageNetwork
     }
     
     @MainActor
@@ -34,21 +37,22 @@ class MypageViewModel: ObservableObject {
             
         case .failure:
             self.userData = nil
+            Log(res)
         }
     }
     
     @MainActor
-    func getxpLog(userId: String, title: String, page: Int) async {
-        let res = await xpNetwork.getXP(userId: userId, title: title, page: page)
+    func getxpLog(userId: String, title: String, page: Int, size: Int) async {
+        let res = await xpNetwork.getXP(userId: userId, title: title, page: page, size: 10)
         
         switch res {
         case .success(let model):
-            self.questXp = [model]
+            self.questXp = model.data
             Log(questXp)
             
         case .failure:
             self.questXp = nil
-            
+            Log(res)
         }
     }
     
@@ -62,7 +66,7 @@ class MypageViewModel: ObservableObject {
             Log(self.challengeList)
 
         case .failure:
-            self.challengeList = []
+            self.challengeList = nil
         }
     }
     
@@ -78,7 +82,7 @@ class MypageViewModel: ObservableObject {
         return level - 1
     }
     
-    func xpForNextLv(XP: Int) -> String {
+    func xpForNextLv(XP: Int) -> Int {
         let currentLevel = convertXPtoLv(XP: XP)
         let nextLevel = currentLevel + 1
         var totalXP = 0
@@ -87,7 +91,18 @@ class MypageViewModel: ObservableObject {
             totalXP += 50 * n
         }
         
-        return String( totalXP - XP )
+        return totalXP - XP
+    }
+    
+    @MainActor
+     func getImage(imageId: String) async -> UIImage? {
+        let res = await imageNetwork.getImage(imageId: imageId)
+        switch res {
+        case .success(let uiImage):
+            return uiImage
+        case .failure:
+            return nil
+        }
     }
 }
 

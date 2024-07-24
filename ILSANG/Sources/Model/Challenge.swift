@@ -5,6 +5,8 @@
 //  Created by Lee Jinhee on 6/26/24.
 //
 
+import Foundation
+
 // TODO: ResponseWithPage와 응답 형식 통일 요청 후 수정
 // MARK: - ICH004 에서 사용되는 모델
 struct RandomChallengeList: Codable {
