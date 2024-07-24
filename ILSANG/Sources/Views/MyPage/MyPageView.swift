@@ -9,11 +9,10 @@ import SwiftUI
 
 struct MyPageView: View {
     
-    @State var testData: [Challenge] = [
-            Challenge(challengeId: "1", userNickName: "User1", quest: QuestEntity(questId: "Q1", missionTitle: "사진 없음", rewardTitle: "Reward 1", missions: [Mission(content: "Complete Task 1", target: "Target 1", quantity: 1, type: "Type 1", title: "Title 1")], status: "Completed", expireDate: "2023-12-31"), receiptImageId: "ImageNull", status: "Completed", createdAt: "2023-03-03", likeCnt: 50, hateCnt: 0),
-            Challenge(challengeId: "2", userNickName: "User2", quest: QuestEntity(questId: "Q2", missionTitle: "사진 있음", rewardTitle: "Reward 2", missions: [Mission(content: "Complete Task 2", target: "Target 2", quantity: 2, type: "Type 2", title: "Title 2")], status: "In Progress", expireDate: "2023-11-30"), receiptImageId: "IMRE2024061314275774", status: "In Progress", createdAt: "2023-03-06", likeCnt: 100, hateCnt: 5)
-        ]
-    
+//    @State var testData: [Challenge] = [
+//            Challenge(challengeId: "1", userNickName: "User1", quest: QuestEntity(questId: "Q1", missionTitle: "사진 없음", rewardTitle: "Reward 1", missions: [Mission(content: "Complete Task 1", target: "Target 1", quantity: 1, type: "Type 1", title: "Title 1")], status: "Completed", expireDate: "2023-12-31"), receiptImageId: "ImageNull", status: "Completed", createdAt: "2023-03-03", likeCnt: 50, hateCnt: 0),
+//            Challenge(challengeId: "2", userNickName: "User2", quest: QuestEntity(questId: "Q2", missionTitle: "사진 있음", rewardTitle: "Reward 2", missions: [Mission(content: "Complete Task 2", target: "Target 2", quantity: 2, type: "Type 2", title: "Title 2")], status: "In Progress", expireDate: "2023-11-30"), receiptImageId: "IMRE2024061314275774", status: "In Progress", createdAt: "2023-03-06", likeCnt: 100, hateCnt: 5)
+//        ]
     @State var activeTestData: [XPContent] = [
             XPContent(recordId: 1, title: "Mission Accomplished", xpPoint: 100, createDate: "2024-06-21"),
             XPContent(recordId: 2, title: "Daily Login", xpPoint: 50, createDate: "2024-06-22"),
