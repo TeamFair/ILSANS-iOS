@@ -19,8 +19,16 @@ class QuestViewModel: ObservableObject {
     @Published var selectedHeader: QuestStatus = .uncompleted
     @Published var selectedQuest: QuestViewModelItem = .mockData
     @Published var showQuestSheet: Bool = false
-    @Published var showSubmitRouterView: Bool = false
-    
+    @Published var showSubmitRouterView: Bool = false {
+        didSet {
+            // TODO: 도전내역 등록 완료시 리스트에서 퀘스트만 삭제/추가하도록 개선(퀘스트 조회 API 호출x)
+            if showSubmitRouterView == false {
+                Task {
+                    await loadInitialData()
+                }
+            }
+        }
+    }
     @Published var itemListByStatus: [QuestStatus: [QuestViewModelItem]] = [
         .uncompleted: [],
         .completed: []
