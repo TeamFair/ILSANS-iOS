@@ -43,7 +43,7 @@ struct DetailQuestview: View {
                     
                     HStack() {
                         VStack (alignment: .leading) {
-                            Text(QuestData.quest.missionTitle)
+                            Text(QuestData.quest.missions.first?.title ?? "")
                                 .font(.headline)
                                 .padding(.bottom, 1)
                             
