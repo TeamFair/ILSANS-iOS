@@ -29,7 +29,7 @@ struct MyPageQuestList: View {
                 VStack(spacing: 12) {
                     ForEach(questData, id: \.challengeId) { Data in
                         NavigationLink(destination: DetailQuestview(QuestData: Data)) {
-                            ListStruct(title: Data.quest.missionTitle, detail: Data.createdAt ?? "", point: nil)
+                            ListStruct(title: Data.quest.missionTitle, detail: Data.createdAt.timeAgoCreatedAt() ?? "", point: nil)
                         }
                     }
                 }
