@@ -267,7 +267,8 @@ struct ApprovalViewModelItem: Identifiable {
         self.image = nil
         self.imageId = challenge.receiptImageId
         self.offset = 0
-        self.nickname = challenge.userNickName
+        // TODO: nickname 옵셔널 해제
+        self.nickname = challenge.userNickName ?? "일상"
         self.time = challenge.createdAt.timeAgoSinceDate()
     }
     

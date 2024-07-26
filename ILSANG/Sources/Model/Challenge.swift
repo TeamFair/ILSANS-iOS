@@ -14,8 +14,10 @@ struct RandomChallengeList: Codable {
     let last: Bool?
 }
 
+// TODO: userNickName 옵셔널 해제
 struct Challenge: Codable {
-    let challengeId, userNickName: String
+    let challengeId: String
+    let userNickName: String?
     let quest: QuestEntity
     let receiptImageId, status: String
     let createdAt: String
@@ -25,11 +27,8 @@ struct Challenge: Codable {
 /// 서버에서 사용되는 Quest Entity
 struct QuestEntity: Codable {
     let questId: String
-    let missionTitle: String
-    let rewardTitle: String
     let missions: [Mission]
-    let status: String
-    let expireDate: String?
+    let rewards: [Reward]
 }
 
 struct Mission: Codable {
@@ -37,4 +36,9 @@ struct Mission: Codable {
     let target: String?
     let quantity: Int
     let type, title: String
+}
+
+struct Reward: Codable {
+    let quantity: Int
+    let type: String
 }
