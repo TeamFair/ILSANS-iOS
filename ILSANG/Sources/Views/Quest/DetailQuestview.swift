@@ -55,7 +55,7 @@ struct DetailQuestview: View {
                         Spacer()
                         
                         VStack{
-                            Text(QuestData.createdAt)
+                            Text(QuestData.createdAt.timeAgoCreatedAt())
                                 .font(.subheadline)
                                 .foregroundColor(.gray400)
                         }
