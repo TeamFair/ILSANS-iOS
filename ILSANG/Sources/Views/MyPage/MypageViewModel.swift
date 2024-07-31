@@ -87,9 +87,15 @@ class MypageViewModel: ObservableObject {
     //이전,다음 레벨 XP
     func xpGapBtwLevels(XP: Int) -> (currentLevelXP: Int, nextLevelXP: Int) {
         let currentLevel = convertXPtoLv(XP: XP)
-        let currentLevelXP = 50 * currentLevel
         let nextLevelXP = 50 * (currentLevel + 1)
-        return (currentLevelXP, nextLevelXP)
+        
+        var totalXP = 0
+        
+        for n in 1..<currentLevel + 1 {
+            totalXP += 50 * n
+        }
+        
+        return (XP - totalXP, nextLevelXP)
     }
     
     //다음 레벨까지 남은 값
@@ -101,7 +107,7 @@ class MypageViewModel: ObservableObject {
         for n in 1...nextLevel {
             totalXP += 50 * n
         }
-        
+        Log(totalXP)
         return totalXP - XP
     }
     
@@ -134,6 +140,8 @@ class MypageViewModel: ObservableObject {
             }
             .onAppear {
                 Log("Progress: \(progress)")
+                Log(self.xpGapBtwLevels(XP: userXP).currentLevelXP)
+                Log(self.xpGapBtwLevels(XP: userXP).nextLevelXP)
             }
         }
     }
