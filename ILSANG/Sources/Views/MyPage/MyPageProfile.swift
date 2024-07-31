@@ -109,41 +109,6 @@ struct ProfileImageView: View {
     }
 }
 
-struct ProgressBar: View {
-    
-    var userXP : Int
-    var levelXP : Int
-    
-    //소수 2자리로 변경합니다.
-    private var progress: Double {
-        Double(userXP / levelXP)
-    }
-    
-    var body: some View {
-        GeometryReader { geometry in
-            ZStack(alignment: .leading) {
-                Rectangle()
-                    .frame(width: geometry.size.width, height: 11)
-                    .cornerRadius(6)
-                    .opacity(0.3)
-                    .foregroundColor(.gray100)
-                
-                Rectangle()
-                    .frame(width: progress * geometry.size.width, height: 10)
-                    .cornerRadius(6)
-                    .foregroundColor(.accentColor)
-            }
-            .onTapGesture {
-                Log(progress)
-                Log(userXP)
-                Log(levelXP)
-                Log(progress * geometry.size.width)
-            }
-        }
-    }
-}
-
-
 #Preview {
     MyPageProfile()
 }
