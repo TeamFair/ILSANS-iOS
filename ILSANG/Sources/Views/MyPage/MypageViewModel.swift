@@ -98,7 +98,7 @@ class MypageViewModel: ObservableObject {
         return (XP - totalXP, nextLevelXP)
     }
     
-    //다음 레벨까지 남은 값
+    //다음 레벨까지 남은 값 
     func xpForNextLv(XP: Int) -> Int {
         let currentLevel = convertXPtoLv(XP: XP)
         let nextLevel = currentLevel + 1
