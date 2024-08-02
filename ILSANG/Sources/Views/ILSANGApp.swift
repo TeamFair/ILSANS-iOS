@@ -41,9 +41,10 @@ struct ILSANGApp: App {
     
     func setTabBarAppearance() {
         let appearance = UITabBarAppearance()
-        appearance.configureWithOpaqueBackground()
+        appearance.backgroundColor = UIColor(.white)
         appearance.shadowColor = UIColor(.grayDD)
         appearance.stackedItemPositioning = .centered
+        UITabBar.appearance().standardAppearance = appearance
         UITabBar.appearance().scrollEdgeAppearance = appearance
     }
 }
