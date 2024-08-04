@@ -43,10 +43,13 @@ final class UserService: ObservableObject {
         
         if authResult.authUser.email != "" {
             self.appleEmail = authResult.authUser.email
+            self.userEmail = authResult.authUser.email
         }
-        await fetchUserInfo()
         
-        self.isLogin = true
+        await fetchUserInfo()
+        if self.currentUser != nil {
+            self.isLogin = true
+        }
     }
     
     @MainActor
