@@ -7,6 +7,7 @@
 
 import Foundation
 import UIKit
+import SwiftUI
 
 class MypageViewModel: ObservableObject {
     @Published var userData: User?
@@ -70,6 +71,7 @@ class MypageViewModel: ObservableObject {
         }
     }
     
+    //XP를 레벨로 변경
     func convertXPtoLv(XP: Int) -> Int {
         var totalXP = 0
         var level = 0
@@ -82,6 +84,21 @@ class MypageViewModel: ObservableObject {
         return level - 1
     }
     
+    //이전,다음 레벨 XP
+    func xpGapBtwLevels(XP: Int) -> (currentLevelXP: Int, nextLevelXP: Int) {
+        let currentLevel = convertXPtoLv(XP: XP)
+        let nextLevelXP = 50 * (currentLevel + 1)
+        
+        var totalXP = 0
+        
+        for n in 1..<currentLevel + 1 {
+            totalXP += 50 * n
+        }
+        
+        return (XP - totalXP, nextLevelXP)
+    }
+    
+    //다음 레벨까지 남은 값 
     func xpForNextLv(XP: Int) -> Int {
         let currentLevel = convertXPtoLv(XP: XP)
         let nextLevel = currentLevel + 1
@@ -90,7 +107,7 @@ class MypageViewModel: ObservableObject {
         for n in 1...nextLevel {
             totalXP += 50 * n
         }
-        
+        Log(totalXP)
         return totalXP - XP
     }
     
@@ -103,6 +120,35 @@ class MypageViewModel: ObservableObject {
         case .failure:
             return nil
         }
+    }
+    
+    func ProgressBar(userXP: Int) -> some View {
+        let levelData = xpGapBtwLevels(XP: userXP)
+        let progress = calculateProgress(userXP: levelData.currentLevelXP, levelXP: levelData.nextLevelXP)
+        
+        return GeometryReader { geometry in
+            ZStack(alignment: .leading) {
+                Rectangle()
+                    .frame(width: geometry.size.width, height: 8)
+                    .cornerRadius(6)
+                    .foregroundColor(.gray100)
+                
+                Rectangle()
+                    .frame(width: CGFloat(progress) * geometry.size.width, height: 8)
+                    .cornerRadius(6)
+                    .foregroundColor(.accentColor)
+            }
+            .onAppear {
+                Log("Progress: \(progress)")
+                Log(self.xpGapBtwLevels(XP: userXP).currentLevelXP)
+                Log(self.xpGapBtwLevels(XP: userXP).nextLevelXP)
+            }
+        }
+    }
+    
+    func calculateProgress(userXP: Int, levelXP: Int) -> Double {
+        guard levelXP != 0 else { return 0 }
+        return Double(userXP) / Double(levelXP)
     }
 }
 
