@@ -15,16 +15,17 @@ struct LoginView: View {
             Image(.loginLogo)
             
             VStack(spacing: 16) {
+#if DEBUG
                 KakaoLoginButtonView(buttonAction: vm.kakaoButtonAction)
                 GoogleLoginButtonView(buttonAction: vm.googleButtonAction)
-                
+#endif
                 AppleLoginButtonView(vm: vm)
-                
 #if DEBUG
                 Text("테스트 로그인")
                     .onTapGesture { vm.testLogin() }
 #endif
             }
+            .frame(height: 200)
         }
         .padding(.top, 90)
         .frame(maxWidth: .infinity, maxHeight: .infinity)
