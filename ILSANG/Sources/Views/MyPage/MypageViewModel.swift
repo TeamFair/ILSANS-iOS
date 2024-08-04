@@ -129,13 +129,12 @@ class MypageViewModel: ObservableObject {
         return GeometryReader { geometry in
             ZStack(alignment: .leading) {
                 Rectangle()
-                    .frame(width: geometry.size.width, height: 11)
+                    .frame(width: geometry.size.width, height: 8)
                     .cornerRadius(6)
-                    .opacity(0.3)
                     .foregroundColor(.gray100)
                 
                 Rectangle()
-                    .frame(width: CGFloat(progress) * geometry.size.width, height: 10)
+                    .frame(width: CGFloat(progress) * geometry.size.width, height: 8)
                     .cornerRadius(6)
                     .foregroundColor(.accentColor)
             }
