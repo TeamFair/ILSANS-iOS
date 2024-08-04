@@ -123,7 +123,8 @@ class MypageViewModel: ObservableObject {
     }
     
     func ProgressBar(userXP: Int) -> some View {
-        let progress = calculateProgress(userXP: xpGapBtwLevels(XP: userXP).currentLevelXP, levelXP: xpGapBtwLevels(XP: userXP).nextLevelXP)
+        let levelData = xpGapBtwLevels(XP: userXP)
+        let progress = calculateProgress(userXP: levelData.currentLevelXP, levelXP: levelData.nextLevelXP)
         
         return GeometryReader { geometry in
             ZStack(alignment: .leading) {
