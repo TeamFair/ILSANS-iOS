@@ -27,7 +27,7 @@ struct MyPageActiveList: View {
             ScrollView {
                 VStack(spacing: 12) {
                     ForEach(activeData, id: \.recordId) { Data in
-                        ListStruct(title: Data.title, detail: Data.createDate, point: Data.xpPoint)
+                        ListStruct(title: Data.title, detail: Data.createDate.timeAgoSinceCreation(), point: Data.xpPoint)
                     }
                 }
             }
