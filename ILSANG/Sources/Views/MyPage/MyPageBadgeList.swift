@@ -22,8 +22,8 @@ struct MyPageBadgeList: View {
             // Data List
             ScrollView {
                 VStack(spacing: 12) {
-                    ForEach(badgeData) { Data in
-                        ListStruct(title: Data.title, detail: Data.createDate, point: Data.xpPoint)
+                    ForEach(badgeData, id: \.recordId) { Data in
+                        ListStruct(title: Data.title, detail: Data.createDate.timeAgoCreatedAt(), point: Data.xpPoint)
                     }
                 }
             }

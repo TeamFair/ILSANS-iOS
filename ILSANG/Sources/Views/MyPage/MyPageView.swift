@@ -48,13 +48,13 @@ struct MyPageView: View {
                 // 퀘스트/활동/뱃지 리스트
                 switch segmentSelect {
                 case 0:
-                    if let questData = vm.challengeList {
+                    if let questData = vm.challengeList, !questData.isEmpty {
                         MyPageQuestList(questData: .constant(questData))
                     } else {
                         emptyView()
                     }
                 case 1:
-                    if let activeData = vm.questXp {
+                    if let activeData = vm.questXp, !activeData.isEmpty {
                         MyPageActiveList(activeData: .constant(activeData))
                     } else {
                         emptyView()
@@ -73,7 +73,7 @@ struct MyPageView: View {
         }
         .task {
             await vm.getQuest(page: 0)
-            await vm.getxpLog(userId: "string", title: "string", page: 1, size: 10)
+            await vm.getxpLog(page: 0, size: 10)
         }
     }
 }

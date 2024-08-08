@@ -26,13 +26,13 @@ struct MyPageActiveList: View {
             // Data List
             ScrollView {
                 VStack(spacing: 12) {
-                    ForEach(activeData) { Data in
-                        ListStruct(title: Data.title, detail: Data.createDate, point: Data.xpPoint)
+                    ForEach(activeData, id: \.recordId) { Data in
+                        ListStruct(title: Data.title, detail: Data.createDate.timeAgoSinceCreation(), point: Data.xpPoint)
                     }
                 }
             }
             .refreshable {
-                await vm.getxpLog(userId: "string", title: "string", page: 0, size: 10)
+                await vm.getxpLog(page: 0, size: 10)
             }
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)

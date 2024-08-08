@@ -66,6 +66,21 @@ extension String {
             return formattedDate
         }
     
+    /// 서버에서 보내주는 시간 "2024-08-07 18:31:49" 을 "2024.12.31" 형식으로 날짜 포맷 변환.
+    /// 현재와 년도가 다를 경우 "2024.12.31"로 변환.
+    func timeAgoSinceCreation() -> String {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+        
+        guard let date = dateFormatter.date(from: self) else { return "" }
+        
+        let outputFormatter = DateFormatter()
+        outputFormatter.dateFormat = "yyyy.MM.dd"
+        let formattedDate = outputFormatter.string(from: date)
+        
+        return formattedDate
+    }
+    
     /// 서버에서 보내주는 값을 1,000 형태로 포맷 변경
     /// 천의 자리 배수에 ","을 추가합니다. "1,000,000" 형식
     func formatNumberInText() -> String {
