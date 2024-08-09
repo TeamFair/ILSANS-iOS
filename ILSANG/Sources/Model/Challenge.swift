@@ -7,18 +7,11 @@
 
 import Foundation
 
-// TODO: ResponseWithPage와 응답 형식 통일 요청 후 수정
-// MARK: - ICH004 에서 사용되는 모델
-struct RandomChallengeList: Codable {
-    let content: [Challenge]
-    let last: Bool?
-}
-
-// TODO: userNickName 옵셔널 해제
+// TODO: userNickName, quest 옵셔널 해제
 struct Challenge: Codable {
     let challengeId: String
     let userNickName: String?
-    let quest: QuestEntity
+    let quest: QuestEntity?
     let receiptImageId, status: String
     let createdAt: String
     let likeCnt, hateCnt: Int
