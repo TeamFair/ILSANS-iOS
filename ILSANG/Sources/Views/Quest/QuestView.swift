@@ -133,24 +133,12 @@ extension QuestView {
             Text("퀘스트 정보")
                 .font(.system(size: 17, weight: .bold))
             
-            Group {
-                if let uiImage = vm.selectedQuest.image {
-                    Image(uiImage: uiImage)
-                        .resizable()
-                        .frame(width: 80, height: 80)
-                        .frame(width: 122, height: 122)
-                        .background(
-                            Circle().foregroundColor(.badgeBlue)
-                        )
-                        .padding(20)
-                } else {
-                    Image(uiImage: .logo)
-                        .resizable()
-                        .scaledToFit()
-                        .frame(width: 122, height: 122)
-                        .clipShape(Circle())
-                }
-            }
+            Image(uiImage: vm.selectedQuest.image ?? .logo)
+                .resizable()
+                .scaledToFill()
+                .frame(width: 122, height: 122)
+                .clipShape(Circle())
+                .padding(20)
             
             Text(vm.selectedQuest.writer)
                 .font(.system(size: 15, weight: .regular))
