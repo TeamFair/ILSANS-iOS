@@ -17,8 +17,8 @@ final class ChallengeNetwork {
         self.url = url
     }
     
-    func getRandomChallenges(page: Int) async -> Result<RandomChallengeList, Error> {
-        let parameters: Parameters = ["page": page, "size": "10"]
+    func getRandomChallenges(page: Int, size: Int = 10) async -> Result<ResponseWithPage<[Challenge]>, Error> {
+        let parameters: Parameters = ["page": page, "size": size]
         return await Network.requestData(url: url+"randomChallenge", method: .get, parameters: parameters, withToken: true)
     }
     

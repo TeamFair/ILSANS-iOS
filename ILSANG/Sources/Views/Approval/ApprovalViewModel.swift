@@ -94,11 +94,11 @@ final class ApprovalViewModel: ObservableObject {
         }
     }
     
-    private func getRandomChallenges(page: Int) async -> [ApprovalViewModelItem] {
-        let res = await challengeNetwork.getRandomChallenges(page: page)
+    private func getRandomChallenges(page: Int, size: Int) async -> [ApprovalViewModelItem] {
+        let res = await challengeNetwork.getRandomChallenges(page: page, size: size)
         switch res {
-        case .success(let success):
-            return success.content.map { ApprovalViewModelItem.init(challenge: $0) }
+        case .success(let response):
+            return response.data.map { ApprovalViewModelItem.init(challenge: $0) }
         case .failure:
             return []
         }
@@ -263,7 +263,7 @@ struct ApprovalViewModelItem: Identifiable {
     
     init(challenge: Challenge) {
         self.id = challenge.challengeId
-        self.title = challenge.quest.missions.first?.title ?? ""
+        self.title = challenge.quest?.missions.first?.title ?? ""
         self.image = nil
         self.imageId = challenge.receiptImageId
         self.offset = 0
