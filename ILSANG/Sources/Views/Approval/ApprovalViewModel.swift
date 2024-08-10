@@ -57,7 +57,7 @@ final class ApprovalViewModel: ObservableObject {
     
     @MainActor
     func getChallengesWithImage(page: Int) async {
-        var challenges = await getRandomChallenges(page: page)
+        var challenges = await getRandomChallenges(page: page, size: 20)
 
         // 중복된 id 제거
         var seenIDs = Set<String>()
