@@ -39,13 +39,15 @@ final class ApprovalViewModel: ObservableObject {
         self.challengeNetwork = challengeNetwork
     }
     
+    @MainActor
     func getData() async {
-        await changeViewStatus(.loading)
+        changeViewStatus(.loading)
         await getChallengesWithImage(page: 0)
-        if !itemList.isEmpty {
-            await getEmoji(challengeId: itemList[currentIdx].id)
+        self.currentIdx = 0
+        if let challengeId = itemList.first?.id {
+            await getEmoji(challengeId: challengeId)
         }
-        await changeViewStatus(.loaded)
+        changeViewStatus(.loaded)
     }
     
     @MainActor
