@@ -14,34 +14,26 @@ struct QuestItemView: View {
     
     var body: some View {
         HStack(spacing: 0) {
-            Group {
-                if let uiImage = quest.image {
-                    Image(uiImage: uiImage)
-                        .resizable()
-                        .frame(width: 36, height: 36)
-                } else {
-                    Image(uiImage: .logo)
-                        .resizable()
-                        .scaledToFit()
+            Image(uiImage: quest.image ?? .logo)
+                .resizable()
+                .scaledToFill()
+                .frame(width: 60, height: 60)
+                .background(Color.badgeBlue)
+                .clipShape(Circle())
+                .padding(.leading, 20)
+                .padding(.trailing, 16)
+                .overlay(alignment: .top) {
+                    Text(String(quest.reward) + "XP")
+                        .font(.system(size: 10, weight: .semibold))
+                        .foregroundStyle(.white)
+                        .padding(.horizontal, 5)
+                        .padding(.vertical, 4)
+                        .background(
+                            RoundedRectangle(cornerRadius: 10)
+                                .foregroundStyle(.primaryPurple)
+                        )
+                        .offset(x: 20, y: 2)
                 }
-            }
-            .frame(width: 60, height: 60)
-            .background(Color.badgeBlue)
-            .clipShape(Circle())
-            .padding(.leading, 20)
-            .padding(.trailing, 16)
-            .overlay(alignment: .top) {
-                Text(String(quest.reward) + "XP")
-                    .font(.system(size: 10, weight: .semibold))
-                    .foregroundStyle(.white)
-                    .padding(.horizontal, 5)
-                    .padding(.vertical, 4)
-                    .background(
-                        RoundedRectangle(cornerRadius: 10)
-                            .foregroundStyle(.primaryPurple)
-                    )
-                    .offset(x: 20, y: 2)
-            }
             
             VStack(alignment: .leading, spacing: 4) {
                 Text(quest.missionTitle)
