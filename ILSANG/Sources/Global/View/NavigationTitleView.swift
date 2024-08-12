@@ -11,6 +11,7 @@ struct NavigationTitleView: View {
     let title: String
     var isSeparatorHidden = false
     var isDismissButtonHidden = false
+    var isDeleteButtonHidden = false
     var action: (() -> Void?)? = nil
     
     var body: some View {
@@ -23,6 +24,15 @@ struct NavigationTitleView: View {
                             self.action?()
                         } label: {
                             DismissButton()
+                        }
+                    }
+                }
+                .overlay(alignment: .trailing) {
+                    if !isDeleteButtonHidden {
+                        Button {
+                            self.action?()
+                        } label: {
+                            DeleteButton()
                         }
                     }
                 }
@@ -52,6 +62,14 @@ struct SeparatorView: View {
 struct DismissButton: View {
     var body: some View {
         Image(systemName: "chevron.left")
+            .foregroundColor(.gray500)
+            .font(.custom("SFPRODISPLAYREGULAR", size: 22))
+    }
+}
+
+struct DeleteButton: View {
+    var body: some View {
+        Image(systemName: "trash")
             .foregroundColor(.gray500)
             .font(.custom("SFPRODISPLAYREGULAR", size: 22))
     }
