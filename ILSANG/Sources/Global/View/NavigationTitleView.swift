@@ -11,8 +11,10 @@ struct NavigationTitleView: View {
     let title: String
     var isSeparatorHidden = false
     var isDismissButtonHidden = false
-    var isDeleteButtonHidden = false
+    var isDeleteButtonHidden = true
     var action: (() -> Void?)? = nil
+    
+    @Binding var QuestDelet: Bool? 
     
     var body: some View {
         VStack (spacing: 0) {
@@ -30,7 +32,7 @@ struct NavigationTitleView: View {
                 .overlay(alignment: .trailing) {
                     if !isDeleteButtonHidden {
                         Button {
-                            self.action?()
+                            self.QuestDelet?.toggle()
                         } label: {
                             DeleteButton()
                         }

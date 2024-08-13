@@ -13,12 +13,13 @@ struct DetailQuestview: View {
     @StateObject var vm: MypageViewModel = MypageViewModel(userNetwork: UserNetwork(),xpNetwork: XPNetwork(), questNetwork: ChallengeNetwork(), imageNetwork: ImageNetwork())
     
     @State private var missionImage: UIImage? = nil
+    @State var questDelet = false
     
     let QuestData : Challenge
     
     var body: some View {
         
-        NavigationTitleView(title: "챌린지 정보") {
+        NavigationTitleView(title: "챌린지 정보", isDeleteButtonHidden: false, QuestDelet: questDelet) {
             dismiss()
         }
         
@@ -68,6 +69,17 @@ struct DetailQuestview: View {
                     .padding()
                 }
             } 
+        }
+        .overlay {
+            if questDelet {
+                SettingAlertView(
+                    alertType: .QuestDelete,
+                    onCancel: { questDelet = false },
+                    onConfirm: {
+                        
+                    }
+                )
+            }
         }
         .task {
             missionImage = await vm.getImage(imageId: QuestData.receiptImageId)
