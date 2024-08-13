@@ -10,8 +10,7 @@ import Foundation
 import UIKit
 
 final class Network {
-    static let retryLimit = 3
-    static let retryDelay: TimeInterval = 1
+    static let maxUploadImageSizeKB = 100.0
     static let requestTimeout: TimeInterval = 30
     
     private static func buildURL(url: String, parameters: Parameters? = nil, page: Int? = nil, size: Int? = nil) -> URL? {
@@ -112,46 +111,50 @@ final class Network {
         urlRequest.headers = headers
         urlRequest.timeoutInterval = requestTimeout
         
-        // 이미지 압축 & 다운샘플링
         var uiImage = image
-        var currentCompressionQuality: CGFloat = 0.5
-        if image.size.width > 3000 || image.size.height > 3000 {
-            guard let downSampledImage = image.downSample(scale: 0.8) else {
+        
+        // MARK: 이미지 다운 샘플링
+        var downSamplingScale: CGFloat = 1.0
+        if uiImage.size.width > 2500 || uiImage.size.height > 2500 {
+            downSamplingScale = 0.7
+        } else if uiImage.size.width > 1500 || uiImage.size.height > 1500 {
+            downSamplingScale = 0.8
+        }
+
+        if downSamplingScale < 1.0 {
+            guard let downSampledImage = uiImage.downSample(scale: downSamplingScale) else {
                 return .failure(NetworkError.invalidImageData)
             }
             uiImage = downSampledImage
         }
-        
-        // 이미지 업로드 실패 시 currentCompressionQuality 줄이면서 retryLimit만큼 재시도
-        for attempt in 1...self.retryLimit {
-            let imageData = uiImage.jpegData(compressionQuality: currentCompressionQuality) ?? Data()
-            
-            let response = await AF.upload(multipartFormData: { multipartFormData in
-                multipartFormData.append(imageData,
-                                         withName: "file",
-                                         fileName: "image.png",
-                                         mimeType: "image/jpeg")
-            }, with: urlRequest)
-                .serializingDecodable(Response<ImageEntity>.self)
-                .response
-            
-            switch response.result {
-            case .success(let res):
-                if let statusCode = response.response?.statusCode {
-                    return handleStatusCode(statusCode, data: res.data)
-                } else {
-                    return .failure(NetworkError.unknownError)
-                }
-            case .failure(let error):
-                if attempt < retryLimit {
-                    try? await Task.sleep(nanoseconds: UInt64(self.retryDelay * 1_000_000_000))
-                    currentCompressionQuality = (currentCompressionQuality * 5) / 10
-                } else {
-                    return .failure(NetworkError.requestFailed(error.localizedDescription))
-                }
-            }
+                
+        // MARK: 이미지 업로드 가능한 사이즈까지 압축
+        var compressedImageData = uiImage.jpegData(compressionQuality: 1.0) ?? Data()
+        var compressionQuality: CGFloat = 0.8
+        while compressedImageData.kilobytes >= maxUploadImageSizeKB && compressionQuality > 0.001 {
+            compressionQuality = Double(round(100 * (compressionQuality - 0.1)) / 100)
+            compressedImageData = uiImage.jpegData(compressionQuality: compressionQuality) ?? Data()
         }
-        return .failure(NetworkError.unknownError)
+        
+        let response = await AF.upload(multipartFormData: { multipartFormData in
+            multipartFormData.append(compressedImageData,
+                                     withName: "file",
+                                     fileName: "image.png",
+                                     mimeType: "image/jpeg")
+        }, with: urlRequest)
+            .serializingDecodable(Response<ImageEntity>.self)
+            .response
+        
+        switch response.result {
+        case .success(let res):
+            if let statusCode = response.response?.statusCode {
+                return handleStatusCode(statusCode, data: res.data)
+            } else {
+                return .failure(NetworkError.unknownError)
+            }
+        case .failure(let error):
+            return .failure(NetworkError.requestFailed(error.localizedDescription))
+        }
     }
     
     private static func handleStatusCode<T>(_ statusCode: Int, data: T?) -> Result<T, Error> {
