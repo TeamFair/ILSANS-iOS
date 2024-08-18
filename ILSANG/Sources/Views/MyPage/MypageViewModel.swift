@@ -71,6 +71,18 @@ class MypageViewModel: ObservableObject {
         }
     }
     
+    @MainActor
+    func deleteChallenge(questId: String) async -> Bool {
+        let parameters: Parameters = ["challengeId": questId]
+        let res: Result<ResponseWithoutData, Error> = await Network.requestData(url: url+"challenge", method: .delete, parameters: parameters, withToken: true)
+        switch res {
+        case .success:
+            return true
+        case .failure:
+            return false
+        }
+    }
+    
     //XP를 레벨로 변경
     func convertXPtoLv(XP: Int) -> Int {
         var totalXP = 0
