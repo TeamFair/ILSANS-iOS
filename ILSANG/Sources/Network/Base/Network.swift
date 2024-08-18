@@ -157,6 +157,25 @@ final class Network {
         }
     }
     
+    private static func calculateDownsamplingScale(for image: UIImage) -> CGFloat {
+        let initialImageData = image.jpegData(compressionQuality: 1.0) ?? Data()
+        let imageSizeKB = initialImageData.kilobytes
+        
+        var downSamplingScale: CGFloat = 1.0
+        
+        if imageSizeKB > 5000 {
+            downSamplingScale = 0.4
+        } else if imageSizeKB > 2500 {
+            downSamplingScale = 0.5
+        } else if imageSizeKB > 2000 {
+            downSamplingScale = 0.65
+        } else {
+            downSamplingScale = 0.8
+        }
+        
+        return downSamplingScale
+    }
+    
     private static func handleStatusCode<T>(_ statusCode: Int, data: T?) -> Result<T, Error> {
         switch statusCode {
         case 200..<300:
