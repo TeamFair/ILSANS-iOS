@@ -111,33 +111,36 @@ final class Network {
         urlRequest.headers = headers
         urlRequest.timeoutInterval = requestTimeout
         
-        var uiImage = image
-        
         // MARK: 이미지 다운 샘플링
-        var downSamplingScale: CGFloat = 1.0
-        if uiImage.size.width > 2500 || uiImage.size.height > 2500 {
-            downSamplingScale = 0.7
-        } else if uiImage.size.width > 1500 || uiImage.size.height > 1500 {
-            downSamplingScale = 0.8
+        let downsamplingScale = calculateDownsamplingScale(for: image)
+        guard let downsampledImage = image.downSample(scale: downsamplingScale) else {
+            return .failure(NetworkError.invalidImageData)
         }
-
-        if downSamplingScale < 1.0 {
-            guard let downSampledImage = uiImage.downSample(scale: downSamplingScale) else {
-                return .failure(NetworkError.invalidImageData)
-            }
-            uiImage = downSampledImage
-        }
-                
+        
+        var currentImage = downsampledImage
+        
         // MARK: 이미지 업로드 가능한 사이즈까지 압축
-        var compressedImageData = uiImage.jpegData(compressionQuality: 1.0) ?? Data()
-        var compressionQuality: CGFloat = 0.8
-        while compressedImageData.kilobytes >= maxUploadImageSizeKB && compressionQuality > 0.001 {
-            compressionQuality = Double(round(100 * (compressionQuality - 0.1)) / 100)
-            compressedImageData = uiImage.jpegData(compressionQuality: compressionQuality) ?? Data()
+        var compressedData = currentImage.jpegData(compressionQuality: 1.0) ?? Data()
+        
+        var compressionQuality: CGFloat = 0.9
+        while compressedData.kilobytes >= maxUploadImageSizeKB {
+            if compressionQuality > 0.1 {
+                compressionQuality = Double(round(1000 * (compressionQuality - 0.05)) / 1000)
+                compressedData = currentImage.jpegData(compressionQuality: compressionQuality) ?? Data()
+            } else {
+                /// 0.1로 압축한 data 사이즈가 maxUploadImageSizeKB보다 작도록 currentImage 리사이즈
+                var tempResizeData: Data = compressedData
+                while tempResizeData.kilobytes >= maxUploadImageSizeKB {
+                    let newWidth = max(currentImage.size.width - 120, currentImage.size.width * 0.5)
+                    currentImage = currentImage.resizeImage(newWidth: newWidth)
+                    tempResizeData = currentImage.jpegData(compressionQuality: 0.1) ?? Data()
+                }
+                compressionQuality = 0.9
+            }
         }
         
         let response = await AF.upload(multipartFormData: { multipartFormData in
-            multipartFormData.append(compressedImageData,
+            multipartFormData.append(compressedData,
                                      withName: "file",
                                      fileName: "image.png",
                                      mimeType: "image/jpeg")
