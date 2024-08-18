@@ -78,7 +78,7 @@ struct DetailQuestview: View {
                     onCancel: { questDelet = false },
                     onConfirm: {
                         Task {
-                            await vm.deleteChallenge(questId: QuestData.quest?.questId ?? "")
+                            await vm.updateQuestStatus(challengeId: QuestData.quest?.questId ?? "")
                         }
                     }
                 )

@@ -38,4 +38,17 @@ final class ChallengeNetwork {
         }
         return await Network.requestData(url: url+"challenge", method: .post, parameters: nil, body: jsonData, withToken: true)
     }
+    
+    func deleteChallenge(questId: String) async -> Bool {
+        let parameters: Parameters = ["challengeId": questId]
+        let res: Result<ResponseWithoutData, Error> = await Network.requestData(url: url+"challenge", method: .delete, parameters: parameters, withToken: true)
+        switch res {
+        case .success:
+            Log(res)
+            return true
+        case .failure:
+            Log(res)
+            return false
+        }
+    }
 }
