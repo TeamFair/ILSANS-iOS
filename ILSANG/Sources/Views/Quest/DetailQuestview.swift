@@ -13,15 +13,16 @@ struct DetailQuestview: View {
     @StateObject var vm: MypageViewModel = MypageViewModel(userNetwork: UserNetwork(),xpNetwork: XPNetwork(), questNetwork: ChallengeNetwork(), imageNetwork: ImageNetwork())
     
     @State private var missionImage: UIImage? = nil
-    @State var questDelet = false
+    @State private var questDelet = false
     
     let QuestData : Challenge
     
     var body: some View {
         
-        NavigationTitleView(title: "챌린지 정보", isDeleteButtonHidden: false, QuestDelet: questDelet) {
+        NavigationTitleView(title: "챌린지 정보", isDeleteButtonHidden: false) {
             dismiss()
         }
+        .environment(\.questDelet, $questDelet)
         
         ZStack {
             if let missionImage = missionImage {
