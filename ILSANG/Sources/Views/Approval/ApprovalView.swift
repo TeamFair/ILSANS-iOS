@@ -99,7 +99,7 @@ struct ApprovalView: View {
     
     private func imageView(for item: ApprovalViewModelItem, diff: Int) -> some View {
         ApprovalImageView(
-            image: item.image ?? .loginLogo,
+            image: item.image ?? .logo,
             width: abs(viewWidth - 40 * CGFloat(diff)),
             height: (viewHeight / 2) - CGFloat(diff) * 26,
             nickname: item.nickname,

@@ -60,6 +60,7 @@
 		60C6B4DC2C2D042700926C0E /* Image.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60C6B4DB2C2D042700926C0E /* Image.swift */; };
 		60C6B4DF2C2D053600926C0E /* SubmitRouterViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60C6B4DE2C2D053600926C0E /* SubmitRouterViewModel.swift */; };
 		60C6B4E12C2D1C0100926C0E /* SubmitAlertViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60C6B4E02C2D1C0100926C0E /* SubmitAlertViewModel.swift */; };
+		60DADF552C6B4EC7001A0B3A /* Data++.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60DADF542C6B4EC7001A0B3A /* Data++.swift */; };
 		A142E0312C2D9F37004395F8 /* SettingAlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A142E0302C2D9F37004395F8 /* SettingAlertView.swift */; };
 		A1501B082C48C3C6001410E1 /* MyPageActiveList.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1501B072C48C3C6001410E1 /* MyPageActiveList.swift */; };
 		A1501B0A2C48C3E5001410E1 /* MyPageBadgeList.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1501B092C48C3E5001410E1 /* MyPageBadgeList.swift */; };
@@ -168,6 +169,7 @@
 		60C6B4DB2C2D042700926C0E /* Image.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Image.swift; sourceTree = "<group>"; };
 		60C6B4DE2C2D053600926C0E /* SubmitRouterViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubmitRouterViewModel.swift; sourceTree = "<group>"; };
 		60C6B4E02C2D1C0100926C0E /* SubmitAlertViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubmitAlertViewModel.swift; sourceTree = "<group>"; };
+		60DADF542C6B4EC7001A0B3A /* Data++.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Data++.swift"; sourceTree = "<group>"; };
 		A142E0302C2D9F37004395F8 /* SettingAlertView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingAlertView.swift; sourceTree = "<group>"; };
 		A1501B072C48C3C6001410E1 /* MyPageActiveList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageActiveList.swift; sourceTree = "<group>"; };
 		A1501B092C48C3E5001410E1 /* MyPageBadgeList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageBadgeList.swift; sourceTree = "<group>"; };
@@ -269,6 +271,7 @@
 		605DA0D42C07122200CC9450 /* Extension */ = {
 			isa = PBXGroup;
 			children = (
+				60DADF542C6B4EC7001A0B3A /* Data++.swift */,
 				608EBF9E2C39C17F00B862CC /* Dictionary++.swift */,
 				605DA0D52C07123400CC9450 /* View++.swift */,
 				6060B2E92C08947B0083944D /* Image++.swift */,
@@ -738,6 +741,7 @@
 				608EBF9F2C39C17F00B862CC /* Dictionary++.swift in Sources */,
 				A1C6422A2C33F55A004954CA /* QuestNetwork.swift in Sources */,
 				A1AB3D6C2C1142AA001EB9D8 /* LoginButton.swift in Sources */,
+				60DADF552C6B4EC7001A0B3A /* Data++.swift in Sources */,
 				60C6B4D52C2C565700926C0E /* ChallengeNetwork.swift in Sources */,
 				A19628652C076D7B0037C53A /* SettingView.swift in Sources */,
 				607FCC332C01AA7300BB2D04 /* SubmitAlertView.swift in Sources */,
@@ -932,6 +936,7 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = ILSANG/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "일상";
 				INFOPLIST_KEY_NSCameraUsageDescription = "일상은 퀘스트 인증 사진을 촬영하기 위해 카메라 접근 권한이 필요합니다.\n계속하려면 카메라 접근 권한을 허용해주세요.";
 				INFOPLIST_KEY_NSPhotoLibraryAddUsageDescription = "일상은 촬영한 퀘스트 인증 사진을 저장하기 위해 앨범 접근 권한이 필요합니다.\n계속하려면 앨범 접근 권한을 허용해주세요.";
 				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "일상은 퀘스트 인증에 필요한 사진을 불러오기 위해 앨범 접근 권한이 필요합니다.\n계속하려면 앨범 접근 권한을 허용해주세요.";
@@ -949,6 +954,8 @@
 				);
 				MARKETING_VERSION = 0.0.3;
 				PRODUCT_BUNDLE_IDENTIFIER = com.ilsang24061;
+				MARKETING_VERSION = 1.0.1;
+				PRODUCT_BUNDLE_IDENTIFIER = com.ilsang240615;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
@@ -972,6 +979,7 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = ILSANG/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "일상";
 				INFOPLIST_KEY_NSCameraUsageDescription = "일상은 퀘스트 인증 사진을 촬영하기 위해 카메라 접근 권한이 필요합니다.\n계속하려면 카메라 접근 권한을 허용해주세요.";
 				INFOPLIST_KEY_NSPhotoLibraryAddUsageDescription = "일상은 촬영한 퀘스트 인증 사진을 저장하기 위해 앨범 접근 권한이 필요합니다.\n계속하려면 앨범 접근 권한을 허용해주세요.";
 				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "일상은 퀘스트 인증에 필요한 사진을 불러오기 위해 앨범 접근 권한이 필요합니다.\n계속하려면 앨범 접근 권한을 허용해주세요.";
@@ -989,6 +997,8 @@
 				);
 				MARKETING_VERSION = 0.0.3;
 				PRODUCT_BUNDLE_IDENTIFIER = com.ilsang24061;
+				MARKETING_VERSION = 1.0.1;
+				PRODUCT_BUNDLE_IDENTIFIER = com.ilsang240615;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
