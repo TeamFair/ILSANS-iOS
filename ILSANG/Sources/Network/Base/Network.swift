@@ -112,8 +112,7 @@ final class Network {
         urlRequest.timeoutInterval = requestTimeout
         
         // MARK: 이미지 다운 샘플링
-        let downsamplingScale = calculateDownsamplingScale(for: image)
-        guard let downsampledImage = image.downSample(scale: downsamplingScale) else {
+        guard let downsampledImage = image.downSample() else {
             return .failure(NetworkError.invalidImageData)
         }
         
@@ -158,25 +157,6 @@ final class Network {
         case .failure(let error):
             return .failure(NetworkError.requestFailed(error.localizedDescription))
         }
-    }
-    
-    private static func calculateDownsamplingScale(for image: UIImage) -> CGFloat {
-        let initialImageData = image.jpegData(compressionQuality: 1.0) ?? Data()
-        let imageSizeKB = initialImageData.kilobytes
-        
-        var downSamplingScale: CGFloat = 1.0
-        
-        if imageSizeKB > 5000 {
-            downSamplingScale = 0.4
-        } else if imageSizeKB > 2500 {
-            downSamplingScale = 0.5
-        } else if imageSizeKB > 2000 {
-            downSamplingScale = 0.65
-        } else {
-            downSamplingScale = 0.8
-        }
-        
-        return downSamplingScale
     }
     
     private static func handleStatusCode<T>(_ statusCode: Int, data: T?) -> Result<T, Error> {

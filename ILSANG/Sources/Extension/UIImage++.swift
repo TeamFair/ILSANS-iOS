@@ -8,7 +8,8 @@
 import UIKit
 
 extension UIImage {
-    func downSample(scale: CGFloat) -> UIImage? {
+    func downSample() -> UIImage? {
+        let scale = self.calculateDownsamplingScale()
         let maxPixel = max(self.size.width, self.size.height) * scale
         let options: [CFString: Any] = [
             kCGImageSourceThumbnailMaxPixelSize: maxPixel,
@@ -34,5 +35,24 @@ extension UIImage {
         let newImage = UIGraphicsGetImageFromCurrentImageContext()!
         UIGraphicsEndImageContext()
         return newImage
+    }
+    
+    func calculateDownsamplingScale() -> CGFloat {
+        let initialImageData = self.jpegData(compressionQuality: 1.0) ?? Data()
+        let imageSizeKB = initialImageData.kilobytes
+        
+        var downSamplingScale: CGFloat = 1.0
+        
+        if imageSizeKB > 5000 {
+            downSamplingScale = 0.4
+        } else if imageSizeKB > 2500 {
+            downSamplingScale = 0.5
+        } else if imageSizeKB > 2000 {
+            downSamplingScale = 0.65
+        } else {
+            downSamplingScale = 0.8
+        }
+        
+        return downSamplingScale
     }
 }
