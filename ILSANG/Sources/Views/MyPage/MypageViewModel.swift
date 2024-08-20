@@ -72,8 +72,13 @@ class MypageViewModel: ObservableObject {
     }
     
     @MainActor
-    func updateQuestStatus(challengeId: String) async -> Bool {
-        return await questNetwork.deleteChallenge(questId: challengeId)
+    func updateQuestStatus(challengeId: String, ImageId: String) async -> Bool {
+        let deleteQuestRes = await questNetwork.deleteChallenge(questId: challengeId)
+        let deleteImageRes = await imageNetwork.deleteImage(imageId: challengeId)
+        
+        Log(deleteQuestRes); Log(deleteImageRes)
+        
+        return deleteQuestRes && deleteImageRes
     }
     
     //XP를 레벨로 변경
