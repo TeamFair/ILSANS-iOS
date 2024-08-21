@@ -71,7 +71,7 @@ class QuestViewModel: ObservableObject {
     
     @MainActor
     func loadQuestListWithImage(page: Int, status: QuestStatus) async {
-        let questList = await getQuestList(page: page, status: status)
+        var questList = await getQuestList(page: page, status: status)
         var itemList = itemListByStatus[status, default: []]
         
         if page == 0 {
@@ -83,6 +83,9 @@ class QuestViewModel: ObservableObject {
             var seenIDs = Set<String>()
             itemList = itemList.filter { quest in
                 if seenIDs.contains(quest.id) {
+                    if let idx = questList.lastIndex(where: { $0.id == quest.id }) {
+                        questList.remove(at: idx)
+                    }
                     return false
                 } else {
                     seenIDs.insert(quest.id)
