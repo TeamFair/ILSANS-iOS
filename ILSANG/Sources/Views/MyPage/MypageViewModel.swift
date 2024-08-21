@@ -74,7 +74,7 @@ class MypageViewModel: ObservableObject {
     @MainActor
     func updateQuestStatus(challengeId: String, ImageId: String) async -> Bool {
         let deleteQuestRes = await questNetwork.deleteChallenge(questId: challengeId)
-        let deleteImageRes = await imageNetwork.deleteImage(imageId: challengeId)
+        let deleteImageRes = await imageNetwork.deleteImage(imageId: ImageId)
         
         Log(deleteQuestRes); Log(deleteImageRes)
         
