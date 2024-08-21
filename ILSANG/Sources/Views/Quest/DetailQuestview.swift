@@ -15,7 +15,7 @@ struct DetailQuestview: View {
     @State private var missionImage: UIImage? = nil
     @State private var questDelet = false
     
-    let QuestData : Challenge
+    let ChallengeData : Challenge
     
     var body: some View {
         
@@ -33,7 +33,7 @@ struct DetailQuestview: View {
             } else {
                 ErrorView(title: "챌린지 정보를 불러오지 못했어요", subTitle: "챌린지 정보를 불러오는 데 실패했어요.\n인터넷 연결 상태 확인 후 다시 시도해주세요."){
                     Task {
-                        missionImage = await vm.getImage(imageId: QuestData.receiptImageId)
+                        missionImage = await vm.getImage(imageId: ChallengeData.receiptImageId)
                     }
                 }
                     .background(Color.background)
@@ -45,11 +45,11 @@ struct DetailQuestview: View {
                     
                     HStack() {
                         VStack (alignment: .leading) {
-                            Text(QuestData.quest?.missions.first?.title ?? "")
+                            Text(ChallengeData.quest?.missions.first?.title ?? "")
                                 .font(.headline)
                                 .padding(.bottom, 1)
                             
-                            Text("좋아요 \(QuestData.likeCnt)개")
+                            Text("좋아요 \(ChallengeData.likeCnt)개")
                                 .font(.subheadline)
                                 .foregroundColor(.gray500)
                         }
@@ -57,7 +57,7 @@ struct DetailQuestview: View {
                         Spacer()
                         
                         VStack{
-                            Text(QuestData.createdAt.timeAgoCreatedAt())
+                            Text(ChallengeData.createdAt.timeAgoCreatedAt())
                                 .font(.subheadline)
                                 .foregroundColor(.gray400)
                         }
@@ -78,14 +78,14 @@ struct DetailQuestview: View {
                     onCancel: { questDelet = false },
                     onConfirm: {
                         Task {
-                            await vm.updateQuestStatus(challengeId: QuestData.challengeId,ImageId: QuestData.receiptImageId)
+                            await vm.updateQuestStatus(challengeId: ChallengeData.challengeId,ImageId: ChallengeData.receiptImageId)
                         }
                     }
                 )
             }
         }
         .task {
-            missionImage = await vm.getImage(imageId: QuestData.receiptImageId)
+            missionImage = await vm.getImage(imageId: ChallengeData.receiptImageId)
         }
         .navigationBarBackButtonHidden()
     }
