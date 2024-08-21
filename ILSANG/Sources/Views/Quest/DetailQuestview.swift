@@ -13,7 +13,7 @@ struct DetailQuestview: View {
     @StateObject var vm: MypageViewModel = MypageViewModel(userNetwork: UserNetwork(),xpNetwork: XPNetwork(), questNetwork: ChallengeNetwork(), imageNetwork: ImageNetwork())
     
     @State private var missionImage: UIImage? = nil
-    @State private var questDelet = false
+    @State private var challengeDelet = false
     
     let ChallengeData : Challenge
     
@@ -22,7 +22,7 @@ struct DetailQuestview: View {
         NavigationTitleView(title: "챌린지 정보", isDeleteButtonHidden: false) {
             dismiss()
         }
-        .environment(\.questDelet, $questDelet)
+        .environment(\.challengeDelet, $challengeDelet)
         
         ZStack {
             if let missionImage = missionImage {
@@ -72,10 +72,10 @@ struct DetailQuestview: View {
             } 
         }
         .overlay {
-            if questDelet {
+            if challengeDelet {
                 SettingAlertView(
                     alertType: .QuestDelete,
-                    onCancel: { questDelet = false },
+                    onCancel: { challengeDelet = false },
                     onConfirm: {
                         Task {
                             await vm.updateQuestStatus(challengeId: ChallengeData.challengeId,ImageId: ChallengeData.receiptImageId)
