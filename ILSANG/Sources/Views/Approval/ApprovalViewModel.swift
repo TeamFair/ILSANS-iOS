@@ -28,6 +28,7 @@ final class ApprovalViewModel: ObservableObject {
     }
     @Published var isScrolling = false
     @Published var emoji: Emoji?
+    @Published var showReportAlert = false
     
     private let imageNetwork: ImageNetwork
     private let emojiNetwork: EmojiNetwork
@@ -190,6 +191,17 @@ final class ApprovalViewModel: ObservableObject {
             self.emoji = model.data
         case .failure:
             self.emoji = nil
+        }
+    }
+    
+    func reportChallenge() async {
+        let challengeId = self.itemList[currentIdx].id
+        let result = await challengeNetwork.patchChallenge(challengeId: challengeId)
+        switch result {
+        case .success:
+            await getData()
+        case .failure(let err):
+            Log("챌린지 신고 실패 \(challengeId) \(err.localizedDescription)")
         }
     }
     
