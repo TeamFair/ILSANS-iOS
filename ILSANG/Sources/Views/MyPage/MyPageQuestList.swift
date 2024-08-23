@@ -28,7 +28,7 @@ struct MyPageQuestList: View {
             ScrollView {
                 VStack(spacing: 12) {
                     ForEach(questData, id: \.challengeId) { Data in
-                        NavigationLink(destination: DetailQuestview(QuestData: Data)) {
+                        NavigationLink(destination: DetailQuestview(ChallengeData: Data)) {
                             ListStruct(title: Data.quest?.missions.first?.title ?? "챌린지명", detail: Data.createdAt.timeAgoCreatedAt(), point: nil)
                         }
                     }

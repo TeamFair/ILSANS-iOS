@@ -19,10 +19,17 @@ struct DetailQuestview: View {
     
     var body: some View {
         
-        NavigationTitleView(title: "챌린지 정보", isDeleteButtonHidden: false) {
+        NavigationTitleView(title: "챌린지 정보") {
             dismiss()
         }
-        .environment(\.challengeDelet, $challengeDelet)
+        .overlay(alignment: .trailing) {
+                Button {
+                    challengeDelet.toggle()
+                } label: {
+                    DeleteButton()
+                }
+        }
+        .background(Color.white)
         
         ZStack {
             if let missionImage = missionImage {

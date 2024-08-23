@@ -11,8 +11,6 @@ struct NavigationTitleView: View {
     let title: String
     var isSeparatorHidden = false
     var isDismissButtonHidden = false
-    var isDeleteButtonHidden = true
-    @Environment(\.challengeDelet) var challengeDelet: Binding<Bool>?
     var action: (() -> Void?)? = nil
 
     var body: some View {
@@ -25,16 +23,6 @@ struct NavigationTitleView: View {
                             self.action?()
                         } label: {
                             DismissButton()
-                        }
-                    }
-                }
-                .overlay(alignment: .trailing) {
-                    if !isDeleteButtonHidden {
-                        Button {
-                            challengeDelet?.wrappedValue.toggle()
-                            Log(challengeDelet?.wrappedValue)
-                        } label: {
-                            DeleteButton()
                         }
                     }
                 }
@@ -74,16 +62,7 @@ struct DeleteButton: View {
         Image(systemName: "trash")
             .foregroundColor(.gray500)
             .font(.custom("SFPRODISPLAYREGULAR", size: 22))
-    }
-}
-
-private struct QuestDeletKey: EnvironmentKey {
-    static let defaultValue: Binding<Bool>? = nil
-}
-
-extension EnvironmentValues {
-    var challengeDelet: Binding<Bool>? {
-        get { self[QuestDeletKey.self] }
-        set { self[QuestDeletKey.self] = newValue }
+            .padding(.top, 10)
+            .padding(.horizontal, 15)
     }
 }
