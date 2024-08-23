@@ -13,7 +13,6 @@ struct DetailQuestview: View {
     @StateObject var vm: MypageViewModel = MypageViewModel(userNetwork: UserNetwork(),xpNetwork: XPNetwork(), questNetwork: ChallengeNetwork(), imageNetwork: ImageNetwork())
     
     @State private var missionImage: UIImage? = nil
-    @State private var challengeDelet = false
     
     let ChallengeData : Challenge
     
@@ -24,7 +23,7 @@ struct DetailQuestview: View {
         }
         .overlay(alignment: .trailing) {
                 Button {
-                    challengeDelet.toggle()
+                    vm.challengeDelet.toggle()
                 } label: {
                     DeleteButton()
                 }
@@ -79,13 +78,13 @@ struct DetailQuestview: View {
             } 
         }
         .overlay {
-            if challengeDelet {
+            if vm.challengeDelet {
                 SettingAlertView(
                     alertType: .QuestDelete,
-                    onCancel: { challengeDelet = false },
+                    onCancel: { vm.challengeDelet = false },
                     onConfirm: {
                         Task {
-                            await vm.updateQuestStatus(challengeId: ChallengeData.challengeId,ImageId: ChallengeData.receiptImageId)
+                            vm.updateStatus = await vm.updateQuestStatus(challengeId: ChallengeData.challengeId,ImageId: ChallengeData.receiptImageId)
                         }
                     }
                 )
