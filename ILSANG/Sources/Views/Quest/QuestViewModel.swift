@@ -71,28 +71,20 @@ class QuestViewModel: ObservableObject {
     
     @MainActor
     func loadQuestListWithImage(page: Int, status: QuestStatus) async {
-        let questList = await getQuestList(page: page, status: status)
-        var itemList = itemListByStatus[status, default: []]
+        var newQuestList = await getQuestList(page: page, status: status)
+        var currentQuestList = itemListByStatus[status, default: []]
         
         if page == 0 {
-            itemList = questList
+            currentQuestList = newQuestList
         } else {
-            itemList += questList
-            
             // MARK: 중복된 퀘스트 제거, 서버 에러 해결시 제거
-            var seenIDs = Set<String>()
-            itemList = itemList.filter { quest in
-                if seenIDs.contains(quest.id) {
-                    return false
-                } else {
-                    seenIDs.insert(quest.id)
-                    return true
-                }
-            }
+            var uniqueQuestIDs = Set(currentQuestList.map { $0.id })
+            newQuestList = newQuestList.filter { uniqueQuestIDs.insert($0.id).inserted }
+            currentQuestList += newQuestList
         }
         
         await withTaskGroup(of: (Int, UIImage?).self) { group in
-            for (index, quest) in questList.enumerated() {
+            for (index, quest) in newQuestList.enumerated() {
                 group.addTask {
                     guard let imageId = quest.imageId else {
                         return (index, nil)
@@ -105,14 +97,14 @@ class QuestViewModel: ObservableObject {
             for await (index, image) in group {
                 if let image = image {
                     if page == 0 {
-                        itemList[index].image = image
+                        currentQuestList[index].image = image
                     } else {
-                        itemList[itemList.count - questList.count + index].image = image
+                        currentQuestList[currentQuestList.count - newQuestList.count + index].image = image
                     }
                 }
             }
         }
-        itemListByStatus[status] = itemList
+        itemListByStatus[status] = currentQuestList
     }
     
     private func getQuestList(page: Int, status: QuestStatus) async -> [QuestViewModelItem] {
