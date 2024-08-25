@@ -9,7 +9,7 @@ import SwiftUI
 //MARK: 색상 폰트 변경 요청
 struct MyPageQuestList: View {
     
-    @ObservedObject var vm: MypageViewModel = MypageViewModel(userNetwork: UserNetwork(),xpNetwork: XPNetwork(), questNetwork: ChallengeNetwork(), imageNetwork: ImageNetwork())
+    @ObservedObject var vm: MypageViewModel = MypageViewModel(userNetwork: UserNetwork(),xpNetwork: XPNetwork(), challengeNetwork: ChallengeNetwork(), imageNetwork: ImageNetwork())
     
     @Binding var questData: [Challenge]
     
