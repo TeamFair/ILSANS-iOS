@@ -39,6 +39,11 @@ final class ChallengeNetwork {
         return await Network.requestData(url: url+"challenge", method: .post, parameters: nil, body: jsonData, withToken: true)
     }
     
+    func patchChallenge(challengeId: String) async -> Result<ResponseWithEmpty, Error> {
+        let parameters: Parameters = ["challengeId": challengeId, "status": "REPORTED"]
+        return await Network.requestData(url: url+"report", method: .patch, parameters: parameters, withToken: true)
+    }
+    
     func deleteChallenge(challengeId: String) async -> Bool {
         let deleteUrl = APIManager.makeURL(CustomerTarget(path: challengeId))
         

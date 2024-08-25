@@ -61,6 +61,7 @@ enum AlertType {
     case NickName
     case Logout
     case Withdrawal
+    case Report
     case QuestDelete
     
     var title: String {
@@ -71,6 +72,8 @@ enum AlertType {
             "로그아웃 하시겠어요?"
         case .Withdrawal:
             "정말 탈퇴하시겠어요?"
+        case .Report:
+            "신고하시겠습니까?"
         case .QuestDelete:
             "챌린지를 삭제 할까요?"
         }
@@ -84,6 +87,8 @@ enum AlertType {
             nil
         case .Withdrawal:
             "확인 시 일상 계정이 영구적으로 삭제되며,\n모든 데이터는 복구가 불가능합니다."
+        case .Report:
+            "확인 후 빠른 시일 내 조치하도록 하겠습니다"
         case .QuestDelete:
             "삭제하면 복구가 불가합니다"
         }
@@ -91,7 +96,7 @@ enum AlertType {
     
     var disagree: String {
         switch self {
-        case .NickName,.Withdrawal,.QuestDelete:
+        case .NickName,.Withdrawal, .Report,.QuestDelete:
             "취소"
         case .Logout:
             "아니요"
@@ -100,7 +105,7 @@ enum AlertType {
     
     var agree: String {
         switch self {
-        case .NickName,.Withdrawal,.QuestDelete:
+        case .NickName,.Withdrawal,.Report,.QuestDelete:
             "확인"
         case .Logout:
             "예"
