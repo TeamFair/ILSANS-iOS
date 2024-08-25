@@ -43,4 +43,19 @@ final class ChallengeNetwork {
         let parameters: Parameters = ["challengeId": challengeId, "status": "REPORTED"]
         return await Network.requestData(url: url+"report", method: .patch, parameters: parameters, withToken: true)
     }
+    
+    func deleteChallenge(challengeId: String) async -> Bool {
+        let deleteUrl = APIManager.makeURL(CustomerTarget(path: challengeId))
+        
+        let res: Result<ResponseWithoutData, Error> = await Network.requestData(url: deleteUrl, method: .delete, parameters: nil, withToken: true)
+        
+        switch res {
+        case .success:
+            Log(res)
+            return true
+        case .failure:
+            Log(res)
+            return false
+        }
+    }
 }
