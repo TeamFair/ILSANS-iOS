@@ -10,7 +10,7 @@ import SwiftUI
 struct DetailQuestview: View {
     
     @Environment(\.dismiss) var dismiss
-    @StateObject var vm: MypageViewModel = MypageViewModel(userNetwork: UserNetwork(),xpNetwork: XPNetwork(), questNetwork: ChallengeNetwork(), imageNetwork: ImageNetwork())
+    @StateObject var vm: MypageViewModel = MypageViewModel(userNetwork: UserNetwork(),xpNetwork: XPNetwork(), challengeNetwork: ChallengeNetwork(), imageNetwork: ImageNetwork())
     
     @State private var missionImage: UIImage? = nil
     
@@ -23,7 +23,7 @@ struct DetailQuestview: View {
         }
         .overlay(alignment: .trailing) {
                 Button {
-                    vm.challengeDelet.toggle()
+                    vm.challengeDelete.toggle()
                 } label: {
                     DeleteButton()
                 }
@@ -78,14 +78,14 @@ struct DetailQuestview: View {
             } 
         }
         .overlay {
-            if vm.challengeDelet {
+            if vm.challengeDelete {
                 SettingAlertView(
                     alertType: .QuestDelete,
-                    onCancel: { vm.challengeDelet = false },
+                    onCancel: { vm.challengeDelete = false },
                     onConfirm: {
                         Task {
-                            if await vm.updateQuestStatus(challengeId: ChallengeData.challengeId,ImageId: ChallengeData.receiptImageId) {
-                                vm.challengeDelet = false
+                            if await vm.updateChallengeStatus(challengeId: ChallengeData.challengeId,ImageId: ChallengeData.receiptImageId) {
+                                vm.challengeDelete = false
                             }
                         }
                     }
