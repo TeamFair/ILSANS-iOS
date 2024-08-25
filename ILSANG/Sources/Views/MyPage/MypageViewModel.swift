@@ -14,7 +14,6 @@ class MypageViewModel: ObservableObject {
     @Published var challengeList: [Challenge]?
     @Published var questXp: [XPContent]?
     @Published var challengeDelet = false
-    @Published var updateStatus = false
     
     private let userNetwork: UserNetwork
     private let questNetwork: ChallengeNetwork

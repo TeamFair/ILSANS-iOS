@@ -22,7 +22,7 @@ final class ImageNetwork {
     }
     
     func deleteImage(imageId: String) async -> Bool {
-        let deleteUrl = APIManager.makeURL(CustomerTarget(path: imageId))
+        let deleteUrl = APIManager.makeURL(CustomerTarget(path: "image/\(imageId)"))
         
         let res: Result<ResponseWithoutData, Error> = await Network.requestData(url: deleteUrl, method: .delete, parameters: nil, withToken: true)
         switch res {

@@ -84,7 +84,9 @@ struct DetailQuestview: View {
                     onCancel: { vm.challengeDelet = false },
                     onConfirm: {
                         Task {
-                            vm.updateStatus = await vm.updateQuestStatus(challengeId: ChallengeData.challengeId,ImageId: ChallengeData.receiptImageId)
+                            if await vm.updateQuestStatus(challengeId: ChallengeData.challengeId,ImageId: ChallengeData.receiptImageId) {
+                                vm.challengeDelet = false
+                            }
                         }
                     }
                 )
