@@ -20,15 +20,22 @@ final class ApprovalViewModel: ObservableObject {
     @Published var currentIdx = 0 {
         didSet {
             Task {
-                if !itemList.isEmpty {
-                    await getEmoji(challengeId: itemList[currentIdx].id)
-                }
+                await self.handleIndexChange(oldValue)
             }
         }
     }
     @Published var isScrolling = false
     @Published var emoji: Emoji?
     @Published var showReportAlert = false
+    
+    private lazy var paginationManager = PaginationManager<ApprovalViewModelItem>(
+        size: 10,
+        threshold: 3,
+        loadPage: { [weak self] page in
+            guard let self = self else { return ([], 0) }
+            return await self.getChallengesWithImage(page: page)
+        }
+    )
     
     private let imageNetwork: ImageNetwork
     private let emojiNetwork: EmojiNetwork
@@ -43,7 +50,8 @@ final class ApprovalViewModel: ObservableObject {
     @MainActor
     func getData() async {
         changeViewStatus(.loading)
-        await getChallengesWithImage(page: 0)
+        await self.paginationManager.loadData(isRefreshing: true)
+
         self.currentIdx = 0
         if let challengeId = itemList.first?.id {
             await getEmoji(challengeId: challengeId)
@@ -57,9 +65,23 @@ final class ApprovalViewModel: ObservableObject {
     }
     
     @MainActor
-    func getChallengesWithImage(page: Int) async {
-        var challenges = await getRandomChallenges(page: page, size: 20)
-
+    func handleIndexChange(_ previousIdx: Int) async {
+        guard !itemList.isEmpty else { return }
+        
+        await getEmoji(challengeId: itemList[currentIdx].id)
+        
+        if previousIdx < currentIdx {
+            if paginationManager.canLoadMoreData(index: currentIdx, currentCount: itemList.count) {
+                await paginationManager.loadData(isRefreshing: false)
+            }
+        }
+    }
+    
+    @MainActor
+    func getChallengesWithImage(page: Int) async -> ([ApprovalViewModelItem], Int) {
+        let getChallengeResult = await getRandomChallenges(page: page, size: paginationManager.size)
+        var challenges = getChallengeResult.data
+        
         // 중복된 id 제거
         var seenIDs = Set<String>()
         challenges = challenges.filter { challenge in
@@ -95,15 +117,17 @@ final class ApprovalViewModel: ObservableObject {
                 }
             }
         }
+        
+        return (itemList, getChallengeResult.total)
     }
     
-    private func getRandomChallenges(page: Int, size: Int) async -> [ApprovalViewModelItem] {
+    private func getRandomChallenges(page: Int, size: Int) async -> (data: [ApprovalViewModelItem], total: Int) {
         let res = await challengeNetwork.getRandomChallenges(page: page, size: size)
         switch res {
         case .success(let response):
-            return response.data.map { ApprovalViewModelItem.init(challenge: $0) }
+            return (response.data.map { ApprovalViewModelItem.init(challenge: $0) }, response.total)
         case .failure:
-            return []
+            return ([], 0)
         }
     }
     
