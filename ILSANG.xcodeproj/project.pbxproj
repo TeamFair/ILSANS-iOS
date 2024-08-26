@@ -11,6 +11,7 @@
 		600211EA2C1EEE6D000CC02E /* APITarget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 600211E92C1EEE6D000CC02E /* APITarget.swift */; };
 		600211EC2C1EEED7000CC02E /* APIManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 600211EB2C1EEED7000CC02E /* APIManager.swift */; };
 		600211EE2C1EEF91000CC02E /* EmojiNetwork.swift in Sources */ = {isa = PBXBuildFile; fileRef = 600211ED2C1EEF91000CC02E /* EmojiNetwork.swift */; };
+		600D83A42C7B1FA4005C93E2 /* PaginationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 600D83A32C7B1FA4005C93E2 /* PaginationManager.swift */; };
 		6011891D2C3E8B3B0070F2AD /* UserService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6011891C2C3E8B3B0070F2AD /* UserService.swift */; };
 		6011891F2C3E94380070F2AD /* AuthUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6011891E2C3E94380070F2AD /* AuthUser.swift */; };
 		601189212C3E94A60070F2AD /* AuthService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 601189202C3E94A60070F2AD /* AuthService.swift */; };
@@ -116,6 +117,7 @@
 		600211E92C1EEE6D000CC02E /* APITarget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APITarget.swift; sourceTree = "<group>"; };
 		600211EB2C1EEED7000CC02E /* APIManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIManager.swift; sourceTree = "<group>"; };
 		600211ED2C1EEF91000CC02E /* EmojiNetwork.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmojiNetwork.swift; sourceTree = "<group>"; };
+		600D83A32C7B1FA4005C93E2 /* PaginationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaginationManager.swift; sourceTree = "<group>"; };
 		601189182C3E84720070F2AD /* ILSANG.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = ILSANG.entitlements; sourceTree = "<group>"; };
 		6011891C2C3E8B3B0070F2AD /* UserService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserService.swift; sourceTree = "<group>"; };
 		6011891E2C3E94380070F2AD /* AuthUser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthUser.swift; sourceTree = "<group>"; };
@@ -257,6 +259,14 @@
 				603F04122C26ADC6008A2332 /* CommonResponse.swift */,
 			);
 			path = Base;
+			sourceTree = "<group>";
+		};
+		600D83A22C7B1F7E005C93E2 /* Manager */ = {
+			isa = PBXGroup;
+			children = (
+				600D83A32C7B1FA4005C93E2 /* PaginationManager.swift */,
+			);
+			path = Manager;
 			sourceTree = "<group>";
 		};
 		6011891B2C3E8B2B0070F2AD /* Service */ = {
@@ -472,6 +482,7 @@
 		60B8BA132BF9F07D005F6DE3 /* Sources */ = {
 			isa = PBXGroup;
 			children = (
+				600D83A22C7B1F7E005C93E2 /* Manager */,
 				6011891B2C3E8B2B0070F2AD /* Service */,
 				600211E62C1EED2B000CC02E /* Model */,
 				606292D62C19E6C00098B6D2 /* Network */,
@@ -741,6 +752,7 @@
 				608EBF9F2C39C17F00B862CC /* Dictionary++.swift in Sources */,
 				A1C6422A2C33F55A004954CA /* QuestNetwork.swift in Sources */,
 				A1AB3D6C2C1142AA001EB9D8 /* LoginButton.swift in Sources */,
+				600D83A42C7B1FA4005C93E2 /* PaginationManager.swift in Sources */,
 				60DADF552C6B4EC7001A0B3A /* Data++.swift in Sources */,
 				60C6B4D52C2C565700926C0E /* ChallengeNetwork.swift in Sources */,
 				A19628652C076D7B0037C53A /* SettingView.swift in Sources */,
@@ -952,7 +964,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0.1;
+				MARKETING_VERSION = 1.0.2;
 				PRODUCT_BUNDLE_IDENTIFIER = com.ilsang240615;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
@@ -993,7 +1005,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0.1;
+				MARKETING_VERSION = 1.0.2;
 				PRODUCT_BUNDLE_IDENTIFIER = com.ilsang240615;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
