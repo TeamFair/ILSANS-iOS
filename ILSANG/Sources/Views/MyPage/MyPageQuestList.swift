@@ -61,10 +61,14 @@ struct ListStruct: View {
             
             Spacer()
             
-            if (point != nil) {
-                Text("+\(point ?? 0)XP")
+            if let point = point {
+                Text("\(point > 0 ? "+\(point)" : "\(point)")XP")
                     .font(.system(size: 17, weight: .semibold))
                     .foregroundColor(Color.accentColor)
+            } else {
+                Text("+0XP")
+                    .font(.system(size: 17, weight: .semibold))
+                    .foregroundColor(Color.gray)
             }
         }
         .padding(20)
