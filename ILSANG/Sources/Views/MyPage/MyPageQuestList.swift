@@ -68,7 +68,7 @@ struct ListStruct: View {
             } else {
                 Text("+0XP")
                     .font(.system(size: 17, weight: .semibold))
-                    .foregroundColor(Color.gray)
+                    .foregroundColor(Color.accentColor)
             }
         }
         .padding(20)
