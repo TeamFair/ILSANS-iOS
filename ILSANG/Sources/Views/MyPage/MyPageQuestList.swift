@@ -65,10 +65,6 @@ struct ListStruct: View {
                 Text("\(point > 0 ? "+\(point)" : "\(point)")XP")
                     .font(.system(size: 17, weight: .semibold))
                     .foregroundColor(Color.accentColor)
-            } else {
-                Text("+0XP")
-                    .font(.system(size: 17, weight: .semibold))
-                    .foregroundColor(Color.accentColor)
             }
         }
         .padding(20)
