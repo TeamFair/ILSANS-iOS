@@ -1,10 +1,10 @@
 // !$*UTF8*$!
 {
-	archiveVersion = 1;
-	classes = {
-	};
-	objectVersion = 56;
-	objects = {
+    archiveVersion = 1;
+    classes = {
+    };
+    objectVersion = 56;
+    objects = {
 
 /* Begin PBXBuildFile section */
 		600211E82C1EED40000CC02E /* Emoji.swift in Sources */ = {isa = PBXBuildFile; fileRef = 600211E72C1EED40000CC02E /* Emoji.swift */; };
@@ -96,20 +96,20 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		60B8B9F42BF9EEF3005F6DE3 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 60B8B9DB2BF9EEF1005F6DE3 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 60B8B9E22BF9EEF1005F6DE3;
-			remoteInfo = ILSANG;
-		};
-		60B8B9FE2BF9EEF3005F6DE3 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 60B8B9DB2BF9EEF1005F6DE3 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 60B8B9E22BF9EEF1005F6DE3;
-			remoteInfo = ILSANG;
-		};
+        60B8B9F42BF9EEF3005F6DE3 /* PBXContainerItemProxy */ = {
+            isa = PBXContainerItemProxy;
+            containerPortal = 60B8B9DB2BF9EEF1005F6DE3 /* Project object */;
+            proxyType = 1;
+            remoteGlobalIDString = 60B8B9E22BF9EEF1005F6DE3;
+            remoteInfo = ILSANG;
+        };
+        60B8B9FE2BF9EEF3005F6DE3 /* PBXContainerItemProxy */ = {
+            isa = PBXContainerItemProxy;
+            containerPortal = 60B8B9DB2BF9EEF1005F6DE3 /* Project object */;
+            proxyType = 1;
+            remoteGlobalIDString = 60B8B9E22BF9EEF1005F6DE3;
+            remoteInfo = ILSANG;
+        };
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
@@ -208,28 +208,28 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		60B8B9E02BF9EEF1005F6DE3 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				606292DD2C19EAB00098B6D2 /* Alamofire in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		60B8B9F02BF9EEF3005F6DE3 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		60B8B9FA2BF9EEF3005F6DE3 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
+        60B8B9E02BF9EEF1005F6DE3 /* Frameworks */ = {
+            isa = PBXFrameworksBuildPhase;
+            buildActionMask = 2147483647;
+            files = (
+                606292DD2C19EAB00098B6D2 /* Alamofire in Frameworks */,
+            );
+            runOnlyForDeploymentPostprocessing = 0;
+        };
+        60B8B9F02BF9EEF3005F6DE3 /* Frameworks */ = {
+            isa = PBXFrameworksBuildPhase;
+            buildActionMask = 2147483647;
+            files = (
+            );
+            runOnlyForDeploymentPostprocessing = 0;
+        };
+        60B8B9FA2BF9EEF3005F6DE3 /* Frameworks */ = {
+            isa = PBXFrameworksBuildPhase;
+            buildActionMask = 2147483647;
+            files = (
+            );
+            runOnlyForDeploymentPostprocessing = 0;
+        };
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -566,134 +566,134 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		60B8B9E22BF9EEF1005F6DE3 /* ILSANG */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 60B8BA072BF9EEF3005F6DE3 /* Build configuration list for PBXNativeTarget "ILSANG" */;
-			buildPhases = (
-				60B8B9DF2BF9EEF1005F6DE3 /* Sources */,
-				60B8B9E02BF9EEF1005F6DE3 /* Frameworks */,
-				60B8B9E12BF9EEF1005F6DE3 /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-			);
-			name = ILSANG;
-			packageProductDependencies = (
-				606292DC2C19EAB00098B6D2 /* Alamofire */,
-			);
-			productName = ILSANG;
-			productReference = 60B8B9E32BF9EEF1005F6DE3 /* ILSANG.app */;
-			productType = "com.apple.product-type.application";
-		};
-		60B8B9F22BF9EEF3005F6DE3 /* ILSANGTests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 60B8BA0A2BF9EEF3005F6DE3 /* Build configuration list for PBXNativeTarget "ILSANGTests" */;
-			buildPhases = (
-				60B8B9EF2BF9EEF3005F6DE3 /* Sources */,
-				60B8B9F02BF9EEF3005F6DE3 /* Frameworks */,
-				60B8B9F12BF9EEF3005F6DE3 /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				60B8B9F52BF9EEF3005F6DE3 /* PBXTargetDependency */,
-			);
-			name = ILSANGTests;
-			productName = ILSANGTests;
-			productReference = 60B8B9F32BF9EEF3005F6DE3 /* ILSANGTests.xctest */;
-			productType = "com.apple.product-type.bundle.unit-test";
-		};
-		60B8B9FC2BF9EEF3005F6DE3 /* ILSANGUITests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 60B8BA0D2BF9EEF3005F6DE3 /* Build configuration list for PBXNativeTarget "ILSANGUITests" */;
-			buildPhases = (
-				60B8B9F92BF9EEF3005F6DE3 /* Sources */,
-				60B8B9FA2BF9EEF3005F6DE3 /* Frameworks */,
-				60B8B9FB2BF9EEF3005F6DE3 /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				60B8B9FF2BF9EEF3005F6DE3 /* PBXTargetDependency */,
-			);
-			name = ILSANGUITests;
-			productName = ILSANGUITests;
-			productReference = 60B8B9FD2BF9EEF3005F6DE3 /* ILSANGUITests.xctest */;
-			productType = "com.apple.product-type.bundle.ui-testing";
-		};
+        60B8B9E22BF9EEF1005F6DE3 /* ILSANG */ = {
+            isa = PBXNativeTarget;
+            buildConfigurationList = 60B8BA072BF9EEF3005F6DE3 /* Build configuration list for PBXNativeTarget "ILSANG" */;
+            buildPhases = (
+                60B8B9DF2BF9EEF1005F6DE3 /* Sources */,
+                60B8B9E02BF9EEF1005F6DE3 /* Frameworks */,
+                60B8B9E12BF9EEF1005F6DE3 /* Resources */,
+            );
+            buildRules = (
+            );
+            dependencies = (
+            );
+            name = ILSANG;
+            packageProductDependencies = (
+                606292DC2C19EAB00098B6D2 /* Alamofire */,
+            );
+            productName = ILSANG;
+            productReference = 60B8B9E32BF9EEF1005F6DE3 /* ILSANG.app */;
+            productType = "com.apple.product-type.application";
+        };
+        60B8B9F22BF9EEF3005F6DE3 /* ILSANGTests */ = {
+            isa = PBXNativeTarget;
+            buildConfigurationList = 60B8BA0A2BF9EEF3005F6DE3 /* Build configuration list for PBXNativeTarget "ILSANGTests" */;
+            buildPhases = (
+                60B8B9EF2BF9EEF3005F6DE3 /* Sources */,
+                60B8B9F02BF9EEF3005F6DE3 /* Frameworks */,
+                60B8B9F12BF9EEF3005F6DE3 /* Resources */,
+            );
+            buildRules = (
+            );
+            dependencies = (
+                60B8B9F52BF9EEF3005F6DE3 /* PBXTargetDependency */,
+            );
+            name = ILSANGTests;
+            productName = ILSANGTests;
+            productReference = 60B8B9F32BF9EEF3005F6DE3 /* ILSANGTests.xctest */;
+            productType = "com.apple.product-type.bundle.unit-test";
+        };
+        60B8B9FC2BF9EEF3005F6DE3 /* ILSANGUITests */ = {
+            isa = PBXNativeTarget;
+            buildConfigurationList = 60B8BA0D2BF9EEF3005F6DE3 /* Build configuration list for PBXNativeTarget "ILSANGUITests" */;
+            buildPhases = (
+                60B8B9F92BF9EEF3005F6DE3 /* Sources */,
+                60B8B9FA2BF9EEF3005F6DE3 /* Frameworks */,
+                60B8B9FB2BF9EEF3005F6DE3 /* Resources */,
+            );
+            buildRules = (
+            );
+            dependencies = (
+                60B8B9FF2BF9EEF3005F6DE3 /* PBXTargetDependency */,
+            );
+            name = ILSANGUITests;
+            productName = ILSANGUITests;
+            productReference = 60B8B9FD2BF9EEF3005F6DE3 /* ILSANGUITests.xctest */;
+            productType = "com.apple.product-type.bundle.ui-testing";
+        };
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
-		60B8B9DB2BF9EEF1005F6DE3 /* Project object */ = {
-			isa = PBXProject;
-			attributes = {
-				BuildIndependentTargetsInParallel = 1;
-				LastSwiftUpdateCheck = 1500;
-				LastUpgradeCheck = 1500;
-				TargetAttributes = {
-					60B8B9E22BF9EEF1005F6DE3 = {
-						CreatedOnToolsVersion = 15.0;
-					};
-					60B8B9F22BF9EEF3005F6DE3 = {
-						CreatedOnToolsVersion = 15.0;
-						TestTargetID = 60B8B9E22BF9EEF1005F6DE3;
-					};
-					60B8B9FC2BF9EEF3005F6DE3 = {
-						CreatedOnToolsVersion = 15.0;
-						TestTargetID = 60B8B9E22BF9EEF1005F6DE3;
-					};
-				};
-			};
-			buildConfigurationList = 60B8B9DE2BF9EEF1005F6DE3 /* Build configuration list for PBXProject "ILSANG" */;
-			compatibilityVersion = "Xcode 14.0";
-			developmentRegion = en;
-			hasScannedForEncodings = 0;
-			knownRegions = (
-				en,
-				Base,
-			);
-			mainGroup = 60B8B9DA2BF9EEF1005F6DE3;
-			packageReferences = (
-				606292DB2C19EAB00098B6D2 /* XCRemoteSwiftPackageReference "Alamofire" */,
-			);
-			productRefGroup = 60B8B9E42BF9EEF1005F6DE3 /* Products */;
-			projectDirPath = "";
-			projectRoot = "";
-			targets = (
-				60B8B9E22BF9EEF1005F6DE3 /* ILSANG */,
-				60B8B9F22BF9EEF3005F6DE3 /* ILSANGTests */,
-				60B8B9FC2BF9EEF3005F6DE3 /* ILSANGUITests */,
-			);
-		};
+        60B8B9DB2BF9EEF1005F6DE3 /* Project object */ = {
+            isa = PBXProject;
+            attributes = {
+                BuildIndependentTargetsInParallel = 1;
+                LastSwiftUpdateCheck = 1500;
+                LastUpgradeCheck = 1500;
+                TargetAttributes = {
+                    60B8B9E22BF9EEF1005F6DE3 = {
+                        CreatedOnToolsVersion = 15.0;
+                    };
+                    60B8B9F22BF9EEF3005F6DE3 = {
+                        CreatedOnToolsVersion = 15.0;
+                        TestTargetID = 60B8B9E22BF9EEF1005F6DE3;
+                    };
+                    60B8B9FC2BF9EEF3005F6DE3 = {
+                        CreatedOnToolsVersion = 15.0;
+                        TestTargetID = 60B8B9E22BF9EEF1005F6DE3;
+                    };
+                };
+            };
+            buildConfigurationList = 60B8B9DE2BF9EEF1005F6DE3 /* Build configuration list for PBXProject "ILSANG" */;
+            compatibilityVersion = "Xcode 14.0";
+            developmentRegion = en;
+            hasScannedForEncodings = 0;
+            knownRegions = (
+                en,
+                Base,
+            );
+            mainGroup = 60B8B9DA2BF9EEF1005F6DE3;
+            packageReferences = (
+                606292DB2C19EAB00098B6D2 /* XCRemoteSwiftPackageReference "Alamofire" */,
+            );
+            productRefGroup = 60B8B9E42BF9EEF1005F6DE3 /* Products */;
+            projectDirPath = "";
+            projectRoot = "";
+            targets = (
+                60B8B9E22BF9EEF1005F6DE3 /* ILSANG */,
+                60B8B9F22BF9EEF3005F6DE3 /* ILSANGTests */,
+                60B8B9FC2BF9EEF3005F6DE3 /* ILSANGUITests */,
+            );
+        };
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
-		60B8B9E12BF9EEF1005F6DE3 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				60B8BA112BF9EF50005F6DE3 /* Launch Screen.storyboard in Resources */,
-				60B8B9EE2BF9EEF3005F6DE3 /* Preview Assets.xcassets in Resources */,
-				606C87B12C0CC89B002D5C3E /* 2406_TERMS_OF_USE.pdf in Resources */,
-				60B8B9EB2BF9EEF3005F6DE3 /* Assets.xcassets in Resources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		60B8B9F12BF9EEF3005F6DE3 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		60B8B9FB2BF9EEF3005F6DE3 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
+        60B8B9E12BF9EEF1005F6DE3 /* Resources */ = {
+            isa = PBXResourcesBuildPhase;
+            buildActionMask = 2147483647;
+            files = (
+                60B8BA112BF9EF50005F6DE3 /* Launch Screen.storyboard in Resources */,
+                60B8B9EE2BF9EEF3005F6DE3 /* Preview Assets.xcassets in Resources */,
+                606C87B12C0CC89B002D5C3E /* 2406_TERMS_OF_USE.pdf in Resources */,
+                60B8B9EB2BF9EEF3005F6DE3 /* Assets.xcassets in Resources */,
+            );
+            runOnlyForDeploymentPostprocessing = 0;
+        };
+        60B8B9F12BF9EEF3005F6DE3 /* Resources */ = {
+            isa = PBXResourcesBuildPhase;
+            buildActionMask = 2147483647;
+            files = (
+            );
+            runOnlyForDeploymentPostprocessing = 0;
+        };
+        60B8B9FB2BF9EEF3005F6DE3 /* Resources */ = {
+            isa = PBXResourcesBuildPhase;
+            buildActionMask = 2147483647;
+            files = (
+            );
+            runOnlyForDeploymentPostprocessing = 0;
+        };
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -803,16 +803,16 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		60B8B9F52BF9EEF3005F6DE3 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 60B8B9E22BF9EEF1005F6DE3 /* ILSANG */;
-			targetProxy = 60B8B9F42BF9EEF3005F6DE3 /* PBXContainerItemProxy */;
-		};
-		60B8B9FF2BF9EEF3005F6DE3 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 60B8B9E22BF9EEF1005F6DE3 /* ILSANG */;
-			targetProxy = 60B8B9FE2BF9EEF3005F6DE3 /* PBXContainerItemProxy */;
-		};
+        60B8B9F52BF9EEF3005F6DE3 /* PBXTargetDependency */ = {
+            isa = PBXTargetDependency;
+            target = 60B8B9E22BF9EEF1005F6DE3 /* ILSANG */;
+            targetProxy = 60B8B9F42BF9EEF3005F6DE3 /* PBXContainerItemProxy */;
+        };
+        60B8B9FF2BF9EEF3005F6DE3 /* PBXTargetDependency */ = {
+            isa = PBXTargetDependency;
+            target = 60B8B9E22BF9EEF1005F6DE3 /* ILSANG */;
+            targetProxy = 60B8B9FE2BF9EEF3005F6DE3 /* PBXContainerItemProxy */;
+        };
 /* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
@@ -1096,62 +1096,62 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		60B8B9DE2BF9EEF1005F6DE3 /* Build configuration list for PBXProject "ILSANG" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				60B8BA052BF9EEF3005F6DE3 /* Debug */,
-				60B8BA062BF9EEF3005F6DE3 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		60B8BA072BF9EEF3005F6DE3 /* Build configuration list for PBXNativeTarget "ILSANG" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				60B8BA082BF9EEF3005F6DE3 /* Debug */,
-				60B8BA092BF9EEF3005F6DE3 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		60B8BA0A2BF9EEF3005F6DE3 /* Build configuration list for PBXNativeTarget "ILSANGTests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				60B8BA0B2BF9EEF3005F6DE3 /* Debug */,
-				60B8BA0C2BF9EEF3005F6DE3 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		60B8BA0D2BF9EEF3005F6DE3 /* Build configuration list for PBXNativeTarget "ILSANGUITests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				60B8BA0E2BF9EEF3005F6DE3 /* Debug */,
-				60B8BA0F2BF9EEF3005F6DE3 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
+        60B8B9DE2BF9EEF1005F6DE3 /* Build configuration list for PBXProject "ILSANG" */ = {
+            isa = XCConfigurationList;
+            buildConfigurations = (
+                60B8BA052BF9EEF3005F6DE3 /* Debug */,
+                60B8BA062BF9EEF3005F6DE3 /* Release */,
+            );
+            defaultConfigurationIsVisible = 0;
+            defaultConfigurationName = Release;
+        };
+        60B8BA072BF9EEF3005F6DE3 /* Build configuration list for PBXNativeTarget "ILSANG" */ = {
+            isa = XCConfigurationList;
+            buildConfigurations = (
+                60B8BA082BF9EEF3005F6DE3 /* Debug */,
+                60B8BA092BF9EEF3005F6DE3 /* Release */,
+            );
+            defaultConfigurationIsVisible = 0;
+            defaultConfigurationName = Release;
+        };
+        60B8BA0A2BF9EEF3005F6DE3 /* Build configuration list for PBXNativeTarget "ILSANGTests" */ = {
+            isa = XCConfigurationList;
+            buildConfigurations = (
+                60B8BA0B2BF9EEF3005F6DE3 /* Debug */,
+                60B8BA0C2BF9EEF3005F6DE3 /* Release */,
+            );
+            defaultConfigurationIsVisible = 0;
+            defaultConfigurationName = Release;
+        };
+        60B8BA0D2BF9EEF3005F6DE3 /* Build configuration list for PBXNativeTarget "ILSANGUITests" */ = {
+            isa = XCConfigurationList;
+            buildConfigurations = (
+                60B8BA0E2BF9EEF3005F6DE3 /* Debug */,
+                60B8BA0F2BF9EEF3005F6DE3 /* Release */,
+            );
+            defaultConfigurationIsVisible = 0;
+            defaultConfigurationName = Release;
+        };
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		606292DB2C19EAB00098B6D2 /* XCRemoteSwiftPackageReference "Alamofire" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/Alamofire/Alamofire.git";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 5.9.1;
-			};
-		};
+        606292DB2C19EAB00098B6D2 /* XCRemoteSwiftPackageReference "Alamofire" */ = {
+            isa = XCRemoteSwiftPackageReference;
+            repositoryURL = "https://github.com/Alamofire/Alamofire.git";
+            requirement = {
+                kind = upToNextMajorVersion;
+                minimumVersion = 5.9.1;
+            };
+        };
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		606292DC2C19EAB00098B6D2 /* Alamofire */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 606292DB2C19EAB00098B6D2 /* XCRemoteSwiftPackageReference "Alamofire" */;
-			productName = Alamofire;
-		};
+        606292DC2C19EAB00098B6D2 /* Alamofire */ = {
+            isa = XCSwiftPackageProductDependency;
+            package = 606292DB2C19EAB00098B6D2 /* XCRemoteSwiftPackageReference "Alamofire" */;
+            productName = Alamofire;
+        };
 /* End XCSwiftPackageProductDependency section */
-	};
-	rootObject = 60B8B9DB2BF9EEF1005F6DE3 /* Project object */;
+    };
+    rootObject = 60B8B9DB2BF9EEF1005F6DE3 /* Project object */;
 }

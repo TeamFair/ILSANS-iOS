@@ -13,17 +13,18 @@ class MypageViewModel: ObservableObject {
     @Published var userData: User?
     @Published var challengeList: [Challenge]?
     @Published var questXp: [XPContent]?
+    @Published var challengeDelete = false
     
     private let userNetwork: UserNetwork
-    private let questNetwork: ChallengeNetwork
+    private let challengeNetwork: ChallengeNetwork
     private let imageNetwork: ImageNetwork
     private let xpNetwork: XPNetwork
     
-    init(userData: User? = nil, userNetwork: UserNetwork, xpNetwork: XPNetwork, questNetwork: ChallengeNetwork, imageNetwork: ImageNetwork) {
+    init(userData: User? = nil, userNetwork: UserNetwork, xpNetwork: XPNetwork, challengeNetwork: ChallengeNetwork, imageNetwork: ImageNetwork) {
         self.userData = userData
         self.userNetwork = userNetwork
         self.xpNetwork = xpNetwork
-        self.questNetwork = questNetwork
+        self.challengeNetwork = challengeNetwork
         self.imageNetwork = imageNetwork
     }
     
@@ -59,7 +60,7 @@ class MypageViewModel: ObservableObject {
     
     @MainActor
     func getQuest(page: Int) async {
-        let Data = await questNetwork.getChallenges(page: page)
+        let Data = await challengeNetwork.getChallenges(page: page)
         
         switch Data {
         case .success(let model):
@@ -69,6 +70,16 @@ class MypageViewModel: ObservableObject {
         case .failure:
             self.challengeList = nil
         }
+    }
+    
+    @MainActor
+    func updateChallengeStatus(challengeId: String, ImageId: String) async -> Bool {
+        let deleteChallengeRes = await challengeNetwork.deleteChallenge(challengeId: challengeId)
+        let deleteImageRes = await imageNetwork.deleteImage(imageId: ImageId)
+        
+        Log(deleteChallengeRes); Log(deleteImageRes)
+        
+        return deleteChallengeRes && deleteImageRes
     }
     
     //XP를 레벨로 변경
