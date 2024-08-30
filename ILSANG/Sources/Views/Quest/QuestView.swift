@@ -114,7 +114,9 @@ extension QuestView {
         ErrorView(
             title: vm.selectedHeader.emptyTitle,
             subTitle: vm.selectedHeader.emptySubTitle
-        )
+        ) {
+            Task { await vm.loadInitialData() }
+        }
     }
     
     private var networkErrorView: some View {
