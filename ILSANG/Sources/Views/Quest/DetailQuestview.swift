@@ -86,6 +86,10 @@ struct DetailQuestview: View {
                         Task {
                             if await vm.updateChallengeStatus(challengeId: ChallengeData.challengeId,ImageId: ChallengeData.receiptImageId) {
                                 vm.challengeDelete = false
+                                dismiss()
+                            } else {
+                                vm.challengeDelete = false
+                                dismiss()
                             }
                         }
                     }
