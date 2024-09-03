@@ -53,15 +53,7 @@ struct SettingView: View {
                 SettingAlertView(
                     alertType: .Logout,
                     onCancel: { logoutAlert = false },
-                    onConfirm: {
-                        Task {
-                            // 로그아웃 함수 호출
-                            let result = await LogoutNetwork().getLogout()
-                            print(result)
-                            // TODO: 로그아웃 로직 추가 확인 필요
-                            UserService.shared.isLogin = false
-                        }
-                    }
+                    onConfirm: { logout() }
                 )
             }
         }
@@ -92,6 +84,19 @@ struct SettingView: View {
             DeleteAccountView()
         default:
             Text("")
+        }
+    }
+    
+    private func logout() {
+        Task {
+            let result = await LogoutNetwork().getLogout()
+            switch result {
+            case .success:
+                await UserService.shared.logout()
+            case .failure(let err):
+                Log("로그아웃 실패 \(err.localizedDescription)")
+                logoutAlert = false
+            }
         }
     }
 }
