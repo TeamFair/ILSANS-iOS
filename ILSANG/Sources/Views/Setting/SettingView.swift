@@ -15,6 +15,7 @@ struct SettingView: View {
     private let settingList: [Setting] = [
         Setting(title: "고객센터", type: .navigate),
         Setting(title: "약관 및 정책", type: .navigate),
+        Setting(title: "오픈소스 정보", type: .navigate),
         Setting(title: "현재 버전", type: .info("v.0.0.1")),
         Setting(title: "로그아웃", type: .alert),
         Setting(title: "회원 탈퇴", titleColor: .subRed, type: .navigate)
@@ -88,6 +89,8 @@ struct SettingView: View {
             CustomerServiceView()
         case "약관 및 정책":
             TermsAndPolicyView()
+        case "오픈소스 정보" :
+            OpenSourceInfoView()
         case "회원 탈퇴":
             DeleteAccountView()
         default:
