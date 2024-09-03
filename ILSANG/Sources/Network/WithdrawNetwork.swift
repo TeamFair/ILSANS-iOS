@@ -5,9 +5,6 @@
 //  Created by Kim Andrew on 6/22/24.
 //
 
-import Foundation
-import Alamofire
-
 final class WithdrawNetwork {
     private let url = APIManager.makeURL(CustomerTarget(path: "withdraw"))
     
