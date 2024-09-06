@@ -89,7 +89,6 @@ struct DetailQuestview: View {
                                 dismiss()
                             } else {
                                 vm.challengeDelete = false
-                                dismiss()
                             }
                         }
                     }
