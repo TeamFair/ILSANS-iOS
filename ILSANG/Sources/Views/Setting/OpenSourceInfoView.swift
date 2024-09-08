@@ -12,10 +12,17 @@ struct OpenSourceInfoView: View {
     
     var body: some View {
         VStack(spacing: 0) {
-            NavigationTitleView(title: "약관 및 정책", isSeparatorHidden: true) {
+            NavigationTitleView(title: "오픈소스 정보", isSeparatorHidden: true) {
                 dismiss()
             }
-            
+            VStack {
+                Text(openSource)
+                    .font(Font.custom("Pretendard", size: 15))
+                    .listRowBackground(Color.clear)
+                
+                Spacer()
+            }
+            .padding(.vertical, 15)
         }
     }
 }
