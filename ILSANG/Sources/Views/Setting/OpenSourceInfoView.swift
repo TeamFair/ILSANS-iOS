@@ -24,6 +24,8 @@ struct OpenSourceInfoView: View {
             }
             .padding(.vertical, 15)
         }
+        .background(Color.background)
+        .navigationBarBackButtonHidden()
     }
 }
 
