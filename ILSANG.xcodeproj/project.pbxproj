@@ -69,8 +69,6 @@
 		A1868C442C09B6C50020BF16 /* DetailQuestview.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1868C432C09B6C50020BF16 /* DetailQuestview.swift */; };
 		A18EB9B02C26B61C00405D56 /* WithdrawNetwork.swift in Sources */ = {isa = PBXBuildFile; fileRef = A18EB9AF2C26B61C00405D56 /* WithdrawNetwork.swift */; };
 		A18EB9B22C26B62E00405D56 /* LogoutNetwork.swift in Sources */ = {isa = PBXBuildFile; fileRef = A18EB9B12C26B62E00405D56 /* LogoutNetwork.swift */; };
-		A18EB9B42C26B6C200405D56 /* Logout.swift in Sources */ = {isa = PBXBuildFile; fileRef = A18EB9B32C26B6C200405D56 /* Logout.swift */; };
-		A18EB9B62C26B6D100405D56 /* Withdraw.swift in Sources */ = {isa = PBXBuildFile; fileRef = A18EB9B52C26B6D100405D56 /* Withdraw.swift */; };
 		A19628622C0763F90037C53A /* ChangeNickNameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A19628612C0763F90037C53A /* ChangeNickNameView.swift */; };
 		A19628652C076D7B0037C53A /* SettingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A19628642C076D7B0037C53A /* SettingView.swift */; };
 		A19628692C0775A70037C53A /* Setting.swift in Sources */ = {isa = PBXBuildFile; fileRef = A19628682C0775A70037C53A /* Setting.swift */; };
@@ -180,8 +178,6 @@
 		A1868C432C09B6C50020BF16 /* DetailQuestview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailQuestview.swift; sourceTree = "<group>"; };
 		A18EB9AF2C26B61C00405D56 /* WithdrawNetwork.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WithdrawNetwork.swift; sourceTree = "<group>"; };
 		A18EB9B12C26B62E00405D56 /* LogoutNetwork.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogoutNetwork.swift; sourceTree = "<group>"; };
-		A18EB9B32C26B6C200405D56 /* Logout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Logout.swift; sourceTree = "<group>"; };
-		A18EB9B52C26B6D100405D56 /* Withdraw.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Withdraw.swift; sourceTree = "<group>"; };
 		A19628612C0763F90037C53A /* ChangeNickNameView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangeNickNameView.swift; sourceTree = "<group>"; };
 		A19628642C076D7B0037C53A /* SettingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingView.swift; sourceTree = "<group>"; };
 		A19628682C0775A70037C53A /* Setting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Setting.swift; sourceTree = "<group>"; };
@@ -243,8 +239,6 @@
 				A1FF91712C257E9A00F03E4B /* User.swift */,
 				A1FF91732C257F6400F03E4B /* XP.swift */,
 				60C6B4D62C2C569800926C0E /* Challenge.swift */,
-				A18EB9B32C26B6C200405D56 /* Logout.swift */,
-				A18EB9B52C26B6D100405D56 /* Withdraw.swift */,
 				60924DC82C48C00E00221072 /* Quest.swift */,
 				6011891E2C3E94380070F2AD /* AuthUser.swift */,
 			);
@@ -706,7 +700,6 @@
 			files = (
 				60924DC92C48C00E00221072 /* Quest.swift in Sources */,
 				A196286B2C0859730037C53A /* CustomerServiceView.swift in Sources */,
-				A18EB9B42C26B6C200405D56 /* Logout.swift in Sources */,
 				607FCBE22BFA6A8300BB2D04 /* Buttons.swift in Sources */,
 				605DA0CF2C07118900CC9450 /* SubmitRouterView.swift in Sources */,
 				A1FF91742C257F6400F03E4B /* XP.swift in Sources */,
@@ -717,7 +710,6 @@
 				A1BB60262BFE05B000AAADD4 /* MyPageSegmenet.swift in Sources */,
 				605DA0D62C07123400CC9450 /* View++.swift in Sources */,
 				A1BB602E2C022A9900AAADD4 /* UserData.swift in Sources */,
-				A18EB9B62C26B6D100405D56 /* Withdraw.swift in Sources */,
 				A19628752C08648C0037C53A /* NavigationTitleView.swift in Sources */,
 				A1AB3D5D2C113A70001EB9D8 /* LoginView.swift in Sources */,
 				A196286F2C0859910037C53A /* DeleteAccountView.swift in Sources */,
