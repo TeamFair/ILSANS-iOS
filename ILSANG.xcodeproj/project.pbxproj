@@ -285,6 +285,7 @@
 				6060B2E92C08947B0083944D /* Image++.swift */,
 				6044B71C2C32B6A4002C13A0 /* UIImage++.swift */,
 				608EBFA02C39C5BB00B862CC /* String++.swift */,
+				A1AB3D6D2C117569001EB9D8 /* Color.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -367,10 +368,10 @@
 		607FCBDE2BFA693F00BB2D04 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				60B8B9E62BF9EEF1005F6DE3 /* ILSANGApp.swift */,
 				A1AB3D5E2C113A7D001EB9D8 /* Login */,
 				A19628632C076D5A0037C53A /* Setting */,
 				A19628602C0763CB0037C53A /* NickName */,
-				60B8B9E62BF9EEF1005F6DE3 /* ILSANGApp.swift */,
 				607FCBD22BFA645100BB2D04 /* Router */,
 				607FCBD92BFA681800BB2D04 /* Quest */,
 				607FCBDA2BFA681F00BB2D04 /* Approval */,
@@ -384,7 +385,6 @@
 			children = (
 				A19628732C08647F0037C53A /* View */,
 				607FCBE52BFD129E00BB2D04 /* Model */,
-				A1AB3D6D2C117569001EB9D8 /* Color.swift */,
 			);
 			path = Global;
 			sourceTree = "<group>";
