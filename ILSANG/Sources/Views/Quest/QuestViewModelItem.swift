@@ -64,9 +64,7 @@ struct QuestViewModelItem {
         self.writer = quest.writer
         self.reward = quest.quantity
     }
-}
-
-extension QuestViewModelItem {
+    
     static let mockImageId = "IMQU2024071520500801"
     
     static let mockData: QuestViewModelItem = QuestViewModelItem(
@@ -81,7 +79,7 @@ extension QuestViewModelItem {
     static let mockQuestList: [QuestViewModelItem] = [
         QuestViewModelItem(
             id: "9f8aacc9-a221-491b-98c1-f9d7d35a67fb",
-            image: .checkmark, 
+            image: .checkmark,
             imageId: mockImageId,
             missionTitle: "아메리카노 15잔 마시기",
             writer: "이디야커피",
@@ -97,4 +95,3 @@ extension QuestViewModelItem {
         )
     ]
 }
-
