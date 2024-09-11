@@ -7,6 +7,38 @@
 
 import UIKit
 
+enum QuestStatus: String, CaseIterable {
+    case uncompleted
+    case completed
+    
+    var headerText: String {
+        switch self {
+        case .uncompleted:
+            "퀘스트"
+        case .completed:
+            "완료"
+        }
+    }
+    
+    var emptyTitle: String {
+        switch self {
+        case .uncompleted:
+            "퀘스트를 모두 완료하셨어요!"
+        case .completed:
+            "완료된 퀘스트가 없어요"
+        }
+    }
+    
+    var emptySubTitle: String {
+        switch self {
+        case .uncompleted:
+            "상상할 수 없는 퀘스트를 준비 중이니\n다음 업데이트를 기대해 주세요!"
+        case .completed:
+            "퀘스트를 수행하러 가볼까요?"
+        }
+    }
+}
+
 struct QuestViewModelItem {
     let id: String
     var image: UIImage?
@@ -66,34 +98,3 @@ extension QuestViewModelItem {
     ]
 }
 
-enum QuestStatus: String, CaseIterable {
-    case uncompleted
-    case completed
-    
-    var headerText: String {
-        switch self {
-        case .uncompleted:
-            "퀘스트"
-        case .completed:
-            "완료"
-        }
-    }
-    
-    var emptyTitle: String {
-        switch self {
-        case .uncompleted:
-            "퀘스트를 모두 완료하셨어요!"
-        case .completed:
-            "완료된 퀘스트가 없어요"
-        }
-    }
-    
-    var emptySubTitle: String {
-        switch self {
-        case .uncompleted:
-            "상상할 수 없는 퀘스트를 준비 중이니\n다음 업데이트를 기대해 주세요!"
-        case .completed:
-            "퀘스트를 수행하러 가볼까요?"
-        }
-    }
-}
