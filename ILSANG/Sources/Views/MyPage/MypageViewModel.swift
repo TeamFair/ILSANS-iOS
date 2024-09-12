@@ -9,6 +9,15 @@ import Foundation
 import UIKit
 import SwiftUI
 
+struct MypageViewModelItem: Identifiable {
+    var id: UUID
+    var status: String
+    var nickname: String
+    var couponCount: Int
+    var completeChallengeCount: Int
+    var xpPoint: Int
+}
+
 class MypageViewModel: ObservableObject {
     @Published var userData: User?
     @Published var challengeList: [Challenge]?
@@ -161,13 +170,4 @@ class MypageViewModel: ObservableObject {
         guard levelXP != 0 else { return 0 }
         return Double(userXP) / Double(levelXP)
     }
-}
-
-struct MypageViewModelItem: Identifiable {
-    var id: UUID
-    var status: String
-    var nickname: String
-    var couponCount: Int
-    var completeChallengeCount: Int
-    var xpPoint: Int
 }

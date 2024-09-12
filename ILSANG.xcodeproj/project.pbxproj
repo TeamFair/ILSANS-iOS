@@ -356,9 +356,9 @@
 			children = (
 				607FCBDC2BFA686700BB2D04 /* MyPageView.swift */,
 				A1BB60252BFE05B000AAADD4 /* MyPageSegmenet.swift */,
-				A1BB60272BFE129000AAADD4 /* MyPageQuestList.swift */,
 				A1BB602B2BFF145100AAADD4 /* MyPageProfile.swift */,
 				A1F770632C2AABCE00DB24A0 /* MypageViewModel.swift */,
+				A1BB60272BFE129000AAADD4 /* MyPageQuestList.swift */,
 				A1501B072C48C3C6001410E1 /* MyPageActiveList.swift */,
 				A1501B092C48C3E5001410E1 /* MyPageBadgeList.swift */,
 			);
