@@ -370,12 +370,12 @@
 			children = (
 				60B8B9E62BF9EEF1005F6DE3 /* ILSANGApp.swift */,
 				A1AB3D5E2C113A7D001EB9D8 /* Login */,
-				A19628632C076D5A0037C53A /* Setting */,
-				A19628602C0763CB0037C53A /* NickName */,
 				607FCBD22BFA645100BB2D04 /* Router */,
 				607FCBD92BFA681800BB2D04 /* Quest */,
 				607FCBDA2BFA681F00BB2D04 /* Approval */,
 				607FCBDB2BFA682800BB2D04 /* MyPage */,
+				A19628632C076D5A0037C53A /* Setting */,
+				A19628602C0763CB0037C53A /* NickName */,
 			);
 			path = Views;
 			sourceTree = "<group>";
