@@ -9,10 +9,16 @@ import SwiftUI
 
 struct QuestView: View {
     @StateObject var vm: QuestViewModel = QuestViewModel(imageNetwork: ImageNetwork(), questNetwork: QuestNetwork())
-    
+    @Namespace private var namespace
+
     var body: some View {
         VStack(spacing: 0) {
             headerView
+                
+            if vm.selectedHeader == .uncompleted {
+                subHeaderView
+            }
+            
             switch vm.viewStatus {
             case .loading:
                 ProgressView().frame(maxHeight: .infinity)
@@ -53,6 +59,38 @@ extension QuestView {
         }
         .frame(height: 50)
         .padding(.horizontal, 20)
+    }
+    
+    private var subHeaderView: some View {
+        HStack(spacing: 0) {
+            ForEach(XpStat.allCases, id: \.headerText) { xpStat in
+                Button {
+                    withAnimation(.snappy) {
+                        vm.selectedXpStat = xpStat
+                    }
+                } label: {
+                    Text(xpStat.headerText)
+                        .foregroundColor(xpStat == vm.selectedXpStat ? .gray500 : .gray300)
+                        .font(.system(size: 16, weight: xpStat == vm.selectedXpStat ? .semibold : .medium))
+                        .frame(height: 30)
+                }
+                .padding(.horizontal, 6)
+                .overlay(alignment: .bottom) {
+                    if xpStat == vm.selectedXpStat {
+                        Rectangle()
+                            .frame(height: 3)
+                            .foregroundStyle(.primaryPurple)
+                            .matchedGeometryEffect(id: "XpStat", in: namespace)
+                    }
+                }
+                .frame(maxWidth: .infinity)
+            }
+        }
+        .overlay(alignment: .bottom) {
+            Rectangle()
+                .frame(height: 1)
+                .foregroundStyle(.gray100)
+        }
     }
     
     private var questListView: some View {
@@ -96,7 +134,7 @@ extension QuestView {
                     }
                 }
             }
-            .padding(.top, 6)
+            .padding(.top, 20)
             .padding(.bottom, 72)
         }
         .frame(maxWidth: .infinity)

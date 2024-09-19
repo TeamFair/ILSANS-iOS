@@ -39,6 +39,29 @@ enum QuestStatus: String, CaseIterable {
     }
 }
 
+enum XpStat: String, CaseIterable {
+    case strength
+    case intellect
+    case fun
+    case charm
+    case sociability
+    
+    var headerText: String {
+        switch self {
+        case .strength:
+            "체력"
+        case .intellect:
+            "지능"
+        case .fun:
+            "재미"
+        case .charm:
+            "매력"
+        case .sociability:
+            "사회성"
+        }
+    }
+}
+
 struct QuestViewModelItem {
     let id: String
     var image: UIImage?
