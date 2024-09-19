@@ -41,7 +41,7 @@ final class ChallengeNetwork {
     
     func patchChallenge(challengeId: String) async -> Result<ResponseWithEmpty, Error> {
         let parameters: Parameters = ["challengeId": challengeId, "status": "REPORTED"]
-        return await Network.requestData(url: url+"report", method: .patch, parameters: parameters, withToken: true)
+        return await Network.requestData(url: url+"status", method: .patch, parameters: parameters, withToken: true)
     }
     
     func deleteChallenge(challengeId: String) async -> Bool {
