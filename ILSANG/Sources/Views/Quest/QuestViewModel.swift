@@ -18,6 +18,7 @@ class QuestViewModel: ObservableObject {
     
     @Published var viewStatus: ViewStatus = .loading
     @Published var selectedHeader: QuestStatus = .uncompleted
+    @Published var selectedXpStat: XpStat = .strength
     @Published var selectedQuest: QuestViewModelItem = .mockData
     @Published var showQuestSheet: Bool = false
     @Published var showSubmitRouterView: Bool = false {
