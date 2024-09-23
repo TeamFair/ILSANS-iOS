@@ -56,15 +56,15 @@ struct MyPageProfile: View {
                 VStack {
                     //스텟
                     HStack (alignment: .center, spacing: 18) {
-                        ProfileStatView(StatName: "stat1", StatPoint: 0)
-                        ProfileStatView(StatName: "stat1", StatPoint: 0)
-                        ProfileStatView(StatName: "stat1", StatPoint: 0)
+                        ProfileStatView(StatName: "체력", StatPoint: vm.xpStats?.strengthStat ?? 0)
+                        ProfileStatView(StatName: "지능", StatPoint: vm.xpStats?.intellectStat ?? 0)
+                        ProfileStatView(StatName: "사회성", StatPoint: vm.xpStats?.funStat ?? 0)
                         
                     }
                     
                     HStack (alignment: .center, spacing: 18) {
-                        ProfileStatView(StatName: "stat1", StatPoint: 0)
-                        ProfileStatView(StatName: "stat1", StatPoint: 0)
+                        ProfileStatView(StatName: "매력", StatPoint: vm.xpStats?.charmStat ?? 0)
+                        ProfileStatView(StatName: "재미", StatPoint: vm.xpStats?.sociabilityStat ?? 0)
                         
                         Spacer().frame(maxWidth: 95)
                         
@@ -72,7 +72,10 @@ struct MyPageProfile: View {
                 }
                 .padding(.vertical, 14)
                 .padding(.horizontal, 8)
-                .task { await vm.getXpStat() }
+                .task {
+                    await vm.getXpStat()
+                    Log(vm.xpStats)
+                }
             }
             .background(
                 RoundedRectangle(cornerRadius: 14)
