@@ -21,6 +21,7 @@ struct MypageViewModelItem: Identifiable {
 class MypageViewModel: ObservableObject {
     @Published var userData: User?
     @Published var challengeList: [Challenge]?
+    @Published var xpStats: [XpStats]
     @Published var questXp: [XPContent]?
     @Published var challengeDelete = false
     
@@ -29,12 +30,16 @@ class MypageViewModel: ObservableObject {
     private let imageNetwork: ImageNetwork
     private let xpNetwork: XPNetwork
     
-    init(userData: User? = nil, userNetwork: UserNetwork, xpNetwork: XPNetwork, challengeNetwork: ChallengeNetwork, imageNetwork: ImageNetwork) {
+    init(userData: User? = nil, challengeList: [Challenge]? = nil, xpStats: [XpStats], questXp: [XPContent]? = nil, challengeDelete: Bool = false, userNetwork: UserNetwork, challengeNetwork: ChallengeNetwork, imageNetwork: ImageNetwork, xpNetwork: XPNetwork) {
         self.userData = userData
+        self.challengeList = challengeList
+        self.xpStats = xpStats
+        self.questXp = questXp
+        self.challengeDelete = challengeDelete
         self.userNetwork = userNetwork
-        self.xpNetwork = xpNetwork
         self.challengeNetwork = challengeNetwork
         self.imageNetwork = imageNetwork
+        self.xpNetwork = xpNetwork
     }
     
     @MainActor
