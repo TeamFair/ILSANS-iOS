@@ -21,7 +21,7 @@ struct MypageViewModelItem: Identifiable {
 class MypageViewModel: ObservableObject {
     @Published var userData: User?
     @Published var challengeList: [Challenge]?
-    @Published var xpStats: [XpStats]
+    @Published var xpStats: Xpstats?
     @Published var questXp: [XPContent]?
     @Published var challengeDelete = false
     
@@ -30,7 +30,7 @@ class MypageViewModel: ObservableObject {
     private let imageNetwork: ImageNetwork
     private let xpNetwork: XPNetwork
     
-    init(userData: User? = nil, challengeList: [Challenge]? = nil, xpStats: [XpStats], questXp: [XPContent]? = nil, challengeDelete: Bool = false, userNetwork: UserNetwork, challengeNetwork: ChallengeNetwork, imageNetwork: ImageNetwork, xpNetwork: XPNetwork) {
+    init(userData: User? = nil, challengeList: [Challenge]? = nil, xpStats: Xpstats? = nil, questXp: [XPContent]? = nil, challengeDelete: Bool = false, userNetwork: UserNetwork, challengeNetwork: ChallengeNetwork, imageNetwork: ImageNetwork, xpNetwork: XPNetwork) {
         self.userData = userData
         self.challengeList = challengeList
         self.xpStats = xpStats
@@ -69,6 +69,20 @@ class MypageViewModel: ObservableObject {
         case .failure:
             self.questXp = nil
             Log(res)
+        }
+    }
+    
+    @MainActor
+    func getXpStat() async {
+        let res = await xpNetwork.getXpStats()
+        
+        switch res {
+        case .success(let model):
+            self.xpStats = model.data
+            Log(xpStats)
+            
+        case .failure:
+            self.xpStats = nil
         }
     }
     
@@ -137,15 +151,15 @@ class MypageViewModel: ObservableObject {
     }
     
     @MainActor
-     func getImage(imageId: String) async -> UIImage? {
-        let res = await imageNetwork.getImage(imageId: imageId)
-        switch res {
-        case .success(let uiImage):
-            return uiImage
-        case .failure:
-            return nil
-        }
+    func getImage(imageId: String) async -> UIImage? {
+    let res = await imageNetwork.getImage(imageId: imageId)
+    switch res {
+    case .success(let uiImage):
+        return uiImage
+    case .failure:
+        return nil
     }
+}
     
     func ProgressBar(userXP: Int) -> some View {
         let levelData = xpGapBtwLevels(XP: userXP)

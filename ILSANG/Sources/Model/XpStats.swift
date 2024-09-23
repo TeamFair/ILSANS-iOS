@@ -7,16 +7,14 @@
 
 import Foundation
 
-struct XpStatModel: Decodable {
-    let data: XpStat
+struct XpstatModel: Decodable {
+    let data: Xpstats
 }
 
-
-struct XpStat: Decodable {
-    let strength_stat: Int
-    let intellect_stat: Int
-    let fun_stat: Int
-    let charm_stat: Int
-    let sociability_stat: Int
+struct Xpstats: Decodable {
+    let strengthStat: Int
+    let intellectStat: Int
+    let funStat: Int
+    let charmStat: Int
+    let sociabilityStat: Int
 }
-

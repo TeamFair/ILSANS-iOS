@@ -9,7 +9,7 @@ import SwiftUI
 
 struct MyPageActiveList: View {
     
-    @ObservedObject var vm: MypageViewModel = MypageViewModel(userNetwork: UserNetwork(),xpNetwork: XPNetwork(), challengeNetwork: ChallengeNetwork(), imageNetwork: ImageNetwork())
+    @ObservedObject var vm = MypageViewModel(userNetwork: UserNetwork(), challengeNetwork: ChallengeNetwork(), imageNetwork: ImageNetwork(), xpNetwork: XPNetwork())
     
     @Binding var activeData: [XPContent]
     

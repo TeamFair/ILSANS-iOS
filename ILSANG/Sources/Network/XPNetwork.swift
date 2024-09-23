@@ -17,7 +17,7 @@ final class XPNetwork {
         return await Network.requestData(url: HistoryUrl + "", method: .get, parameters: parameters, withToken: true)
     }
     
-    func getXpStats() async -> Result<XpStats,Error> {
-        return await Network.requestData(url: StatsUrl, method: .get, withToken: true)
+    func getXpStats() async -> Result<XpstatModel,Error> {
+        return await Network.requestData(url: StatsUrl, method: .get, parameters: nil, withToken: true)
     }
 }

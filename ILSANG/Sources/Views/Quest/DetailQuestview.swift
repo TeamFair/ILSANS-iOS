@@ -10,7 +10,7 @@ import SwiftUI
 struct DetailQuestview: View {
     
     @Environment(\.dismiss) var dismiss
-    @StateObject var vm: MypageViewModel = MypageViewModel(userNetwork: UserNetwork(),xpNetwork: XPNetwork(), challengeNetwork: ChallengeNetwork(), imageNetwork: ImageNetwork())
+    @StateObject var vm: MypageViewModel = MypageViewModel(userNetwork: UserNetwork(), challengeNetwork: ChallengeNetwork(), imageNetwork: ImageNetwork(), xpNetwork: XPNetwork())
     
     @State private var missionImage: UIImage? = nil
     
