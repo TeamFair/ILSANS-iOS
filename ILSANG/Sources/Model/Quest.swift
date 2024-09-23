@@ -8,9 +8,9 @@
 struct Quest: Codable {
     let questId: String
     let writer: String
-    let quantity: Int
     let missionTitle: String
     let status: String
     let creatorRole: String
     let imageId: String?
+    let rewardList: [Reward]
 }

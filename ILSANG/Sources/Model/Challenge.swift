@@ -33,5 +33,6 @@ struct Mission: Codable {
 
 struct Reward: Codable {
     let quantity: Int
+    let content: String?
     let type: String
 }
