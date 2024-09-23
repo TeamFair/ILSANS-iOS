@@ -13,44 +13,53 @@ struct MyPageProfile: View {
     
     var body: some View {
         NavigationLink(destination: ChangeNickNameView()) {
-            HStack {
-                //프로필
-                ProfileImageView(profileImage: nil, level: vm.convertXPtoLv(XP: vm.userData?.xpPoint ?? 9))
-                
-                // 프로필 상세
-                VStack (alignment: .leading) {
-                    //유저 이름
-                    Text(vm.userData?.nickname ?? "일상73079405")
-                        .font(.system(size: 16, weight: .bold))
-                        .underline(true, color: .gray300)
-                        .foregroundStyle(.gray500)
-                        .multilineTextAlignment(.leading)
+            VStack {
+                //기본 프로필
+                HStack {
+                    //프로필
+                    ProfileImageView(profileImage: nil, level: vm.convertXPtoLv(XP: vm.userData?.xpPoint ?? 9))
                     
-                    HStack {
-                        // 프로그레스 바
-                        vm.ProgressBar(userXP: vm.userData?.xpPoint ?? 0)
-                            .frame(height: 10)
+                    // 프로필 상세
+                    VStack (alignment: .leading) {
+                        //유저 이름
+                        Text(vm.userData?.nickname ?? "일상73079405")
+                            .font(.system(size: 16, weight: .bold))
+                            .underline(true, color: .gray300)
+                            .foregroundStyle(.gray500)
+                            .multilineTextAlignment(.leading)
                         
-                        // 경험치 Text
-                        Text(String(vm.userData?.xpPoint ?? 0)+"XP")
+                        HStack {
+                            // 프로그레스 바
+                            vm.ProgressBar(userXP: vm.userData?.xpPoint ?? 0)
+                                .frame(height: 10)
+                            
+                            // 경험치 Text
+                            Text(String(vm.userData?.xpPoint ?? 0)+"XP")
+                                .font(.system(size: 13))
+                                .fontWeight(.bold)
+                                .foregroundColor(.accentColor)
+                        }
+                        
+                        Text("다음 레벨까지 \(vm.xpForNextLv(XP: vm.userData?.xpPoint ?? 50))XP 남았어요!")
                             .font(.system(size: 13))
-                            .fontWeight(.bold)
-                            .foregroundColor(.accentColor)
+                            .foregroundColor(.gray500)
                     }
-                    
-                    Text("다음 레벨까지 \(vm.xpForNextLv(XP: vm.userData?.xpPoint ?? 50))XP 남았어요!")
-                        .font(.system(size: 13))
-                        .foregroundColor(.gray500)
                 }
-            }
-            .padding(18)
-            .background(
-                RoundedRectangle(cornerRadius: 12)
-                    .foregroundColor(Color.white)
-            )
-            .task {
-                await vm.getUser()
-                Log(vm.userData)
+                .padding(18)
+                .background(
+                    RoundedRectangle(cornerRadius: 12)
+                        .foregroundColor(Color.white)
+                )
+                .task {
+                    await vm.getUser()
+                    Log(vm.userData)
+                }
+                
+                //스텟
+                HStack (alignment: .center, spacing: 18) {
+                    ProfileStatView(StatName: "stat1", StatPoint: 0)
+                }
+                .padding(.horizontal, 8)
             }
         }
     }
@@ -106,6 +115,21 @@ struct ProfileImageView: View {
             }
         }
         .frame(height: 68)
+    }
+}
+
+struct ProfileStatView: View {
+    var StatName: String
+    var StatPoint: Int
+    
+    init(StatName: String, StatPoint: Int) {
+        self.StatName = StatName
+        self.StatPoint = StatPoint
+    }
+    
+    var body: some View {
+        Text("\(StatName) : \(StatPoint)P")
+            .font(.system(size: 15, weight: .semibold))
     }
 }
 
