@@ -72,6 +72,7 @@ struct MyPageProfile: View {
                 }
                 .padding(.vertical, 14)
                 .padding(.horizontal, 8)
+                .task { await vm.getXpStat() }
             }
             .background(
                 RoundedRectangle(cornerRadius: 14)
