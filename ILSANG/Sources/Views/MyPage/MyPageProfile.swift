@@ -48,12 +48,13 @@ struct MyPageProfile: View {
                 }
                 .padding(18)
                 .background(Color.white)
+                .cornerRadius(12, corners: [.topLeft, .topRight])
                 .task {
                     await vm.getUser()
                     Log(vm.userData)
                 }
                 
-                VStack {
+                VStack (spacing: 8){
                     //스텟
                     HStack (alignment: .center, spacing: 18) {
                         ProfileStatView(StatName: "체력", StatPoint: vm.xpStats?.strengthStat ?? 0)
@@ -70,17 +71,16 @@ struct MyPageProfile: View {
                         
                     }
                 }
-                .padding(.vertical, 14)
+                .padding(.top, 7)
+                .padding(.bottom, 14)
                 .padding(.horizontal, 8)
                 .task {
                     await vm.getXpStat()
                     Log(vm.xpStats)
                 }
             }
-            .background(
-                RoundedRectangle(cornerRadius: 14)
-                    .foregroundColor(Color.primary100)
-            )
+            .background(Color.primary100)
+            .cornerRadius(12)
         }
     }
 }
