@@ -13,6 +13,7 @@ struct MyPageProfile: View {
     
     var body: some View {
         NavigationLink(destination: ChangeNickNameView()) {
+            
             VStack {
                 //기본 프로필
                 HStack {
@@ -46,21 +47,36 @@ struct MyPageProfile: View {
                     }
                 }
                 .padding(18)
-                .background(
-                    RoundedRectangle(cornerRadius: 12)
-                        .foregroundColor(Color.white)
-                )
+                .background(Color.white)
                 .task {
                     await vm.getUser()
                     Log(vm.userData)
                 }
                 
-                //스텟
-                HStack (alignment: .center, spacing: 18) {
-                    ProfileStatView(StatName: "stat1", StatPoint: 0)
+                VStack {
+                    //스텟
+                    HStack (alignment: .center, spacing: 18) {
+                        ProfileStatView(StatName: "stat1", StatPoint: 0)
+                        ProfileStatView(StatName: "stat1", StatPoint: 0)
+                        ProfileStatView(StatName: "stat1", StatPoint: 0)
+                        
+                    }
+                    
+                    HStack (alignment: .center, spacing: 18) {
+                        ProfileStatView(StatName: "stat1", StatPoint: 0)
+                        ProfileStatView(StatName: "stat1", StatPoint: 0)
+                        
+                        Spacer().frame(maxWidth: 95)
+                        
+                    }
                 }
+                .padding(.vertical, 14)
                 .padding(.horizontal, 8)
             }
+            .background(
+                RoundedRectangle(cornerRadius: 14)
+                    .foregroundColor(Color.primary100)
+            )
         }
     }
 }
@@ -129,7 +145,9 @@ struct ProfileStatView: View {
     
     var body: some View {
         Text("\(StatName) : \(StatPoint)P")
+            .foregroundColor(.accent)
             .font(.system(size: 15, weight: .semibold))
+            .frame(maxWidth: 95)
     }
 }
 
