@@ -32,7 +32,7 @@ struct QuestView: View {
         .background(Color.background)
         .sheet(isPresented: $vm.showQuestSheet) {
             questSheetView
-                .presentationDetents([.height(540)])
+                .presentationDetents([.height(558)])
                 .presentationDragIndicator(.visible)
         }
         .fullScreenCover(isPresented: $vm.showSubmitRouterView) {
@@ -172,39 +172,39 @@ extension QuestView {
         VStack(spacing: 0) {
             Text("퀘스트 정보")
                 .font(.system(size: 17, weight: .bold))
+                .padding(.bottom, 22)
+                .padding(.top, 4)
             
             Image(uiImage: vm.selectedQuest.image ?? .logo)
                 .resizable()
                 .scaledToFill()
                 .frame(width: 122, height: 122)
                 .clipShape(Circle())
-                .padding(20)
+                .padding(.bottom, 20)
             
             Text(vm.selectedQuest.writer)
                 .font(.system(size: 15, weight: .regular))
-                .padding(.bottom, 9)
+                .padding(.bottom, 5)
             
             Text(vm.selectedQuest.missionTitle)
                 .font(.system(size: 18, weight: .bold))
-                .padding(.bottom, 22)
+                .padding(.bottom, 18)
             
-            Text("+" + String(vm.selectedQuest.reward) + "XP")
+            Text("+" + String(vm.selectedQuest.totalRewardXP()) + "XP")
                 .font(.system(size: 30, weight: .semibold))
-                .padding(.horizontal, 38)
-                .padding(.vertical, 31)
                 .foregroundStyle(.primaryPurple)
-                .background(
-                    RoundedRectangle(cornerRadius: 14)
-                        .foregroundStyle(.primary100.opacity(0.5))
-                )
-                .padding(.bottom, 15)
+                .padding(.bottom, 19)
+            
+            StatView(dic: vm.selectedQuest.rewardDic)
+                .padding(.bottom, 17)
             
             Text("퀘스트를 수행하셨나요?\n인증 후 포인트를 적립받으세요")
                 .font(.system(size: 14, weight: .regular))
                 .multilineTextAlignment(.center)
                 .lineSpacing(4)
-                .padding(.bottom, 26)
-
+            
+            Spacer(minLength: 0)
+            
             PrimaryButton(title: "퀘스트 인증하기") {
                 vm.tappedQuestApprovalBtn()
             }
@@ -216,4 +216,37 @@ extension QuestView {
 
 #Preview {
     QuestView(vm: QuestViewModel(imageNetwork: ImageNetwork(), questNetwork: QuestNetwork()))
+}
+
+struct StatView: View {
+    let columns = [GridItem(.flexible(minimum: 60)), GridItem(.flexible(minimum: 60)), GridItem(.flexible(minimum: 60))]
+    let stats: [XpStat] = [.strength, .intellect, .sociability, .charm, .fun]
+    let dic: [XpStat: Int]
+    
+    var body: some View {
+        LazyVGrid(columns: columns, spacing: 8) {
+            ForEach(stats, id: \.self) { stat in
+                HStack {
+                    Text("\(stat.headerText) : \(dic[stat] ?? 0)P")
+                        .frame(height: 22, alignment: .leading)
+                        .font(.system(size: 15, weight: .semibold))
+                        .foregroundStyle(.primaryPurple)
+                    Spacer(minLength: 0)
+                }
+                .frame(maxWidth: .infinity)
+                .padding(.leading, 8)
+            }
+        }
+        .padding(.horizontal, 12)
+        .frame(height: 84)
+        .background(
+            RoundedRectangle(cornerRadius: 14)
+                .foregroundStyle(.primary100.opacity(0.5))
+        )
+    }
+}
+
+#Preview {
+    StatView(dic: [.charm: 225, .fun: 392, .sociability: 0])
+        .padding(.horizontal, 20)
 }

@@ -93,6 +93,10 @@ struct QuestViewModelItem {
         }
     }
     
+    func totalRewardXP() -> Int {
+        self.rewardDic.values.reduce(0, +)
+    }
+    
     static let mockImageId = "IMQU2024071520500801"
     
     static let mockData: QuestViewModelItem = QuestViewModelItem(
