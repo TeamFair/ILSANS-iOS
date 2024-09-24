@@ -35,6 +35,7 @@ class QuestViewModel: ObservableObject {
         .uncompleted: [],
         .completed: []
     ]
+    @Published var uncompletedQuestListByXpStat: [XpStat: [QuestViewModelItem]] = Dictionary(uniqueKeysWithValues: XpStat.allCases.map { ($0, []) })
     
     var isCurrentListEmpty: Bool {
         switch selectedHeader {
@@ -44,8 +45,24 @@ class QuestViewModel: ObservableObject {
             return itemListByStatus[.completed, default: []].isEmpty
         }
     }
-    var isCompletedQuestPageable: Bool = false
-    var isUncompletedQuestPageable: Bool = false
+    
+    lazy var uncompletedPaginationManager = PaginationManager<QuestViewModelItem>(
+        size: 100,
+        threshold: 8,
+        loadPage: { [weak self] page in
+            guard let self = self else { return ([], 0) }
+            return await loadQuestListWithImage(page: page, status: .uncompleted)
+        }
+    )
+    
+    lazy var completedPaginationManager = PaginationManager<QuestViewModelItem>(
+        size: 10,
+        threshold: 8,
+        loadPage: { [weak self] page in
+            guard let self = self else { return ([], 0) }
+            return await loadQuestListWithImage(page: page, status: .completed)
+        }
+    )
     
     private let imageNetwork: ImageNetwork
     private let questNetwork: QuestNetwork
@@ -61,8 +78,8 @@ class QuestViewModel: ObservableObject {
     
     func loadInitialData() async {
         await changeViewStatus(.loading)
-        await loadQuestListWithImage(page: 0, status: .uncompleted)
-        await loadQuestListWithImage(page: 0, status: .completed)
+        await uncompletedPaginationManager.loadData(isRefreshing: true)
+        await completedPaginationManager.loadData(isRefreshing: true)
         await changeViewStatus(.loaded)
     }
     
@@ -71,9 +88,10 @@ class QuestViewModel: ObservableObject {
         self.viewStatus = viewStatus
     }
     
-    @MainActor
-    func loadQuestListWithImage(page: Int, status: QuestStatus) async {
-        var newQuestList = await getQuestList(page: page, status: status)
+    @discardableResult @MainActor
+    func loadQuestListWithImage(page: Int, status: QuestStatus) async -> ([QuestViewModelItem], Int) {
+        let getQuestList = await getQuestList(page: page, status: status)
+        var newQuestList = getQuestList.data
         var currentQuestList = itemListByStatus[status, default: []]
         
         if page == 0 {
@@ -107,9 +125,24 @@ class QuestViewModel: ObservableObject {
             }
         }
         itemListByStatus[status] = currentQuestList
+        
+        if status == .uncompleted {
+            mapUncompletedQuestByXpStat()
+        }
+        return (itemListByStatus[status, default: []], getQuestList.total)
     }
     
-    private func getQuestList(page: Int, status: QuestStatus) async -> [QuestViewModelItem] {
+    /// uncompleted 상태의 퀘스트 목록을 XpStat별로 분류하여 uncompletedQuestListByXpStat 딕셔너리에 매핑합니다.
+    private func mapUncompletedQuestByXpStat() {
+        guard let uncompletedQuestList = itemListByStatus[.uncompleted] else { return }
+        for item in uncompletedQuestList {
+            for reward in item.rewardDic {
+                uncompletedQuestListByXpStat[reward.key]?.append(item)
+            }
+        }
+    }
+    
+    private func getQuestList(page: Int, status: QuestStatus) async -> (data: [QuestViewModelItem], total: Int) {
         let result: Result<ResponseWithPage<[Quest]>, Error>
         
         switch status {
@@ -121,21 +154,18 @@ class QuestViewModel: ObservableObject {
         
         switch result {
         case .success(let response):
-            let hasMorePages = (page + 1) * response.size < response.total
-            setPageableStatus(status: status, hasMorePages: hasMorePages)
-            return response.data.map { QuestViewModelItem(quest: $0) }
+            return (response.data.map { QuestViewModelItem(quest: $0) }, response.total)
         case .failure:
-            setPageableStatus(status: status, hasMorePages: false)
-            return []
+            return ([], 0)
         }
     }
     
-    private func setPageableStatus(status: QuestStatus, hasMorePages: Bool) {
+    func hasMorePage(status: QuestStatus) -> Bool {
         switch status {
         case .uncompleted:
-            isUncompletedQuestPageable = hasMorePages
+            return uncompletedPaginationManager.canLoadMoreData()
         case .completed:
-            isCompletedQuestPageable = hasMorePages
+            return completedPaginationManager.canLoadMoreData()
         }
     }
     
