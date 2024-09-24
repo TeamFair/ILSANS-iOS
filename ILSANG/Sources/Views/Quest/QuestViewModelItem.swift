@@ -68,15 +68,15 @@ struct QuestViewModelItem {
     let imageId: String?
     let missionTitle: String
     let writer: String
-    let reward: Int
+    var rewardDic: [XpStat: Int]
     
-    init(id: String, image: UIImage? = nil, imageId: String, missionTitle: String, writer: String, reward: Int) {
+    init(id: String, image: UIImage? = nil, imageId: String, missionTitle: String, writer: String, rewardDic: [XpStat: Int]) {
         self.id = id
         self.image = image
         self.imageId = imageId
         self.missionTitle = missionTitle
         self.writer = writer
-        self.reward = reward
+        self.rewardDic = rewardDic
     }
     
     init(quest: Quest) {
@@ -85,7 +85,16 @@ struct QuestViewModelItem {
         self.imageId = quest.imageId
         self.missionTitle = quest.missionTitle
         self.writer = quest.writer
-        self.reward = quest.quantity
+        self.rewardDic = [:]
+        for reward in quest.rewardList {
+            if reward.type == "XP" , let content = reward.content {
+                self.rewardDic[XpStat(rawValue: content.lowercased()) ?? .strength] = reward.quantity
+            }
+        }
+    }
+    
+    func totalRewardXP() -> Int {
+        self.rewardDic.values.reduce(0, +)
     }
     
     static let mockImageId = "IMQU2024071520500801"
@@ -96,7 +105,7 @@ struct QuestViewModelItem {
         imageId: mockImageId,
         missionTitle: "아메리카노 15잔 마시기",
         writer: "이디야커피",
-        reward: 50
+        rewardDic: [:]
     )
     
     static let mockQuestList: [QuestViewModelItem] = [
@@ -106,7 +115,7 @@ struct QuestViewModelItem {
             imageId: mockImageId,
             missionTitle: "아메리카노 15잔 마시기",
             writer: "이디야커피",
-            reward: 50
+            rewardDic: [:]
         ),
         QuestViewModelItem(
             id: "13",
@@ -114,7 +123,7 @@ struct QuestViewModelItem {
             imageId: mockImageId,
             missionTitle: "카페라떼 1잔 마시기",
             writer: "투썸플레이스",
-            reward: 150
+            rewardDic: [:]
         )
     ]
 }
