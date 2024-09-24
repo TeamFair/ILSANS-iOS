@@ -7,11 +7,11 @@
 
 import Foundation
 
-// TODO: userNickName, quest 옵셔널 해제
+// TODO: userNickName 옵셔널 해제
 struct Challenge: Codable {
     let challengeId: String
     let userNickName: String?
-    let quest: QuestEntity?
+    let missionTitle: String?
     let receiptImageId, status: String
     let createdAt: String
     let likeCnt, hateCnt: Int
