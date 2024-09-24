@@ -301,7 +301,7 @@ struct ApprovalViewModelItem: Identifiable {
     
     init(challenge: Challenge) {
         self.id = challenge.challengeId
-        self.title = challenge.quest?.missions.first?.title ?? ""
+        self.title = challenge.missionTitle ?? ""
         self.image = nil
         self.imageId = challenge.receiptImageId
         self.offset = 0
