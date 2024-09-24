@@ -23,7 +23,7 @@ struct QuestItemView: View {
                 .padding(.leading, 20)
                 .padding(.trailing, 16)
                 .overlay(alignment: .top) {
-                    Text(String(quest.reward) + "XP")
+                    Text(String(quest.totalRewardXP()) + "XP")
                         .font(.system(size: 10, weight: .semibold))
                         .foregroundStyle(.white)
                         .padding(.horizontal, 5)
