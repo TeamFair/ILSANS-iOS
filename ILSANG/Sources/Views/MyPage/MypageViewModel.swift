@@ -21,7 +21,7 @@ struct MypageViewModelItem: Identifiable {
 class MypageViewModel: ObservableObject {
     @Published var userData: User?
     @Published var challengeList: [Challenge]?
-    @Published var xpStats: Xpstats?
+    @Published var xpStats: [XpStat: Int]
     @Published var questXp: [XPContent]?
     @Published var challengeDelete = false
     
@@ -30,7 +30,7 @@ class MypageViewModel: ObservableObject {
     private let imageNetwork: ImageNetwork
     private let xpNetwork: XPNetwork
     
-    init(userData: User? = nil, challengeList: [Challenge]? = nil, xpStats: Xpstats? = nil, questXp: [XPContent]? = nil, challengeDelete: Bool = false, userNetwork: UserNetwork, challengeNetwork: ChallengeNetwork, imageNetwork: ImageNetwork, xpNetwork: XPNetwork) {
+    init(userData: User? = nil, challengeList: [Challenge]? = nil, xpStats: [XpStat: Int] = [:], questXp: [XPContent]? = nil, challengeDelete: Bool = false, userNetwork: UserNetwork, challengeNetwork: ChallengeNetwork, imageNetwork: ImageNetwork, xpNetwork: XPNetwork) {
         self.userData = userData
         self.challengeList = challengeList
         self.xpStats = xpStats
@@ -78,11 +78,18 @@ class MypageViewModel: ObservableObject {
         
         switch res {
         case .success(let model):
-            self.xpStats = model.data
+            let xpData = model.data
+            self.xpStats = [
+                .strength: xpData.strengthStat,
+                .intellect: xpData.intellectStat,
+                .fun: xpData.funStat,
+                .charm: xpData.charmStat,
+                .sociability: xpData.sociabilityStat
+            ]
             Log(xpStats)
             
         case .failure:
-            self.xpStats = nil
+            self.xpStats = [:]
         }
     }
     

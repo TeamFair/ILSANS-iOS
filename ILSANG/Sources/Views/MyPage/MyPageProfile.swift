@@ -54,30 +54,11 @@ struct MyPageProfile: View {
                     Log(vm.userData)
                 }
                 
-                VStack (spacing: 8){
-                    //스텟
-                    HStack (alignment: .center, spacing: 18) {
-                        ProfileStatView(StatName: "체력", StatPoint: vm.xpStats?.strengthStat ?? 0)
-                        ProfileStatView(StatName: "지능", StatPoint: vm.xpStats?.intellectStat ?? 0)
-                        ProfileStatView(StatName: "사회성", StatPoint: vm.xpStats?.funStat ?? 0)
-                        
+                StatView(dic: vm.xpStats)
+                    .task {
+                        await vm.getXpStat()
+                        Log(vm.xpStats)
                     }
-                    
-                    HStack (alignment: .center, spacing: 18) {
-                        ProfileStatView(StatName: "매력", StatPoint: vm.xpStats?.charmStat ?? 0)
-                        ProfileStatView(StatName: "재미", StatPoint: vm.xpStats?.sociabilityStat ?? 0)
-                        
-                        Spacer().frame(maxWidth: 95)
-                        
-                    }
-                }
-                .padding(.top, 7)
-                .padding(.bottom, 14)
-                .padding(.horizontal, 8)
-                .task {
-                    await vm.getXpStat()
-                    Log(vm.xpStats)
-                }
             }
             .background(Color.primary100)
             .cornerRadius(12)
