@@ -46,9 +46,10 @@ class QuestViewModel: ObservableObject {
         }
     }
     
+    // TODO: 현재 0페이지만 불러오며, 임시로 100개 로딩. 스탯 분류와 관련해서 기획 & API 수정에 따라 페이지네이션 로직 수정 필요
     lazy var uncompletedPaginationManager = PaginationManager<QuestViewModelItem>(
         size: 100,
-        threshold: 8,
+        threshold: 98,
         loadPage: { [weak self] page in
             guard let self = self else { return ([], 0) }
             return await loadQuestListWithImage(page: page, status: .uncompleted)
