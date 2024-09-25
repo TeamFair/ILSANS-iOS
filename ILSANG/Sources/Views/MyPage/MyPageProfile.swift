@@ -55,6 +55,7 @@ struct MyPageProfile: View {
                 }
                 
                 StatView(dic: vm.xpStats)
+                    .frame(height: 70)
                     .task {
                         await vm.getXpStat()
                         Log(vm.xpStats)
