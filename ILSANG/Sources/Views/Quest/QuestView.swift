@@ -98,21 +98,18 @@ extension QuestView {
             LazyVStack(spacing: 12) {
                 switch vm.selectedHeader {
                 case .uncompleted:
-                    ForEach(vm.itemListByStatus[.uncompleted, default: []], id: \.id) { quest in
+                    ForEach(vm.uncompletedQuestListByXpStat[vm.selectedXpStat, default: []], id: \.id) { quest in
                         Button {
                             vm.tappedQuestBtn(quest: quest)
                         } label: {
                             QuestItemView(quest: quest, status: .uncompleted)
                         }
                     }
-                    if vm.isUncompletedQuestPageable {
+                    if vm.hasMorePage(status: .uncompleted) {
                         ProgressView()
                             .onAppear {
                                 Task {
-                                    await vm.loadQuestListWithImage(
-                                        page: vm.itemListByStatus[.uncompleted, default: []].count / 10,
-                                        status: .uncompleted
-                                    )
+                                    await vm.uncompletedPaginationManager.loadData(isRefreshing: false)
                                 }
                             }
                     }
@@ -121,14 +118,11 @@ extension QuestView {
                     ForEach(vm.itemListByStatus[.completed, default: []], id: \.id) { quest in
                         QuestItemView(quest: quest, status: .completed)
                     }
-                    if vm.isCompletedQuestPageable {
+                    if vm.hasMorePage(status: .completed) {
                         ProgressView()
                             .onAppear {
                                 Task {
-                                    await vm.loadQuestListWithImage(
-                                        page: vm.itemListByStatus[.completed, default: []].count / 10,
-                                        status: .completed
-                                    )
+                                    await vm.completedPaginationManager.loadData(isRefreshing: false)
                                 }
                             }
                     }
@@ -139,7 +133,12 @@ extension QuestView {
         }
         .frame(maxWidth: .infinity)
         .refreshable {
-            await vm.loadQuestListWithImage(page: 0, status: vm.selectedHeader)
+            switch vm.selectedHeader {
+            case .uncompleted:
+                await vm.uncompletedPaginationManager.loadData(isRefreshing: true)
+            case .completed:
+                await vm.completedPaginationManager.loadData(isRefreshing: true)
+            }
         }
         .overlay {
             if vm.isCurrentListEmpty {
