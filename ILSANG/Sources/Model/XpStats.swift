@@ -17,4 +17,12 @@ struct Xpstats: Decodable {
     let funStat: Int
     let charmStat: Int
     let sociabilityStat: Int
+    
+    enum CodingKeys: String, CodingKey {
+        case strengthStat = "strength_stat"
+        case intellectStat = "intellect_stat"
+        case funStat = "fun_stat"
+        case charmStat = "charm_stat"
+        case sociabilityStat = "sociability_stat"
+    }
 }

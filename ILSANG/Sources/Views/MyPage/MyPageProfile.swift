@@ -58,7 +58,6 @@ struct MyPageProfile: View {
                     .frame(height: 70)
                     .task {
                         await vm.getXpStat()
-                        Log(vm.xpStats)
                     }
             }
             .background(Color.primary100)
