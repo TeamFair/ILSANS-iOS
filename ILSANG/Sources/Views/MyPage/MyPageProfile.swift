@@ -9,49 +9,59 @@ import SwiftUI
 
 struct MyPageProfile: View {
     
-    @StateObject var vm = MypageViewModel(userNetwork: UserNetwork(),xpNetwork: XPNetwork(), challengeNetwork: ChallengeNetwork(), imageNetwork: ImageNetwork())
+    @StateObject var vm = MypageViewModel(userNetwork: UserNetwork(), challengeNetwork: ChallengeNetwork(), imageNetwork: ImageNetwork(), xpNetwork: XPNetwork())
     
     var body: some View {
         NavigationLink(destination: ChangeNickNameView()) {
-            HStack {
-                //프로필
-                ProfileImageView(profileImage: nil, level: vm.convertXPtoLv(XP: vm.userData?.xpPoint ?? 9))
-                
-                // 프로필 상세
-                VStack (alignment: .leading) {
-                    //유저 이름
-                    Text(vm.userData?.nickname ?? "일상73079405")
-                        .font(.system(size: 16, weight: .bold))
-                        .underline(true, color: .gray300)
-                        .foregroundStyle(.gray500)
-                        .multilineTextAlignment(.leading)
+            
+            VStack {
+                //기본 프로필
+                HStack {
+                    //프로필
+                    ProfileImageView(profileImage: nil, level: vm.convertXPtoLv(XP: vm.userData?.xpPoint ?? 9))
                     
-                    HStack {
-                        // 프로그레스 바
-                        vm.ProgressBar(userXP: vm.userData?.xpPoint ?? 0)
-                            .frame(height: 10)
+                    // 프로필 상세
+                    VStack (alignment: .leading) {
+                        //유저 이름
+                        Text(vm.userData?.nickname ?? "일상73079405")
+                            .font(.system(size: 16, weight: .bold))
+                            .underline(true, color: .gray300)
+                            .foregroundStyle(.gray500)
+                            .multilineTextAlignment(.leading)
                         
-                        // 경험치 Text
-                        Text(String(vm.userData?.xpPoint ?? 0)+"XP")
+                        HStack {
+                            // 프로그레스 바
+                            vm.ProgressBar(userXP: vm.userData?.xpPoint ?? 0)
+                                .frame(height: 10)
+                            
+                            // 경험치 Text
+                            Text(String(vm.userData?.xpPoint ?? 0)+"XP")
+                                .font(.system(size: 13))
+                                .fontWeight(.bold)
+                                .foregroundColor(.accentColor)
+                        }
+                        
+                        Text("다음 레벨까지 \(vm.xpForNextLv(XP: vm.userData?.xpPoint ?? 50))XP 남았어요!")
                             .font(.system(size: 13))
-                            .fontWeight(.bold)
-                            .foregroundColor(.accentColor)
+                            .foregroundColor(.gray500)
                     }
-                    
-                    Text("다음 레벨까지 \(vm.xpForNextLv(XP: vm.userData?.xpPoint ?? 50))XP 남았어요!")
-                        .font(.system(size: 13))
-                        .foregroundColor(.gray500)
                 }
+                .padding(18)
+                .background(Color.white)
+                .cornerRadius(12, corners: [.topLeft, .topRight])
+                .task {
+                    await vm.getUser()
+                    Log(vm.userData)
+                }
+                
+                StatView(dic: vm.xpStats)
+                    .frame(height: 70)
+                    .task {
+                        await vm.getXpStat()
+                    }
             }
-            .padding(18)
-            .background(
-                RoundedRectangle(cornerRadius: 12)
-                    .foregroundColor(Color.white)
-            )
-            .task {
-                await vm.getUser()
-                Log(vm.userData)
-            }
+            .background(Color.primary100)
+            .cornerRadius(12)
         }
     }
 }
@@ -106,6 +116,23 @@ struct ProfileImageView: View {
             }
         }
         .frame(height: 68)
+    }
+}
+
+struct ProfileStatView: View {
+    var StatName: String
+    var StatPoint: Int
+    
+    init(StatName: String, StatPoint: Int) {
+        self.StatName = StatName
+        self.StatPoint = StatPoint
+    }
+    
+    var body: some View {
+        Text("\(StatName) : \(StatPoint)P")
+            .foregroundColor(.accent)
+            .font(.system(size: 15, weight: .semibold))
+            .frame(maxWidth: 95)
     }
 }
 

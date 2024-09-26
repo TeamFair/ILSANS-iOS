@@ -15,7 +15,7 @@ struct MyPageView: View {
             XPContent(recordId: 3, title: "Quest Completed", xpPoint: 150, createDate: "2024-06-23")
         ]
     
-    @StateObject var vm: MypageViewModel = MypageViewModel(userNetwork: UserNetwork(),xpNetwork: XPNetwork(), challengeNetwork: ChallengeNetwork(), imageNetwork: ImageNetwork())
+    @StateObject var vm: MypageViewModel = MypageViewModel(userNetwork: UserNetwork(), challengeNetwork: ChallengeNetwork(), imageNetwork: ImageNetwork(), xpNetwork: XPNetwork())
     
     @State var segmentSelect = 0
     @State private var isSettingsViewActive = false

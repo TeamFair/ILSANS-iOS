@@ -21,6 +21,7 @@ struct MypageViewModelItem: Identifiable {
 class MypageViewModel: ObservableObject {
     @Published var userData: User?
     @Published var challengeList: [Challenge]?
+    @Published var xpStats: [XpStat: Int]
     @Published var questXp: [XPContent]?
     @Published var challengeDelete = false
     
@@ -29,12 +30,16 @@ class MypageViewModel: ObservableObject {
     private let imageNetwork: ImageNetwork
     private let xpNetwork: XPNetwork
     
-    init(userData: User? = nil, userNetwork: UserNetwork, xpNetwork: XPNetwork, challengeNetwork: ChallengeNetwork, imageNetwork: ImageNetwork) {
+    init(userData: User? = nil, challengeList: [Challenge]? = nil, xpStats: [XpStat: Int] = [:], questXp: [XPContent]? = nil, challengeDelete: Bool = false, userNetwork: UserNetwork, challengeNetwork: ChallengeNetwork, imageNetwork: ImageNetwork, xpNetwork: XPNetwork) {
         self.userData = userData
+        self.challengeList = challengeList
+        self.xpStats = xpStats
+        self.questXp = questXp
+        self.challengeDelete = challengeDelete
         self.userNetwork = userNetwork
-        self.xpNetwork = xpNetwork
         self.challengeNetwork = challengeNetwork
         self.imageNetwork = imageNetwork
+        self.xpNetwork = xpNetwork
     }
     
     @MainActor
@@ -64,6 +69,27 @@ class MypageViewModel: ObservableObject {
         case .failure:
             self.questXp = nil
             Log(res)
+        }
+    }
+    
+    @MainActor
+    func getXpStat() async {
+        let res = await xpNetwork.getXpStats()
+        
+        switch res {
+        case .success(let model):
+            let xpData = model.data
+            self.xpStats = [
+                .strength: xpData.strengthStat,
+                .intellect: xpData.intellectStat,
+                .fun: xpData.funStat,
+                .charm: xpData.charmStat,
+                .sociability: xpData.sociabilityStat
+            ]
+            Log(xpStats)
+            
+        case .failure:
+            self.xpStats = [:]
         }
     }
     
@@ -132,15 +158,15 @@ class MypageViewModel: ObservableObject {
     }
     
     @MainActor
-     func getImage(imageId: String) async -> UIImage? {
-        let res = await imageNetwork.getImage(imageId: imageId)
-        switch res {
-        case .success(let uiImage):
-            return uiImage
-        case .failure:
-            return nil
-        }
+    func getImage(imageId: String) async -> UIImage? {
+    let res = await imageNetwork.getImage(imageId: imageId)
+    switch res {
+    case .success(let uiImage):
+        return uiImage
+    case .failure:
+        return nil
     }
+}
     
     func ProgressBar(userXP: Int) -> some View {
         let levelData = xpGapBtwLevels(XP: userXP)
