@@ -127,34 +127,40 @@ class MypageViewModel: ObservableObject {
             totalXP += 50 * level
         }
         
-        return level - 1
+        return max(0, level - 1)
     }
     
     //이전,다음 레벨 XP
     func xpGapBtwLevels(XP: Int) -> (currentLevelXP: Int, nextLevelXP: Int) {
-        let currentLevel = convertXPtoLv(XP: XP)
+        let sanitizedXP = max(0, XP)
+        
+        let currentLevel = convertXPtoLv(XP: sanitizedXP)
         let nextLevelXP = 50 * (currentLevel + 1)
         
         var totalXP = 0
         
-        for n in 1..<currentLevel + 1 {
-            totalXP += 50 * n
+        if currentLevel > 0 {
+            for n in 1..<currentLevel + 1 {
+                totalXP += 50 * n
+            }
         }
         
-        return (XP - totalXP, nextLevelXP)
+        return (sanitizedXP - totalXP, nextLevelXP)
     }
     
     //다음 레벨까지 남은 값 
     func xpForNextLv(XP: Int) -> Int {
-        let currentLevel = convertXPtoLv(XP: XP)
+        let sanitizedXP = max(0, XP)
+        let currentLevel = convertXPtoLv(XP: sanitizedXP)
         let nextLevel = currentLevel + 1
         var totalXP = 0
         
         for n in 1...nextLevel {
             totalXP += 50 * n
         }
+        
         Log(totalXP)
-        return totalXP - XP
+        return totalXP - sanitizedXP
     }
     
     @MainActor
