@@ -65,7 +65,7 @@ extension QuestView {
         HStack(spacing: 0) {
             ForEach(XpStat.allCases, id: \.headerText) { xpStat in
                 Button {
-                    withAnimation(.snappy) {
+                    withAnimation(.easeInOut) {
                         vm.selectedXpStat = xpStat
                     }
                 } label: {
