@@ -30,6 +30,9 @@ struct QuestView: View {
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .background(Color.background)
+        .task {
+            await vm.loadInitialData()
+        }
         .sheet(isPresented: $vm.showQuestSheet) {
             questSheetView
                 .presentationDetents([.height(558)])

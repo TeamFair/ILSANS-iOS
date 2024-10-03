@@ -71,10 +71,6 @@ class QuestViewModel: ObservableObject {
     init(imageNetwork: ImageNetwork, questNetwork: QuestNetwork) {
         self.imageNetwork = imageNetwork
         self.questNetwork = questNetwork
-        
-        Task {
-            await loadInitialData()
-        }
     }
     
     func loadInitialData() async {
@@ -99,8 +95,9 @@ class QuestViewModel: ObservableObject {
             currentQuestList = newQuestList
         } else {
             // MARK: 중복된 퀘스트 제거, 서버 에러 해결시 제거
-            var uniqueQuestIDs = Set(currentQuestList.map { $0.id })
-            newQuestList = newQuestList.filter { uniqueQuestIDs.insert($0.id).inserted }
+            newQuestList = newQuestList.filter { quest in
+                !currentQuestList.contains { $0.id == quest.id }
+            }
             currentQuestList += newQuestList
         }
         
