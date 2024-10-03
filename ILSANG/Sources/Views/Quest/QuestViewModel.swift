@@ -52,7 +52,7 @@ class QuestViewModel: ObservableObject {
         threshold: 98,
         loadPage: { [weak self] page in
             guard let self = self else { return ([], 0) }
-            return await loadQuestListWithImage(page: page, status: .uncompleted)
+            return await loadQuestListWithImage(page: page, size: 100, status: .uncompleted)
         }
     )
     
@@ -61,7 +61,7 @@ class QuestViewModel: ObservableObject {
         threshold: 8,
         loadPage: { [weak self] page in
             guard let self = self else { return ([], 0) }
-            return await loadQuestListWithImage(page: page, status: .completed)
+            return await loadQuestListWithImage(page: page, size: 10, status: .completed)
         }
     )
     
@@ -90,8 +90,8 @@ class QuestViewModel: ObservableObject {
     }
     
     @discardableResult @MainActor
-    func loadQuestListWithImage(page: Int, status: QuestStatus) async -> ([QuestViewModelItem], Int) {
-        let getQuestList = await getQuestList(page: page, status: status)
+    func loadQuestListWithImage(page: Int, size: Int, status: QuestStatus) async -> ([QuestViewModelItem], Int) {
+        let getQuestList = await getQuestList(page: page, size: size, status: status)
         var newQuestList = getQuestList.data
         var currentQuestList = itemListByStatus[status, default: []]
         
@@ -143,14 +143,14 @@ class QuestViewModel: ObservableObject {
         }
     }
     
-    private func getQuestList(page: Int, status: QuestStatus) async -> (data: [QuestViewModelItem], total: Int) {
+    private func getQuestList(page: Int, size: Int, status: QuestStatus) async -> (data: [QuestViewModelItem], total: Int) {
         let result: Result<ResponseWithPage<[Quest]>, Error>
         
         switch status {
         case .uncompleted:
-            result = await questNetwork.getUncompletedQuest(page: page)
+            result = await questNetwork.getUncompletedQuest(page: page, size: size)
         case .completed:
-            result = await questNetwork.getCompletedQuest(page: page)
+            result = await questNetwork.getCompletedQuest(page: page, size: size)
         }
         
         switch result {
