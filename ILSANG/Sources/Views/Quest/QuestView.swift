@@ -105,14 +105,6 @@ extension QuestView {
                             QuestItemView(quest: quest, status: .uncompleted)
                         }
                     }
-                    if vm.hasMorePage(status: .uncompleted) {
-                        ProgressView()
-                            .onAppear {
-                                Task {
-                                    await vm.uncompletedPaginationManager.loadData(isRefreshing: false)
-                                }
-                            }
-                    }
                     
                 case .completed:
                     ForEach(vm.itemListByStatus[.completed, default: []], id: \.id) { quest in
