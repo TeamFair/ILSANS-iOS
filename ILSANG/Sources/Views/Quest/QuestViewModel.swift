@@ -136,6 +136,8 @@ class QuestViewModel: ObservableObject {
     /// uncompleted 상태의 퀘스트 목록을 XpStat별로 분류하여 uncompletedQuestListByXpStat 딕셔너리에 매핑합니다.
     private func mapUncompletedQuestByXpStat() {
         guard let uncompletedQuestList = itemListByStatus[.uncompleted] else { return }
+        self.uncompletedQuestListByXpStat = self.uncompletedQuestListByXpStat.mapValues { _ in [] } // 초기화
+        
         for item in uncompletedQuestList {
             for reward in item.rewardDic {
                 uncompletedQuestListByXpStat[reward.key]?.append(item)
