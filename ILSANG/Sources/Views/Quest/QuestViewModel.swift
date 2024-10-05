@@ -52,7 +52,7 @@ class QuestViewModel: ObservableObject {
         threshold: 98,
         loadPage: { [weak self] page in
             guard let self = self else { return ([], 0) }
-            return await loadQuestListWithImage(page: page, status: .uncompleted)
+            return await loadQuestListWithImage(page: page, size: 100, status: .uncompleted)
         }
     )
     
@@ -61,7 +61,7 @@ class QuestViewModel: ObservableObject {
         threshold: 8,
         loadPage: { [weak self] page in
             guard let self = self else { return ([], 0) }
-            return await loadQuestListWithImage(page: page, status: .completed)
+            return await loadQuestListWithImage(page: page, size: 10, status: .completed)
         }
     )
     
@@ -71,10 +71,6 @@ class QuestViewModel: ObservableObject {
     init(imageNetwork: ImageNetwork, questNetwork: QuestNetwork) {
         self.imageNetwork = imageNetwork
         self.questNetwork = questNetwork
-        
-        Task {
-            await loadInitialData()
-        }
     }
     
     func loadInitialData() async {
@@ -90,8 +86,8 @@ class QuestViewModel: ObservableObject {
     }
     
     @discardableResult @MainActor
-    func loadQuestListWithImage(page: Int, status: QuestStatus) async -> ([QuestViewModelItem], Int) {
-        let getQuestList = await getQuestList(page: page, status: status)
+    func loadQuestListWithImage(page: Int, size: Int, status: QuestStatus) async -> ([QuestViewModelItem], Int) {
+        let getQuestList = await getQuestList(page: page, size: size, status: status)
         var newQuestList = getQuestList.data
         var currentQuestList = itemListByStatus[status, default: []]
         
@@ -99,8 +95,9 @@ class QuestViewModel: ObservableObject {
             currentQuestList = newQuestList
         } else {
             // MARK: 중복된 퀘스트 제거, 서버 에러 해결시 제거
-            var uniqueQuestIDs = Set(currentQuestList.map { $0.id })
-            newQuestList = newQuestList.filter { uniqueQuestIDs.insert($0.id).inserted }
+            newQuestList = newQuestList.filter { quest in
+                !currentQuestList.contains { $0.id == quest.id }
+            }
             currentQuestList += newQuestList
         }
         
@@ -136,6 +133,8 @@ class QuestViewModel: ObservableObject {
     /// uncompleted 상태의 퀘스트 목록을 XpStat별로 분류하여 uncompletedQuestListByXpStat 딕셔너리에 매핑합니다.
     private func mapUncompletedQuestByXpStat() {
         guard let uncompletedQuestList = itemListByStatus[.uncompleted] else { return }
+        self.uncompletedQuestListByXpStat = self.uncompletedQuestListByXpStat.mapValues { _ in [] } // 초기화
+        
         for item in uncompletedQuestList {
             for reward in item.rewardDic {
                 uncompletedQuestListByXpStat[reward.key]?.append(item)
@@ -143,14 +142,14 @@ class QuestViewModel: ObservableObject {
         }
     }
     
-    private func getQuestList(page: Int, status: QuestStatus) async -> (data: [QuestViewModelItem], total: Int) {
+    private func getQuestList(page: Int, size: Int, status: QuestStatus) async -> (data: [QuestViewModelItem], total: Int) {
         let result: Result<ResponseWithPage<[Quest]>, Error>
         
         switch status {
         case .uncompleted:
-            result = await questNetwork.getUncompletedQuest(page: page)
+            result = await questNetwork.getUncompletedQuest(page: page, size: size)
         case .completed:
-            result = await questNetwork.getCompletedQuest(page: page)
+            result = await questNetwork.getCompletedQuest(page: page, size: size)
         }
         
         switch result {

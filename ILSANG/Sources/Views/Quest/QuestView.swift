@@ -30,6 +30,9 @@ struct QuestView: View {
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .background(Color.background)
+        .task {
+            await vm.loadInitialData()
+        }
         .sheet(isPresented: $vm.showQuestSheet) {
             questSheetView
                 .presentationDetents([.height(558)])
@@ -104,14 +107,6 @@ extension QuestView {
                         } label: {
                             QuestItemView(quest: quest, status: .uncompleted)
                         }
-                    }
-                    if vm.hasMorePage(status: .uncompleted) {
-                        ProgressView()
-                            .onAppear {
-                                Task {
-                                    await vm.uncompletedPaginationManager.loadData(isRefreshing: false)
-                                }
-                            }
                     }
                     
                 case .completed:
