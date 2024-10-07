@@ -20,6 +20,10 @@ struct RankingView: View {
                     .foregroundColor(.gray500)
             }
             
+            subHeaderView
+            
+            switch 
+            
         }
     }
 }

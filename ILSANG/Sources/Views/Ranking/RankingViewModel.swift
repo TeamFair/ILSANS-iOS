@@ -9,5 +9,11 @@ import UIKit
 import SwiftUI
 
 class RankingViewModel: ObservableObject {
+    enum ViewStatus {
+        case error
+        case loading
+        case loaded
+    }
     
+    private 
 }

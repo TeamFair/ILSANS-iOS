@@ -10,7 +10,8 @@ import Alamofire
 
 final class UserNetwork {
     private let url = APIManager.makeURL(CustomerTarget(path: "user"))
-        
+    private let rankUrl = APIManager.makeURL(CustomerTarget(path: "rank"))
+    
     func getUser() async -> Result<Response<User>, Error> {
         return await Network.requestData(url: url, method: .get, parameters: nil, withToken: true)
     }
@@ -26,5 +27,11 @@ final class UserNetwork {
         case.failure:
             return false
         }
+    }
+    
+    func getUserRank(xpstat: String) async -> Result<UserRank, Error> {
+        let url = rankUrl + "?xpType=\(xpstat)&size=0"
+        
+        return await Network.requestData(url: url, method: .get, parameters: nil, withToken: true)
     }
 }
