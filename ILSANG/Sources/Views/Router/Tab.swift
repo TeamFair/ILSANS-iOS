@@ -8,6 +8,7 @@
 enum Tab: CaseIterable {
     case quest
     case approval
+    case ranking
     case mypage
     
     var icon: String {
@@ -16,6 +17,8 @@ enum Tab: CaseIterable {
             return "quest"
         case .approval:
             return "approval.circle"
+        case .ranking:
+            return "profile"
         case .mypage:
             return "profile"
         }
@@ -31,6 +34,8 @@ enum Tab: CaseIterable {
             return "퀘스트"
         case .approval:
             return "인증"
+        case .ranking:
+            return "랭킹"
         case .mypage:
             return "마이"
         }

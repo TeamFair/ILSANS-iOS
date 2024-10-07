@@ -32,6 +32,8 @@ struct MainTabView: View {
             QuestView()
         case .approval:
             ApprovalView()
+        case .ranking:
+            RankingView()
         case .mypage:
             MyPageView()
         }
