@@ -16,7 +16,7 @@ class RankingViewModel: ObservableObject {
     }
     
     @Published var viewStatus: ViewStatus = .loading
-    @Published var userRank: [Rank]
+    @Published var userRank: [Rank] = []
     
     private let userNetwork: UserNetwork
     
