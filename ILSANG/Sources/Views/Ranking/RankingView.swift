@@ -36,7 +36,7 @@ struct RankingView: View {
                 rankingListView
                 
             case .error:
-                VStack{}
+                networkErrorView
             }
             
         }
@@ -86,7 +86,7 @@ extension RankingView {
             subTitle: "네트워크 연결 상태가 좋지 않아\n퀘스트를 불러올 수 없어요 ",
             emoticon: "🥲"
         ) {
-            Task { await vm.loadUserRank(xpStat: "STRENGTH") }
+            Task { await vm.loadUserRank(xpStat: vm.selectedXpStat.parameterText) }
         }
     }
     
