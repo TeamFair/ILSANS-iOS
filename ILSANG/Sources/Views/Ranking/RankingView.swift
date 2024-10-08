@@ -41,7 +41,7 @@ struct RankingView: View {
             
         }
         .task {
-            await vm.loadUserRank(xpStat: "STRENGTH")
+            await vm.loadUserRank(xpStat: vm.selectedXpStat.parameterText)
         }
     }
 }
@@ -93,7 +93,7 @@ extension RankingView {
     private var rankingListView: some View {
         ScrollView {
             Text("Testing")
-            Spacer()                                              
+            Spacer()
         }
     }
 }
