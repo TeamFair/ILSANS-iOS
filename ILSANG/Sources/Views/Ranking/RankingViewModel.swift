@@ -16,6 +16,7 @@ class RankingViewModel: ObservableObject {
     }
     
     @Published var viewStatus: ViewStatus = .loading
+    @Published var selectedXpStat: XpStat = .strength
     @Published var userRank: [Rank] = []
     
     private let userNetwork: UserNetwork
