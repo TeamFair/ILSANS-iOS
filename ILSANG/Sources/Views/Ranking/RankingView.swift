@@ -92,8 +92,13 @@ extension RankingView {
     
     private var rankingListView: some View {
         ScrollView {
-            Text("Testing")
-            Spacer()
+            LazyVStack(spacing: 12) {
+                ForEach(vm.userRank, id: \.xpPoint) { rank in
+                    Text(rank.nickname)
+                    Spacer()
+                    Text("\(rank.xpPoint) XP")
+                }
+            }
         }
     }
 }
