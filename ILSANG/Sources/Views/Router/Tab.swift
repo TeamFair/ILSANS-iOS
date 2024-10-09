@@ -18,7 +18,7 @@ enum Tab: CaseIterable {
         case .approval:
             return "approval.circle"
         case .ranking:
-            return "profile"
+            return "rank"
         case .mypage:
             return "profile"
         }
