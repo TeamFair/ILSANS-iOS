@@ -44,6 +44,11 @@ struct RankingView: View {
         .task {
             await vm.loadUserRank(xpStat: vm.selectedXpStat.parameterText)
         }
+        .onChange(of: vm.selectedXpStat) { stat in
+            Task {
+                await vm.loadUserRank(xpStat: stat.parameterText)
+            }
+        }
     }
 }
 
@@ -95,9 +100,7 @@ extension RankingView {
         ScrollView {
             LazyVStack(spacing: 12) {
                 ForEach(vm.userRank, id: \.xpPoint) { rank in
-                    Text(rank.nickname)
-                    Spacer()
-                    Text("\(rank.xpPoint) XP")
+                    RankingItemView(nickName: rank.nickname, stat: rank.xpType, point: rank.xpPoint)
                 }
             }
         }
