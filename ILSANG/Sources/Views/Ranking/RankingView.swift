@@ -36,7 +36,7 @@ struct RankingView: View {
                 rankingListView
                 
             case .error:
-                networkErrorView
+                rankingListView
             }
             
         }
@@ -99,8 +99,8 @@ extension RankingView {
     private var rankingListView: some View {
         ScrollView {
             LazyVStack(spacing: 12) {
-                ForEach(vm.userRank, id: \.xpPoint) { rank in
-                    RankingItemView(nickName: rank.nickname, stat: rank.xpType, point: rank.xpPoint)
+                ForEach(Array(vm.userRank.enumerated()), id: \.element.xpPoint) { idx, rank in
+                    RankingItemView(level: idx + 1,nickName: rank.nickname, stat: rank.xpType,point: rank.xpPoint)
                 }
             }
         }

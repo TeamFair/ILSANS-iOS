@@ -9,13 +9,14 @@ import SwiftUI
 
 struct RankingItemView: View {
     
+    var level: Int
     var nickName: String
     var stat: String
     var point: Int
     
     var body: some View {
         HStack (spacing: 17) {
-            RankingProfile(profileImage: nil, level: 1)
+            RankingProfile(profileImage: nil, level: level)
             
             VStack (alignment: .leading, spacing: 3) {
                 Text(nickName)
@@ -25,6 +26,7 @@ struct RankingItemView: View {
                     .font(.system(size: 13))
                     .foregroundColor(.gray400)
             }
+            .frame(height: 40)
             
             Spacer()
         }
@@ -62,12 +64,10 @@ struct RankingProfile: View {
                         .resizable()
                         .frame(width: 60, height: 60)
                 }
-                
-                Spacer()
             }
             
             VStack {
-                Text("1st")
+                Text(RankingViewModel.convertToOrdinal(Level))
                     .font(.system(size: 10))
                     .fontWeight(.semibold)
                     .foregroundColor(.white)
@@ -81,10 +81,10 @@ struct RankingProfile: View {
             }
             
         }
-        .frame(height: 68)
+        .frame(height: 60)
     }
 }
 
 #Preview {
-    RankingItemView(nickName: "닉네임1", stat: "체력", point: 1298349027148)
+    RankingItemView(level: 1, nickName: "닉네임1", stat: "체력", point: 1298349027148)
 }
