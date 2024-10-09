@@ -7,6 +7,7 @@
 
 import UIKit
 import SwiftUI
+import Alamofire
 
 class RankingViewModel: ObservableObject {
     enum ViewStatus {
@@ -32,7 +33,7 @@ class RankingViewModel: ObservableObject {
     
     @MainActor
     func loadUserRank(xpStat: String) async {
-        let res = await userNetwork.getUserRank(xpstat: xpStat)
+        let res = await userNetwork.getUserRank(xpstat: xpStat, page: 0)
         
         switch res {
         case .success(let model):

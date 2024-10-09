@@ -17,6 +17,8 @@ struct User: Decodable {
 
 struct UserRank: Decodable {
     let data: [Rank]
+    let status: String
+    let message: String
 }
 
 struct Rank: Decodable {
