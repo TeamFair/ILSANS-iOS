@@ -36,7 +36,7 @@ struct RankingView: View {
                 rankingListView
                 
             case .error:
-                rankingListView
+                networkErrorView
             }
             
         }
