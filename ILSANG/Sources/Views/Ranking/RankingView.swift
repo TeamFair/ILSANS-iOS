@@ -40,6 +40,7 @@ struct RankingView: View {
             }
             
         }
+        .background(Color.background)
         .task {
             await vm.loadUserRank(xpStat: vm.selectedXpStat.parameterText)
         }
