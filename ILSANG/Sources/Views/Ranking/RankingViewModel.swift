@@ -38,7 +38,7 @@ class RankingViewModel: ObservableObject {
     
     @MainActor
     func loadUserRank(xpStat: String) async {
-        let res = await userNetwork.getUserRank(xpstat: xpStat, page: 0)
+        let res = await userNetwork.getUserRank(xpstat: xpStat)
         
         switch res {
         case .success(let model):

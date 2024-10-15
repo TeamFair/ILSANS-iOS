@@ -29,8 +29,8 @@ final class UserNetwork {
         }
     }
     
-    func getUserRank(xpstat: String, page: Int) async -> Result<UserRank, Error> {
-        let parameters: Parameters = ["xpType":xpstat, "size": page]
+    func getUserRank(xpstat: String) async -> Result<UserRank, Error> {
+        let parameters: Parameters = ["xpType":xpstat, "size": 20]
         
         return await Network.requestData(url: url+"rank", method: .get, parameters: parameters, withToken: true)
     }

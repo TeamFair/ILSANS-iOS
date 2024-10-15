@@ -13,7 +13,7 @@ struct RankingView: View {
     @Namespace private var namespace
     
     var body: some View {
-        VStack{
+        VStack (spacing: 0){
             //HeaderView
             HStack {
                 Text("랭킹")
@@ -100,9 +100,11 @@ extension RankingView {
         ScrollView {
             LazyVStack(spacing: 12) {
                 ForEach(Array(vm.userRank.enumerated()), id: \.element.xpPoint) { idx, rank in
-                    RankingItemView(level: idx + 1,nickName: rank.nickname, stat: rank.xpType,point: rank.xpPoint)
+                    RankingItemView(level: idx + 1, rank: rank)
                 }
             }
+            .padding(.top, 20)
+            .padding(.bottom, 72)
         }
     }
 }
