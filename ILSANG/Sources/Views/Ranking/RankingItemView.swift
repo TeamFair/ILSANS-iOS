@@ -30,7 +30,7 @@ struct RankingItemView: View {
         }
         .padding(.horizontal, 19)
         .padding(.vertical, 21)
-        .frame(maxWidth: 353, alignment: .topLeading)
+        .frame(maxWidth: .infinity, alignment: .topLeading)
         .background(.white)
         .cornerRadius(16)
         .padding(.horizontal, 20)
