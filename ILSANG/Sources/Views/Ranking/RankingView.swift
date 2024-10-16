@@ -42,12 +42,7 @@ struct RankingView: View {
         }
         .background(Color.background)
         .task {
-            await vm.loadUserRank(xpStat: vm.selectedXpStat.parameterText)
-        }
-        .onChange(of: vm.selectedXpStat) { stat in
-            Task {
-                await vm.loadUserRank(xpStat: stat.parameterText)
-            }
+            await vm.loadAllUserRank()
         }
     }
 }
@@ -92,15 +87,17 @@ extension RankingView {
             subTitle: "네트워크 연결 상태가 좋지 않아\n퀘스트를 불러올 수 없어요 ",
             emoticon: "🥲"
         ) {
-            Task { await vm.loadUserRank(xpStat: vm.selectedXpStat.parameterText) }
+            Task { await vm.loadUserRank(xpStat: vm.selectedXpStat) }
         }
     }
     
     private var rankingListView: some View {
         ScrollView {
             LazyVStack(spacing: 12) {
-                ForEach(Array(vm.userRank.flatMap { $0.value }.enumerated()), id: \.element.customerId) { idx, rank in
-                    RankingItemView(level: idx + 1, rank: rank)
+                if let ranks = vm.userRank[vm.selectedXpStat] {
+                    ForEach(Array(ranks.enumerated()), id: \.element.customerId) { idx, rank in
+                        RankingItemView(level: idx + 1, rank: rank)
+                    }
                 }
             }
             .padding(.top, 20)
@@ -108,7 +105,7 @@ extension RankingView {
         }
         .refreshable {
             Task {
-                await vm.loadUserRank(xpStat: vm.selectedXpStat.parameterText)
+                await vm.loadUserRank(xpStat: vm.selectedXpStat)
             }
         }
     }

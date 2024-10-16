@@ -36,16 +36,25 @@ class RankingViewModel: ObservableObject {
         self.viewStatus = viewStatus
     }
     
+    func loadAllUserRank() async {
+        for xpStat in XpStat.allCases {
+            await loadUserRank(xpStat: xpStat)
+        }
+    }
+    
     @MainActor
-    func loadUserRank(xpStat: String) async {
-        let res = await userNetwork.getUserRank(xpstat: xpStat)
+    func loadUserRank(xpStat: XpStat) async {
+        let res = await userNetwork.getUserRank(xpstat: xpStat.parameterText)
         
         switch res {
         case .success(let model):
-            self.userRank = [selectedXpStat: model.data]
+            var updatedRank = self.userRank
+            updatedRank[xpStat] = model.data
+            self.userRank = updatedRank
+            
             changeViewStatus(.loaded)
             Log(userRank)
-            
+
         case .failure:
             changeViewStatus(.error)
             Log(res)
