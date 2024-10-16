@@ -13,8 +13,11 @@ struct Challenge: Codable {
     let userNickName: String?
     let missionTitle: String?
     let receiptImageId, status: String
+    let questImageId: String?
     let createdAt: String
     let likeCnt, hateCnt: Int
+    
+    static let challengeMockData = Challenge(challengeId: "", userNickName: "일상유저123", missionTitle: "바닐라라떼 마시기", receiptImageId: "", status: "", questImageId: "", createdAt: "2024-01-01'T'00:00:00", likeCnt: 3, hateCnt: 0)
 }
 
 /// 서버에서 사용되는 Quest Entity
