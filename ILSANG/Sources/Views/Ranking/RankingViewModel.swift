@@ -18,7 +18,7 @@ class RankingViewModel: ObservableObject {
     
     @Published var viewStatus: ViewStatus = .loading
     @Published var selectedXpStat: XpStat = .strength
-    @Published var userRank: [Rank] = []
+    @Published var userRank: [XpStat: [Rank]] = Dictionary(uniqueKeysWithValues: XpStat.allCases.map { ($0, []) })
     @Published var mokData: [Rank] = [
         Rank(xpType: "CHARM", xpPoint: 200, customerId: "1234-5678-91011", nickname: "TestUser1"),
         Rank(xpType: "STRENGTH", xpPoint: 150, customerId: "2234-5678-91011", nickname: "TestUser2"),
@@ -42,7 +42,7 @@ class RankingViewModel: ObservableObject {
         
         switch res {
         case .success(let model):
-            self.userRank = model.data
+            self.userRank = [selectedXpStat: model.data]
             changeViewStatus(.loaded)
             Log(userRank)
             
