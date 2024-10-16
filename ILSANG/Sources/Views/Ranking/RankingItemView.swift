@@ -20,7 +20,7 @@ struct RankingItemView: View {
                 Text(rank.nickname)
                     .font(.system(size: 15))
                     .fontWeight(.bold)
-                Text("\(rank.xpType): \(rank.xpPoint)p")
+                Text("\(convertStat(rank.xpType)): \(rank.xpPoint)p")
                     .font(.system(size: 13))
                     .foregroundColor(.gray400)
             }
@@ -66,6 +66,7 @@ struct RankingProfile: View {
             VStack {
                 Text(RankingViewModel.convertToOrdinal(Level))
                     .foregroundColor(.accentColor)
+                    .font(.system(size: 10, weight: .semibold))
                     .padding(.horizontal, 5)
                     .padding(.vertical, 2)
                     .background(Color.primary100)
@@ -77,5 +78,20 @@ struct RankingProfile: View {
             
         }
         .frame(height: 60)
+    }
+}
+
+extension RankingItemView {
+    //XpStat 한글 변환
+    func convertStat(_ xpType: String) -> String {
+        let typeMapping: [String: String] = [
+            "STRENGTH": "체력",
+            "INTELLECT": "지능",
+            "FUN": "재미",
+            "CHARM": "매력",
+            "SOCIABILITY": "사회성"
+        ]
+    
+        return typeMapping[xpType] ?? xpType
     }
 }

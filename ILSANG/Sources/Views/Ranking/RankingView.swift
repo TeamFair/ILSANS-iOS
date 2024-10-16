@@ -99,7 +99,7 @@ extension RankingView {
     private var rankingListView: some View {
         ScrollView {
             LazyVStack(spacing: 12) {
-                ForEach(Array(vm.userRank.enumerated()), id: \.element.xpPoint) { idx, rank in
+                ForEach(Array(vm.userRank.enumerated()), id: \.element.customerId) { idx, rank in
                     RankingItemView(level: idx + 1, rank: rank)
                 }
             }
