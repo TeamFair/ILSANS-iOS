@@ -66,6 +66,9 @@ struct ChallengeDetailView: View {
     
     private var trailingButton: some View {
         Menu {
+            ShareLink(item: photo, preview: SharePreview(photo.caption, image: photo.image)) {
+                Label("공유하기", image: "share")
+            }
             Button {
                 vm.challengeDelete.toggle()
             } label: {
@@ -79,6 +82,19 @@ struct ChallengeDetailView: View {
                 .foregroundStyle(.gray500)
         }
         .padding(.trailing, 12)
+    }
+    
+    // MARK: - 챌린지 이미지 공유하기
+    private var photo: TransferableUIImage {
+        return .init(uiimage: dailyShareUIImage, caption: "일상 챌린지 공유하기")
+    }
+    
+    private var dailyShareUIImage: UIImage {
+        let renderer = ImageRenderer(
+            content: ChallengeImageView(missionImage: missionImage ?? .logo, questImage: questImage ?? .logo, challengeData: challengeData).frame(width: 440)
+        )
+        renderer.scale = 3.0
+        return renderer.uiImage ?? .init()
     }
 }
 
