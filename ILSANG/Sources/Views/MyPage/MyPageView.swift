@@ -49,7 +49,7 @@ struct MyPageView: View {
                 switch segmentSelect {
                 case 0:
                     if let questData = vm.challengeList, !questData.isEmpty {
-                        MyPageQuestList(questData: .constant(questData))
+                        MyPageChallengeList(challengeList: .constant(questData))
                     } else {
                         emptyView()
                     }
