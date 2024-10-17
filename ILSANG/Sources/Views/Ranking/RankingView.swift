@@ -103,6 +103,7 @@ extension RankingView {
             .padding(.top, 20)
             .padding(.bottom, 72)
         }
+        .animation(nil)
         .refreshable {
             Task {
                 await vm.loadUserRank(xpStat: vm.selectedXpStat)
