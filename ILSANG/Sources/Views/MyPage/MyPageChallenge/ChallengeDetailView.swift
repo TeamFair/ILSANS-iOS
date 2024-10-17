@@ -25,6 +25,7 @@ struct ChallengeDetailView: View {
             .overlay(alignment: .trailing) {
                 trailingButton /// 공유 & 삭제 버튼
             }
+            .padding(.bottom, 8) // 세로로 긴 이미지 대응 (NavigationTitleView의 bottom 패딩과 겹침)
             
             if let missionImage = missionImage {
                 ChallengeImageView(missionImage: missionImage, questImage: questImage, challengeData: challengeData)
@@ -121,13 +122,13 @@ struct ChallengeImageView: View {
                     .frame(width: 48, height: 48)
                     .background(.primary100)
                     .clipShape(Circle())
-                    .padding(.trailing, 12)
+                    .padding(.trailing, 8)
             }
             
-            VStack (alignment: .leading, spacing: 4) {
+            VStack(alignment: .leading, spacing: 4) {
                 Text(challengeData.missionTitle ?? "")
-                    .font(.system(size: 19, weight: .bold))
-                    .frame(height: 23)
+                    .font(.system(size: 17, weight: .bold))
+                    .kerning(-0.3)
                     .foregroundColor(.black)
                 HStack(spacing: 4) {
                     Image(.heart)
@@ -137,14 +138,13 @@ struct ChallengeImageView: View {
                         .font(.system(size: 12, weight: .regular))
                 }
                 .foregroundColor(.gray500)
-                .frame(height: 23)
             }
             
             Spacer(minLength: 0)
             
             Text("1/1")
                 .font(.system(size: 13, weight: .semibold))
-                .padding(.horizontal, 12)
+                .padding(.horizontal, 11)
                 .frame(height: 20)
                 .foregroundColor(.white)
                 .background(
@@ -152,7 +152,9 @@ struct ChallengeImageView: View {
                         .foregroundStyle(.gray300)
                 )
         }
-        .padding(20)
+        .padding(.horizontal, 9.5)
+        .padding(.vertical, 20)
+
         .background(
             RoundedRectangle(cornerRadius: 12)
                 .foregroundStyle(.white)
