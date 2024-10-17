@@ -14,3 +14,16 @@ struct User: Decodable {
     let completeChallengeCount: Int
     let xpPoint: Int
 }
+
+struct UserRank: Decodable {
+    let data: [Rank]
+    let status: String
+    let message: String
+}
+
+struct Rank: Decodable {
+    let xpType: String
+    let xpPoint: Int
+    let customerId: String
+    let nickname: String
+}

@@ -60,6 +60,21 @@ enum XpStat: String, CaseIterable {
             "사회성"
         }
     }
+    
+    var parameterText: String {
+        switch self {
+        case .strength:
+            "STRENGTH"
+        case .intellect:
+            "INTELLECT"
+        case .fun:
+            "FUN"
+        case .charm:
+            "CHARM"
+        case .sociability:
+            "SOCIABILITY"
+        }
+    }
 }
 
 struct QuestViewModelItem {
