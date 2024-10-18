@@ -128,12 +128,7 @@ extension QuestView {
         }
         .frame(maxWidth: .infinity)
         .refreshable {
-            switch vm.selectedHeader {
-            case .uncompleted:
-                await vm.uncompletedPaginationManager.loadData(isRefreshing: true)
-            case .completed:
-                await vm.completedPaginationManager.loadData(isRefreshing: true)
-            }
+            await vm.refreshData()
         }
         .overlay {
             if vm.isCurrentListEmpty {
