@@ -75,6 +75,9 @@ class QuestViewModel: ObservableObject {
     init(imageNetwork: ImageNetwork, questNetwork: QuestNetwork) {
         self.imageNetwork = imageNetwork
         self.questNetwork = questNetwork
+        Task {
+            await loadInitialData()
+        }
     }
     
     func loadInitialData() async {
