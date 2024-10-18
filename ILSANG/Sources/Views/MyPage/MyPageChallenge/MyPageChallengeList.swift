@@ -9,9 +9,7 @@ import SwiftUI
 //MARK: 색상 폰트 변경 요청
 struct MyPageChallengeList: View {
     
-    @ObservedObject var vm = MypageViewModel(userNetwork: UserNetwork(), challengeNetwork: ChallengeNetwork(), imageNetwork: ImageNetwork(), xpNetwork: XPNetwork())
-    
-    @Binding var challengeList: [Challenge]
+    @ObservedObject var vm: MypageViewModel
     
     var body: some View {
 
@@ -27,15 +25,15 @@ struct MyPageChallengeList: View {
             // Data List
             ScrollView {
                 VStack(spacing: 12) {
-                    ForEach(challengeList, id: \.challengeId) { challenge in
-                        NavigationLink(destination: ChallengeDetailView(challengeData: challenge)) {
+                    ForEach(vm.challengeList, id: \.challengeId) { challenge in
+                        NavigationLink(destination: ChallengeDetailView(vm: vm, challengeData: challenge)) {
                             ListStruct(title: challenge.missionTitle ?? "챌린지명", detail: challenge.createdAt.timeAgoCreatedAt(), point: nil)
                         }
                     }
                 }
             }
             .refreshable {
-                await vm.getQuest(page: 0)
+                await vm.getChallenges(page: 0)
             }
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)

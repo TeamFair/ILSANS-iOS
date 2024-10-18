@@ -9,7 +9,7 @@ import SwiftUI
 
 struct MyPageProfile: View {
     
-    @StateObject var vm = MypageViewModel(userNetwork: UserNetwork(), challengeNetwork: ChallengeNetwork(), imageNetwork: ImageNetwork(), xpNetwork: XPNetwork())
+    @ObservedObject var vm: MypageViewModel
     
     var body: some View {
         NavigationLink(destination: ChangeNickNameView()) {
@@ -137,5 +137,5 @@ struct ProfileStatView: View {
 }
 
 #Preview {
-    MyPageProfile()
+    MyPageProfile(vm: MypageViewModel(userNetwork: UserNetwork(), challengeNetwork: ChallengeNetwork(), imageNetwork: ImageNetwork(), xpNetwork: XPNetwork()))
 }

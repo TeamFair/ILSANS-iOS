@@ -9,9 +9,7 @@ import SwiftUI
 
 struct MyPageActiveList: View {
     
-    @ObservedObject var vm = MypageViewModel(userNetwork: UserNetwork(), challengeNetwork: ChallengeNetwork(), imageNetwork: ImageNetwork(), xpNetwork: XPNetwork())
-    
-    @Binding var activeData: [XPContent]
+    @ObservedObject var vm: MypageViewModel
     
     var body: some View {
         VStack(alignment: .leading) {
@@ -26,7 +24,7 @@ struct MyPageActiveList: View {
             // Data List
             ScrollView {
                 VStack(spacing: 12) {
-                    ForEach(activeData, id: \.recordId) { Data in
+                    ForEach(vm.xpLogList, id: \.recordId) { Data in
                         ListStruct(title: Data.title, detail: Data.createDate.timeAgoSinceCreation(), point: Data.xpPoint)
                     }
                 }

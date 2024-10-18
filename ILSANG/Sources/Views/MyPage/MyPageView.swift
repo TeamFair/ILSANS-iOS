@@ -34,7 +34,7 @@ struct MyPageView: View {
                 .padding(.bottom, 5)
                 
                 // 개인 프로필
-                MyPageProfile()
+                MyPageProfile(vm: vm)
                 
                 // 퀘스트/활동/뱃지 세그먼트
                 MyPageSegment(selectedIndex: $segmentSelect)
@@ -42,17 +42,9 @@ struct MyPageView: View {
                 // 퀘스트/활동/뱃지 리스트
                 switch segmentSelect {
                 case 0:
-                    if let questData = vm.challengeList, !questData.isEmpty {
-                        MyPageChallengeList(challengeList: .constant(questData))
-                    } else {
-                        emptyView()
-                    }
+                    MyPageChallengeList(vm: vm)
                 case 1:
-                    if let activeData = vm.questXp, !activeData.isEmpty {
-                        MyPageActiveList(activeData: .constant(activeData))
-                    } else {
-                        emptyView()
-                    }
+                    MyPageActiveList(vm: vm)
                 case 2:
                     emptyView()
                     
