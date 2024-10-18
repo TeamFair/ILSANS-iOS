@@ -48,17 +48,9 @@ struct MyPageProfile: View {
                 }
                 .padding(18)
                 .background(Color.white)
-                .cornerRadius(12, corners: [.topLeft, .topRight])
-                .task {
-                    await vm.getUser()
-                    Log(vm.userData)
-                }
                 
                 StatView(dic: vm.xpStats)
                     .frame(height: 70)
-                    .task {
-                        await vm.getXpStat()
-                    }
             }
             .background(Color.primary100)
             .cornerRadius(12)
