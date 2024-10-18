@@ -33,6 +33,11 @@ struct MyPageActiveList: View {
                 await vm.getxpLog(page: 0, size: 10)
             }
         }
+        .overlay {
+            if vm.xpLogList.isEmpty {
+                EmptyView(title: "활동 내역이 없어요!")
+            }
+        }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
     }
 }

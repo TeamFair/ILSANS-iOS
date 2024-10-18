@@ -46,12 +46,12 @@ struct MyPageView: View {
                 case 1:
                     MyPageActiveList(vm: vm)
                 case 2:
-                    emptyView()
-                    
                     // 뱃지 구현후 적용
-                    //MyPageBadgeList(badgeData: .constant([]))
+                    // MyPageBadgeList(vm: vm)
+                    EmptyView(title: "Coming Soon!")
+                    
                 default:
-                    emptyView()
+                    EmptyView()
                 }
             }
             .padding(.horizontal, 20)
@@ -64,18 +64,18 @@ struct MyPageView: View {
     }
 }
 
-struct emptyView: View {
+struct EmptyView: View {
+    var title: String = ""
+    
     var body: some View {
-        VStack {
-            Text("Coming Soon!")
-                .font(.system(size: 17))
-                .fontWeight(.medium)
-                .foregroundColor(.gray400)
-                .multilineTextAlignment(.center)
-                .refreshable {
-                    // 데이터 리프레시
-                }
-                .frame(maxWidth: .infinity, maxHeight: .infinity)
-        }
+        Text(title)
+            .font(.system(size: 17))
+            .fontWeight(.medium)
+            .foregroundColor(.gray400)
+            .multilineTextAlignment(.center)
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
+            .refreshable {
+                // 데이터 리프레시
+            }
     }
 }
