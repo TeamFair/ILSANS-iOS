@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct QuestView: View {
-    @StateObject var vm: QuestViewModel = QuestViewModel(imageNetwork: ImageNetwork(), questNetwork: QuestNetwork())
+    @StateObject var vm: QuestViewModel = QuestViewModel(questNetwork: QuestNetwork())
     @Namespace private var namespace
 
     var body: some View {
@@ -201,7 +201,7 @@ extension QuestView {
 }
 
 #Preview {
-    QuestView(vm: QuestViewModel(imageNetwork: ImageNetwork(), questNetwork: QuestNetwork()))
+    QuestView(vm: QuestViewModel(questNetwork: QuestNetwork()))
 }
 
 struct StatView: View {

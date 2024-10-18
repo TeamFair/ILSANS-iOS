@@ -65,15 +65,13 @@ class QuestViewModel: ObservableObject {
         }
     )
     
-    private let imageNetwork: ImageNetwork
     // MARK: throttle 관련
     let throttleInterval: TimeInterval = 2.0
     var lastRefreshTime: Date? = nil
     
     private let questNetwork: QuestNetwork
     
-    init(imageNetwork: ImageNetwork, questNetwork: QuestNetwork) {
-        self.imageNetwork = imageNetwork
+    init(questNetwork: QuestNetwork) {
         self.questNetwork = questNetwork
         Task {
             await loadInitialData()
