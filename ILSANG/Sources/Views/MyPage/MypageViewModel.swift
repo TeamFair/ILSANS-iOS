@@ -5,20 +5,12 @@
 //  Created by Kim Andrew on 6/25/24.
 //
 
-import Foundation
-import UIKit
 import SwiftUI
 
-struct MypageViewModelItem: Identifiable {
-    var id: UUID
-    var status: String
-    var nickname: String
-    var couponCount: Int
-    var completeChallengeCount: Int
-    var xpPoint: Int
-}
-
-class MypageViewModel: ObservableObject {
+final class MypageViewModel: ObservableObject {
+    
+    @Published var segmentSelect = 0
+    
     @Published var userData: User?
     @Published var xpStats: [XpStat: Int] = [:]
     @Published var xpLogList: [XPContent] = []

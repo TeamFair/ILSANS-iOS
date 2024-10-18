@@ -12,7 +12,6 @@ struct MyPageChallengeList: View {
     @ObservedObject var vm: MypageViewModel
     
     var body: some View {
-
         VStack(alignment: .leading) {
             HStack {
                 Text("수행한 챌린지")

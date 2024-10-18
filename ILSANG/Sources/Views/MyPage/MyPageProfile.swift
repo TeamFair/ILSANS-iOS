@@ -13,7 +13,6 @@ struct MyPageProfile: View {
     
     var body: some View {
         NavigationLink(destination: ChangeNickNameView()) {
-            
             VStack {
                 //기본 프로필
                 HStack {
@@ -89,7 +88,6 @@ struct ProfileImageView: View {
             }
             
             VStack {
-                
                 Spacer()
                 
                 Text("Lv. \(Level)")

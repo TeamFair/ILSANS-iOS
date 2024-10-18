@@ -11,10 +11,6 @@ struct MyPageView: View {
     
     @StateObject var vm: MypageViewModel = MypageViewModel(userNetwork: UserNetwork(), challengeNetwork: ChallengeNetwork(), imageNetwork: ImageNetwork(), xpNetwork: XPNetwork())
     
-    @State var segmentSelect = 0
-    @State private var isSettingsViewActive = false
-    
-    
     var body: some View {
         NavigationView {
             VStack(spacing: 0) {
@@ -37,10 +33,10 @@ struct MyPageView: View {
                 MyPageProfile(vm: vm)
                 
                 // 퀘스트/활동/뱃지 세그먼트
-                MyPageSegment(selectedIndex: $segmentSelect)
+                MyPageSegment(selectedIndex: $vm.segmentSelect)
                 
                 // 퀘스트/활동/뱃지 리스트
-                switch segmentSelect {
+                switch vm.segmentSelect {
                 case 0:
                     MyPageChallengeList(vm: vm)
                 case 1:

@@ -12,7 +12,6 @@ struct MyPageBadgeList: View {
     @ObservedObject var vm: MypageViewModel
 
     var body: some View {
-        
         VStack(alignment: .leading) {
             Text("최근 활동 순")
                 .font(.system(size: 14))

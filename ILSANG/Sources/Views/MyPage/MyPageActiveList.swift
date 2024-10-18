@@ -13,14 +13,12 @@ struct MyPageActiveList: View {
     
     var body: some View {
         VStack(alignment: .leading) {
-            HStack {
-                Text("최근 활동 순")
-                    .font(.system(size: 14))
-                    .fontWeight(.medium)
-                    .foregroundColor(.gray400)
-                
-                Spacer()
-            }
+            Text("최근 활동 순")
+                .font(.system(size: 14))
+                .fontWeight(.medium)
+                .foregroundColor(.gray400)
+                .frame(maxWidth: .infinity, alignment: .leading)
+            
             // Data List
             ScrollView {
                 VStack(spacing: 12) {
