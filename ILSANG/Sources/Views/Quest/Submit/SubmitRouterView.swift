@@ -23,6 +23,7 @@ struct SubmitRouterView: View {
                     NavigationTitleView(title: "퀘스트 인증") {
                         vm.clearSelectedImage()
                     }
+                    .padding(.bottom, 8) // 세로로 긴 이미지 대응 (NavigationTitleView의 bottom 패딩과 겹침)
                     
                     Image(uiImage: myImage)
                         .resizable()
