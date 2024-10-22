@@ -12,8 +12,8 @@ struct SubmitRouterView: View {
     @StateObject var vm: SubmitRouterViewModel
     @Environment(\.dismiss) var dismiss
 
-    init(selectedQuestId: String) {
-        _vm = StateObject(wrappedValue: SubmitRouterViewModel(selectedQuestId: selectedQuestId))
+    init(selectedQuest: QuestViewModelItem) {
+        _vm = StateObject(wrappedValue: SubmitRouterViewModel(selectedQuest: selectedQuest))
     }
 
     var body: some View {
@@ -40,7 +40,7 @@ struct SubmitRouterView: View {
         }
         .background(Color.white)
         .overlay {
-            SubmitAlertView(vm: SubmitAlertViewModel(selectedImage: vm.selectedImage, selectedQuestId: vm.selectedQuestId, imageNetwork: ImageNetwork(), challengeNetwork: ChallengeNetwork(), showSubmitAlertView: vm.showSubmitAlertView))
+            SubmitAlertView(selectedImage: vm.selectedImage, selectedQuest: vm.selectedQuest, showSubmitAlertView: vm.showSubmitAlertView)
         }
     }
 }
@@ -69,4 +69,8 @@ extension SubmitRouterView {
         .background(Color.white)
         .cornerRadius(24, corners: [.topLeft, .topRight])
     }
+}
+
+#Preview {
+    SubmitRouterView(selectedQuest: .mockData)
 }

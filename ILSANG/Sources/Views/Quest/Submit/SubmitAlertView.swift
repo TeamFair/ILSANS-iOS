@@ -11,6 +11,11 @@ struct SubmitAlertView: View {
     @ObservedObject var vm: SubmitAlertViewModel
     @Environment(\.dismiss) var dismiss
     
+    init(selectedImage: UIImage?, selectedQuest: QuestViewModelItem, showSubmitAlertView: Bool) {
+        _vm = ObservedObject(wrappedValue: SubmitAlertViewModel(selectedImage: selectedImage, selectedQuest: selectedQuest, imageNetwork: ImageNetwork(), challengeNetwork: ChallengeNetwork(), showSubmitAlertView: showSubmitAlertView)
+        )
+    }
+    
     var body: some View {
         ZStack {
             if vm.showSubmitAlertView {

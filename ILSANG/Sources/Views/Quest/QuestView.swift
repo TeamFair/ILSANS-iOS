@@ -39,7 +39,7 @@ struct QuestView: View {
                 .presentationDragIndicator(.visible)
         }
         .fullScreenCover(isPresented: $vm.showSubmitRouterView) {
-            SubmitRouterView(selectedQuestId: vm.selectedQuest.id)
+            SubmitRouterView(selectedQuest: vm.selectedQuest)
                 .interactiveDismissDisabled()
         }
     }
