@@ -116,9 +116,10 @@ struct QuestViewModelItem {
         self.missionTitle = quest.missionTitle
         self.writer = quest.writer
         self.rewardDic = [:]
-        for reward in quest.rewardList {
-            if reward.type == "XP" , let content = reward.content {
-                self.rewardDic[XpStat(rawValue: content.lowercased()) ?? .strength] = reward.quantity
+        
+        for reward in quest.rewardList where reward.quantity > 0 && reward.type == "XP" {
+            if let content = reward.content, let stat = XpStat(rawValue: content.lowercased()) {
+                rewardDic[stat] = reward.quantity
             }
         }
     }
