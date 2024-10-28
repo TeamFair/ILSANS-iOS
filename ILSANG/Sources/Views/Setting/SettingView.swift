@@ -16,7 +16,7 @@ struct SettingView: View {
         Setting(title: "고객센터", type: .navigate),
         Setting(title: "약관 및 정책", type: .navigate),
         Setting(title: "오픈소스 정보", type: .navigate),
-        Setting(title: "현재 버전", type: .info("v.0.0.1")),
+        Setting(title: "현재 버전", type: .info("v.1.2.1")),
         Setting(title: "로그아웃", type: .alert),
         Setting(title: "회원 탈퇴", titleColor: .subRed, type: .navigate)
     ]
