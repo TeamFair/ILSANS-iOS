@@ -184,3 +184,15 @@ final class MypageViewModel: ObservableObject {
         return Double(userXP) / Double(levelXP)
     }
 }
+
+extension ChangeNickNameView {
+    func isValidNickname(_ name: String) -> Bool {
+        let regex = "^[가-힣a-zA-Z0-9]*$"
+        
+        let isValidCharacters = NSPredicate(format: "SELF MATCHES %@", regex).evaluate(with: name)
+        
+        let isValidLength = (2...12).contains(name.count)
+        
+        return isValidCharacters && isValidLength
+    }
+}
