@@ -73,7 +73,7 @@ struct ChangeNickNameView: View {
                     
                     Spacer()
                     
-                    PrimaryButton(title: "변경 완료", buttonAble: !isSame || !name.isEmpty) {
+                    PrimaryButton(title: "변경 완료", buttonAble: !isSame && isqualified) {
                         Task {
                             if await UserNetwork().putUser(nickname: name) {
                                 withAnimation {
