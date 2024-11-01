@@ -17,7 +17,7 @@ struct MyPageProfile: View {
                 //기본 프로필
                 HStack {
                     //프로필
-                    ProfileImageView(profileImage: nil, level: vm.convertXPtoLv(XP: vm.userData?.xpPoint ?? 9))
+                    ProfileImageView(ProfileImage: nil)
                     
                     // 프로필 상세
                     VStack (alignment: .leading) {
@@ -27,6 +27,20 @@ struct MyPageProfile: View {
                             .underline(true, color: .gray300)
                             .foregroundStyle(.gray500)
                             .multilineTextAlignment(.leading)
+                        
+                        Text("Lv. \(vm.convertXPtoLv(XP: vm.userData?.xpPoint ?? 9))")
+                            .font(.system(size: 13))
+                            .fontWeight(.bold)
+                            .foregroundColor(Color.accent)
+                            .padding(.horizontal, 14.5)
+                            .padding(.vertical, 4)
+                            .background(.white)
+                            .cornerRadius(20)
+                            .overlay(
+                                RoundedRectangle(cornerRadius: 20)
+                                    .inset(by: 0.5)
+                                    .stroke(.accent, lineWidth: 1)
+                            )
                         
                         HStack {
                             // 프로그레스 바
@@ -59,11 +73,9 @@ struct MyPageProfile: View {
 
 struct ProfileImageView: View {
     var ProfileImage: UIImage?
-    var Level: Int
     
-    init(profileImage: UIImage? = nil, level: Int) {
-        self.ProfileImage = profileImage
-        self.Level = level
+    init(ProfileImage: UIImage? = nil) {
+        self.ProfileImage = ProfileImage
     }
     
     var body: some View {
@@ -90,19 +102,12 @@ struct ProfileImageView: View {
             VStack {
                 Spacer()
                 
-                Text("Lv. \(Level)")
-                    .font(.system(size: 13))
-                    .fontWeight(.bold)
-                    .foregroundColor(Color.accent)
-                    .padding(.horizontal, 14.5)
-                    .padding(.vertical, 4)
-                    .background(.white)
-                    .cornerRadius(20)
-                    .overlay(
-                        RoundedRectangle(cornerRadius: 20)
-                            .inset(by: 0.5)
-                            .stroke(.accent, lineWidth: 1)
-                    )
+                Image("profileEdit")
+                    .padding(3)
+                    .frame(width: 18, height: 18, alignment: .center)
+                    .background(.black)
+                    .cornerRadius(1000)
+                    .offset(x: 20, y: -5)
             }
         }
         .frame(height: 68)
