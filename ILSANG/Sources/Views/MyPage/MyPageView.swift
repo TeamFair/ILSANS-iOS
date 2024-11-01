@@ -42,9 +42,7 @@ struct MyPageView: View {
                 case 1:
                     MyPageActiveList(vm: vm)
                 case 2:
-                    // 뱃지 구현후 적용
-                    // MyPageBadgeList(vm: vm)
-                    EmptyView(title: "Coming Soon!")
+                    MyPageBadgeList(vm: vm)
                     
                 default:
                     EmptyView()

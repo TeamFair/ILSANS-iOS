@@ -20,11 +20,10 @@ struct MyPageProfile: View {
                     ProfileImageView(ProfileImage: nil)
                     
                     // 프로필 상세
-                    VStack (alignment: .leading) {
+                    VStack (alignment: .leading, spacing: 4) {
                         //유저 이름
                         Text(vm.userData?.nickname ?? "일상73079405")
                             .font(.system(size: 16, weight: .bold))
-                            .underline(true, color: .gray300)
                             .foregroundStyle(.gray500)
                             .multilineTextAlignment(.leading)
                         
@@ -41,31 +40,11 @@ struct MyPageProfile: View {
                                     .inset(by: 0.5)
                                     .stroke(.accent, lineWidth: 1)
                             )
-                        
-                        HStack {
-                            // 프로그레스 바
-                            vm.ProgressBar(userXP: vm.userData?.xpPoint ?? 0)
-                                .frame(height: 10)
-                            
-                            // 경험치 Text
-                            Text(String(vm.userData?.xpPoint ?? 0)+"XP")
-                                .font(.system(size: 13))
-                                .fontWeight(.bold)
-                                .foregroundColor(.accentColor)
-                        }
-                        
-                        Text("다음 레벨까지 \(vm.xpForNextLv(XP: vm.userData?.xpPoint ?? 50))XP 남았어요!")
-                            .font(.system(size: 13))
-                            .foregroundColor(.gray500)
                     }
+                    
+                    Spacer()
                 }
-                .padding(18)
-                .background(Color.white)
-                
-                StatView(dic: vm.xpStats)
-                    .frame(height: 70)
             }
-            .background(Color.primary100)
             .cornerRadius(12)
         }
     }
@@ -111,23 +90,6 @@ struct ProfileImageView: View {
             }
         }
         .frame(height: 68)
-    }
-}
-
-struct ProfileStatView: View {
-    var StatName: String
-    var StatPoint: Int
-    
-    init(StatName: String, StatPoint: Int) {
-        self.StatName = StatName
-        self.StatPoint = StatPoint
-    }
-    
-    var body: some View {
-        Text("\(StatName) : \(StatPoint)P")
-            .foregroundColor(.accent)
-            .font(.system(size: 15, weight: .semibold))
-            .frame(maxWidth: 95)
     }
 }
 
