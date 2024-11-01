@@ -15,6 +15,8 @@ struct MyPageBadgeList: View {
         VStack(alignment: .leading, spacing: 12) {
             VStack(alignment: .leading, spacing: 4){
                 Text("총 포인트")
+                    .font(.system(size: 12))
+                    .foregroundColor(.gray400)
                 
                 Text("\(String(vm.userData?.xpPoint ?? 150).formatNumberInText())XP")
                     .font(.system(size: 23, weight: .bold))
