@@ -12,13 +12,18 @@ struct MyPageBadgeList: View {
     @ObservedObject var vm: MypageViewModel
 
     var body: some View {
-        VStack(alignment: .leading) {
-            VStack {
+        VStack(alignment: .leading, spacing: 12) {
+            VStack(alignment: .leading, spacing: 4){
                 Text("총 포인트")
+                
+                Text("\(String(vm.userData?.xpPoint ?? 150).formatNumberInText())XP")
+                    .font(.system(size: 23, weight: .bold))
+                    .foregroundColor(.gray500)
                 
                 // 프로그레스 바
                 vm.ProgressBar(userXP: vm.userData?.xpPoint ?? 0)
                     .frame(height: 10)
+                    .padding(.top, 14)
                 
                 HStack {
                     Text("LV.\(vm.convertXPtoLv(XP: vm.userData?.xpPoint ?? 9))")
@@ -38,18 +43,12 @@ struct MyPageBadgeList: View {
                         .foregroundColor(.accent)
                 }
             }
+            .padding(.horizontal, 20)
+            .padding(.vertical, 20)
+            .background(.white)
+            .cornerRadius(12)
             
-            // Data List
-            ScrollView {
-                VStack(spacing: 12) {
-                    ForEach(vm.xpLogList, id: \.recordId) { Data in
-                        ListStruct(title: Data.title, detail: Data.createDate.timeAgoCreatedAt(), point: Data.xpPoint)
-                    }
-                }
-            }
-            .refreshable {
-                // 데이터 리프레시
-            }
+            PantagonGraph()
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
     }
