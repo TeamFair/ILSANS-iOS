@@ -32,6 +32,7 @@
 		605DA0D32C0711E900CC9450 /* CameraViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 605DA0D22C0711E900CC9450 /* CameraViewModel.swift */; };
 		605DA0D62C07123400CC9450 /* View++.swift in Sources */ = {isa = PBXBuildFile; fileRef = 605DA0D52C07123400CC9450 /* View++.swift */; };
 		6060B2EA2C08947B0083944D /* Image++.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6060B2E92C08947B0083944D /* Image++.swift */; };
+		606132782CD68FE300830948 /* TagView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 606132772CD68FE300830948 /* TagView.swift */; };
 		606292D82C19E70A0098B6D2 /* Network.swift in Sources */ = {isa = PBXBuildFile; fileRef = 606292D72C19E70A0098B6D2 /* Network.swift */; };
 		606292DD2C19EAB00098B6D2 /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 606292DC2C19EAB00098B6D2 /* Alamofire */; };
 		606C21CC2CC6B4FC00803947 /* SubmitStatusView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 606C21CB2CC6B4FC00803947 /* SubmitStatusView.swift */; };
@@ -146,6 +147,7 @@
 		605DA0D22C0711E900CC9450 /* CameraViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraViewModel.swift; sourceTree = "<group>"; };
 		605DA0D52C07123400CC9450 /* View++.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View++.swift"; sourceTree = "<group>"; };
 		6060B2E92C08947B0083944D /* Image++.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Image++.swift"; sourceTree = "<group>"; };
+		606132772CD68FE300830948 /* TagView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagView.swift; sourceTree = "<group>"; };
 		606292D72C19E70A0098B6D2 /* Network.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Network.swift; sourceTree = "<group>"; };
 		606C21CB2CC6B4FC00803947 /* SubmitStatusView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubmitStatusView.swift; sourceTree = "<group>"; };
 		606C87AE2C0B9B8C002D5C3E /* ApprovalImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApprovalImageView.swift; sourceTree = "<group>"; };
@@ -567,6 +569,7 @@
 				607FCBEA2BFE44D900BB2D04 /* IconView.swift */,
 				A19628742C08648C0037C53A /* NavigationTitleView.swift */,
 				6044B7322C33F754002C13A0 /* ErrorView.swift */,
+				606132772CD68FE300830948 /* TagView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -802,6 +805,7 @@
 				6011891D2C3E8B3B0070F2AD /* UserService.swift in Sources */,
 				A196286D2C0859820037C53A /* TermsAndPolicyView.swift in Sources */,
 				A1F770642C2AABCE00DB24A0 /* MypageViewModel.swift in Sources */,
+				606132782CD68FE300830948 /* TagView.swift in Sources */,
 				605DA0CD2C070A0300CC9450 /* Camera.swift in Sources */,
 				600211EE2C1EEF91000CC02E /* EmojiNetwork.swift in Sources */,
 				601189212C3E94A60070F2AD /* AuthService.swift in Sources */,

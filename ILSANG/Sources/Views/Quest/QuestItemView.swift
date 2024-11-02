@@ -23,15 +23,7 @@ struct QuestItemView: View {
                 .padding(.leading, 20)
                 .padding(.trailing, 16)
                 .overlay(alignment: .top) {
-                    Text(String(quest.totalRewardXP()) + "XP")
-                        .font(.system(size: 10, weight: .semibold))
-                        .foregroundStyle(.white)
-                        .padding(.horizontal, 5)
-                        .padding(.vertical, 4)
-                        .background(
-                            RoundedRectangle(cornerRadius: 10)
-                                .foregroundStyle(.primaryPurple)
-                        )
+                    TagView(title: String(quest.totalRewardXP()) + "XP", tagStyle: .xp)
                         .offset(x: 20, y: 2)
                 }
             
@@ -39,20 +31,34 @@ struct QuestItemView: View {
                 Text(quest.missionTitle)
                     .font(.system(size: 15, weight: .bold))
                     .foregroundColor(.black)
-                    .minimumScaleFactor(0.05)
-                    .lineLimit(1)
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .multilineTextAlignment(.leading)
+                    .lineLimit(2)
                 
                 Text(quest.writer)
                     .font(.system(size: 13, weight: .regular))
                     .foregroundColor(.gray400)
+                    .padding(.bottom, 4)
+                
+                if status == .uncompleted {
+                    HStack(spacing: 4) {
+                        ForEach(Array(XpStat.sortedStat), id: \.rawValue) { stat in
+                            let reward = quest.rewardDic[stat, default: 0]
+                            if reward > 0 {
+                                TagView(title: "\(reward)P", image: stat.image, tagStyle: .xpWithIcon)
+                            }
+                        }
+                    }
+                }
             }
             
-            Spacer(minLength: 8)
+            Spacer(minLength: 4)
             
             Group {
                 switch status {
                 case .uncompleted:
-                    IconView(iconWidth: 12, size: .small, icon: .arrowDown, color: .gray)
+                    IconView(iconWidth: 6, size: .small, icon: .arrowRight, color: .gray)
+                        .padding(.trailing, 24)
                 case .completed:
                     VStack(spacing: 7) {
                         IconView(iconWidth: 13, size: .small, icon: .check, color: .green)
@@ -61,22 +67,24 @@ struct QuestItemView: View {
                             .multilineTextAlignment(.center)
                             .foregroundColor(.green)
                     }
+                    .frame(width: separatorOffset)
                 }
             }
-            .frame(width: separatorOffset, height: 103)
         }
-        .frame(height: 103)
+        .padding(.vertical, 24)
         .background(.white)
         .overlay(alignment: .trailing) {
-            VLine()
-                .stroke(style: StrokeStyle(lineWidth: 0.5, dash: [3.3]))
-                .frame(width: 0.5)
-                .foregroundStyle(.gray200)
-                .offset(x: -separatorOffset)
-                .padding(.vertical, 12)
+            if status == .completed {
+                VLine()
+                    .stroke(style: StrokeStyle(lineWidth: 0.5, dash: [3.3]))
+                    .frame(width: 0.5)
+                    .foregroundStyle(.gray200)
+                    .offset(x: -separatorOffset)
+                    .padding(.vertical, 12)
+            }
         }
         .disabled(status == .uncompleted)
-        .cornerRadius(16)
+        .cornerRadius(status == .uncompleted ? 12 : 16)
         .shadow(color: .shadow7D.opacity(0.05), radius: 20, x: 0, y: 10)
         .padding(.horizontal, 20)
     }
