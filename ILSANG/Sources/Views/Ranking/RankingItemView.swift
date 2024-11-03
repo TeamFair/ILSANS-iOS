@@ -8,76 +8,49 @@
 import SwiftUI
 
 struct RankingItemView: View {
-    
-    let level: Int
+    let idx: Int
     let rank: Rank
     
     var body: some View {
-        HStack (spacing: 17) {
-            RankingProfile(profileImage: nil, level: level)
+        HStack(spacing: 0) {
+            // 랭킹 아이콘 & 순위
+            if idx <= 3 {
+                Image("rank\(idx)")
+                    .resizable()
+                    .frame(width: 26, height: 26)
+            } else {
+                Text("\(idx)")
+                    .frame(width: 26, height: 26, alignment: .center)
+                    .font(.system(size: 15, weight: .bold))
+                    .foregroundStyle(.gray500)
+            }
             
-            VStack (alignment: .leading, spacing: 3) {
+            Text("😍")
+                .font(.system(size: 23, weight: .bold))
+                .frame(width: 48, height: 48)
+                .background(
+                    Circle().fill(Color.backgroundBlue)
+                )
+                .padding(.horizontal, UIDevice.isSEDevice ? 16 : 24)
+            
+            VStack (alignment: .leading, spacing: 4) {
                 Text(rank.nickname)
-                    .font(.system(size: 15))
-                    .fontWeight(.bold)
+                    .font(.system(size: 15, weight: .bold))
                 Text("\(convertStat(rank.xpType)): \(rank.xpPoint)p")
                     .font(.system(size: 13))
                     .foregroundColor(.gray400)
             }
-            .frame(height: 40)
             
-            Spacer()
+            Spacer(minLength: 0)
+            
+            // MARK: API 수정 후 태그뷰 추가
         }
-        .padding(.horizontal, 19)
-        .padding(.vertical, 21)
+        .padding(.horizontal, UIDevice.isSEDevice ? 20 : 24)
+        .padding(.vertical, 26)
         .frame(maxWidth: .infinity, alignment: .topLeading)
         .background(.white)
         .cornerRadius(16)
         .padding(.horizontal, 20)
-    }
-}
-
-struct RankingProfile: View {
-    var ProfileImage: UIImage?
-    var Level: Int
-    
-    init(profileImage: UIImage? = nil, level: Int) {
-        self.ProfileImage = profileImage
-        self.Level = level
-    }
-    
-    var body: some View {
-        // 프로필 이미지
-        ZStack {
-                //커스텀 이미지가 존재할 경우
-                if (ProfileImage != nil) {
-                    Image(uiImage: ProfileImage!)
-                        .resizable()
-                        .frame(width: 60, height: 60)
-                        .clipShape(Circle())
-                        .overlay(Circle().stroke(Color.accentColor, lineWidth: 2))
-                } else {
-                    //커스텀 이미지가 존재하지 않을 경우
-                    Image("profile.circle")
-                        .resizable()
-                        .frame(width: 60, height: 60)
-                }
-            
-            VStack {
-                Text(RankingViewModel.convertToOrdinal(Level))
-                    .foregroundColor(.accentColor)
-                    .font(.system(size: 10, weight: .semibold))
-                    .padding(.horizontal, 5)
-                    .padding(.vertical, 2)
-                    .background(Color.primary100)
-                    .cornerRadius(10)
-                    .multilineTextAlignment(.center)
-                    .offset(x: 15)
-                Spacer()
-            }
-            
-        }
-        .frame(height: 60)
     }
 }
 

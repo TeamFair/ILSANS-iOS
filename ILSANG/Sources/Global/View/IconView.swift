@@ -18,6 +18,7 @@ struct IconView: View {
             .resizable()
             .scaledToFit()
             .frame(width: iconWidth)
+            .offset(x: icon == .arrowRight ? 1 : 0)
             .foregroundStyle(color.fgColor)
             .frame(width: size.value, height: size.value)
             .background(

@@ -38,7 +38,6 @@ struct RankingView: View {
             case .error:
                 networkErrorView
             }
-            
         }
         .background(Color.background)
         .task {
@@ -58,8 +57,8 @@ extension RankingView {
                 } label: {
                     Text(xpStat.headerText)
                         .foregroundColor(xpStat == vm.selectedXpStat ? .gray500 : .gray300)
-                        .font(.system(size: 16, weight: xpStat == vm.selectedXpStat ? .semibold : .medium))
-                        .frame(height: 30)
+                        .font(.system(size: 14, weight: xpStat == vm.selectedXpStat ? .semibold : .medium))
+                        .frame(height: 40)
                 }
                 .padding(.horizontal, 6)
                 .overlay(alignment: .bottom) {
@@ -73,7 +72,7 @@ extension RankingView {
                 .frame(maxWidth: .infinity)
             }
         }
-        .overlay(alignment: .bottom) {
+        .background(alignment: .bottom) {
             Rectangle()
                 .frame(height: 1)
                 .foregroundStyle(.gray100)
@@ -84,7 +83,7 @@ extension RankingView {
         ErrorView(
             systemImageName: "wifi.exclamationmark",
             title: "네트워크 연결 상태를 확인해주세요",
-            subTitle: "네트워크 연결 상태가 좋지 않아\n퀘스트를 불러올 수 없어요 ",
+            subTitle: "네트워크 연결 상태가 좋지 않아\n랭킹을 불러올 수 없어요",
             emoticon: "🥲"
         ) {
             Task { await vm.loadUserRank(xpStat: vm.selectedXpStat) }
@@ -96,11 +95,11 @@ extension RankingView {
             LazyVStack(spacing: 12) {
                 if let ranks = vm.userRank[vm.selectedXpStat] {
                     ForEach(Array(ranks.enumerated()), id: \.element.customerId) { idx, rank in
-                        RankingItemView(level: idx + 1, rank: rank)
+                        RankingItemView(idx: idx + 1, rank: rank)
                     }
                 }
             }
-            .padding(.top, 20)
+            .padding(.top, 24)
             .padding(.bottom, 72)
         }
         .animation(nil)
