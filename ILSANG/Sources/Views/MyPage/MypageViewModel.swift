@@ -21,7 +21,7 @@ final class MypageViewModel: ObservableObject {
     let mockXpStats: [XpStat: Int] = [
         .strength: 35,
         .intellect: 45,
-        .fun: 20,
+        .fun: 0,
         .charm: 50,
         .sociability: 30
     ]
@@ -227,8 +227,6 @@ final class MypageViewModel: ObservableObject {
                                     )
                                 }
                                 
-                                let _: CGFloat = 15 // 꼭짓점의 곡선 정도를 조절하는 값
-                                
                                 path.move(to: points[0])
                                 
                                 for i in 0..<points.count {
@@ -239,9 +237,6 @@ final class MypageViewModel: ObservableObject {
                                     )
                                     path.addQuadCurve(to: midPoint, control: points[i])
                                 }
-                                
-                                // 마지막 부분에 첫 번째 점으로 부드럽게 연결
-                                path.addQuadCurve(to: points[0], control: points[points.count - 1])
                                 
                                 path.closeSubpath()
                             }
