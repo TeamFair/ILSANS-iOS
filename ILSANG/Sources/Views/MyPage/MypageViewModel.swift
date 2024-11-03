@@ -18,6 +18,14 @@ final class MypageViewModel: ObservableObject {
     
     @Published var challengeDelete = false
     
+    let mockXpStats: [XpStat: Int] = [
+        .strength: 35,
+        .intellect: 45,
+        .fun: 20,
+        .charm: 50,
+        .sociability: 30
+    ]
+    
     private let userNetwork: UserNetwork
     private let challengeNetwork: ChallengeNetwork
     private let imageNetwork: ImageNetwork
@@ -199,7 +207,7 @@ final class MypageViewModel: ObservableObject {
                 }
                 
                 // 능력치 수치를 기반으로 한 데이터 오각형
-                Polygon(count: 5, relativeCornerRadius: 0.3)
+                Polygon(count: 5, relativeCornerRadius: 0.15)
                     .stroke(mainColor, lineWidth: 2)
                     .background(
                         Polygon(count: 5, relativeCornerRadius: 0.15)
@@ -208,23 +216,32 @@ final class MypageViewModel: ObservableObject {
                     .mask(
                         GeometryReader { geo in
                             Path { path in
-                                // 각 능력치 점들을 계산하고 Path에 추가
-                                for (index, stat) in XpStat.allCases.enumerated() {
+                                let points = XpStat.allCases.enumerated().map { index, stat -> CGPoint in
                                     let value = CGFloat(xpStats[stat] ?? 0)
                                     let normalizedValue = min(value / CGFloat(maxValue), 1.0)
                                     let angle = (CGFloat(index) / CGFloat(XpStat.allCases.count)) * 2 * .pi - .pi / 2
                                     let radius = (width / 2) * normalizedValue
-                                    let point = CGPoint(
+                                    return CGPoint(
                                         x: geo.size.width / 2 + radius * cos(angle),
                                         y: geo.size.height / 2 + radius * sin(angle)
                                     )
-                                    
-                                    if index == 0 {
-                                        path.move(to: point)
-                                    } else {
-                                        path.addLine(to: point)
-                                    }
                                 }
+                                
+                                let radius: CGFloat = 15 // 곡률을 조절하는 값
+                                
+                                // 첫 번째 점을 시작점으로 설정하고 곡선 추가
+                                path.move(to: points[0])
+                                path.addArc(tangent1End: points[0], tangent2End: points[1], radius: radius)
+                                
+                                // 각 점을 따라 곡선으로 연결
+                                for i in 1..<points.count {
+                                    let nextIndex = (i + 1) % points.count
+                                    path.addArc(tangent1End: points[i], tangent2End: points[nextIndex], radius: radius)
+                                }
+                                
+                                // 마지막 점과 첫 번째 점 사이에도 곡선 추가
+                                path.addArc(tangent1End: points[points.count - 1], tangent2End: points[0], radius: radius)
+                                
                                 path.closeSubpath()
                             }
                         }
