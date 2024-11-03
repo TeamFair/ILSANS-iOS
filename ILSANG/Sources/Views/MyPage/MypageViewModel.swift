@@ -227,20 +227,21 @@ final class MypageViewModel: ObservableObject {
                                     )
                                 }
                                 
-                                let radius: CGFloat = 15 // 곡률을 조절하는 값
+                                let _: CGFloat = 15 // 꼭짓점의 곡선 정도를 조절하는 값
                                 
-                                // 첫 번째 점을 시작점으로 설정하고 곡선 추가
                                 path.move(to: points[0])
-                                path.addArc(tangent1End: points[0], tangent2End: points[1], radius: radius)
                                 
-                                // 각 점을 따라 곡선으로 연결
-                                for i in 1..<points.count {
+                                for i in 0..<points.count {
                                     let nextIndex = (i + 1) % points.count
-                                    path.addArc(tangent1End: points[i], tangent2End: points[nextIndex], radius: radius)
+                                    let midPoint = CGPoint(
+                                        x: (points[i].x + points[nextIndex].x) / 2,
+                                        y: (points[i].y + points[nextIndex].y) / 2
+                                    )
+                                    path.addQuadCurve(to: midPoint, control: points[i])
                                 }
                                 
-                                // 마지막 점과 첫 번째 점 사이에도 곡선 추가
-                                path.addArc(tangent1End: points[points.count - 1], tangent2End: points[0], radius: radius)
+                                // 마지막 부분에 첫 번째 점으로 부드럽게 연결
+                                path.addQuadCurve(to: points[0], control: points[points.count - 1])
                                 
                                 path.closeSubpath()
                             }
