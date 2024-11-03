@@ -71,8 +71,8 @@ extension QuestView {
                 } label: {
                     Text(xpStat.headerText)
                         .foregroundColor(xpStat == vm.selectedXpStat ? .gray500 : .gray300)
-                        .font(.system(size: 16, weight: xpStat == vm.selectedXpStat ? .semibold : .medium))
-                        .frame(height: 30)
+                        .font(.system(size: 14, weight: xpStat == vm.selectedXpStat ? .semibold : .medium))
+                        .frame(height: 40)
                 }
                 .padding(.horizontal, 6)
                 .overlay(alignment: .bottom) {
