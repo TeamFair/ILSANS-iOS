@@ -7,7 +7,9 @@
 
 import SwiftUI
 
-/// Animatable Polygon
+/// https://github.com/heestand-xyz/PolyKit
+/// MIT 라이센스로 무료 사용 가능
+/// 사랑해요 덕분에 살았어요.
 public struct Polygon: Shape {
     
     let count: Int
