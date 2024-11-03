@@ -19,10 +19,10 @@ final class MypageViewModel: ObservableObject {
     @Published var challengeDelete = false
     
     let mockXpStats: [XpStat: Int] = [
-        .strength: 35,
-        .intellect: 45,
-        .fun: 0,
-        .charm: 50,
+        .strength: 0,
+        .intellect: 50,
+        .fun: 30,
+        .charm: 20,
         .sociability: 30
     ]
     
@@ -207,41 +207,9 @@ final class MypageViewModel: ObservableObject {
                 }
                 
                 //데이터 오각형
-                Polygon(count: 5, relativeCornerRadius: 0.15)
-                    .stroke(mainColor, lineWidth: 2)
-                    .background(
-                        Polygon(count: 5, relativeCornerRadius: 0.15)
-                            .fill(mainColor)
-                    )
-                    .mask(
-                        GeometryReader { geo in
-                            Path { path in
-                                let points = XpStat.allCases.enumerated().map { index, stat -> CGPoint in
-                                    let value = CGFloat(xpStats[stat] ?? 0)
-                                    let normalizedValue = min(value / CGFloat(maxValue), 1.0)
-                                    let angle = (CGFloat(index) / CGFloat(XpStat.allCases.count)) * 2 * .pi - .pi / 2
-                                    let radius = (width / 2) * normalizedValue
-                                    return CGPoint(
-                                        x: geo.size.width / 2 + radius * cos(angle),
-                                        y: geo.size.height / 2 + radius * sin(angle)
-                                    )
-                                }
-                                
-                                path.move(to: points[0])
-                                
-                                for i in 0..<points.count {
-                                    let nextIndex = (i + 1) % points.count
-                                    let midPoint = CGPoint(
-                                        x: (points[i].x + points[nextIndex].x) / 2,
-                                        y: (points[i].y + points[nextIndex].y) / 2
-                                    )
-                                    path.addQuadCurve(to: midPoint, control: points[i])
-                                }
-                                
-                                path.closeSubpath()
-                            }
-                        }
-                    )
+                StatPolygon(xpStats: xpStats, maxValue: 50, cornerRadius: 15)
+                    .fill(mainColor)
+                    .opacity(0.8)
                 
                 // 능력치 레이블
                 ForEach(Array(XpStat.allCases.enumerated()), id: \.element) { index, stat in

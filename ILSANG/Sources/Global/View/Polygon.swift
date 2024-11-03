@@ -241,3 +241,58 @@ public struct Polygon: Shape {
                        y: point.y - dy * factor)
     }
 }
+
+struct StatPolygon: Shape {
+    
+    let xpStats: [XpStat: Int]
+    let maxValue: Double
+    let cornerRadius: CGFloat
+    
+    init(xpStats: [XpStat: Int], maxValue: Double = 50.0, cornerRadius: CGFloat = 15.0) {
+        self.xpStats = xpStats
+        self.maxValue = maxValue
+        self.cornerRadius = cornerRadius
+    }
+    
+    func path(in rect: CGRect) -> Path {
+        var path = Path()
+        
+        let center = CGPoint(x: rect.midX, y: rect.midY)
+        let radius = min(rect.width, rect.height) / 2
+        
+        // 꼭짓점 좌표 계산
+        let points = XpStat.allCases.enumerated().map { index, stat -> CGPoint in
+            let value = CGFloat(xpStats[stat] ?? 0)
+            let normalizedValue = min(value / CGFloat(maxValue), 1.0)
+            let angle = (CGFloat(index) / CGFloat(XpStat.allCases.count)) * 2 * .pi - .pi / 2
+            let adjustedRadius = radius * normalizedValue
+            return CGPoint(
+                x: center.x + adjustedRadius * cos(angle),
+                y: center.y + adjustedRadius * sin(angle)
+            )
+        }
+        
+        guard points.count > 2 else { return path } // 최소한 세 개의 점이 있어야 경로를 그릴 수 있음
+
+        // 첫 번째와 마지막 점 사이의 중간 지점을 시작 위치로 설정
+        let lastIndex = points.count - 1
+        let startPoint = CGPoint(
+            x: (points[lastIndex].x + points[0].x) / 2,
+            y: (points[lastIndex].y + points[0].y) / 2
+        )
+        
+        path.move(to: startPoint)
+
+        // 각 꼭짓점에 곡선 적용
+        for i in 0..<points.count {
+            let currentPoint = points[i]
+            let nextPoint = points[(i + 1) % points.count]
+            
+            path.addArc(tangent1End: currentPoint, tangent2End: nextPoint, radius: cornerRadius)
+        }
+        
+        path.closeSubpath()
+        
+        return path
+    }
+}
