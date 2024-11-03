@@ -197,7 +197,7 @@ final class MypageViewModel: ObservableObject {
             Spacer()
             
             ZStack {
-                // Polygon을 사용하여 배경의 오각형을 여러 겹으로 쌓기 (분할 선 표시)
+                //분할 선 표시
                 ForEach(1...5, id: \.self) { level in
                     let relativeCornerRadius = CGFloat(0.20) // 각 꼭지점의 곡률 조절
                     let scale = CGFloat(level) / 5.0
@@ -206,7 +206,7 @@ final class MypageViewModel: ObservableObject {
                         .frame(width: width * scale, height: width * scale)
                 }
                 
-                // 능력치 수치를 기반으로 한 데이터 오각형
+                //데이터 오각형
                 Polygon(count: 5, relativeCornerRadius: 0.15)
                     .stroke(mainColor, lineWidth: 2)
                     .background(
@@ -262,18 +262,6 @@ final class MypageViewModel: ObservableObject {
             
             Spacer()
         }
-    }
-
-    func deg2rad(_ num: CGFloat) -> CGFloat {
-        return num * .pi / 180
-    }
-
-    func radAngleFraction(numerator: Int, denominator: Int) -> CGFloat {
-        return deg2rad(360 * CGFloat(numerator) / CGFloat(denominator))
-    }
-
-    func deAngleFraction(numerator: Int, denominator: Int) -> CGFloat {
-        return 360 * CGFloat(numerator) / CGFloat(denominator)
     }
 }
 
