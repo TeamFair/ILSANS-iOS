@@ -197,38 +197,55 @@ final class MypageViewModel: ObservableObject {
             Spacer()
             
             ZStack {
-                //분할 선 표시
-                ForEach(1...5, id: \.self) { level in
-                    let relativeCornerRadius = CGFloat(0.20) // 각 꼭지점의 곡률 조절
-                    let scale = CGFloat(level) / 5.0
-                    Polygon(count: 5, relativeCornerRadius: relativeCornerRadius)
-                        .stroke(subColor, lineWidth: 1)
-                        .frame(width: width * scale, height: width * scale)
-                }
-                
-                //데이터 오각형
-                StatPolygon(xpStats: xpStats, maxValue: 50, cornerRadius: 15)
+                BackgroundPolygons(width: width, subColor: subColor) // 배경 오각형
+                StatPolygon(xpStats: xpStats, maxValue: maxValue, cornerRadius: 15) // 데이터 오각형
                     .fill(mainColor)
                     .opacity(0.8)
                 
-                // 능력치 레이블
-                ForEach(Array(XpStat.allCases.enumerated()), id: \.element) { index, stat in
-                    let angle = (CGFloat(index) / CGFloat(XpStat.allCases.count)) * 2 * .pi - .pi / 2
-                    let radius = width / 2 + 20 // 레이블을 표시할 위치의 반지름
-                    let labelPoint = CGPoint(
-                        x: width / 2 + radius * cos(angle),
-                        y: width / 2 + radius * sin(angle)
-                    )
-                    
-                    Text(stat.headerText)
-                        .font(.caption)
-                        .foregroundColor(subColor)
-                        .position(x: labelPoint.x, y: labelPoint.y)
-                }
+                StatLabels(width: width, subColor: subColor) // 능력치 레이블
             }
             .frame(width: width, height: width)
             
             Spacer()
+        }
+    }
+
+    // 배경 오각형 뷰
+    func BackgroundPolygons(width: CGFloat, subColor: Color) -> some View {
+        ForEach(1...5, id: \.self) { level in
+            let relativeCornerRadius = CGFloat(0.20) // 각 꼭지점의 곡률 조절
+            let scale = CGFloat(level) / 5.0
+            Polygon(count: 5, relativeCornerRadius: relativeCornerRadius)
+                .stroke(subColor, lineWidth: 1)
+                .frame(width: width * scale, height: width * scale)
+        }
+    }
+
+    // 능력치 레이블 위치 지정
+    func StatLabels(width: CGFloat, subColor: Color) -> some View {
+        ForEach(Array(XpStat.allCases.enumerated()), id: \.element) { index, stat in
+            let angle = (CGFloat(index) / CGFloat(XpStat.allCases.count)) * 2 * .pi - .pi / 2
+            let radius = width / 2 + 20 // 레이블을 표시할 위치의 반지름
+            let labelPoint = CGPoint(
+                x: width / 2 + radius * cos(angle),
+                y: width / 2 + radius * sin(angle)
+            )
+            
+            self.PentagonStat(xpStat: stat)
+                .font(.caption)
+                .foregroundColor(subColor)
+                .position(x: labelPoint.x, y: labelPoint.y)
+        }
+    }
+
+    // 능력치 레이블 뷰
+    func PentagonStat(xpStat: XpStat) -> some View {
+        HStack (spacing: 5) {
+            Image(xpStat.image)
+                .frame(height: 30)
+            Text(xpStat.headerText)
+                .font(.system(size: 15, weight: .semibold))
+                .foregroundStyle(.gray500)
         }
     }
 }
