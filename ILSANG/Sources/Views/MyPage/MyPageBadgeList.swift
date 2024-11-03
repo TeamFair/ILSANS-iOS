@@ -50,12 +50,12 @@ struct MyPageBadgeList: View {
             .background(.white)
             .cornerRadius(12)
             
-            VStack(alignment: .leading){
+            VStack(alignment: .leading, spacing: 24){
                 Text("능력별 포인트")
                     .font(.system(size: 12))
                     .foregroundColor(.gray400)
                 
-                vm.PentagonGraph(xpStats: vm.xpStats, width: 300, mainColor: .accent, subColor: .gray300)
+                vm.PentagonGraph(xpStats: vm.xpStats, width: 185, mainColor: .accent, subColor: .gray300)
                 
                 PrimaryButton(title: "공유하기", action: {print("tapped")})
             }

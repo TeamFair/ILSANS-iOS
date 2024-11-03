@@ -184,65 +184,71 @@ final class MypageViewModel: ObservableObject {
         return Double(userXP) / Double(levelXP)
     }
     
-    func PentagonGraph(xpStats: [XpStat: Int], width: CGFloat, mainColor: Color, subColor: Color, maxValue: Double = 100.0) -> some View {
-        ZStack {
-            // Polygon을 사용하여 배경의 오각형을 여러 겹으로 쌓기 (분할 선 표시)
-            ForEach(1...5, id: \.self) { level in
-                let relativeCornerRadius = CGFloat(0.20) // 각 꼭지점의 곡률 조절
-                let scale = CGFloat(level) / 5.0
-                Polygon(count: 5, relativeCornerRadius: relativeCornerRadius)
-                    .stroke(subColor, lineWidth: 1)
-                    .frame(width: width * scale, height: width * scale)
-            }
+    func PentagonGraph(xpStats: [XpStat: Int], width: CGFloat, mainColor: Color, subColor: Color, maxValue: Double = 50.0) -> some View {
+        HStack {
+            Spacer()
             
-            // 능력치 수치를 기반으로 한 데이터 오각형
-            Polygon(count: 5, relativeCornerRadius: 0.3)
-                .stroke(mainColor, lineWidth: 2)
-                .background(
-                    Polygon(count: 5, relativeCornerRadius: 0.15)
-                        .fill(mainColor)
-                )
-                .mask(
-                    GeometryReader { geo in
-                        Path { path in
-                            // 각 능력치 점들을 계산하고 Path에 추가
-                            for (index, stat) in XpStat.allCases.enumerated() {
-                                let value = CGFloat(xpStats[stat] ?? 0)
-                                let normalizedValue = min(value / CGFloat(maxValue), 1.0)
-                                let angle = (CGFloat(index) / CGFloat(XpStat.allCases.count)) * 2 * .pi - .pi / 2
-                                let radius = (width / 2) * normalizedValue
-                                let point = CGPoint(
-                                    x: geo.size.width / 2 + radius * cos(angle),
-                                    y: geo.size.height / 2 + radius * sin(angle)
-                                )
-                                
-                                if index == 0 {
-                                    path.move(to: point)
-                                } else {
-                                    path.addLine(to: point)
-                                }
-                            }
-                            path.closeSubpath()
-                        }
-                    }
-                )
-            
-            // 능력치 레이블
-            ForEach(Array(XpStat.allCases.enumerated()), id: \.element) { index, stat in
-                let angle = (CGFloat(index) / CGFloat(XpStat.allCases.count)) * 2 * .pi - .pi / 2
-                let radius = width / 2 + 20 // 레이블을 표시할 위치의 반지름
-                let labelPoint = CGPoint(
-                    x: width / 2 + radius * cos(angle),
-                    y: width / 2 + radius * sin(angle)
-                )
+            ZStack {
+                // Polygon을 사용하여 배경의 오각형을 여러 겹으로 쌓기 (분할 선 표시)
+                ForEach(1...5, id: \.self) { level in
+                    let relativeCornerRadius = CGFloat(0.20) // 각 꼭지점의 곡률 조절
+                    let scale = CGFloat(level) / 5.0
+                    Polygon(count: 5, relativeCornerRadius: relativeCornerRadius)
+                        .stroke(subColor, lineWidth: 1)
+                        .frame(width: width * scale, height: width * scale)
+                }
                 
-                Text(stat.headerText)
-                    .font(.caption)
-                    .foregroundColor(subColor)
-                    .position(x: labelPoint.x, y: labelPoint.y)
+                // 능력치 수치를 기반으로 한 데이터 오각형
+                Polygon(count: 5, relativeCornerRadius: 0.3)
+                    .stroke(mainColor, lineWidth: 2)
+                    .background(
+                        Polygon(count: 5, relativeCornerRadius: 0.15)
+                            .fill(mainColor)
+                    )
+                    .mask(
+                        GeometryReader { geo in
+                            Path { path in
+                                // 각 능력치 점들을 계산하고 Path에 추가
+                                for (index, stat) in XpStat.allCases.enumerated() {
+                                    let value = CGFloat(xpStats[stat] ?? 0)
+                                    let normalizedValue = min(value / CGFloat(maxValue), 1.0)
+                                    let angle = (CGFloat(index) / CGFloat(XpStat.allCases.count)) * 2 * .pi - .pi / 2
+                                    let radius = (width / 2) * normalizedValue
+                                    let point = CGPoint(
+                                        x: geo.size.width / 2 + radius * cos(angle),
+                                        y: geo.size.height / 2 + radius * sin(angle)
+                                    )
+                                    
+                                    if index == 0 {
+                                        path.move(to: point)
+                                    } else {
+                                        path.addLine(to: point)
+                                    }
+                                }
+                                path.closeSubpath()
+                            }
+                        }
+                    )
+                
+                // 능력치 레이블
+                ForEach(Array(XpStat.allCases.enumerated()), id: \.element) { index, stat in
+                    let angle = (CGFloat(index) / CGFloat(XpStat.allCases.count)) * 2 * .pi - .pi / 2
+                    let radius = width / 2 + 20 // 레이블을 표시할 위치의 반지름
+                    let labelPoint = CGPoint(
+                        x: width / 2 + radius * cos(angle),
+                        y: width / 2 + radius * sin(angle)
+                    )
+                    
+                    Text(stat.headerText)
+                        .font(.caption)
+                        .foregroundColor(subColor)
+                        .position(x: labelPoint.x, y: labelPoint.y)
+                }
             }
+            .frame(width: width, height: width)
+            
+            Spacer()
         }
-        .frame(width: width, height: width)
     }
 
     func deg2rad(_ num: CGFloat) -> CGFloat {
