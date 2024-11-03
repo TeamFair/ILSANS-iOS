@@ -183,6 +183,79 @@ final class MypageViewModel: ObservableObject {
         guard levelXP != 0 else { return 0 }
         return Double(userXP) / Double(levelXP)
     }
+    
+    func PentagonGraph(xpStats: [XpStat: Int], width: CGFloat, mainColor: Color, subColor: Color, maxValue: Double = 5000.0) -> some View {
+        ZStack {
+            // Polygon을 사용하여 배경의 오각형을 여러 겹으로 쌓기 (분할 선 표시)
+            ForEach(1...5, id: \.self) { level in
+                let relativeCornerRadius = CGFloat(0.15) // 각 꼭지점의 곡률 조절
+                let scale = CGFloat(level) / 5.0
+                Polygon(count: 5, relativeCornerRadius: relativeCornerRadius)
+                    .stroke(subColor, lineWidth: 1)
+                    .frame(width: width * scale, height: width * scale)
+            }
+            
+            // 능력치 수치를 기반으로 한 데이터 오각형
+            Polygon(count: 5, relativeCornerRadius: 0.3)
+                .stroke(mainColor, lineWidth: 2)
+                .background(
+                    Polygon(count: 5, relativeCornerRadius: 0.3)
+                        .fill(mainColor.opacity(0.3))
+                )
+                .mask(
+                    GeometryReader { geo in
+                        Path { path in
+                            // 각 능력치 점들을 계산하고 Path에 추가
+                            for (index, stat) in XpStat.allCases.enumerated() {
+                                let value = CGFloat(xpStats[stat] ?? 0)
+                                let normalizedValue = min(value / CGFloat(maxValue), 1.0)
+                                let angle = (CGFloat(index) / CGFloat(XpStat.allCases.count)) * 2 * .pi - .pi / 2
+                                let radius = (width / 2) * normalizedValue
+                                let point = CGPoint(
+                                    x: geo.size.width / 2 + radius * cos(angle),
+                                    y: geo.size.height / 2 + radius * sin(angle)
+                                )
+                                
+                                if index == 0 {
+                                    path.move(to: point)
+                                } else {
+                                    path.addLine(to: point)
+                                }
+                            }
+                            path.closeSubpath()
+                        }
+                    }
+                )
+            
+            // 능력치 레이블
+            ForEach(Array(XpStat.allCases.enumerated()), id: \.element) { index, stat in
+                let angle = (CGFloat(index) / CGFloat(XpStat.allCases.count)) * 2 * .pi - .pi / 2
+                let radius = width / 2 + 20 // 레이블을 표시할 위치의 반지름
+                let labelPoint = CGPoint(
+                    x: width / 2 + radius * cos(angle),
+                    y: width / 2 + radius * sin(angle)
+                )
+                
+                Text(stat.headerText)
+                    .font(.caption)
+                    .foregroundColor(subColor)
+                    .position(x: labelPoint.x, y: labelPoint.y)
+            }
+        }
+        .frame(width: width, height: width)
+    }
+
+    func deg2rad(_ num: CGFloat) -> CGFloat {
+        return num * .pi / 180
+    }
+
+    func radAngleFraction(numerator: Int, denominator: Int) -> CGFloat {
+        return deg2rad(360 * CGFloat(numerator) / CGFloat(denominator))
+    }
+
+    func deAngleFraction(numerator: Int, denominator: Int) -> CGFloat {
+        return 360 * CGFloat(numerator) / CGFloat(denominator)
+    }
 }
 
 extension ChangeNickNameView {

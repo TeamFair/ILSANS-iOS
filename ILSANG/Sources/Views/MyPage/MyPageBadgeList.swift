@@ -50,14 +50,24 @@ struct MyPageBadgeList: View {
             .background(.white)
             .cornerRadius(12)
             
-            PantagonGraph()
+            VStack(alignment: .leading){
+                Text("능력별 포인트")
+                    .font(.system(size: 12))
+                    .foregroundColor(.gray400)
+                
+                vm.PentagonGraph(xpStats: vm.xpStats, width: 300, mainColor: .accent, subColor: .blue)
+                
+                PrimaryButton(title: "공유하기", action: {print("tapped")})
+            }
+            .padding(.horizontal, 19)
+            .padding(.vertical, 18)
+            .background(.white)
+            .cornerRadius(12)
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
     }
 }
 
-struct PantagonGraph: View {
-    var body: some View {
-        Text("오각형")
-    }
+#Preview {
+    MyPageBadgeList(vm:MypageViewModel(userNetwork: UserNetwork(), challengeNetwork: ChallengeNetwork(), imageNetwork: ImageNetwork(), xpNetwork: XPNetwork()))
 }
