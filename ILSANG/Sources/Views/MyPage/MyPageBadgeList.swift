@@ -55,7 +55,7 @@ struct MyPageBadgeList: View {
                     .font(.system(size: 12))
                     .foregroundColor(.gray400)
                 
-                vm.PentagonGraph(xpStats: vm.xpStats, width: 300, mainColor: .accent, subColor: .blue)
+                vm.PentagonGraph(xpStats: vm.xpStats, width: 300, mainColor: .accent, subColor: .gray300)
                 
                 PrimaryButton(title: "공유하기", action: {print("tapped")})
             }

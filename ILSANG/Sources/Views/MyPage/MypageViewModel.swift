@@ -184,11 +184,11 @@ final class MypageViewModel: ObservableObject {
         return Double(userXP) / Double(levelXP)
     }
     
-    func PentagonGraph(xpStats: [XpStat: Int], width: CGFloat, mainColor: Color, subColor: Color, maxValue: Double = 5000.0) -> some View {
+    func PentagonGraph(xpStats: [XpStat: Int], width: CGFloat, mainColor: Color, subColor: Color, maxValue: Double = 100.0) -> some View {
         ZStack {
             // Polygon을 사용하여 배경의 오각형을 여러 겹으로 쌓기 (분할 선 표시)
             ForEach(1...5, id: \.self) { level in
-                let relativeCornerRadius = CGFloat(0.15) // 각 꼭지점의 곡률 조절
+                let relativeCornerRadius = CGFloat(0.20) // 각 꼭지점의 곡률 조절
                 let scale = CGFloat(level) / 5.0
                 Polygon(count: 5, relativeCornerRadius: relativeCornerRadius)
                     .stroke(subColor, lineWidth: 1)
@@ -199,8 +199,8 @@ final class MypageViewModel: ObservableObject {
             Polygon(count: 5, relativeCornerRadius: 0.3)
                 .stroke(mainColor, lineWidth: 2)
                 .background(
-                    Polygon(count: 5, relativeCornerRadius: 0.3)
-                        .fill(mainColor.opacity(0.3))
+                    Polygon(count: 5, relativeCornerRadius: 0.15)
+                        .fill(mainColor)
                 )
                 .mask(
                     GeometryReader { geo in
