@@ -20,10 +20,10 @@ final class MypageViewModel: ObservableObject {
     
     let mockXpStats: [XpStat: Int] = [
         .strength: 0,
-        .intellect: 50,
-        .fun: 30,
-        .charm: 20,
-        .sociability: 30
+        .intellect: 10,
+        .fun: 20,
+        .charm: 30,
+        .sociability: 40
     ]
     
     private let userNetwork: UserNetwork
@@ -235,6 +235,8 @@ final class MypageViewModel: ObservableObject {
                 .font(.caption)
                 .foregroundColor(subColor)
                 .position(x: labelPoint.x, y: labelPoint.y)
+            
+            self.StatLabel(xpStat: stat)
         }
     }
 
@@ -246,6 +248,22 @@ final class MypageViewModel: ObservableObject {
             Text(xpStat.headerText)
                 .font(.system(size: 15, weight: .semibold))
                 .foregroundStyle(.gray500)
+        }
+    }
+    
+    func StatLabel(xpStat: XpStat) -> some View {
+        VStack(spacing: 0) {
+            Text(xpStat.headerText)
+                .font(.system(size: 13, weight: .semibold))
+                .foregroundColor(.accent)
+                .padding(.horizontal, 12)
+                .padding(.vertical, 8)
+                .background(.white)
+                .cornerRadius(8)
+            
+            Polygon(count: 3, cornerRadius: 2)
+                .frame(width: 20, height: 10)
+                .offset(y: -1)
         }
     }
 }
