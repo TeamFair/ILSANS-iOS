@@ -212,12 +212,18 @@ final class MypageViewModel: ObservableObject {
 
     // 배경 오각형 뷰
     func BackgroundPolygons(width: CGFloat, subColor: Color) -> some View {
-        ForEach(1...5, id: \.self) { level in
-            let relativeCornerRadius = CGFloat(0.20) // 각 꼭지점의 곡률 조절
-            let scale = CGFloat(level) / 5.0
-            Polygon(count: 5, relativeCornerRadius: relativeCornerRadius)
-                .stroke(subColor, lineWidth: 1)
-                .frame(width: width * scale, height: width * scale)
+        ZStack {
+            Polygon(count: 5, relativeCornerRadius: 0.20)
+                .stroke(.gray300, lineWidth: 1)
+                .frame(width: width, height: width)
+            
+            Polygon(count: 5, relativeCornerRadius: 0.20)
+                .stroke(.gray100, lineWidth: 1)
+                .frame(width: width * 0.9, height: width * 0.9)
+            
+            Polygon(count: 5, relativeCornerRadius: 0.20)
+                .stroke(.gray100, lineWidth: 1)
+                .frame(width: width * 0.5, height: width * 0.5)
         }
     }
 
