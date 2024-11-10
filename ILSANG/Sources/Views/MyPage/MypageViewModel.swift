@@ -235,8 +235,12 @@ final class MypageViewModel: ObservableObject {
                 .font(.caption)
                 .foregroundColor(subColor)
                 .position(x: labelPoint.x, y: labelPoint.y)
+                .onTapGesture{} 
             
             self.StatLabel(xpStat: stat)
+                .font(.caption)
+                .foregroundColor(subColor)
+                .position(x: labelPoint.x, y: labelPoint.y + 100)
         }
     }
 
@@ -264,6 +268,7 @@ final class MypageViewModel: ObservableObject {
             Polygon(count: 3, cornerRadius: 2)
                 .frame(width: 20, height: 10)
                 .offset(y: -1)
+                .rotationEffect(.degrees(180))
         }
     }
 }
