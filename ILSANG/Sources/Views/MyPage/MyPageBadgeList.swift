@@ -57,7 +57,12 @@ struct MyPageBadgeList: View {
                 
                 vm.PentagonGraph(xpStats: vm.xpStats, width: 185, mainColor: .primaryPurple, subColor: .gray300)
                 
-                PrimaryButton(title: "공유하기", action: {print("tapped")})
+                ShareLink(
+                    item: ShareImage,
+                    preview: SharePreview("프로필 공유", image: ShareImage)
+                ) {
+                    PrimaryButton(title: "공유하기", action: {Log("공유하기 버튼")})
+                }
             }
             .padding(.horizontal, 19)
             .padding(.vertical, 18)
@@ -65,6 +70,18 @@ struct MyPageBadgeList: View {
             .cornerRadius(12)
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
+    }
+    
+    //공유하기 기능 구현
+    private var ShareImage: TransferableUIImage {
+        return .init(uiimage: ProfileShareImage, caption: "개인 프로파일 공유하기")
+    }
+    
+    private var ProfileShareImage: UIImage {
+        let renderer = ImageRenderer(content:  MyPageBadgeList(vm:MypageViewModel(userNetwork: UserNetwork(), challengeNetwork: ChallengeNetwork(), imageNetwork: ImageNetwork(), xpNetwork: XPNetwork())).frame(width: 300))
+        
+        renderer.scale = 3.0
+        return renderer.uiImage ?? .init()
     }
 }
 
