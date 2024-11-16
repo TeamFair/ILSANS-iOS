@@ -237,13 +237,15 @@ final class MypageViewModel: ObservableObject {
                 y: width / 2 + radius * sin(angle)
             )
             
+            @State var isTouched: Bool = false
+            
             self.PentagonStat(xpStat: stat)
                 .font(.caption)
                 .foregroundColor(subColor)
                 .position(x: labelPoint.x, y: labelPoint.y)
                 .onTapGesture{} 
             
-            self.StatLabel(xpStat: stat)
+            self.StatLabel(xpStat: stat, isTouched: isTouched)
                 .font(.caption)
                 .foregroundColor(subColor)
                 .position(x: labelPoint.x, y: labelPoint.y + 100)
@@ -261,7 +263,8 @@ final class MypageViewModel: ObservableObject {
         }
     }
     
-    func StatLabel(xpStat: XpStat) -> some View {
+    // 능력치 스텟 뷰
+    func StatLabel(xpStat: XpStat, isTouched: Bool) -> some View {
         VStack(spacing: 0) {
             Text(xpStat.headerText)
                 .font(.system(size: 13, weight: .semibold))
@@ -276,6 +279,7 @@ final class MypageViewModel: ObservableObject {
                 .offset(y: -1)
                 .rotationEffect(.degrees(180))
         }
+        .opacity(isTouched ? 1 : 0)
     }
 }
 
