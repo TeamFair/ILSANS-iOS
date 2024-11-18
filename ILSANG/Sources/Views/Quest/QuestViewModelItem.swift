@@ -90,6 +90,10 @@ enum XpStat: String, CaseIterable {
             return .sociability
         }
     }
+    
+    static var sortedStat: [XpStat] {
+        return [.strength, .intellect, .fun, .charm, .sociability]
+    }
 }
 
 struct QuestViewModelItem {

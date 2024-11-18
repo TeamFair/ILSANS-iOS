@@ -184,3 +184,19 @@ final class MypageViewModel: ObservableObject {
         return Double(userXP) / Double(levelXP)
     }
 }
+
+extension ChangeNickNameView {
+    func isValidNickname(_ name: String) -> Bool {
+        let Korean = ".*[가-힣].*"
+        let English = ".*[a-zA-Z].*"
+        let Number = ".*[0-9].*"
+        
+        let koreanMatch = NSPredicate(format: "SELF MATCHES %@", Korean).evaluate(with: name)
+        let englishMatch = NSPredicate(format: "SELF MATCHES %@", English).evaluate(with: name)
+        let numberMatch = NSPredicate(format: "SELF MATCHES %@", Number).evaluate(with: name)
+        
+        let isValidLength = (2...12).contains(name.count)
+        
+        return koreanMatch && englishMatch && numberMatch && isValidLength
+    }
+}
