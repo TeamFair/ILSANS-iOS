@@ -25,7 +25,7 @@ struct MyPageBadgeList: View {
                 // 프로그레스 바
                 vm.ProgressBar(userXP: vm.userData?.xpPoint ?? 0)
                     .frame(height: 10)
-                    .padding(.top, 14)
+                    .padding(.top, 10)
                 
                 HStack {
                     Text("LV.\(vm.convertXPtoLv(XP: vm.userData?.xpPoint ?? 9))")
@@ -69,7 +69,7 @@ struct MyPageBadgeList: View {
             .background(.white)
             .cornerRadius(12)
         }
-        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .frame(maxWidth: .infinity, alignment: .top)
     }
     
     //공유하기 기능 구현
