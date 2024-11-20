@@ -55,7 +55,7 @@ struct MyPageBadgeList: View {
                     .font(.system(size: 12))
                     .foregroundColor(.gray400)
                 
-                vm.PentagonGraph(xpStats: vm.xpStats, width: 185, mainColor: .primaryPurple, subColor: .gray300)
+                vm.PentagonGraph(xpStats: vm.xpStats, width: 185, mainColor: .primaryPurple, subColor: .gray300, maxValue: Double(50 + vm.convertXPtoLv(XP: vm.userData?.xpPoint ?? 0)+1))
                 
                 ShareLink(
                     item: ShareImage,
