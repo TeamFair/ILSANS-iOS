@@ -250,6 +250,7 @@ final class MypageViewModel: ObservableObject {
                 .font(.caption)
                 .foregroundColor(subColor)
                 .position(x: labelPoint.x, y: labelPoint.y + 100)
+                .onTapGesture{isTouched.toggle()}
         }
     }
 
