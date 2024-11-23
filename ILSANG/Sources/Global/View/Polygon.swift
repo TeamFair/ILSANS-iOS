@@ -264,7 +264,8 @@ struct StatPolygon: Shape {
         
         // 꼭짓점 좌표 계산
         let points = XpStat.allCases.enumerated().map { index, stat -> CGPoint in
-            let value = CGFloat(xpStats[stat] ?? 0)
+            //stat 기본값 + 10, nil일 경우 10으로 고정합니다.
+            let value = CGFloat((xpStats[stat] ?? 10) + 10)
             let normalizedValue = min(value / CGFloat(maxValue), 1.0)
             let angle = (CGFloat(index) / CGFloat(XpStat.allCases.count)) * 2 * .pi - .pi / 2
             let adjustedRadius = radius * normalizedValue

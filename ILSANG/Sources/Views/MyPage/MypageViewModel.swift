@@ -192,7 +192,7 @@ final class MypageViewModel: ObservableObject {
         return Double(userXP) / Double(levelXP)
     }
     
-    //MAX 값은 기본 50 + 레벨 * 10
+    //MAX 값은 기본 60 + 레벨 * 10
     func PentagonGraph(xpStats: [XpStat: Int], width: CGFloat, mainColor: Color, subColor: Color, maxValue: Double) -> some View {
         HStack {
             Spacer()
