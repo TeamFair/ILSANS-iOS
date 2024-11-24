@@ -35,7 +35,7 @@ struct QuestView: View {
                 vm.tappedQuestApprovalBtn()
             }
             .presentationDetents([.height(464)])
-            .presentationDragIndicator(.visible)
+            .presentationDragIndicator(.hidden)
         }
         .fullScreenCover(isPresented: $vm.showSubmitRouterView) {
             SubmitRouterView(selectedQuest: vm.selectedQuest)

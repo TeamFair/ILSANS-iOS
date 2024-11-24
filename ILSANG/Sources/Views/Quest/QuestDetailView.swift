@@ -13,14 +13,20 @@ struct QuestDetailView: View {
     
     var body: some View {
         VStack(spacing: 0) {
+            RoundedRectangle(cornerRadius: 2)
+                .frame(width: 30, height: 4)
+                .foregroundStyle(.gray100)
+                .padding(.top, 8)
+                .padding(.bottom, 14)
+
             Text("퀘스트 정보")
                 .font(.system(size: 17, weight: .bold))
-                .padding(.top, 4)
                 .padding(.bottom, 32)
             
             questInfoView
             
             Divider()
+                .foregroundStyle(.gray100)
                 .padding(.top, 16)
                 .padding(.bottom, 32)
 
@@ -39,7 +45,6 @@ struct QuestDetailView: View {
             }
         }
         .foregroundStyle(.gray500)
-        .padding(.top, 20)
         .padding(.horizontal, 20)
     }
     
