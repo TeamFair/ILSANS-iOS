@@ -9,7 +9,11 @@ import SwiftUI
 
 struct MyPageBadgeList: View {
     
-    @ObservedObject var vm: MypageViewModel
+    let xpPoint: Int
+    let userLV: Int
+    let nextLV: Int
+    let gapLV: (currentLevelXP: Int, nextLevelXP: Int)
+    let xpStats: [XpStat: Int]
 
     var body: some View {
         VStack(alignment: .leading) {
@@ -18,29 +22,29 @@ struct MyPageBadgeList: View {
                     .font(.system(size: 12))
                     .foregroundColor(.gray400)
                 
-                Text("\(String(vm.userData?.xpPoint ?? 150).formatNumberInText())XP")
+                Text("\(String(xpPoint).formatNumberInText())XP")
                     .font(.system(size: 23, weight: .bold))
                     .foregroundColor(.gray500)
                 
                 // 프로그레스 바
-                ProgressBar(userXP: vm.userData?.xpPoint ?? 0)
+                ProgressBar(userXP: gapLV)
                     .frame(height: 10)
                     .padding(.top, 10)
                 
                 HStack {
-                    Text("LV.\(vm.convertXPtoLv(XP: vm.userData?.xpPoint ?? 9))")
+                    Text("LV.\(userLV)")
                         .font(.system(size: 13, weight: .bold))
                         .foregroundColor(.gray200)
                     
                     Spacer()
                     
-                    Text("다음 레벨까지 \(vm.xpForNextLv(XP: vm.userData?.xpPoint ?? 50))XP 남았어요!")
+                    Text("다음 레벨까지 \(nextLV)XP 남았어요!")
                         .font(.system(size: 13))
                         .foregroundColor(.gray500)
                     
                     Spacer()
                     
-                    Text("LV.\(vm.convertXPtoLv(XP: vm.userData?.xpPoint ?? 9)+1)")
+                    Text("LV.\(nextLV + 1)")
                         .font(.system(size: 13, weight: .bold))
                         .foregroundColor(.accent)
                 }
@@ -55,7 +59,7 @@ struct MyPageBadgeList: View {
                     .font(.system(size: 12))
                     .foregroundColor(.gray400)
                 
-                PentagonGraph(xpStats: vm.xpStats, width: 185, mainColor: .primaryPurple, subColor: .gray300, maxValue: Double(60 + vm.convertXPtoLv(XP: vm.userData?.xpPoint ?? 0)))
+                PentagonGraph(xpStats: xpStats, width: 185, mainColor: .primaryPurple, subColor: .gray300, maxValue: Double(60 + userLV))
                 
                 ShareLink(
                     item: ShareImage,
@@ -75,8 +79,8 @@ struct MyPageBadgeList: View {
 }
 
 extension MyPageBadgeList {
-    func ProgressBar(userXP: Int) -> some View {
-        let levelData = vm.xpGapBtwLevels(XP: userXP)
+    func ProgressBar(userXP: (currentLevelXP: Int, nextLevelXP: Int)) -> some View {
+        let levelData = userXP
         let progress = calculateProgress(userXP: levelData.currentLevelXP, levelXP: levelData.nextLevelXP)
         
         return GeometryReader { geometry in
@@ -93,8 +97,6 @@ extension MyPageBadgeList {
             }
             .onAppear {
                 Log("Progress: \(progress)")
-                Log(vm.xpGapBtwLevels(XP: userXP).currentLevelXP)
-                Log(vm.xpGapBtwLevels(XP: userXP).nextLevelXP)
             }
         }
     }
@@ -202,13 +204,15 @@ extension MyPageBadgeList {
     }
     
     private var ProfileShareImage: UIImage {
-        let renderer = ImageRenderer(content:  MyPageBadgeList(vm:MypageViewModel(userNetwork: UserNetwork(), challengeNetwork: ChallengeNetwork(), imageNetwork: ImageNetwork(), xpNetwork: XPNetwork())).frame(width: 300))
+        let renderer = ImageRenderer(content:   MyPageBadgeList(
+            xpPoint: xpPoint,
+            userLV: userLV,
+            nextLV: nextLV,
+            gapLV:  gapLV,
+            xpStats: xpStats)
+            .frame(width: 300))
         
         renderer.scale = 3.0
         return renderer.uiImage ?? .init()
     }
-}
-
-#Preview {
-    MyPageBadgeList(vm:MypageViewModel(userNetwork: UserNetwork(), challengeNetwork: ChallengeNetwork(), imageNetwork: ImageNetwork(), xpNetwork: XPNetwork()))
 }
