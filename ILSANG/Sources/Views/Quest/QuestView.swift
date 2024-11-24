@@ -98,7 +98,7 @@ extension QuestView {
             LazyVStack(spacing: 12) {
                 switch vm.selectedHeader {
                 case .uncompleted:
-                    ForEach(vm.uncompletedQuestListByXpStat[vm.selectedXpStat, default: []], id: \.id) { quest in
+                    ForEach(vm.filteredUncompletedQuestListByXpStat, id: \.id) { quest in
                         Button {
                             vm.tappedQuestBtn(quest: quest)
                         } label: {
@@ -120,18 +120,31 @@ extension QuestView {
                     }
                 }
             }
-            .padding(.top, 20)
+            .padding(.top, 70)
+            .overlay(alignment: .top) {
+                if vm.selectedHeader == .uncompleted {
+                    filterPickerView
+                }
+            }
             .padding(.bottom, 72)
         }
-        .frame(maxWidth: .infinity)
         .refreshable {
             await vm.refreshData()
         }
+        .frame(maxWidth: .infinity)
         .overlay {
             if vm.isCurrentListEmpty {
                 questListEmptyView
             }
         }
+    }
+    
+    private var filterPickerView: some View {
+        PickerView<QuestFilter>(selection: $vm.selectedFilter)
+            .frame(maxWidth: .infinity, alignment: .trailing)
+            .padding(.trailing, 20)
+            .padding(.top, 13)
+            .padding(.bottom, 16)
     }
     
     private var questListEmptyView: some View {

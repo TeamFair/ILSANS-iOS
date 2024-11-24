@@ -13,4 +13,5 @@ struct Quest: Codable {
     let creatorRole: String
     let imageId: String?
     let rewardList: [Reward]
+    // let score: Int
 }
