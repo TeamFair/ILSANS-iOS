@@ -145,31 +145,25 @@ extension MyPageBadgeList {
 
     // 능력치 레이블 위치 지정
     private func StatLabels(width: CGFloat, subColor: Color) -> some View {
-        ForEach(Array(XpStat.allCases.enumerated()), id: \.element) { index, stat in
-            let angle = (CGFloat(index) / CGFloat(XpStat.allCases.count)) * 2 * .pi - .pi / 2
-            let radius = width / 2 + 30 // 레이블을 표시할 위치의 반지름
+        ForEach(Array(XpStat.sortedStat.enumerated()), id: \.element) { index, stat in
+            let angle = (CGFloat(index) / CGFloat(XpStat.sortedStat.count)) * 2 * .pi - .pi / 2
+            let radius = width / 2 + 30
             let labelPoint = CGPoint(
                 x: width / 2 + radius * cos(angle),
                 y: width / 2 + radius * sin(angle) + 10
             )
             
-            self.PentagonStat(xpStat: stat)
+            PentagonStat(xpStat: stat)
                 .font(.caption)
                 .foregroundColor(subColor)
                 .position(x: labelPoint.x, y: labelPoint.y)
                 .onTapGesture {
-                    if touchedIdx == index {
-                        touchedIdx = nil // 같은 항목을 다시 클릭하면 닫음
-                    } else {
-                        touchedIdx = index
-                    }
+                    touchedIdx = (touchedIdx == index) ? nil : index
                 }
             
-            if touchedIdx == index {
-                self.StatLabel(xpStat: stat)
-                    .font(.caption)
-                    .foregroundColor(subColor)
-                    .position(x: labelPoint.x, y: labelPoint.y + 50)
+            if touchedIdx == index, let point = xpStats[stat] {
+                StatLabel(stat: stat, statPoint: point)
+                    .position(x: labelPoint.x, y: labelPoint.y - 30)
             }
         }
     }
@@ -186,19 +180,20 @@ extension MyPageBadgeList {
     }
     
     // 능력치 스텟 뷰
-    private func StatLabel(xpStat: XpStat) -> some View {
+    private func StatLabel(stat: XpStat, statPoint: Int) -> some View {
         VStack(spacing: 0) {
-            Text(xpStat.headerText)
+            Text("\(stat.headerText): \(statPoint) P")
                 .font(.system(size: 13, weight: .semibold))
-                .foregroundColor(.accent)
+                .foregroundColor(.white)
                 .padding(.horizontal, 12)
                 .padding(.vertical, 8)
-                .background(.white)
+                .background(.accent)
                 .cornerRadius(8)
             
             Polygon(count: 3, cornerRadius: 2)
-                .frame(width: 20, height: 10)
-                .offset(y: -1)
+                .frame(width: 22, height: 28)
+                .foregroundColor(.accent)
+                .offset(y: 10)
                 .rotationEffect(.degrees(180))
         }
     }
