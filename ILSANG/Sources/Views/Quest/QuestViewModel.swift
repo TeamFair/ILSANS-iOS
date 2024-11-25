@@ -19,6 +19,8 @@ class QuestViewModel: ObservableObject {
     @Published var viewStatus: ViewStatus = .loading
     @Published var selectedHeader: QuestStatus = .uncompleted
     @Published var selectedXpStat: XpStat = .strength
+    @Published var selectedFilter: QuestFilter = .popular
+
     @Published var selectedQuest: QuestViewModelItem = .mockData
     @Published var showQuestSheet: Bool = false
     @Published var showSubmitRouterView: Bool = false {
@@ -35,7 +37,19 @@ class QuestViewModel: ObservableObject {
         .uncompleted: [],
         .completed: []
     ]
-    @Published var uncompletedQuestListByXpStat: [XpStat: [QuestViewModelItem]] = Dictionary(uniqueKeysWithValues: XpStat.allCases.map { ($0, []) })
+    
+    var uncompletedQuestListByXpStat: [XpStat: [QuestViewModelItem]] = Dictionary(uniqueKeysWithValues: XpStat.allCases.map { ($0, []) })
+
+    var filteredUncompletedQuestListByXpStat: [QuestViewModelItem] {
+        switch selectedFilter {
+        case .pointHighest:
+            return uncompletedQuestListByXpStat[selectedXpStat, default: []].sorted { $0.rewardDic[selectedXpStat, default: 0] > $1.rewardDic[selectedXpStat, default: 0] }
+        case .pointLowest:
+            return uncompletedQuestListByXpStat[selectedXpStat, default: []].sorted { $0.rewardDic[selectedXpStat, default: 0] < $1.rewardDic[selectedXpStat, default: 0] }
+        case .popular:
+            return uncompletedQuestListByXpStat[selectedXpStat, default: []]
+        }
+    }
     
     var isCurrentListEmpty: Bool {
         switch selectedHeader {
