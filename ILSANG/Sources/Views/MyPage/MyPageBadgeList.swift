@@ -16,7 +16,8 @@ struct MyPageBadgeList: View {
     let xpStats: [XpStat: Int]
     
     @State private var touchedIdx: Int? = nil
-
+    @State private var shareImage: TransferableUIImage = TransferableUIImage(uiimage: .logo, caption: "caption")
+    
     var body: some View {
         VStack(alignment: .leading) {
             VStack(alignment: .leading, spacing: 4){
@@ -56,28 +57,28 @@ struct MyPageBadgeList: View {
             .background(.white)
             .cornerRadius(12)
             
-            VStack(alignment: .leading, spacing: 24){
+            VStack(alignment: .leading, spacing: 24) {
                 Text("능력별 포인트")
                     .font(.system(size: 12))
                     .foregroundColor(.gray400)
                 
                 PentagonGraph(xpStats: xpStats, width: 185, mainColor: .primaryPurple, subColor: .gray300, maxValue: Double(60 + userLV))
                 
-//                ShareLink(
-//                    item: ShareImage,
-//                    preview: SharePreview("프로필 공유", image: ShareImage)
-//                ) {
-//                    PrimaryButton(title: "공유하기", action: {Log("공유하기 버튼")})
-//                }
+                ShareLink(
+                    item: shareImage,
+                    preview: SharePreview("프로필 공유", image: shareImage.image)
+                ) {
+                    PrimaryButton(title: "공유하기", action: {shareImage = createShareImage()})
+                        .padding(.top, 27)
+                }
             }
             .padding(.horizontal, 19)
             .padding(.vertical, 18)
             .background(.white)
             .cornerRadius(12)
         }
-        .frame(maxWidth: .infinity, alignment: .top)
+        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
     }
-   
 }
 
 extension MyPageBadgeList {
@@ -214,5 +215,20 @@ extension MyPageBadgeList {
         
         renderer.scale = 3.0
         return renderer.uiImage ?? .init()
+    }
+    
+    private func createShareImage() -> TransferableUIImage {
+        let renderer = ImageRenderer(content: MyPageBadgeList(
+            xpPoint: xpPoint,
+            userLV: userLV,
+            nextLV: nextLV,
+            gapLV: gapLV,
+            xpStats: xpStats
+        ).frame(width: 300))
+        
+        renderer.scale = 3.0
+        let uiImage = renderer.uiImage ?? UIImage()
+        
+        return TransferableUIImage(uiimage: uiImage, caption: "개인 프로파일 공유하기")
     }
 }
