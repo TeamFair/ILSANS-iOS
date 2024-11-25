@@ -43,11 +43,11 @@ struct MyPageView: View {
                     MyPageActiveList(vm: vm)
                 case 2:
                     MyPageBadgeList(
-                        xpPoint: vm.userData?.xpPoint ?? 0,
+                        xpPoint: String(vm.userData?.xpPoint ?? 0).formatNumberInText(),
                         userLV: vm.convertXPtoLv(XP: vm.userData?.xpPoint ?? 0),
                         nextLV: vm.xpForNextLv(XP: vm.userData?.xpPoint ?? 50),
                         gapLV:  vm.xpGapBtwLevels(XP: vm.userData?.xpPoint ?? 0),
-                        xpStats: vm.xpStats)
+                        xpStats: vm.mockXpStats)
                     
                 default:
                     EmptyView()
