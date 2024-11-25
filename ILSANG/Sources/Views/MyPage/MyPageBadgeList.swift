@@ -9,11 +9,7 @@ import SwiftUI
 
 struct MyPageBadgeList: View {
     
-    let xpPoint: String
-    let userLV: Int
-    let nextLV: Int
-    let gapLV: (currentLevelXP: Int, nextLevelXP: Int)
-    let xpStats: [XpStat: Int]
+    @ObservedObject var vm: MypageViewModel
     
     @State private var touchedIdx: Int? = nil
     
@@ -24,29 +20,29 @@ struct MyPageBadgeList: View {
                     .font(.system(size: 12))
                     .foregroundColor(.gray400)
                 
-                Text("\(xpPoint)XP")
+                Text("\(String(vm.userData?.xpPoint ?? 150).formatNumberInText())XP")
                     .font(.system(size: 23, weight: .bold))
                     .foregroundColor(.gray500)
                 
                 // 프로그레스 바
-                ProgressBar(levelData: gapLV)
+                ProgressBar(userXP: vm.userData?.xpPoint ?? 0)
                     .frame(height: 10)
                     .padding(.top, 10)
                 
-                HStack {
-                    Text("LV.\(userLV)")
+                            HStack {
+                    Text("LV.\(vm.convertXPtoLv(XP: vm.userData?.xpPoint ?? 9))")
                         .font(.system(size: 13, weight: .bold))
                         .foregroundColor(.gray200)
                     
                     Spacer()
                     
-                    Text("다음 레벨까지 \(nextLV)XP 남았어요!")
+                    Text("다음 레벨까지 \(vm.xpForNextLv(XP: vm.userData?.xpPoint ?? 50))XP 남았어요!")
                         .font(.system(size: 13))
                         .foregroundColor(.gray500)
                     
                     Spacer()
                     
-                    Text("LV.\(userLV + 1)")
+                    Text("LV.\(vm.convertXPtoLv(XP: vm.userData?.xpPoint ?? 9)+1)")
                         .font(.system(size: 13, weight: .bold))
                         .foregroundColor(.accent)
                 }
@@ -61,15 +57,15 @@ struct MyPageBadgeList: View {
                     .font(.system(size: 12))
                     .foregroundColor(.gray400)
                 
-                PentagonGraph(xpStats: xpStats, width: 185, mainColor: .primaryPurple, subColor: .gray300, maxValue: Double(60 + userLV))
-                
-                ShareLink(
-                    item: ShareImage,
-                    preview: SharePreview("프로필 공유", image: ShareImage.image)
-                ) {
-                    PrimaryButton(title: "공유하기", action: {Log("Share Btn")})
-                        .padding(.top, 27)
-                }
+                PentagonGraph(xpStats: vm.mockXpStats, width: 185, mainColor: .primaryPurple, subColor: .gray300, maxValue: Double(60 + vm.convertXPtoLv(XP: vm.userData?.xpPoint ?? 0)))
+                                    
+//                ShareLink(
+//                    item: ShareImage,
+//                    preview: SharePreview("프로필 공유", image: ShareImage.image)
+//                ) {
+//                    PrimaryButton(title: "공유하기", action: {Log("Share Btn")})
+//                        .padding(.top, 27)
+//                }
             }
             .padding(.horizontal, 19)
             .padding(.vertical, 18)
@@ -81,7 +77,8 @@ struct MyPageBadgeList: View {
 }
 
 extension MyPageBadgeList {
-    private func ProgressBar(levelData: (currentLevelXP: Int, nextLevelXP: Int)) -> some View {
+    private  func ProgressBar(userXP: Int) -> some View {
+        let levelData = vm.xpGapBtwLevels(XP: userXP)
         let progress = calculateProgress(userXP: levelData.currentLevelXP, levelXP: levelData.nextLevelXP)
         
         return GeometryReader { geometry in
@@ -98,6 +95,8 @@ extension MyPageBadgeList {
             }
             .onAppear {
                 Log("Progress: \(progress)")
+                Log(vm.xpGapBtwLevels(XP: userXP).currentLevelXP)
+                Log(vm.xpGapBtwLevels(XP: userXP).nextLevelXP)
             }
         }
     }
@@ -145,27 +144,37 @@ extension MyPageBadgeList {
 
     // 능력치 레이블 위치 지정
     private func StatLabels(width: CGFloat, subColor: Color) -> some View {
-        ForEach(Array(XpStat.sortedStat.enumerated()), id: \.element) { index, stat in
-            let angle = (CGFloat(index) / CGFloat(XpStat.sortedStat.count)) * 2 * .pi - .pi / 2
-            let radius = width / 2 + 30
-            let labelPoint = CGPoint(
-                x: width / 2 + radius * cos(angle),
-                y: width / 2 + radius * sin(angle) + 10
-            )
-            
-            PentagonStat(xpStat: stat)
-                .font(.caption)
-                .foregroundColor(subColor)
-                .position(x: labelPoint.x, y: labelPoint.y)
-                .onTapGesture {
-                    touchedIdx = (touchedIdx == index) ? nil : index
+        ForEach(Array(vm.xpStats.keys.enumerated()), id: \.offset) { index, stat in
+            let angle = calculateAngle(index: index, totalCount: XpStat.sortedStat.count)
+            let labelPoint = calculateLabelPosition(width: width, angle: angle)
+
+            VStack {
+                PentagonStat(xpStat: stat)
+                    .font(.caption)
+                    .foregroundColor(subColor)
+                    .position(x: labelPoint.x, y: labelPoint.y)
+                    .onTapGesture {
+                        touchedIdx = (touchedIdx == index) ? nil : index
+                    }
+
+                if touchedIdx == index, let point = vm.xpStats[stat] {
+                    StatLabel(stat: stat, statPoint: point)
+                        .position(x: labelPoint.x, y: labelPoint.y - 30)
                 }
-            
-            if touchedIdx == index, let point = xpStats[stat] {
-                StatLabel(stat: stat, statPoint: point)
-                    .position(x: labelPoint.x, y: labelPoint.y - 30)
             }
         }
+    }
+
+    private func calculateAngle(index: Int, totalCount: Int) -> CGFloat {
+        return (CGFloat(index) / CGFloat(totalCount)) * 2 * .pi - .pi / 2
+    }
+
+    private func calculateLabelPosition(width: CGFloat, angle: CGFloat) -> CGPoint {
+        let radius = width / 2 + 30
+        return CGPoint(
+            x: width / 2 + radius * cos(angle),
+            y: width / 2 + radius * sin(angle) + 10
+        )
     }
 
     // 능력치 레이블 뷰
@@ -199,20 +208,20 @@ extension MyPageBadgeList {
     }
     
     //공유하기 기능 구현
-    private var ShareImage: TransferableUIImage {
-        return .init(uiimage: ProfileShareImage, caption: "개인 프로파일 공유하기")
-    }
+//    private var ShareImage: TransferableUIImage {
+//        return .init(uiimage: ProfileShareImage, caption: "개인 프로파일 공유하기")
+//    }
     
-    private var ProfileShareImage: UIImage {
-        let renderer = ImageRenderer(content: MyPageBadgeList(
-            xpPoint: xpPoint,
-            userLV: userLV,
-            nextLV: nextLV,
-            gapLV:  gapLV,
-            xpStats: xpStats)
-            .frame(width: 300))
-        
-        renderer.scale = 3.0
-        return renderer.uiImage ?? .init()
-    }
+//    private var ProfileShareImage: UIImage {
+//        let renderer = ImageRenderer(content: MyPageBadgeList(
+//            xpPoint: xpPoint,
+//            userLV: userLV,
+//            nextLV: nextLV,
+//            gapLV:  gapLV,
+//            xpStats: xpStats)
+//            .frame(width: 300))
+//        
+//        renderer.scale = 3.0
+//        return renderer.uiImage ?? .init()
+//    }
 }
