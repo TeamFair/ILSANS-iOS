@@ -14,72 +14,77 @@ struct MyPageBadgeList: View {
     @State private var touchedIdx: Int? = nil
     
     var body: some View {
-        VStack(alignment: .leading) {
-            VStack(alignment: .leading, spacing: 4){
-                Text("총 포인트")
-                    .font(.system(size: 12))
-                    .foregroundColor(.gray400)
-                
-                Text("\(String(vm.userData?.xpPoint ?? 150).formatNumberInText())XP")
-                    .font(.system(size: 23, weight: .bold))
-                    .foregroundColor(.gray500)
-                
-                // 프로그레스 바
-                ProgressBar(userXP: vm.userData?.xpPoint ?? 0)
-                    .frame(height: 10)
-                    .padding(.top, 10)
-                
-                            HStack {
-                    Text("LV.\(vm.convertXPtoLv(XP: vm.userData?.xpPoint ?? 9))")
-                        .font(.system(size: 13, weight: .bold))
-                        .foregroundColor(.gray200)
+        ZStack {
+            VStack(alignment: .leading) {
+                VStack(alignment: .leading, spacing: 4){
+                    Text("총 포인트")
+                        .font(.system(size: 12))
+                        .foregroundColor(.gray400)
                     
-                    Spacer()
-                    
-                    Text("다음 레벨까지 \(vm.xpForNextLv(XP: vm.userData?.xpPoint ?? 50))XP 남았어요!")
-                        .font(.system(size: 13))
+                    Text("\(String(vm.userData?.xpPoint ?? 150).formatNumberInText())XP")
+                        .font(.system(size: 23, weight: .bold))
                         .foregroundColor(.gray500)
                     
-                    Spacer()
+                    // 프로그레스 바
+                    ProgressBar(userXP: vm.userData?.xpPoint ?? 0)
+                        .frame(height: 10)
+                        .padding(.top, 10)
                     
-                    Text("LV.\(vm.convertXPtoLv(XP: vm.userData?.xpPoint ?? 9)+1)")
-                        .font(.system(size: 13, weight: .bold))
-                        .foregroundColor(.accent)
+                    HStack {
+                        Text("LV.\(vm.convertXPtoLv(XP: vm.userData?.xpPoint ?? 9))")
+                            .font(.system(size: 13, weight: .bold))
+                            .foregroundColor(.gray200)
+                        
+                        Spacer()
+                        
+                        Text("다음 레벨까지 \(vm.xpForNextLv(XP: vm.userData?.xpPoint ?? 50))XP 남았어요!")
+                            .font(.system(size: 13))
+                            .foregroundColor(.gray500)
+                        
+                        Spacer()
+                        
+                        Text("LV.\(vm.convertXPtoLv(XP: vm.userData?.xpPoint ?? 9)+1)")
+                            .font(.system(size: 13, weight: .bold))
+                            .foregroundColor(.accent)
+                    }
                 }
-            }
-            .padding(.horizontal, 20)
-            .padding(.vertical, 20)
-            .background(.white)
-            .cornerRadius(12)
-            
-            VStack(alignment: .leading, spacing: 24) {
-                Text("능력별 포인트")
-                    .font(.system(size: 12))
-                    .foregroundColor(.gray400)
+                .padding(.horizontal, 20)
+                .padding(.vertical, 20)
+                .background(.white)
+                .cornerRadius(12)
                 
-                PentagonGraph(xpStats: vm.xpStats, width: 185, mainColor: .primaryPurple, subColor: .gray300, maxValue: Double(60 + vm.convertXPtoLv(XP: vm.userData?.xpPoint ?? 0)))
-               
-                ShareLink(
-                    item: ShareImage,
-                    preview: SharePreview("프로필 공유", image: ShareImage.image)
-                ) {
-                    Text("공유하기")
-                        .frame(maxWidth: .infinity)
-                        .frame(height: 50)
-                        .font(.system(size: 16, weight: .semibold))
-                        .foregroundStyle(.white)
-                        .background(Color.accentColor)
-                        .cornerRadius(12)
-                        .padding(.top, 27)
+                VStack(alignment: .leading, spacing: 24) {
+                    Text("능력별 포인트")
+                        .font(.system(size: 12))
+                        .foregroundColor(.gray400)
+                    
+                    PentagonGraph(xpStats: vm.xpStats, width: 185, mainColor: .primaryPurple, subColor: .gray300, maxValue: Double(60 + vm.convertXPtoLv(XP: vm.userData?.xpPoint ?? 0)))
+                    
+                    ShareLink(
+                        item: ShareImage,
+                        preview: SharePreview("프로필 공유", image: ShareImage.image)
+                    ) {
+                        Text("공유하기")
+                            .frame(maxWidth: .infinity)
+                            .frame(height: 50)
+                            .font(.system(size: 16, weight: .semibold))
+                            .foregroundStyle(.white)
+                            .background(Color.accentColor)
+                            .cornerRadius(12)
+                            .padding(.top, 27)
+                    }
+                    
                 }
-               
+                .padding(.horizontal, 19)
+                .padding(.vertical, 18)
+                .background(.white)
+                .cornerRadius(12)
             }
-            .padding(.horizontal, 19)
-            .padding(.vertical, 18)
-            .background(.white)
-            .cornerRadius(12)
+            .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
+            
+            StatLabels(width: 180, subColor: .primaryPurple)
+                .zIndex(3)
         }
-        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
     }
 }
 
@@ -100,11 +105,6 @@ extension MyPageBadgeList {
                     .cornerRadius(6)
                     .foregroundColor(.accentColor)
             }
-            .onAppear {
-                Log("Progress: \(progress)")
-                Log(vm.xpGapBtwLevels(XP: userXP).currentLevelXP)
-                Log(vm.xpGapBtwLevels(XP: userXP).nextLevelXP)
-            }
         }
     }
     
@@ -113,7 +113,6 @@ extension MyPageBadgeList {
         return Double(userXP) / Double(levelXP)
     }
     
-    //MAX 값은 기본 60 + 레벨 * 10
     private func PentagonGraph(xpStats: [XpStat: Int], width: CGFloat, mainColor: Color, subColor: Color, maxValue: Double) -> some View {
         HStack {
             Spacer()
@@ -123,8 +122,6 @@ extension MyPageBadgeList {
                 StatPolygon(xpStats: xpStats, maxValue: maxValue, cornerRadius: 15) // 데이터 오각형
                     .fill(mainColor)
                     .opacity(0.8)
-                
-                StatLabels(width: width, subColor: subColor) // 능력치 레이블
             }
             .frame(width: width, height: width)
             
@@ -132,7 +129,6 @@ extension MyPageBadgeList {
         }
     }
 
-    // 배경 오각형 뷰
     private func BackgroundPolygons(width: CGFloat, subColor: Color) -> some View {
         ZStack {
             Polygon(count: 5, relativeCornerRadius: 0.20)
@@ -149,13 +145,12 @@ extension MyPageBadgeList {
         }
     }
 
-    // 능력치 레이블 위치 지정
     private func StatLabels(width: CGFloat, subColor: Color) -> some View {
         ForEach(Array(XpStat.allCases.enumerated()), id: \.element) { index, stat in
             let angle = calculateAngle(index: index, totalCount: XpStat.sortedStat.count)
             let labelPoint = calculateLabelPosition(width: width, angle: angle)
 
-            VStack {
+            ZStack {
                 PentagonStat(xpStat: stat)
                     .font(.caption)
                     .foregroundColor(subColor)
@@ -166,10 +161,13 @@ extension MyPageBadgeList {
 
                 if touchedIdx == index, let point = vm.xpStats[stat] {
                     StatLabel(stat: stat, statPoint: point)
-                        .position(x: labelPoint.x, y: labelPoint.y - 120)
+                        .position(x: labelPoint.x, y: labelPoint.y - 25) // 위치 조정
+                        .zIndex(1)
                 }
             }
+            .padding(.top, 20)
         }
+        .frame(width: width, height: width, alignment: .center)
     }
 
     private func calculateAngle(index: Int, totalCount: Int) -> CGFloat {
@@ -184,9 +182,8 @@ extension MyPageBadgeList {
         )
     }
 
-    // 능력치 레이블 뷰
     private func PentagonStat(xpStat: XpStat) -> some View {
-        HStack (spacing: 5) {
+        HStack(spacing: 5) {
             Image(xpStat.image)
                 .frame(height: 30)
             Text(xpStat.headerText)
@@ -195,7 +192,6 @@ extension MyPageBadgeList {
         }
     }
     
-    // 능력치 스텟 뷰
     private func StatLabel(stat: XpStat, statPoint: Int) -> some View {
         VStack(spacing: 0) {
             Text("\(stat.headerText): \(statPoint) P")
@@ -214,7 +210,6 @@ extension MyPageBadgeList {
         }
     }
     
-    //공유하기 기능 구현
     private var ShareImage: TransferableUIImage {
         return .init(uiimage: ProfileShareImage, caption: "마이페이지 공유하기")
     }
