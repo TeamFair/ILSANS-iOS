@@ -84,7 +84,7 @@ struct MyPageBadgeList: View {
 }
 
 extension MyPageBadgeList {
-    private  func ProgressBar(userXP: Int) -> some View {
+    private func ProgressBar(userXP: Int) -> some View {
         let levelData = vm.xpGapBtwLevels(XP: userXP)
         let progress = calculateProgress(userXP: levelData.currentLevelXP, levelXP: levelData.nextLevelXP)
         

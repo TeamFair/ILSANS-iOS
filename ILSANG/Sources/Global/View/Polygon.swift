@@ -262,11 +262,16 @@ struct StatPolygon: Shape {
         let center = CGPoint(x: rect.midX, y: rect.midY)
         let radius = min(rect.width, rect.height) / 2
         
+        // 값 정규화 (최소 비율과 최대 비율을 제한) 그래프가 역으로 꺾이는 문제 해결
+        let minRatio: CGFloat = 0.2 // 최소 비율 (값이 작아도 최소 이 정도는 확보)
+        let maxRatio: CGFloat = 1.0 // 최대 비율
+        
         // 꼭짓점 좌표 계산
         let points = XpStat.allCases.enumerated().map { index, stat -> CGPoint in
-            //stat 기본값 + 10, nil일 경우 10으로 고정합니다.
-            let value = CGFloat((xpStats[stat] ?? 10) + 10)
-            let normalizedValue = min(value / CGFloat(maxValue), 1.0)
+            // stat 기본값 + 10, nil일 경우 10으로 고정
+            let value = CGFloat((xpStats[stat] ?? 10) == 0 ? 10 : (xpStats[stat]! + 10))
+            let rawRatio = value / CGFloat(maxValue)
+            let normalizedValue = max(min(rawRatio, maxRatio), minRatio)
             let angle = (CGFloat(index) / CGFloat(XpStat.allCases.count)) * 2 * .pi - .pi / 2
             let adjustedRadius = radius * normalizedValue
             return CGPoint(
@@ -290,7 +295,6 @@ struct StatPolygon: Shape {
         for i in 0..<points.count {
             let currentPoint = points[i]
             let nextPoint = points[(i + 1) % points.count]
-            
             path.addArc(tangent1End: currentPoint, tangent2End: nextPoint, radius: cornerRadius)
         }
         
