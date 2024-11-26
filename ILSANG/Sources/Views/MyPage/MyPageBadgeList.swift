@@ -39,7 +39,7 @@ struct MyPageBadgeList: View {
                         
                         Text("다음 레벨까지 \(vm.xpForNextLv(XP: vm.userData?.xpPoint ?? 50))XP 남았어요!")
                             .font(.system(size: 13))
-                            .foregroundColor(.gray500)
+                            .foregroundColor(.gray400)
                         
                         Spacer()
                         
