@@ -58,14 +58,14 @@ struct MyPageBadgeList: View {
                     .foregroundColor(.gray400)
                 
                 PentagonGraph(xpStats: vm.mockXpStats, width: 185, mainColor: .primaryPurple, subColor: .gray300, maxValue: Double(60 + vm.convertXPtoLv(XP: vm.userData?.xpPoint ?? 0)))
-                                    
-//                ShareLink(
-//                    item: ShareImage,
-//                    preview: SharePreview("프로필 공유", image: ShareImage.image)
-//                ) {
-//                    PrimaryButton(title: "공유하기", action: {Log("Share Btn")})
-//                        .padding(.top, 27)
-//                }
+               
+                ShareLink(
+                    item: ShareImage,
+                    preview: SharePreview("프로필 공유", image: ShareImage.image)
+                ) {
+                    Text("Share URL")
+                }
+               
             }
             .padding(.horizontal, 19)
             .padding(.vertical, 18)
@@ -208,20 +208,20 @@ extension MyPageBadgeList {
     }
     
     //공유하기 기능 구현
-//    private var ShareImage: TransferableUIImage {
-//        return .init(uiimage: ProfileShareImage, caption: "개인 프로파일 공유하기")
-//    }
+    private var ShareImage: TransferableUIImage {
+        return .init(uiimage: ProfileShareImage, caption: "마이페이지 공유하기")
+    }
     
-//    private var ProfileShareImage: UIImage {
-//        let renderer = ImageRenderer(content: MyPageBadgeList(
-//            xpPoint: xpPoint,
-//            userLV: userLV,
-//            nextLV: nextLV,
-//            gapLV:  gapLV,
-//            xpStats: xpStats)
-//            .frame(width: 300))
-//        
-//        renderer.scale = 3.0
-//        return renderer.uiImage ?? .init()
-//    }
+    private var ProfileShareImage: UIImage {
+        let renderer = ImageRenderer(content: MypageShareImage(
+            xpPoint: String(vm.userData?.xpPoint ?? 0).formatNumberInText(),
+            userLV: vm.convertXPtoLv(XP: vm.userData?.xpPoint ?? 0),
+            nextLV: vm.xpForNextLv(XP: vm.userData?.xpPoint ?? 50),
+            gapLV:  vm.xpGapBtwLevels(XP: vm.userData?.xpPoint ?? 0),
+            xpStats: vm.mockXpStats)
+            .frame(width: 300))
+        
+        renderer.scale = 3.0
+        return renderer.uiImage ?? .init()
+    }
 }

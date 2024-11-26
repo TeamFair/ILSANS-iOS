@@ -62,13 +62,14 @@ struct MypageShareImage: View {
                 
                 PentagonGraph(xpStats: xpStats, width: 185, mainColor: .primaryPurple, subColor: .gray300, maxValue: Double(60 + userLV))
                 
+                Spacer()
             }
             .padding(.horizontal, 19)
             .padding(.vertical, 18)
             .background(.white)
             .cornerRadius(12)
         }
-        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
+        .frame(maxWidth: .infinity,maxHeight: .infinity)
     }
 }
 
