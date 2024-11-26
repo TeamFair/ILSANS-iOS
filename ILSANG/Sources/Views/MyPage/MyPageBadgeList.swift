@@ -57,7 +57,7 @@ struct MyPageBadgeList: View {
                     .font(.system(size: 12))
                     .foregroundColor(.gray400)
                 
-                PentagonGraph(xpStats: vm.mockXpStats, width: 185, mainColor: .primaryPurple, subColor: .gray300, maxValue: Double(60 + vm.convertXPtoLv(XP: vm.userData?.xpPoint ?? 0)))
+                PentagonGraph(xpStats: vm.xpStats, width: 185, mainColor: .primaryPurple, subColor: .gray300, maxValue: Double(60 + vm.convertXPtoLv(XP: vm.userData?.xpPoint ?? 0)))
                
                 ShareLink(
                     item: ShareImage,
@@ -151,7 +151,7 @@ extension MyPageBadgeList {
 
     // 능력치 레이블 위치 지정
     private func StatLabels(width: CGFloat, subColor: Color) -> some View {
-        ForEach(Array(vm.xpStats.keys.enumerated()), id: \.offset) { index, stat in
+        ForEach(Array(XpStat.allCases.enumerated()), id: \.element) { index, stat in
             let angle = calculateAngle(index: index, totalCount: XpStat.sortedStat.count)
             let labelPoint = calculateLabelPosition(width: width, angle: angle)
 
@@ -166,7 +166,7 @@ extension MyPageBadgeList {
 
                 if touchedIdx == index, let point = vm.xpStats[stat] {
                     StatLabel(stat: stat, statPoint: point)
-                        .position(x: labelPoint.x, y: labelPoint.y - 30)
+                        .position(x: labelPoint.x, y: labelPoint.y - 120)
                 }
             }
         }
@@ -225,7 +225,7 @@ extension MyPageBadgeList {
             userLV: vm.convertXPtoLv(XP: vm.userData?.xpPoint ?? 0),
             nextLV: vm.xpForNextLv(XP: vm.userData?.xpPoint ?? 50),
             gapLV:  vm.xpGapBtwLevels(XP: vm.userData?.xpPoint ?? 0),
-            xpStats: vm.mockXpStats)
+            xpStats: vm.xpStats)
             .frame(width: 300))
         
         renderer.scale = 3.0
