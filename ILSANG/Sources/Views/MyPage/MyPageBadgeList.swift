@@ -63,7 +63,14 @@ struct MyPageBadgeList: View {
                     item: ShareImage,
                     preview: SharePreview("프로필 공유", image: ShareImage.image)
                 ) {
-                    Text("Share URL")
+                    Text("공유하기")
+                        .frame(maxWidth: .infinity)
+                        .frame(height: 50)
+                        .font(.system(size: 16, weight: .semibold))
+                        .foregroundStyle(.white)
+                        .background(Color.accentColor)
+                        .cornerRadius(12)
+                        .padding(.top, 27)
                 }
                
             }
