@@ -31,9 +31,11 @@ struct QuestView: View {
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .background(Color.background)
         .sheet(isPresented: $vm.showQuestSheet) {
-            questSheetView
-                .presentationDetents([.height(558)])
-                .presentationDragIndicator(.visible)
+            QuestDetailView(quest: vm.selectedQuest) {
+                vm.tappedQuestApprovalBtn()
+            }
+            .presentationDetents([.height(464)])
+            .presentationDragIndicator(.hidden)
         }
         .fullScreenCover(isPresented: $vm.showSubmitRouterView) {
             SubmitRouterView(selectedQuest: vm.selectedQuest)
@@ -165,51 +167,6 @@ extension QuestView {
         ) {
             Task { await vm.loadInitialData() }
         }
-    }
-    
-    private var questSheetView: some View {
-        VStack(spacing: 0) {
-            Text("퀘스트 정보")
-                .font(.system(size: 17, weight: .bold))
-                .padding(.bottom, 22)
-                .padding(.top, 4)
-            
-            Image(uiImage: vm.selectedQuest.image ?? .logo)
-                .resizable()
-                .scaledToFill()
-                .frame(width: 122, height: 122)
-                .clipShape(Circle())
-                .padding(.bottom, 20)
-            
-            Text(vm.selectedQuest.writer)
-                .font(.system(size: 15, weight: .regular))
-                .padding(.bottom, 5)
-            
-            Text(vm.selectedQuest.missionTitle)
-                .font(.system(size: 18, weight: .bold))
-                .padding(.bottom, 18)
-            
-            Text("+" + String(vm.selectedQuest.totalRewardXP()) + "XP")
-                .font(.system(size: 30, weight: .semibold))
-                .foregroundStyle(.primaryPurple)
-                .padding(.bottom, 19)
-            
-            StatView(dic: vm.selectedQuest.rewardDic)
-                .padding(.bottom, 17)
-            
-            Text("퀘스트를 수행하셨나요?\n인증 후 포인트를 적립받으세요")
-                .font(.system(size: 14, weight: .regular))
-                .multilineTextAlignment(.center)
-                .lineSpacing(4)
-            
-            Spacer(minLength: 0)
-            
-            PrimaryButton(title: "퀘스트 인증하기") {
-                vm.tappedQuestApprovalBtn()
-            }
-        }
-        .foregroundStyle(.gray500)
-        .padding(20)
     }
 }
 
