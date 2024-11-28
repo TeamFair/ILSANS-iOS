@@ -70,6 +70,7 @@ struct MypageShareImage: View {
             .cornerRadius(12)
         }
         .frame(maxWidth: .infinity,maxHeight: .infinity)
+        .foregroundColor(.gray300)
     }
 }
 
@@ -87,7 +88,7 @@ extension MypageShareImage {
                 Rectangle()
                     .frame(width: CGFloat(progress) * geometry.size.width, height: 8)
                     .cornerRadius(6)
-                    .foregroundColor(.accentColor)
+                    .foregroundColor(.accent)
             }
             .onAppear {
                 Log("Progress: \(progress)")
