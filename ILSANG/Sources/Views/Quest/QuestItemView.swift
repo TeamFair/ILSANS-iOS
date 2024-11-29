@@ -28,7 +28,7 @@ struct QuestItemView: View {
                 }
             
             VStack(alignment: .leading, spacing: 4) {
-                Text(quest.missionTitle)
+                Text(quest.missionTitle.forceCharWrapping)
                     .font(.system(size: 15, weight: .bold))
                     .foregroundColor(.black)
                     .frame(maxWidth: .infinity, alignment: .leading)

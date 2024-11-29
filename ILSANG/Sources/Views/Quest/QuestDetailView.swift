@@ -61,7 +61,7 @@ struct QuestDetailView: View {
                     .font(.system(size: 15, weight: .regular))
                     .frame(height: 30)
                 
-                Text(quest.missionTitle)
+                Text(quest.missionTitle.forceCharWrapping)
                     .font(.system(size: 18, weight: .bold))
                     .lineLimit(2)
                     .kerning(-0.3)
