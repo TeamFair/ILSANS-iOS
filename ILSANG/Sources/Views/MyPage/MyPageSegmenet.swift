@@ -10,7 +10,7 @@ import SwiftUI
 struct MyPageSegment: View {
     @Binding var selectedIndex: Int
     
-    private let items = ["퀘스트", "활동", "뱃지"]
+    private let items = ["퀘스트", "활동", "내 정보"]
     private let icons = ["📜", "⛳️", "🎖️"]
     
     var body: some View {

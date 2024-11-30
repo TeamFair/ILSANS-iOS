@@ -17,41 +17,34 @@ struct MyPageProfile: View {
                 //기본 프로필
                 HStack {
                     //프로필
-                    ProfileImageView(profileImage: nil, level: vm.convertXPtoLv(XP: vm.userData?.xpPoint ?? 9))
+                    ProfileImageView(ProfileImage: nil)
                     
                     // 프로필 상세
-                    VStack (alignment: .leading) {
+                    VStack (alignment: .leading, spacing: 4) {
                         //유저 이름
                         Text(vm.userData?.nickname ?? "일상73079405")
                             .font(.system(size: 16, weight: .bold))
-                            .underline(true, color: .gray300)
                             .foregroundStyle(.gray500)
                             .multilineTextAlignment(.leading)
                         
-                        HStack {
-                            // 프로그레스 바
-                            vm.ProgressBar(userXP: vm.userData?.xpPoint ?? 0)
-                                .frame(height: 10)
-                            
-                            // 경험치 Text
-                            Text(String(vm.userData?.xpPoint ?? 0)+"XP")
-                                .font(.system(size: 13))
-                                .fontWeight(.bold)
-                                .foregroundColor(.accentColor)
-                        }
-                        
-                        Text("다음 레벨까지 \(vm.xpForNextLv(XP: vm.userData?.xpPoint ?? 50))XP 남았어요!")
+                        Text("Lv. \(vm.convertXPtoLv(XP: vm.userData?.xpPoint ?? 9))")
                             .font(.system(size: 13))
-                            .foregroundColor(.gray500)
+                            .fontWeight(.bold)
+                            .foregroundColor(Color.accent)
+                            .padding(.horizontal, 14.5)
+                            .padding(.vertical, 4)
+                            .background(.white)
+                            .cornerRadius(20)
+                            .overlay(
+                                RoundedRectangle(cornerRadius: 20)
+                                    .inset(by: 0.5)
+                                    .stroke(.accent, lineWidth: 1)
+                            )
                     }
+                    
+                    Spacer()
                 }
-                .padding(18)
-                .background(Color.white)
-                
-                StatView(dic: vm.xpStats)
-                    .frame(height: 70)
             }
-            .background(Color.primary100)
             .cornerRadius(12)
         }
     }
@@ -59,11 +52,9 @@ struct MyPageProfile: View {
 
 struct ProfileImageView: View {
     var ProfileImage: UIImage?
-    var Level: Int
     
-    init(profileImage: UIImage? = nil, level: Int) {
-        self.ProfileImage = profileImage
-        self.Level = level
+    init(ProfileImage: UIImage? = nil) {
+        self.ProfileImage = ProfileImage
     }
     
     var body: some View {
@@ -90,39 +81,15 @@ struct ProfileImageView: View {
             VStack {
                 Spacer()
                 
-                Text("Lv. \(Level)")
-                    .font(.system(size: 13))
-                    .fontWeight(.bold)
-                    .foregroundColor(Color.accent)
-                    .padding(.horizontal, 14.5)
-                    .padding(.vertical, 4)
-                    .background(.white)
-                    .cornerRadius(20)
-                    .overlay(
-                        RoundedRectangle(cornerRadius: 20)
-                            .inset(by: 0.5)
-                            .stroke(.accent, lineWidth: 1)
-                    )
+                Image("profileEdit")
+                    .padding(3)
+                    .frame(width: 18, height: 18, alignment: .center)
+                    .background(.black)
+                    .cornerRadius(1000)
+                    .offset(x: 20, y: -5)
             }
         }
         .frame(height: 68)
-    }
-}
-
-struct ProfileStatView: View {
-    var StatName: String
-    var StatPoint: Int
-    
-    init(StatName: String, StatPoint: Int) {
-        self.StatName = StatName
-        self.StatPoint = StatPoint
-    }
-    
-    var body: some View {
-        Text("\(StatName) : \(StatPoint)P")
-            .foregroundColor(.accent)
-            .font(.system(size: 15, weight: .semibold))
-            .frame(maxWidth: 95)
     }
 }
 
