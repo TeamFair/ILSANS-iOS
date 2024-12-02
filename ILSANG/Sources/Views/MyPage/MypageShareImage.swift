@@ -60,7 +60,7 @@ struct MypageShareImage: View {
                     .font(.system(size: 12))
                     .foregroundColor(.gray400)
                 
-                PentagonGraph(xpPoint: xpPoint, xpStats: xpStats, width: 185, mainColor: .primaryPurple, subColor: .gray300, maxValue: Double(60 + userLV))
+                PentagonGraph(xpPoint: Int(xpPoint), xpStats: xpStats, width: 185, mainColor: .primaryPurple, subColor: .gray300, maxValue: Double(60 + userLV))
                 
                 Spacer()
             }
