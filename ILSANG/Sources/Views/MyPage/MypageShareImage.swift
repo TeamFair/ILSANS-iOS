@@ -113,6 +113,7 @@ extension MypageShareImage {
                         .fill(mainColor)
                         .opacity(0.8)
                 }
+                StatLabels(width: width, subColor: subColor) // 능력치 레이블
             }
             .frame(width: width, height: width)
             
