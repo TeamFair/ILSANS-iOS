@@ -58,7 +58,7 @@ struct MyPageBadgeList: View {
                         .font(.system(size: 12))
                         .foregroundColor(.gray400)
                     
-                    PentagonGraph(xpStats: vm.xpStats, width: 185, mainColor: .primaryPurple, subColor: .gray300, maxValue: Double(60 + vm.convertXPtoLv(XP: vm.userData?.xpPoint ?? 0)))
+                    PentagonGraph(xpPoint: vm.userData?.xpPoint ?? 10, xpStats: vm.xpStats, width: 185, mainColor: .primaryPurple, subColor: .gray300, maxValue: Double(60 + vm.convertXPtoLv(XP: vm.userData?.xpPoint ?? 0)))
                     
                     ShareLink(
                         item: ShareImage,
@@ -113,15 +113,18 @@ extension MyPageBadgeList {
         return Double(userXP) / Double(levelXP)
     }
     
-    private func PentagonGraph(xpStats: [XpStat: Int], width: CGFloat, mainColor: Color, subColor: Color, maxValue: Double) -> some View {
+    private func PentagonGraph(xpPoint:Int, xpStats: [XpStat: Int], width: CGFloat, mainColor: Color, subColor: Color, maxValue: Double) -> some View {
         HStack {
             Spacer()
             
             ZStack {
                 BackgroundPolygons(width: width, subColor: subColor) // 배경 오각형
-                StatPolygon(xpStats: xpStats, maxValue: maxValue, cornerRadius: 15) // 데이터 오각형
-                    .fill(mainColor)
-                    .opacity(0.8)
+                if xpPoint != 0 {
+                    StatPolygon(xpStats: xpStats, maxValue: maxValue, cornerRadius: 15) // 데이터 오각형
+                        .fill(mainColor)
+                        .opacity(0.8)
+                }
+                StatLabels(width: width, subColor: subColor) // 능력치 레이블
             }
             .frame(width: width, height: width)
             
