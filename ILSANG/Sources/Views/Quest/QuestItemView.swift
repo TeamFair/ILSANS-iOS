@@ -21,6 +21,10 @@ struct QuestItemView: View {
     let component: QuestCommonComponent
     let style: QuestStyle
     
+    fileprivate struct Constants {
+        static let separatorOffset = 72.0
+    }
+
     init(style: QuestStyle, quest: QuestViewModelItem, tagTitle: String, action: @escaping () -> Void) {
         self.component = QuestCommonComponent(
             title: quest.missionTitle,
@@ -59,13 +63,18 @@ struct QuestItemView: View {
                     StatGridView(rewardDic: component.rewardDic)
                 }
                 
-                Spacer()
+                Spacer(minLength: 0)
                 
                 style.trailingView()
             }
-            .padding(20)
+            .padding(.vertical, 20)
+            .padding(.leading, 20)
+            .padding(.trailing, style.trailingPadding)
             .background(style.backgroundColor)
             .cornerRadius(12)
+            .overlay(alignment: .trailing) {
+                style.overlayView()
+            }
             .shadow(color: .shadow7D.opacity(0.05), radius: 20, x: 0, y: 10)
             .padding(.horizontal, 20)
         }
@@ -106,9 +115,18 @@ enum QuestStyle {
                 IconView(iconWidth: 13, size: .small, icon: .check, color: .green)
                 Text("적립완료")
                     .font(.system(size: 12, weight: .semibold))
+                    .multilineTextAlignment(.center)
                     .foregroundColor(.green)
             }
-            .frame(width: 72)
+            .frame(width: QuestItemView.Constants.separatorOffset)
+        }
+    }
+    var trailingPadding: CGFloat {
+        switch self {
+        case .uncompleted, .repeatable:
+            20
+        case .completed:
+            0
         }
     }
     
@@ -123,6 +141,21 @@ enum QuestStyle {
         switch self {
         case .completed: return true
         default: return false
+        }
+    }
+    
+    @ViewBuilder
+    func overlayView() -> some View {
+        switch self {
+        case .completed:
+            VLine()
+                .stroke(style: StrokeStyle(lineWidth: 0.5, dash: [3.3]))
+                .frame(width: 0.5)
+                .foregroundStyle(.gray200)
+                .offset(x: -QuestItemView.Constants.separatorOffset)
+                .padding(.vertical, 12)
+        case .repeatable, .uncompleted:
+            EmptyView()
         }
     }
 }
