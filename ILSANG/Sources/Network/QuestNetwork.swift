@@ -16,9 +16,14 @@ final class QuestNetwork {
         self.questUrl = questUrl
     }
     
-    func getUncompletedQuest(page: Int, size: Int) async -> Result<ResponseWithPage<[Quest]>, Error> {
+    func getDefaultQuest(page: Int, size: Int) async -> Result<ResponseWithPage<[Quest]>, Error> {
         let parameters: Parameters = ["page": page, "size": size]
         return await Network.requestData(url: questUrl+"uncompletedQuest", method: .get, parameters: parameters, withToken: true)
+    } 
+    
+    func getRepeatQuest(status: RepeatType, page: Int, size: Int) async -> Result<ResponseWithPage<[Quest]>, Error> {
+        let parameters: Parameters = ["status": status.toParam(), "page": page, "size": size]
+        return await Network.requestData(url: questUrl+"uncompletedRepeatQuest", method: .get, parameters: parameters, withToken: true)
     }
     
     func getCompletedQuest(page: Int, size: Int) async -> Result<ResponseWithPage<[Quest]>, Error> {

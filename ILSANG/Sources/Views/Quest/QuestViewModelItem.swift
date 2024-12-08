@@ -7,95 +7,6 @@
 
 import UIKit
 
-enum QuestStatus: String, CaseIterable {
-    case uncompleted
-    case completed
-    
-    var headerText: String {
-        switch self {
-        case .uncompleted:
-            "퀘스트"
-        case .completed:
-            "완료"
-        }
-    }
-    
-    var emptyTitle: String {
-        switch self {
-        case .uncompleted:
-            "퀘스트를 모두 완료하셨어요!"
-        case .completed:
-            "완료된 퀘스트가 없어요"
-        }
-    }
-    
-    var emptySubTitle: String {
-        switch self {
-        case .uncompleted:
-            "상상할 수 없는 퀘스트를 준비 중이니\n다음 업데이트를 기대해 주세요!"
-        case .completed:
-            "퀘스트를 수행하러 가볼까요?"
-        }
-    }
-}
-
-enum XpStat: String, CaseIterable {
-    case strength
-    case intellect
-    case fun
-    case charm
-    case sociability
-    
-    var headerText: String {
-        switch self {
-        case .strength:
-            "체력"
-        case .intellect:
-            "지능"
-        case .fun:
-            "재미"
-        case .charm:
-            "매력"
-        case .sociability:
-            "사회성"
-        }
-    }
-    
-    var parameterText: String {
-        switch self {
-        case .strength:
-            "STRENGTH"
-        case .intellect:
-            "INTELLECT"
-        case .fun:
-            "FUN"
-        case .charm:
-            "CHARM"
-        case .sociability:
-            "SOCIABILITY"
-        }
-    }
-    
-    var image: ImageResource {
-        switch self {
-        case .strength:
-            return .strength
-        case .intellect:
-            return .intellect
-        case .fun:
-            return .fun
-        case .charm:
-            return .charm
-        case .sociability:
-            return .sociability
-        }
-    }
-    
-    static var sortedStat: [XpStat] {
-        return [.strength, .intellect, .fun, .charm, .sociability]
-    }
-}
-
 struct QuestViewModelItem {
     let id: String
     var image: UIImage?
@@ -131,7 +42,9 @@ struct QuestViewModelItem {
     func totalRewardXP() -> Int {
         self.rewardDic.values.reduce(0, +)
     }
-    
+}
+
+extension QuestViewModelItem {
     static let mockImageId = "IMQU2024071520500801"
     
     static let mockData: QuestViewModelItem = QuestViewModelItem(
@@ -150,7 +63,23 @@ struct QuestViewModelItem {
             imageId: mockImageId,
             missionTitle: "아메리카노 15잔 마시기",
             writer: "이디야커피",
-            rewardDic: [.charm: 30, .intellect: 20, .fun: 25]
+            rewardDic: [.charm: 3, .sociability: 20, .strength: 25]
+        ),
+        QuestViewModelItem(
+            id: "9f8aacc9-98c1-f9d7d35a67fb",
+            image: .checkmark,
+            imageId: mockImageId,
+            missionTitle: "아메리카노 15잔 마시기",
+            writer: "이디야커피",
+            rewardDic: [.charm: 3, .fun: 25, .sociability: 20, .strength: 25]
+        ),
+        QuestViewModelItem(
+            id: "9f8aacc9-a221-4-f9d7d35a67fb",
+            image: .checkmark,
+            imageId: mockImageId,
+            missionTitle: "아메리카노 15잔 마시기",
+            writer: "이디야커피",
+            rewardDic: [.charm: 30, .intellect: 20, .fun: 25, .sociability: 20, .strength: 25]
         ),
         QuestViewModelItem(
             id: "13",
@@ -158,7 +87,7 @@ struct QuestViewModelItem {
             imageId: mockImageId,
             missionTitle: "카페라떼 1잔 마시기",
             writer: "투썸플레이스",
-            rewardDic: [.charm: 30, .intellect: 100, .fun: 5]
+            rewardDic: [.charm: 200, .intellect: 50, .fun: 25, .sociability: 100, .strength: 25]
         )
     ]
 }
