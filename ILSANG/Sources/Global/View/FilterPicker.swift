@@ -10,6 +10,7 @@ import SwiftUI
 struct PickerView<SelectionValue>: View where SelectionValue: Hashable & CustomStringConvertible & CaseIterable {
     @State var status: PickerStatus = .close
     @Binding var selection: SelectionValue
+    let width: CGFloat
     
     var body: some View {
         ZStack(alignment: .top) {
@@ -25,7 +26,7 @@ struct PickerView<SelectionValue>: View where SelectionValue: Hashable & CustomS
             }
             .foregroundStyle(.gray500)
             .padding(.horizontal, 12)
-            .frame(width: 150, height: 40)
+            .frame(width: width, height: 40)
             .background(Color.white)
             .clipShape(
                 RoundedRectangle(cornerRadius: 8)
@@ -37,7 +38,8 @@ struct PickerView<SelectionValue>: View where SelectionValue: Hashable & CustomS
             
             if status == .open {
                 VStack(spacing: 0) {
-                    ForEach(Array(SelectionValue.allCases).filter { $0 != selection }, id: \.self) { value in
+                    let selectableList = SelectionValue.allCases.filter { $0 != selection }
+                    ForEach(Array(selectableList.enumerated()), id: \.offset) { idx, value in
                         Button(action: {
                             self.selection = value
                             self.status.toggle()
@@ -48,11 +50,19 @@ struct PickerView<SelectionValue>: View where SelectionValue: Hashable & CustomS
                                 .frame(maxWidth: .infinity, alignment: .leading)
                                 .frame(height: 40)
                                 .background(Color.white)
+                                .padding(.horizontal, 12)
+                        }
+                        .overlay(alignment: .bottom) {
+                            if idx != selectableList.count - 1 {
+                                Rectangle()
+                                    .frame(height: 1)
+                                    .frame(maxWidth: .infinity)
+                                    .foregroundStyle(.gray100)
+                            }
                         }
                     }
                 }
-                .padding(.horizontal, 12)
-                .frame(width: 150)
+                .frame(width: width)
                 .background(Color.white)
                 .clipShape(RoundedRectangle(cornerRadius: 8))
                 .shadow(color: .shadow7D.opacity(0.05), radius: 20, x: 0, y: 10)

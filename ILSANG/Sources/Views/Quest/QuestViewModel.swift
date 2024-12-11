@@ -17,7 +17,14 @@ class QuestViewModel: ObservableObject {
     }
     
     @Published var viewStatus: ViewStatus = .loading
-    @Published var selectedHeader: QuestStatus = .uncompleted
+    @Published var selectedHeader: QuestStatus = .default  // TODO: 바뀔 때 api 요청하도록 수정 (refresh, init 고려)
+    @Published var selectedRepeatType: RepeatType = .daily {
+        didSet {
+            Task {
+                await repeatPaginationManager.loadData(isRefreshing: true)
+            }
+        }
+    }
     @Published var selectedXpStat: XpStat = .strength
     @Published var selectedFilter: QuestFilter = .popular
 
@@ -34,39 +41,64 @@ class QuestViewModel: ObservableObject {
         }
     }
     @Published var itemListByStatus: [QuestStatus: [QuestViewModelItem]] = [
-        .uncompleted: [],
+        .default: [],
+        .repeat: [],
         .completed: []
     ]
     
-    var uncompletedQuestListByXpStat: [XpStat: [QuestViewModelItem]] = Dictionary(uniqueKeysWithValues: XpStat.allCases.map { ($0, []) })
+    var defaultQuestListByXpStat: [XpStat: [QuestViewModelItem]] = Dictionary(uniqueKeysWithValues: XpStat.allCases.map { ($0, []) })
+    var repeatQuestListByXpStat: [XpStat: [QuestViewModelItem]] = Dictionary(uniqueKeysWithValues: XpStat.allCases.map { ($0, []) })
 
-    var filteredUncompletedQuestListByXpStat: [QuestViewModelItem] {
+    var filteredDefaultQuestListByXpStat: [QuestViewModelItem] {
         switch selectedFilter {
         case .pointHighest:
-            return uncompletedQuestListByXpStat[selectedXpStat, default: []].sorted { $0.rewardDic[selectedXpStat, default: 0] > $1.rewardDic[selectedXpStat, default: 0] }
+            return defaultQuestListByXpStat[selectedXpStat, default: []].sorted { $0.rewardDic[selectedXpStat, default: 0] > $1.rewardDic[selectedXpStat, default: 0] }
         case .pointLowest:
-            return uncompletedQuestListByXpStat[selectedXpStat, default: []].sorted { $0.rewardDic[selectedXpStat, default: 0] < $1.rewardDic[selectedXpStat, default: 0] }
+            return defaultQuestListByXpStat[selectedXpStat, default: []].sorted { $0.rewardDic[selectedXpStat, default: 0] < $1.rewardDic[selectedXpStat, default: 0] }
         case .popular:
-            return uncompletedQuestListByXpStat[selectedXpStat, default: []]
+            return defaultQuestListByXpStat[selectedXpStat, default: []]
+        }
+    }
+    
+    var filteredRepeatQuestListByXpStat: [QuestViewModelItem] {
+        switch selectedFilter {
+        case .pointHighest:
+            return repeatQuestListByXpStat[selectedXpStat, default: []].sorted { $0.rewardDic[selectedXpStat, default: 0] > $1.rewardDic[selectedXpStat, default: 0] }
+        case .pointLowest:
+            return repeatQuestListByXpStat[selectedXpStat, default: []].sorted { $0.rewardDic[selectedXpStat, default: 0] < $1.rewardDic[selectedXpStat, default: 0] }
+        case .popular:
+            return repeatQuestListByXpStat[selectedXpStat, default: []]
         }
     }
     
     var isCurrentListEmpty: Bool {
         switch selectedHeader {
-        case .uncompleted:
-            return itemListByStatus[.uncompleted, default: []].isEmpty
+        case .default:
+            return itemListByStatus[.default, default: []].isEmpty || filteredDefaultQuestListByXpStat.isEmpty
+        case .repeat:
+            return itemListByStatus[.repeat, default: []].isEmpty || filteredRepeatQuestListByXpStat.isEmpty
         case .completed:
             return itemListByStatus[.completed, default: []].isEmpty
         }
     }
     
-    // TODO: 현재 0페이지만 불러오며, 임시로 100개 로딩. 스탯 분류와 관련해서 기획 & API 수정에 따라 페이지네이션 로직 수정 필요
-    lazy var uncompletedPaginationManager = PaginationManager<QuestViewModelItem>(
-        size: 100,
-        threshold: 98,
+    // TODO: 현재 0페이지만 불러오며, 임시로 80개 로딩. 스탯 분류&필터링과 관련해서 기획 & API 수정에 따라 페이지네이션 로직 수정 필요
+    lazy var defaultPaginationManager = PaginationManager<QuestViewModelItem>(
+        size: 80,
+        threshold: 78,
         loadPage: { [weak self] page in
             guard let self = self else { return ([], 0) }
-            return await loadQuestListWithImage(page: page, size: 100, status: .uncompleted)
+            return await loadQuestListWithImage(page: page, size: 80, status: .default)
+        }
+    )
+    
+    // TODO: 현재 0페이지만 불러오며, 임시로 40개 로딩. 스탯 분류&필터링과 관련해서 기획 & API 수정에 따라 페이지네이션 로직 수정 필요
+    lazy var repeatPaginationManager = PaginationManager<QuestViewModelItem>(
+        size: 40,
+        threshold: 38,
+        loadPage: { [weak self] page in
+            guard let self = self else { return ([], 0) }
+            return await loadQuestListWithImage(page: page, size: 40, status: .repeat)
         }
     )
     
@@ -94,7 +126,8 @@ class QuestViewModel: ObservableObject {
     
     func loadInitialData() async {
         await changeViewStatus(.loading)
-        await uncompletedPaginationManager.loadData(isRefreshing: true)
+        await defaultPaginationManager.loadData(isRefreshing: true)
+        await repeatPaginationManager.loadData(isRefreshing: true)
         await completedPaginationManager.loadData(isRefreshing: true)
         await changeViewStatus(.loaded)
     }
@@ -109,8 +142,10 @@ class QuestViewModel: ObservableObject {
         lastRefreshTime = now
 
         switch selectedHeader {
-        case .uncompleted:
-            await uncompletedPaginationManager.loadData(isRefreshing: true)
+        case .default:
+            await defaultPaginationManager.loadData(isRefreshing: true)
+        case .repeat:
+            await repeatPaginationManager.loadData(isRefreshing: true)
         case .completed:
             await completedPaginationManager.loadData(isRefreshing: true)
         }
@@ -126,16 +161,27 @@ class QuestViewModel: ObservableObject {
     @discardableResult @MainActor
     func loadQuestListWithImage(page: Int, size: Int, status: QuestStatus) async -> ([QuestViewModelItem], Int) {
         let getQuestList = await getQuestList(page: page, size: size, status: status)
+        
         var newQuestList = getQuestList.data
         var currentQuestList = itemListByStatus[status, default: []]
+        
+        // 중복된 항목 제거 로직
+        let currentQuestIds = Set(currentQuestList.map { $0.id }) // 현재 리스트의 ID 집합 (page 1이상일 경우만 고려됨)
+        var seenIds = Set<String>() // 추가될 퀘스트에서 확인된 ID를 저장할 집합
+        
+        newQuestList = newQuestList.filter { quest in
+            // ID가 집합에 없으면 true를 반환하고, 집합에 추가
+            if seenIds.contains(quest.id) || (currentQuestIds.contains(quest.id) && page > 0) {
+                return false
+            } else {
+                seenIds.insert(quest.id)
+                return true
+            }
+        }
         
         if page == 0 {
             currentQuestList = newQuestList
         } else {
-            // MARK: 중복된 퀘스트 제거, 서버 에러 해결시 제거
-            newQuestList = newQuestList.filter { quest in
-                !currentQuestList.contains { $0.id == quest.id }
-            }
             currentQuestList += newQuestList
         }
         
@@ -162,20 +208,33 @@ class QuestViewModel: ObservableObject {
         }
         itemListByStatus[status] = currentQuestList
         
-        if status == .uncompleted {
-            mapUncompletedQuestByXpStat()
+        if status == .default {
+            mapDefaultQuestByXpStat()
+        } else if status == .repeat {
+            mapRepeatQuestByXpStat()
         }
         return (itemListByStatus[status, default: []], getQuestList.total)
     }
     
-    /// uncompleted 상태의 퀘스트 목록을 XpStat별로 분류하여 uncompletedQuestListByXpStat 딕셔너리에 매핑합니다.
-    private func mapUncompletedQuestByXpStat() {
-        guard let uncompletedQuestList = itemListByStatus[.uncompleted] else { return }
-        self.uncompletedQuestListByXpStat = self.uncompletedQuestListByXpStat.mapValues { _ in [] } // 초기화
+    /// uncompleted 상태의 기본 퀘스트 목록을 XpStat별로 분류하여 defaultQuestListByXpStat 딕셔너리에 매핑합니다.
+    private func mapDefaultQuestByXpStat() {
+        guard let uncompletedQuestList = itemListByStatus[.default] else { return }
+        self.defaultQuestListByXpStat = self.defaultQuestListByXpStat.mapValues { _ in [] } // 초기화
         
         for item in uncompletedQuestList {
             for reward in item.rewardDic {
-                uncompletedQuestListByXpStat[reward.key]?.append(item)
+                defaultQuestListByXpStat[reward.key]?.append(item)
+            }
+        }
+    }
+    
+    private func mapRepeatQuestByXpStat() {
+        guard let repeatQuestList = itemListByStatus[.repeat] else { return }
+        self.repeatQuestListByXpStat = self.repeatQuestListByXpStat.mapValues { _ in [] } // 초기화
+        
+        for item in repeatQuestList {
+            for reward in item.rewardDic {
+                repeatQuestListByXpStat[reward.key]?.append(item)
             }
         }
     }
@@ -184,8 +243,10 @@ class QuestViewModel: ObservableObject {
         let result: Result<ResponseWithPage<[Quest]>, Error>
         
         switch status {
-        case .uncompleted:
-            result = await questNetwork.getUncompletedQuest(page: page, size: size)
+        case .default:
+            result = await questNetwork.getDefaultQuest(page: page, size: size)
+        case .repeat:
+            result = await questNetwork.getRepeatQuest(status: self.selectedRepeatType, page: page, size: size)
         case .completed:
             result = await questNetwork.getCompletedQuest(page: page, size: size)
         }
@@ -200,8 +261,10 @@ class QuestViewModel: ObservableObject {
     
     func hasMorePage(status: QuestStatus) -> Bool {
         switch status {
-        case .uncompleted:
-            return uncompletedPaginationManager.canLoadMoreData()
+        case .default:
+            return defaultPaginationManager.canLoadMoreData()
+        case .repeat:
+            return repeatPaginationManager.canLoadMoreData()
         case .completed:
             return completedPaginationManager.canLoadMoreData()
         }
