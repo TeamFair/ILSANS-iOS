@@ -122,7 +122,7 @@ extension QuestView {
                     }
                 }
             }
-            .padding(.top, 70)
+            .padding(.top, vm.selectedHeader == .uncompleted ? 70 : 0)
             .overlay(alignment: .top) {
                 if vm.selectedHeader == .uncompleted {
                     filterPickerView

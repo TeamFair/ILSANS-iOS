@@ -141,7 +141,8 @@ extension MypageShareImage {
     // 능력치 레이블 위치 지정
     private func StatLabels(width: CGFloat, subColor: Color) -> some View {
         ForEach(Array(XpStat.allCases.enumerated()), id: \.element) { index, stat in
-            let angle = (CGFloat(index) / CGFloat(XpStat.sortedStat.count)) * 2 * .pi - .pi / 2
+            let indexRatio = CGFloat(index) / CGFloat(XpStat.sortedStat.count)
+            let angle = (indexRatio * 2 * .pi) - .pi / 2
             let radius = width / 2 + 30
             let labelPoint = CGPoint(
                 x: width / 2 + radius * cos(angle),
