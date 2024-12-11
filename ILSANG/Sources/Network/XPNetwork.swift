@@ -12,12 +12,12 @@ final class XPNetwork {
     private let HistoryUrl = APIManager.makeURL(CustomerTarget(path: "xpHistory"))
     private let StatsUrl = APIManager.makeURL(CustomerTarget(path: "xpStats"))
     
-    func getXP(page: Int, size: Int) async -> Result<XP,Error> {
+    func getXpHistory(page: Int, size: Int) async -> Result<Response<[XpLog]>,Error> {
         let parameters: Parameters = ["page": page, "size": size]
         return await Network.requestData(url: HistoryUrl + "", method: .get, parameters: parameters, withToken: true)
     }
     
-    func getXpStats() async -> Result<XpstatModel,Error> {
+    func getXpStats() async -> Result<Response<XpStats>,Error> {
         return await Network.requestData(url: StatsUrl, method: .get, parameters: nil, withToken: true)
     }
 }
