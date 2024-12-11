@@ -264,7 +264,7 @@ struct StatPolygon: Shape {
         
         // 값 정규화 (최소 비율과 최대 비율을 제한) 그래프가 역으로 꺾이는 문제 해결
         let minRatio: CGFloat = 0.2 // 최소 비율 (값이 작아도 최소 이 정도는 확보)
-        let maxValue: CGFloat = CGFloat(xpStats.values.max() ?? 50) // 최대값을 동적으로 설정
+        let maxValue: CGFloat = max(CGFloat(xpStats.values.max() ?? 0), 50) // 최대값을 동적으로 설정
         
         // 꼭짓점 좌표 계산
         let points = XpStat.allCases.enumerated().map { index, stat -> CGPoint in
