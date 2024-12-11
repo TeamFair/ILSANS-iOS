@@ -15,7 +15,7 @@ struct QuestView: View {
         VStack(spacing: 0) {
             headerView
                 
-            if vm.selectedHeader == .uncompleted {
+            if vm.selectedHeader == .default || vm.selectedHeader == .repeat {
                 subHeaderView
             }
             
@@ -46,7 +46,7 @@ struct QuestView: View {
 
 extension QuestView {
     private var headerView: some View {
-        HStack(spacing: 15) {
+        HStack(spacing: 16) {
             ForEach(QuestStatus.allCases, id: \.headerText) { status in
                 Button {
                     vm.selectedHeader = status
@@ -99,18 +99,36 @@ extension QuestView {
         ScrollView {
             LazyVStack(spacing: 12) {
                 switch vm.selectedHeader {
-                case .uncompleted:
-                    ForEach(vm.filteredUncompletedQuestListByXpStat, id: \.id) { quest in
-                        Button {
-                            vm.tappedQuestBtn(quest: quest)
-                        } label: {
-                            QuestItemView(quest: quest, status: .uncompleted)
-                        }
+                case .default:
+                    ForEach(vm.filteredDefaultQuestListByXpStat, id: \.id) { quest in
+                        QuestItemView(
+                            style: .uncompleted,
+                            quest: quest,
+                            tagTitle: String(quest.totalRewardXP())+"XP",
+                            action: {
+                                vm.tappedQuestBtn(quest: quest)
+                            }
+                        )
                     }
-                    
+                case .repeat:
+                    ForEach(vm.filteredRepeatQuestListByXpStat, id: \.id) { quest in
+                        QuestItemView(
+                            style: .repeatable(vm.selectedRepeatType),
+                            quest: quest,
+                            tagTitle: vm.selectedRepeatType.description,
+                            action: {
+                                vm.tappedQuestBtn(quest: quest)
+                            }
+                        )
+                    }
                 case .completed:
                     ForEach(vm.itemListByStatus[.completed, default: []], id: \.id) { quest in
-                        QuestItemView(quest: quest, status: .completed)
+                        QuestItemView(
+                            style: .completed,
+                            quest: quest,
+                            tagTitle: String(quest.totalRewardXP())+"XP",
+                            action: { }
+                        )
                     }
                     if vm.hasMorePage(status: .completed) {
                         ProgressView()
@@ -122,11 +140,22 @@ extension QuestView {
                     }
                 }
             }
-            .padding(.top, vm.selectedHeader == .uncompleted ? 70 : 0)
+            .padding(.top, vm.selectedHeader == .default || vm.selectedHeader == .repeat ? 70 : 0)
             .overlay(alignment: .top) {
-                if vm.selectedHeader == .uncompleted {
-                    filterPickerView
+                Group {
+                    if (vm.selectedHeader == .default) {
+                        filterPickerDefaultView
+                    } else if (vm.selectedHeader == .repeat) {
+                        HStack(alignment: .top, spacing: 8) {
+                            filterPickerRepeatView
+                            filterPickerDefaultView
+                        }
+                    }
                 }
+                .padding(.top, 13)
+                .padding(.bottom, 16)
+                .padding(.trailing, 20)
+                .frame(maxWidth: .infinity, alignment: .trailing)
             }
             .padding(.bottom, 72)
         }
@@ -141,21 +170,20 @@ extension QuestView {
         }
     }
     
-    private var filterPickerView: some View {
-        PickerView<QuestFilter>(selection: $vm.selectedFilter)
-            .frame(maxWidth: .infinity, alignment: .trailing)
-            .padding(.trailing, 20)
-            .padding(.top, 13)
-            .padding(.bottom, 16)
+    private var filterPickerDefaultView: some View {
+        PickerView<QuestFilter>(selection: $vm.selectedFilter, width: 150)
+    }
+    
+    private var filterPickerRepeatView: some View {
+        PickerView<RepeatType>(selection: $vm.selectedRepeatType, width: 85)
     }
     
     private var questListEmptyView: some View {
         ErrorView(
             title: vm.selectedHeader.emptyTitle,
-            subTitle: vm.selectedHeader.emptySubTitle
-        ) {
-            Task { await vm.loadInitialData() }
-        }
+            subTitle: vm.selectedHeader.emptySubTitle,
+            showButton: false
+        )
     }
     
     private var networkErrorView: some View {
@@ -172,37 +200,4 @@ extension QuestView {
 
 #Preview {
     QuestView(vm: QuestViewModel(questNetwork: QuestNetwork()))
-}
-
-struct StatView: View {
-    let columns = [GridItem(.flexible(minimum: 60)), GridItem(.flexible(minimum: 60)), GridItem(.flexible(minimum: 60))]
-    let stats: [XpStat] = [.strength, .intellect, .sociability, .charm, .fun]
-    let dic: [XpStat: Int]
-    
-    var body: some View {
-        LazyVGrid(columns: columns, spacing: 8) {
-            ForEach(stats, id: \.self) { stat in
-                HStack {
-                    Text("\(stat.headerText) : \(dic[stat] ?? 0)P")
-                        .frame(height: 22, alignment: .leading)
-                        .font(.system(size: 15, weight: .semibold))
-                        .foregroundStyle(.primaryPurple)
-                    Spacer(minLength: 0)
-                }
-                .frame(maxWidth: .infinity)
-                .padding(.leading, 8)
-            }
-        }
-        .padding(.horizontal, 12)
-        .frame(height: 84)
-        .background(
-            RoundedRectangle(cornerRadius: 14)
-                .foregroundStyle(.primary100.opacity(0.5))
-        )
-    }
-}
-
-#Preview {
-    StatView(dic: [.charm: 225, .fun: 392, .sociability: 0])
-        .padding(.horizontal, 20)
 }

@@ -13,5 +13,5 @@ PORT = 8880
 
 
 // App Settings
-APP_NAME = 일상
-APP_BUNDLE_ID = com.ilsang240615
+APP_NAME = 일상 DEV
+APP_BUNDLE_ID = com.ilsang240615.dev

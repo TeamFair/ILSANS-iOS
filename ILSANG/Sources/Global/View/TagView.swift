@@ -30,7 +30,7 @@ struct TagView: View {
 
 extension TagView {
     enum TagStyle {
-        case level, levelStroke, xp, xpWithIcon
+        case level, levelStroke, xp, xpWithIcon, `repeat`(RepeatType)
         
         var font: Font {
             switch self {
@@ -38,6 +38,7 @@ extension TagView {
             case .levelStroke: return .system(size: 13, weight: .bold)
             case .xp: return .system(size: 10, weight: .semibold)
             case .xpWithIcon: return .system(size: 12, weight: .regular)
+            case .repeat: return .system(size: 10, weight: .semibold)
             }
         }
         
@@ -47,6 +48,7 @@ extension TagView {
             case .levelStroke: return .primaryPurple
             case .xp: return .white
             case .xpWithIcon: return .primaryPurple
+            case .repeat(let type): return type.fgColor
             }
         }
         
@@ -56,13 +58,23 @@ extension TagView {
             case .levelStroke: return .white
             case .xp: return .primaryPurple
             case .xpWithIcon: return .clear
+            case .repeat: return .white
+            }
+        }
+        
+        var gradient: Gradient? {
+            switch self {
+            case .repeat(let type):
+                return type.bgGradient
+            case .level, .levelStroke, .xp, .xpWithIcon:
+                return nil
             }
         }
         
         var strokeColor: Color? {
             switch self {
             case .xpWithIcon, .levelStroke: return .primaryPurple
-            case .level, .xp: return nil
+            case .level, .xp, .repeat: return nil
             }
         }
         
@@ -70,8 +82,18 @@ extension TagView {
             switch self {
             case .level: return EdgeInsets(top: 2, leading: 12, bottom: 2, trailing: 12)
             case .levelStroke: return EdgeInsets(top: 4, leading: 14.5, bottom: 4, trailing: 14.5)
-            case .xp: return EdgeInsets(top: 4, leading: 5, bottom: 4, trailing: 5)
+            case .xp: return EdgeInsets(top: 0, leading: 7, bottom: 0, trailing: 7)
             case .xpWithIcon: return EdgeInsets(top: 0, leading: 4, bottom: 0, trailing: 4)
+            case .repeat: return EdgeInsets(top: 0, leading: 11, bottom: 0, trailing: 11)
+            }
+        }
+        
+        var height: CGFloat {
+            switch self {
+            case .level, .levelStroke, .xp, .repeat:
+                20
+            case .xpWithIcon:
+                25
             }
         }
         
@@ -89,7 +111,20 @@ struct TagViewModifier: ViewModifier {
             .font(style.font)
             .foregroundColor(style.fgColor)
             .padding(style.padding)
-            .background(style.bgColor)
+            .frame(height: style.height)
+            .background(
+                ZStack {
+                    if let gradient = style.gradient {
+                        LinearGradient(
+                            gradient: gradient,
+                            startPoint: .topLeading,
+                            endPoint: .bottomTrailing
+                        )
+                    } else {
+                        style.bgColor
+                    }
+                }
+            )
             .clipShape(RoundedRectangle(cornerRadius: style.cornerRadius))
             .overlay(
                 RoundedRectangle(cornerRadius: style.cornerRadius)
