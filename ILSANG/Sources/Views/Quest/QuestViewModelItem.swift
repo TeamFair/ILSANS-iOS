@@ -150,7 +150,7 @@ struct QuestViewModelItem {
             imageId: mockImageId,
             missionTitle: "아메리카노 15잔 마시기",
             writer: "이디야커피",
-            rewardDic: [:]
+            rewardDic: [.charm: 30, .intellect: 20, .fun: 25]
         ),
         QuestViewModelItem(
             id: "13",
@@ -158,7 +158,7 @@ struct QuestViewModelItem {
             imageId: mockImageId,
             missionTitle: "카페라떼 1잔 마시기",
             writer: "투썸플레이스",
-            rewardDic: [:]
+            rewardDic: [.charm: 30, .intellect: 100, .fun: 5]
         )
     ]
 }

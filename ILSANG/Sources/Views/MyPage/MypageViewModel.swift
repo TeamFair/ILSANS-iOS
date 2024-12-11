@@ -18,6 +18,14 @@ final class MypageViewModel: ObservableObject {
     
     @Published var challengeDelete = false
     
+    let mockXpStats: [XpStat: Int] = [
+        .strength: 0,
+        .intellect: 10,
+        .fun: 20,
+        .charm: 30,
+        .sociability: 40
+    ]
+    
     private let userNetwork: UserNetwork
     private let challengeNetwork: ChallengeNetwork
     private let imageNetwork: ImageNetwork
@@ -154,49 +162,14 @@ final class MypageViewModel: ObservableObject {
     func getImage(imageId: String) async -> UIImage? {
         await ImageCacheService.shared.loadImageAsync(imageId: imageId)
     }
-    
-    func ProgressBar(userXP: Int) -> some View {
-        let levelData = xpGapBtwLevels(XP: userXP)
-        let progress = calculateProgress(userXP: levelData.currentLevelXP, levelXP: levelData.nextLevelXP)
-        
-        return GeometryReader { geometry in
-            ZStack(alignment: .leading) {
-                Rectangle()
-                    .frame(width: geometry.size.width, height: 8)
-                    .cornerRadius(6)
-                    .foregroundColor(.gray100)
-                
-                Rectangle()
-                    .frame(width: CGFloat(progress) * geometry.size.width, height: 8)
-                    .cornerRadius(6)
-                    .foregroundColor(.accentColor)
-            }
-            .onAppear {
-                Log("Progress: \(progress)")
-                Log(self.xpGapBtwLevels(XP: userXP).currentLevelXP)
-                Log(self.xpGapBtwLevels(XP: userXP).nextLevelXP)
-            }
-        }
-    }
-    
-    func calculateProgress(userXP: Int, levelXP: Int) -> Double {
-        guard levelXP != 0 else { return 0 }
-        return Double(userXP) / Double(levelXP)
-    }
 }
 
 extension ChangeNickNameView {
     func isValidNickname(_ name: String) -> Bool {
-        let Korean = ".*[가-힣].*"
-        let English = ".*[a-zA-Z].*"
-        let Number = ".*[0-9].*"
-        
-        let koreanMatch = NSPredicate(format: "SELF MATCHES %@", Korean).evaluate(with: name)
-        let englishMatch = NSPredicate(format: "SELF MATCHES %@", English).evaluate(with: name)
-        let numberMatch = NSPredicate(format: "SELF MATCHES %@", Number).evaluate(with: name)
-        
+        let language = ".*[가-힣a-zA-Z0-9]+.*"
+        let isMatche = NSPredicate(format: "SELF MATCHES %@", language).evaluate(with: name)
         let isValidLength = (2...12).contains(name.count)
         
-        return koreanMatch && englishMatch && numberMatch && isValidLength
+        return isMatche && isValidLength
     }
 }
