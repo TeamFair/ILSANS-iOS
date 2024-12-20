@@ -13,7 +13,7 @@ final class MypageViewModel: ObservableObject {
     
     @Published var userData: User?
     @Published var xpStats: [XpStat: Int] = [:]
-    @Published var xpLogList: [XpLog] = []
+    @Published var xpLogList: [XPContent] = []
     @Published var challengeList: [Challenge] = []
     
     @Published var challengeDelete = false
@@ -55,16 +55,16 @@ final class MypageViewModel: ObservableObject {
     }
     
     @MainActor
-    func getXpLog(page: Int, size: Int) async {
-        let res = await xpNetwork.getXpHistory(page: page, size: 10)
+    func getxpLog(page: Int, size: Int) async {
+        let res = await xpNetwork.getXP(page: page, size: 10)
         
         switch res {
         case .success(let model):
             self.xpLogList = model.data
             
-        case .failure(let err):
+        case .failure:
             self.xpLogList = []
-            Log(err)
+            Log(res)
         }
     }
     

@@ -15,9 +15,3 @@ struct Quest: Codable {
     let rewardList: [Reward]
     // let score: Int
 }
-
-struct Reward: Codable {
-    let quantity: Int
-    let content: String?
-    let type: String
-}
