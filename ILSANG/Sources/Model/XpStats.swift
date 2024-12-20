@@ -5,13 +5,7 @@
 //  Created by Kim Andrew on 9/23/24.
 //
 
-import Foundation
-
-struct XpstatModel: Decodable {
-    let data: Xpstats
-}
-
-struct Xpstats: Decodable {
+struct XpStats: Decodable {
     let strengthStat: Int
     let intellectStat: Int
     let funStat: Int

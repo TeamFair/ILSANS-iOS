@@ -55,7 +55,7 @@ struct MyPageView: View {
             await vm.getUser()
             await vm.getXpStat()
             await vm.getChallenges(page: 0)
-            await vm.getxpLog(page: 0, size: 10)
+            await vm.getXpLog(page: 0, size: 10)
         }
     }
 }

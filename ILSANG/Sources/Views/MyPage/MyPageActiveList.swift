@@ -22,13 +22,13 @@ struct MyPageActiveList: View {
             // Data List
             ScrollView {
                 VStack(spacing: 12) {
-                    ForEach(vm.xpLogList, id: \.recordId) { Data in
-                        ListStruct(title: Data.title, detail: Data.createDate.timeAgoSinceCreation(), point: Data.xpPoint)
+                    ForEach(vm.xpLogList, id: \.recordId) { xpLog in
+                        ListStruct(title: xpLog.title, detail: xpLog.createDate.timeAgoSinceCreation(), point: xpLog.xpPoint)
                     }
                 }
             }
             .refreshable {
-                await vm.getxpLog(page: 0, size: 10)
+                await vm.getXpLog(page: 0, size: 10)
             }
         }
         .overlay {
