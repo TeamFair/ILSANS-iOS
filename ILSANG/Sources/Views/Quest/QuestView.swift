@@ -8,9 +8,14 @@
 import SwiftUI
 
 struct QuestView: View {
-    @StateObject var vm: QuestViewModel = QuestViewModel(questNetwork: QuestNetwork())
+    @StateObject var vm: QuestViewModel
+    @EnvironmentObject var sharedState: SharedState
     @Namespace private var namespace
 
+    init(initialXpStat: XpStat) {
+        _vm = StateObject(wrappedValue: QuestViewModel(questNetwork: QuestNetwork(), selectedXpStat: initialXpStat))
+    }
+    
     var body: some View {
         VStack(spacing: 0) {
             headerView
@@ -30,6 +35,9 @@ struct QuestView: View {
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .background(Color.background)
+        .onReceive(sharedState.$selectedXpStat) { newValue in
+            vm.selectedXpStat = newValue
+        }
         .sheet(isPresented: $vm.showQuestSheet) {
             QuestDetailView(quest: vm.selectedQuest) {
                 vm.tappedQuestApprovalBtn()
@@ -45,6 +53,7 @@ struct QuestView: View {
 }
 
 extension QuestView {
+    // 헤더 - 기본/반복/완료
     private var headerView: some View {
         HStack(spacing: 16) {
             ForEach(QuestStatus.allCases, id: \.headerText) { status in
@@ -63,6 +72,7 @@ extension QuestView {
         .padding(.horizontal, 20)
     }
     
+    // 서브헤더 - 5가지 스탯
     private var subHeaderView: some View {
         HStack(spacing: 0) {
             ForEach(XpStat.allCases, id: \.headerText) { xpStat in
@@ -99,37 +109,35 @@ extension QuestView {
         ScrollView {
             LazyVStack(spacing: 12) {
                 switch vm.selectedHeader {
-                case .default:
+                case .default: // 미완료 퀘스트
                     ForEach(vm.filteredDefaultQuestListByXpStat, id: \.id) { quest in
                         QuestItemView(
-                            style: .uncompleted,
                             quest: quest,
-                            tagTitle: String(quest.totalRewardXP())+"XP",
-                            action: {
-                                vm.tappedQuestBtn(quest: quest)
-                            }
-                        )
+                            style: UncompletedStyle(),
+                            tagTitle: String(quest.totalRewardXP())+"XP"
+                        ) {
+                            vm.tappedQuestBtn(quest: quest)
+                        }
                     }
-                case .repeat:
+                case .repeat: // 미완료 반복 퀘스트
                     ForEach(vm.filteredRepeatQuestListByXpStat, id: \.id) { quest in
                         QuestItemView(
-                            style: .repeatable(vm.selectedRepeatType),
                             quest: quest,
-                            tagTitle: vm.selectedRepeatType.description,
-                            action: {
-                                vm.tappedQuestBtn(quest: quest)
-                            }
-                        )
+                            style: RepeatStyle(repeatType: vm.selectedRepeatType),
+                            tagTitle: vm.selectedRepeatType.description
+                        ) {
+                            vm.tappedQuestBtn(quest: quest)
+                        }
                     }
-                case .completed:
+                case .completed: // 완료 퀘스트
                     ForEach(vm.itemListByStatus[.completed, default: []], id: \.id) { quest in
                         QuestItemView(
-                            style: .completed,
                             quest: quest,
-                            tagTitle: String(quest.totalRewardXP())+"XP",
-                            action: { }
-                        )
+                            style: CompletedStyle(),
+                            tagTitle: String(quest.totalRewardXP())+"XP"
+                        ) { }
                     }
+                    
                     if vm.hasMorePage(status: .completed) {
                         ProgressView()
                             .onAppear {
@@ -199,5 +207,5 @@ extension QuestView {
 }
 
 #Preview {
-    QuestView(vm: QuestViewModel(questNetwork: QuestNetwork()))
+    QuestView(initialXpStat:  .charm)
 }

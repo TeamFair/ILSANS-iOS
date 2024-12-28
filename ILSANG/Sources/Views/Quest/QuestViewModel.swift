@@ -25,7 +25,7 @@ class QuestViewModel: ObservableObject {
             }
         }
     }
-    @Published var selectedXpStat: XpStat = .strength
+    @Published var selectedXpStat: XpStat
     @Published var selectedFilter: QuestFilter = .popular
 
     @Published var selectedQuest: QuestViewModelItem = .mockData
@@ -84,11 +84,11 @@ class QuestViewModel: ObservableObject {
     
     // TODO: 현재 0페이지만 불러오며, 임시로 80개 로딩. 스탯 분류&필터링과 관련해서 기획 & API 수정에 따라 페이지네이션 로직 수정 필요
     lazy var defaultPaginationManager = PaginationManager<QuestViewModelItem>(
-        size: 80,
-        threshold: 78,
+        size: 30,
+        threshold: 28,
         loadPage: { [weak self] page in
             guard let self = self else { return ([], 0) }
-            return await loadQuestListWithImage(page: page, size: 80, status: .default)
+            return await loadQuestListWithImage(page: page, size: 30, status: .default)
         }
     )
     
@@ -117,7 +117,8 @@ class QuestViewModel: ObservableObject {
     
     private let questNetwork: QuestNetwork
     
-    init(questNetwork: QuestNetwork) {
+    init(questNetwork: QuestNetwork, selectedXpStat: XpStat) {
+        self.selectedXpStat = selectedXpStat
         self.questNetwork = questNetwork
         Task {
             await loadInitialData()

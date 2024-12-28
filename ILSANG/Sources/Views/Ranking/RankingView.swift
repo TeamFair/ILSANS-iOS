@@ -95,14 +95,14 @@ extension RankingView {
             LazyVStack(spacing: 12) {
                 if let ranks = vm.userRank[vm.selectedXpStat] {
                     ForEach(Array(ranks.enumerated()), id: \.element.customerId) { idx, rank in
-                        RankingItemView(idx: idx + 1, rank: rank)
+                        RankingItemView(idx: idx + 1, rank: rank, style: .horizontal)
                     }
                 }
             }
             .padding(.top, 24)
             .padding(.bottom, 72)
         }
-        .animation(nil)
+        .animation(nil, value: vm.selectedXpStat)
         .refreshable {
             Task {
                 await vm.loadUserRank(xpStat: vm.selectedXpStat)
