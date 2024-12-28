@@ -52,7 +52,7 @@ struct CarouselAutoSlideView: View {
             }
             .onChange(of: vm.currentIndex) { oldIdx, newIdx in
                 // 이미지 인덱스가 바뀔 때마다 필요한 로직 처리
-                if newIdx > 1 && newIdx < vm.totalImageCnt {
+                if newIdx > 1 && newIdx < vm.totalExtendedImageCnt {
                     withAnimation(.easeInOut) {
                         proxy.scrollTo(newIdx)
                         vm.handleIndexTransition(from: oldIdx, to: newIdx)
@@ -74,7 +74,7 @@ final class CarouselAutoSlideViewModel: ObservableObject {
     let images: [UIImage]
     let extendedImages: [UIImage]
     
-    var totalImageCnt: Int {
+    var totalExtendedImageCnt: Int {
         extendedImages.count
     }
     
@@ -117,7 +117,7 @@ final class CarouselAutoSlideViewModel: ObservableObject {
     
     /// 이미지 전환 시 처리 로직
     func handleIndexTransition(from oldIdx: Int, to newIdx: Int) {
-        if newIdx == totalImageCnt - 2 {
+        if newIdx == totalExtendedImageCnt - 2 {
             moveToFirstImage()
         }
     }
