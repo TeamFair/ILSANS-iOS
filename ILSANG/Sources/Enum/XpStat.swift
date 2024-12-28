@@ -5,7 +5,7 @@
 //  Created by Lee Jinhee on 12/7/24.
 //
 
-import Foundation
+import UIKit
 
 enum XpStat: String, CaseIterable {
     case strength
