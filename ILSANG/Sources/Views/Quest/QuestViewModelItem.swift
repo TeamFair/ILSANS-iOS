@@ -61,6 +61,17 @@ extension QuestViewModelItem {
         writer: "이디야커피",
         rewardDic: [.charm: 30, .intellect: 100, .fun: 5],
         type: "DEFAULT",
+        target: "NONE"
+    )
+    
+    static let mockRepeatData: QuestViewModelItem = QuestViewModelItem(
+        id: "11",
+        image: .img0,
+        imageId: mockImageId,
+        missionTitle: "아이스 아메리카노 가나잔 마시",
+        writer: "이디야커피",
+        rewardDic: [.charm: 30, .intellect: 100, .fun: 5],
+        type: "REPEAT",
         target: "DAILY"
     )
     
@@ -72,7 +83,7 @@ extension QuestViewModelItem {
             missionTitle: "아이스 카페라떼 15잔 마시기",
             writer: "이디야커피",
             rewardDic: [.charm: 3, .strength: 25],
-            type: "DEFAULT",
+            type: "REPEAT",
             target: "MONTHLY"
         ),
         QuestViewModelItem(
@@ -82,7 +93,7 @@ extension QuestViewModelItem {
             missionTitle: "하늘 사진 찍기",
             writer: "이디야커피",
             rewardDic: [.charm: 3, .fun: 25, .sociability: 20, .strength: 25],
-            type: "DEFAULT",
+            type: "REPEAT",
             target: "DAILY"
         ),
         QuestViewModelItem(
@@ -92,7 +103,7 @@ extension QuestViewModelItem {
             missionTitle: "아이스 아메리카노 15잔 마시기",
             writer: "이디야커피",
             rewardDic: [.charm: 30],
-            type: "DEFAULT",
+            type: "REPEAT",
             target: "WEEKLY"
         ),
         QuestViewModelItem(
