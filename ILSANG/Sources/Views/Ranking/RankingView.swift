@@ -48,7 +48,7 @@ struct RankingView: View {
 
 extension RankingView {
     private var subHeaderView: some View {
-        QuestStatHeaderView(
+        StatHeaderView(
             selectedXpStat: $vm.selectedXpStat,
             horizontalPadding: 0,
             height: 44,

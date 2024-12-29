@@ -1,5 +1,5 @@
 //
-//  QuestStatHeaderView.swift
+//  StatHeaderView.swift
 //  ILSANG
 //
 //  Created by Lee Jinhee on 12/29/24.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct QuestStatHeaderView: View {
+struct StatHeaderView: View {
     @Binding var selectedXpStat: XpStat
     let horizontalPadding: CGFloat
     let height: CGFloat
@@ -55,8 +55,8 @@ struct QuestStatHeaderView: View {
 #Preview {
     VStack {
         // 홈뷰
-        QuestStatHeaderView(selectedXpStat: .constant(XpStat.fun), horizontalPadding: 20, height: 30, hasBottomLine: false)
+        StatHeaderView(selectedXpStat: .constant(XpStat.fun), horizontalPadding: 20, height: 30, hasBottomLine: false)
         // 퀘스트뷰
-        QuestStatHeaderView(selectedXpStat: .constant(XpStat.intellect), horizontalPadding: 0, height: 44, hasBottomLine: true)
+        StatHeaderView(selectedXpStat: .constant(XpStat.intellect), horizontalPadding: 0, height: 44, hasBottomLine: true)
     }
 }

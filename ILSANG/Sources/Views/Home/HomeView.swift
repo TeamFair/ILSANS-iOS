@@ -111,7 +111,7 @@ struct HomeView: View {
             ),
             content:
                 Group {
-                    QuestStatHeaderView(
+                    StatHeaderView(
                         selectedXpStat: $vm.selectedXpStat,
                         horizontalPadding: horizontalPadding,
                         height: 30,
