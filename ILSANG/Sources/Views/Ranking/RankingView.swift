@@ -48,35 +48,12 @@ struct RankingView: View {
 
 extension RankingView {
     private var subHeaderView: some View {
-        HStack(spacing: 0) {
-            ForEach(XpStat.allCases, id: \.headerText) { xpStat in
-                Button {
-                    withAnimation(.easeInOut) {
-                        vm.selectedXpStat = xpStat
-                    }
-                } label: {
-                    Text(xpStat.headerText)
-                        .foregroundColor(xpStat == vm.selectedXpStat ? .gray500 : .gray300)
-                        .font(.system(size: 14, weight: xpStat == vm.selectedXpStat ? .semibold : .medium))
-                        .frame(height: 40)
-                }
-                .padding(.horizontal, 6)
-                .overlay(alignment: .bottom) {
-                    if xpStat == vm.selectedXpStat {
-                        Rectangle()
-                            .frame(height: 3)
-                            .foregroundStyle(.primaryPurple)
-                            .matchedGeometryEffect(id: "XpStat", in: namespace)
-                    }
-                }
-                .frame(maxWidth: .infinity)
-            }
-        }
-        .background(alignment: .bottom) {
-            Rectangle()
-                .frame(height: 1)
-                .foregroundStyle(.gray100)
-        }
+        QuestStatHeaderView(
+            selectedXpStat: $vm.selectedXpStat,
+            horizontalPadding: 0,
+            height: 44,
+            hasBottomLine: true
+        )
     }
     
     private var networkErrorView: some View {
