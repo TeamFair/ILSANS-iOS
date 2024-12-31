@@ -12,12 +12,12 @@ struct QuestImageWithTagView: View {
     let tagTitle: String
     let tagStyle: TagView.TagStyle
     let tagOffset: (x: CGFloat, y: CGFloat)
-    private let imageSize: CGSize = CGSize(width: 60, height: 60)
+    let imageSize: CGSize
     
     var body: some View {
         Image(uiImage: image ?? .logo)
             .resizable()
-            .scaledToFit()
+            .scaledToFill()
             .frame(width: imageSize.width, height: imageSize.height)
             .background(Color.badgeBlue)
             .clipShape(Circle())

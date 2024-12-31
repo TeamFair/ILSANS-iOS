@@ -13,6 +13,11 @@ struct StatGridView: View {
     var body: some View {
         if rewardDic.filter({ $0.value > 0 }).count <= 3 {
             tagView(range: 0..<5)
+        } else if rewardDic.filter({ $0.value > 0 }).count == 4 {
+            VStack(alignment: .leading, spacing: 4) {
+                tagView(range: 0..<4) // 0 1 2 3
+                tagView(range: 4..<5) // 4
+            }
         } else {
             VStack(alignment: .leading, spacing: 4) {
                 tagView(range: 0..<3) // 0 1 2

@@ -7,30 +7,37 @@
 
 import SwiftUI
 
-// 공통 데이터 구조
-struct QuestCommonComponent {
+/// 공통 데이터 구조
+struct QuestCommonModel {
     let title: String
     let writer: String
     let rewardDic: [XpStat: Int]
+    let writerImage: UIImage?
     let image: UIImage?
-    let tagTitle: String
+    let type: String
+    let target: String
+    let tagTitle: String?
     let action: (() -> Void)?
 }
 
-struct QuestItemView: View {
-    let component: QuestCommonComponent
-    let style: QuestStyle
+// 공통 퀘스트 아이템 뷰
+struct QuestItemView<Style: QuestStyleProtocol>: View {
+    let quest: QuestCommonModel
+    let style: Style
     
     fileprivate struct Constants {
-        static let separatorOffset = 72.0
+        let separatorOffset = 72.0
     }
 
-    init(style: QuestStyle, quest: QuestViewModelItem, tagTitle: String, action: @escaping () -> Void) {
-        self.component = QuestCommonComponent(
+    init(quest: QuestViewModelItem, style: Style, tagTitle: String? = nil, action: @escaping () -> Void) {
+        self.quest = QuestCommonModel(
             title: quest.missionTitle,
             writer: quest.writer,
-            rewardDic: quest.rewardDic,
-            image: quest.image,
+            rewardDic: quest.rewardDic, 
+            writerImage: quest.image,
+            image: quest.image, 
+            type: quest.type,
+            target: quest.target,
             tagTitle: tagTitle,
             action: action
         )
@@ -38,33 +45,42 @@ struct QuestItemView: View {
     }
     
     var body: some View {
-        Button(action: { component.action?() }) {
+        style.viewForQuest(quest: quest)
+    }
+}
+
+// 기본 스타일
+struct DefaultQuestView<Style: DefaultQuestStyleProtocol>: View {
+    let quest: QuestCommonModel
+    let style: Style
+    
+    var body: some View {
+        Button(action: { quest.action?() }) {
             HStack(spacing: 0) {
+                // 이미지 및 태그 뷰
                 QuestImageWithTagView(
-                    image: component.image,
-                    tagTitle: component.tagTitle,
-                    tagStyle: style.tagStyle,
-                    tagOffset: style.tagOffset
+                    image: quest.writerImage,
+                    tagTitle: quest.tagTitle ?? "",
+                    tagStyle: style.tagStyle ?? .xp,
+                    tagOffset: style.tagOffset, 
+                    imageSize: style.imageSize
                 )
                 .padding(.trailing, 20)
                 
+                // 텍스트 정보
                 VStack(alignment: .leading, spacing: 4) {
-                    Text(component.title)
+                    Text(quest.title.forceCharWrapping)
                         .font(.system(size: 15, weight: .bold))
                         .foregroundColor(.black)
                         .lineLimit(2)
                         .multilineTextAlignment(.leading)
-                    
-                    Text(component.writer)
+                    Text(quest.writer)
                         .font(.system(size: 13, weight: .regular))
                         .foregroundColor(.gray400)
                         .padding(.bottom, 4)
-                    
-                    StatGridView(rewardDic: component.rewardDic)
+                    StatGridView(rewardDic: quest.rewardDic)
                 }
-                
                 Spacer(minLength: 0)
-                
                 style.trailingView()
             }
             .padding(.vertical, 20)
@@ -82,80 +98,85 @@ struct QuestItemView: View {
     }
 }
 
-// 스타일 관리
-enum QuestStyle {
-    case uncompleted
-    case completed
-    case repeatable(RepeatType)
+
+// Popular 스타일
+struct PopularQuestView<Style: QuestStyleProtocol>: View {
+    let quest: QuestCommonModel
+    let style: Style
     
-    var tagStyle: TagView.TagStyle {
-        switch self {
-        case .uncompleted: return .xp
-        case .completed: return .xp
-        case .repeatable(let repeatType): return .repeat(repeatType)
-        }
-    }
-    
-    var tagOffset: (x: CGFloat, y: CGFloat) {
-        switch self {
-        case .uncompleted, .completed:
-            return (x: 48, y: 5)
-        case .repeatable:
-            return (x: 54, y: 3)
-        }
-    }
-    
-    @ViewBuilder
-    func trailingView() -> some View {
-        switch self {
-        case .uncompleted, .repeatable:
-            IconView(iconWidth: 6, size: .small, icon: .arrowRight, color: .gray)
-        case .completed:
-            VStack(spacing: 7) {
-                IconView(iconWidth: 13, size: .small, icon: .check, color: .green)
-                Text("적립완료")
-                    .font(.system(size: 12, weight: .semibold))
-                    .multilineTextAlignment(.center)
-                    .foregroundColor(.green)
+    var body: some View {
+        Button(action: { quest.action?() }) {
+            VStack(alignment: .leading, spacing: 0) {
+                Image(uiImage: quest.image ?? .logo)
+                    .resizable()
+                    .scaledToFill()
+                    .frame(width: style.imageSize.width, height:  style.imageSize.height)
+                    .clipped()
+                    .overlay(alignment: .topTrailing) {
+                        if let tagTitle = RepeatType(rawValue: quest.target.lowercased())?.description {
+                            TagView(title: tagTitle, tagStyle: style.tagStyle ?? .xp)
+                                .offset(x: -style.tagOffset.x, y: style.tagOffset.y)
+                        }
+                    }
+                    .padding(.horizontal, -16)
+                    .padding(.bottom, 9)
+                Text(quest.title.forceCharWrapping)
+                    .font(.system(size: 15, weight: .bold))
+                    .multilineTextAlignment(.leading)
+                    .lineLimit(2)
+                    .lineSpacing(4)
+                    .foregroundColor(.black)
+                    .padding(.bottom, 4)
+                Text(quest.writer)
+                    .font(.system(size: 11, weight: .regular))
+                    .foregroundColor(.gray400)
             }
-            .frame(width: QuestItemView.Constants.separatorOffset)
+            .padding(.bottom, 16)
+            .padding(.horizontal, 16)
+            .frame(width:style.imageSize.width, height: 220, alignment: .top)
+            .background(
+                Rectangle()
+                    .foregroundStyle(style.backgroundColor)
+            )
+            .clipShape(RoundedRectangle(cornerRadius: 12))
         }
     }
-    var trailingPadding: CGFloat {
-        switch self {
-        case .uncompleted, .repeatable:
-            20
-        case .completed:
-            0
-        }
-    }
-    
-    var backgroundColor: Color {
-        switch self {
-        case .completed: return Color.white
-        default: return Color.white
-        }
-    }
-    
-    var isDisabled: Bool {
-        switch self {
-        case .completed: return true
-        default: return false
-        }
-    }
-    
-    @ViewBuilder
-    func overlayView() -> some View {
-        switch self {
-        case .completed:
-            VLine()
-                .stroke(style: StrokeStyle(lineWidth: 0.5, dash: [3.3]))
-                .frame(width: 0.5)
-                .foregroundStyle(.gray200)
-                .offset(x: -QuestItemView.Constants.separatorOffset)
-                .padding(.vertical, 12)
-        case .repeatable, .uncompleted:
-            EmptyView()
+}
+
+// Recommend 스타일
+struct RecommendQuestView<Style: QuestStyleProtocol>: View {
+    let quest: QuestCommonModel
+    let style: Style
+
+    var body: some View {
+        Button(action: { quest.action?() }) {
+            VStack(alignment: .leading, spacing: 0) {
+                Text(quest.title.forceCharWrapping)
+                    .font(.system(size: 13, weight: .bold))
+                    .multilineTextAlignment(.leading)
+                    .lineLimit(2)
+                    .lineSpacing(4)
+                    .kerning(-0.3)
+                    .foregroundColor(.black)
+                    .padding(.bottom, 6)
+                Text(quest.writer)
+                    .font(.system(size: 10, weight: .regular))
+                    .foregroundColor(.gray400)
+                    .kerning(-0.3)
+                Spacer(minLength: 0)
+                Image(uiImage: quest.writerImage ?? .logo)
+                    .resizable()
+                    .scaledToFill()
+                    .frame(width: 64, height: 64)
+                    .background(Color.badgeBlue)
+                    .clipShape(Circle())
+            }
+            .padding(16)
+            .padding(.top, 4)
+            .frame(width: 152, height: 172, alignment: .leading)
+            .background(RoundedRectangle(cornerRadius: 12)
+                .fill(style.backgroundColor)
+            )
         }
     }
 }

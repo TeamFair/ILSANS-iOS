@@ -7,7 +7,11 @@
 
 import UIKit
 
-enum XpStat: String, CaseIterable {
+enum XpStat: String, CaseIterable, Identifiable {
+    var id: String {
+        self.rawValue
+    }
+    
     case strength
     case intellect
     case fun
