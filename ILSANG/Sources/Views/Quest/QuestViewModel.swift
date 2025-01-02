@@ -127,9 +127,10 @@ class QuestViewModel: ObservableObject {
     
     func loadInitialData() async {
         await changeViewStatus(.loading)
-        await defaultPaginationManager.loadData(isRefreshing: true)
-        await repeatPaginationManager.loadData(isRefreshing: true)
-        await completedPaginationManager.loadData(isRefreshing: true)
+        async let defaultLoad: () = defaultPaginationManager.loadData(isRefreshing: true)
+        async let repeatLoad: () = repeatPaginationManager.loadData(isRefreshing: true)
+        async let completedLoad: () = completedPaginationManager.loadData(isRefreshing: true)
+        _ = await (defaultLoad, repeatLoad, completedLoad)
         await changeViewStatus(.loaded)
     }
     

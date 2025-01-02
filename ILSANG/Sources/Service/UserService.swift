@@ -64,7 +64,7 @@ final class UserService: ObservableObject {
     }
     
     /// 갖고 있는 토큰으로 로그인 시도
-    func login() async throws -> Bool {
+    func login() async -> Bool {
         let authUser = AuthUser(email: userEmail, accessToken: accessToken, refreshToken: refreshToken)
         if authToken.isEmpty {
             await updateLoginStatus(false)
