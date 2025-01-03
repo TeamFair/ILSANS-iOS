@@ -8,8 +8,9 @@
 import SwiftUI
 
 struct HomeView: View {
-    @StateObject var vm: HomeViewModel = HomeViewModel()
+    @StateObject var vm: HomeViewModel = HomeViewModel(questNetwork: QuestNetwork())
     @EnvironmentObject var sharedState: SharedState
+    @Environment(\.redactionReasons) var redactionReasons
     
     private let gridItem = [GridItem(), GridItem()]
     private let horizontalPadding: CGFloat = 20
@@ -17,13 +18,19 @@ struct HomeView: View {
     
     var body: some View {
         VStack(spacing: 23) {
-            header
-            content
+            ScrollView {
+                header
+                content
+            }
+            .refreshable {
+                await vm.loadInitialData()
+            }
         }
+        .disabled(vm.viewStatus == .loading)
         .background(Color.background)
         .sheet(isPresented: $vm.showQuestSheet) {
             QuestDetailView(quest: vm.selectedQuest) {
-                vm.tappedQuestApprovalBtn()
+                vm.onQuestApprovalTapped()
             }
             .presentationDetents([.height(464)])
             .presentationDragIndicator(.hidden)
@@ -50,32 +57,54 @@ struct HomeView: View {
     }
     
     private var content: some View {
-        ScrollView {
-            LazyVStack(spacing: sectionSpacing) {
-                // TODO: 메인 배너 섹션
-                popularQuestSection
-                recommendQuestSection
-                largestRewardQuestSection
-                userRankingSection
-            }
+        LazyVStack(spacing: sectionSpacing) {
+            // TODO: 메인 배너 섹션
+            popularQuestSection
+            recommendQuestSection
+            largestRewardQuestSection
+            userRankingSection
         }
+        .redacted(reason: vm.viewStatus == .loading ? .placeholder : [])
+        .foregroundStyle(redactionReasons.contains(.placeholder) ? .clear: Color.gray500)
     }
     
     private var popularQuestSection: some View {
         TitleWithContentView(
             title: "이번 달 인기 퀘스트 모음",
             content:
-                LazyHGrid(rows: gridItem, alignment: .top, spacing: 9) {
-                    ForEach(vm.popularQuestList, id: \.id) { quest in
-                        QuestItemView(
-                            quest: quest,
-                            style: PopularStyle(repeatType: RepeatType(rawValue: quest.target.lowercased()) ?? RepeatType.daily),
-                            tagTitle: String(quest.totalRewardXP())+"XP") {
-                                vm.tappedQuestBtn(quest: quest)
+                VStack(spacing: 26) {
+                    TabView(selection: $vm.selectedPopularTabIndex) {
+                        ForEach(Array(vm.popularQuestList.chunks(of: vm.popularChunkSize).enumerated()), id: \.offset) { idx, chunk in
+                            LazyHGrid(rows: gridItem, alignment: .top, spacing: 9) {
+                                ForEach(chunk) { quest in
+                                    QuestItemView(
+                                        quest: quest,
+                                        style: PopularStyle(repeatType: RepeatType(rawValue: quest.target.lowercased()) ?? RepeatType.daily),
+                                        tagTitle: String(quest.totalRewardXP()) + "XP"
+                                    ) {
+                                        vm.onQuestTapped(quest: quest)
+                                    }
+                                }
                             }
+                            .padding(.horizontal, horizontalPadding)
+                            .tag(idx)
+                        }
+                    }
+                    .frame(height: 450)
+                    .tabViewStyle(.page(indexDisplayMode: .never))
+                    
+                    HStack(spacing: 4) {
+                        let pageCount = Int(vm.popularQuestList.count / vm.popularChunkSize)
+                        if pageCount >= 2 {
+                            ForEach(0..<Int(pageCount), id: \.self) { circleIdx in
+                                Circle()
+                                    .frame(width: 10, height: 10)
+                                    .foregroundStyle(circleIdx == vm.selectedPopularTabIndex ? Color.gray500 : Color.gray100)
+                                    .animation(.default, value: circleIdx)
+                            }
+                        }
                     }
                 }
-                .padding(.horizontal, horizontalPadding)
         )
     }
     
@@ -89,7 +118,7 @@ struct HomeView: View {
                             QuestItemView(
                                 quest: quest,
                                 style: RecommendStyle()) {
-                                    vm.tappedQuestBtn(quest: quest)
+                                    vm.onQuestTapped(quest: quest)
                                 }
                         }
                     }
@@ -117,13 +146,14 @@ struct HomeView: View {
                         height: 30,
                         hasBottomLine: false
                     )
+                    // TODO: (디자인 대기 중) 퀘스트 타입에 따라 다르게 보여줘야함
                     ForEach(vm.largestRewardQuestList[vm.selectedXpStat, default: []].prefix(3), id: \.id) { quest in
                         QuestItemView(
                             quest: quest,
                             style: UncompletedStyle(),
                             tagTitle: String(quest.totalRewardXP())+"XP"
                         ) {
-                            vm.tappedQuestBtn(quest: quest)
+                            vm.onQuestTapped(quest: quest)
                         }
                     }
                 }
@@ -156,4 +186,12 @@ struct HomeView: View {
 
 #Preview {
     HomeView()
+}
+
+extension Array {
+    func chunks(of chunkSize: Int) -> [[Element]] {
+        stride(from: 0, to: count, by: chunkSize).map {
+            Array(self[$0..<Swift.min($0 + chunkSize, count)])
+        }
+    }
 }

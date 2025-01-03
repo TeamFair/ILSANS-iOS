@@ -11,7 +11,8 @@ struct Quest: Codable {
     let missionTitle: String
     let status: String
     let creatorRole: String
-    let imageId: String?
+    let imageId, mainImageId: String?
+    let popularYn: Bool
     let rewardList: [Reward]
     let type: String
     let target: String
