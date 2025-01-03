@@ -8,22 +8,37 @@
 import SwiftUI
 
 struct HomeView: View {
-    @StateObject var vm: HomeViewModel = HomeViewModel()
+    @StateObject var vm: HomeViewModel = HomeViewModel(questNetwork: QuestNetwork())
     @EnvironmentObject var sharedState: SharedState
+    @Environment(\.redactionReasons) var redactionReasons
     
     private let gridItem = [GridItem(), GridItem()]
-    private let horizontalPadding: CGFloat = 20
-    private let sectionSpacing: CGFloat = 36
+    
+    private struct LayoutConstants {
+        static let sectionSpacing: CGFloat = 36
+        static let vStackSpacing: CGFloat = 26
+        static let lazyHGridSpacing: CGFloat = 9
+        static let horizontalPadding: CGFloat = 20
+        static let tabViewHeight: CGFloat = 450
+        static let paginationSpacing: CGFloat = 4
+        static let circleSize: CGFloat = 10
+    }
     
     var body: some View {
-        VStack(spacing: 23) {
-            header
-            content
+        ScrollView {
+            VStack(spacing: 23) {
+                header
+                content
+            }
         }
+        .refreshable {
+            await vm.loadInitialData()
+        }
+        .disabled(vm.viewStatus == .loading)
         .background(Color.background)
         .sheet(isPresented: $vm.showQuestSheet) {
             QuestDetailView(quest: vm.selectedQuest) {
-                vm.tappedQuestApprovalBtn()
+                vm.onQuestApprovalTapped()
             }
             .presentationDetents([.height(464)])
             .presentationDragIndicator(.hidden)
@@ -46,37 +61,90 @@ struct HomeView: View {
                     .frame(width: 36, height: 36)
             }
         }
-        .padding(.horizontal, horizontalPadding)
+        .padding(.horizontal, LayoutConstants.horizontalPadding)
     }
     
     private var content: some View {
-        ScrollView {
-            LazyVStack(spacing: sectionSpacing) {
-                // TODO: 메인 배너 섹션
-                popularQuestSection
-                recommendQuestSection
-                largestRewardQuestSection
-                userRankingSection
-            }
+        LazyVStack(spacing: LayoutConstants.sectionSpacing) {
+            // TODO: 메인 배너 섹션
+            popularQuestSection
+            recommendQuestSection
+            largestRewardQuestSection
+            userRankingSection
         }
+        .redacted(reason: vm.viewStatus == .loading ? .placeholder : [])
+        .foregroundStyle(redactionReasons.contains(.placeholder) ? .clear: Color.gray500)
     }
     
     private var popularQuestSection: some View {
         TitleWithContentView(
             title: "이번 달 인기 퀘스트 모음",
-            content:
-                LazyHGrid(rows: gridItem, alignment: .top, spacing: 9) {
-                    ForEach(vm.popularQuestList, id: \.id) { quest in
-                        QuestItemView(
-                            quest: quest,
-                            style: PopularStyle(repeatType: RepeatType(rawValue: quest.target.lowercased()) ?? RepeatType.daily),
-                            tagTitle: String(quest.totalRewardXP())+"XP") {
-                                vm.tappedQuestBtn(quest: quest)
-                            }
-                    }
-                }
-                .padding(.horizontal, horizontalPadding)
+            content: popularQuestSectionContent
         )
+    }
+    
+    @ViewBuilder
+    private var popularQuestSectionContent: some View {
+        if vm.popularQuestList.count <= vm.popularChunkSize {
+            singlePageContent
+        } else {
+            multiPageContent
+        }
+    }
+    
+    private var singlePageContent: some View {
+        LazyHGrid(rows: gridItem, alignment: .top, spacing: LayoutConstants.lazyHGridSpacing) {
+            ForEach(vm.popularQuestList) { quest in
+                QuestItemView(
+                    quest: quest,
+                    style: PopularStyle(repeatType: RepeatType(rawValue: quest.target.lowercased()) ?? .daily),
+                    tagTitle: "\(quest.totalRewardXP())XP"
+                ) {
+                    vm.onQuestTapped(quest: quest)
+                }
+            }
+        }
+        .padding(.horizontal, LayoutConstants.horizontalPadding)
+    }
+    
+    private var multiPageContent: some View {
+        VStack(spacing: LayoutConstants.vStackSpacing) {
+            TabView(selection: $vm.selectedPopularTabIndex) {
+                ForEach(vm.paginatedPopularQuests.indices, id: \.self) { pageIndex in
+                    LazyHGrid(rows: gridItem, alignment: .top, spacing: LayoutConstants.lazyHGridSpacing) {
+                        ForEach(vm.paginatedPopularQuests[pageIndex]) { quest in
+                            QuestItemView(
+                                quest: quest,
+                                style: PopularStyle(repeatType: RepeatType(rawValue: quest.target.lowercased()) ?? .daily),
+                                tagTitle: "\(quest.totalRewardXP())XP"
+                            ) {
+                                vm.onQuestTapped(quest: quest)
+                            }
+                        }
+                    }
+                    .padding(.horizontal, LayoutConstants.horizontalPadding)
+                    .tag(pageIndex)
+                }
+            }
+            .frame(height: LayoutConstants.tabViewHeight)
+            .tabViewStyle(.page(indexDisplayMode: .never))
+            
+            paginationIndicator
+        }
+    }
+    
+    private var paginationIndicator: some View {
+        HStack(spacing: LayoutConstants.paginationSpacing) {
+            let pageCount = Int(vm.popularQuestList.count / vm.popularChunkSize)
+            if pageCount >= 2 {
+                ForEach(0..<pageCount, id: \.self) { index in
+                    Circle()
+                        .frame(width: LayoutConstants.circleSize, height: LayoutConstants.circleSize)
+                        .foregroundStyle(index == vm.selectedPopularTabIndex ? Color.gray500 : Color.gray100)
+                        .animation(.default, value: index)
+                }
+            }
+        }
     }
     
     private var recommendQuestSection: some View {
@@ -89,11 +157,11 @@ struct HomeView: View {
                             QuestItemView(
                                 quest: quest,
                                 style: RecommendStyle()) {
-                                    vm.tappedQuestBtn(quest: quest)
+                                    vm.onQuestTapped(quest: quest)
                                 }
                         }
                     }
-                    .padding(.horizontal, horizontalPadding)
+                    .padding(.horizontal, LayoutConstants.horizontalPadding)
                 }
                 .scrollIndicators(.hidden)
         )
@@ -113,17 +181,18 @@ struct HomeView: View {
                 Group {
                     StatHeaderView(
                         selectedXpStat: $vm.selectedXpStat,
-                        horizontalPadding: horizontalPadding,
+                        horizontalPadding: LayoutConstants.horizontalPadding,
                         height: 30,
                         hasBottomLine: false
                     )
+                    // TODO: (디자인 대기 중) 퀘스트 타입에 따라 다르게 보여줘야함
                     ForEach(vm.largestRewardQuestList[vm.selectedXpStat, default: []].prefix(3), id: \.id) { quest in
                         QuestItemView(
                             quest: quest,
                             style: UncompletedStyle(),
                             tagTitle: String(quest.totalRewardXP())+"XP"
                         ) {
-                            vm.tappedQuestBtn(quest: quest)
+                            vm.onQuestTapped(quest: quest)
                         }
                     }
                 }
@@ -147,7 +216,7 @@ struct HomeView: View {
                         }
                     }
                     .padding(.bottom, 72)
-                    .padding(.horizontal, horizontalPadding)
+                    .padding(.horizontal, LayoutConstants.horizontalPadding)
                 }
                 .scrollIndicators(.never)
         )
@@ -156,4 +225,12 @@ struct HomeView: View {
 
 #Preview {
     HomeView()
+}
+
+extension Array {
+    func chunks(of chunkSize: Int) -> [[Element]] {
+        stride(from: 0, to: count, by: chunkSize).map {
+            Array(self[$0..<Swift.min($0 + chunkSize, count)])
+        }
+    }
 }
