@@ -13,18 +13,26 @@ struct HomeView: View {
     @Environment(\.redactionReasons) var redactionReasons
     
     private let gridItem = [GridItem(), GridItem()]
-    private let horizontalPadding: CGFloat = 20
-    private let sectionSpacing: CGFloat = 36
+    
+    private struct LayoutConstants {
+        static let sectionSpacing: CGFloat = 36
+        static let vStackSpacing: CGFloat = 26
+        static let lazyHGridSpacing: CGFloat = 9
+        static let horizontalPadding: CGFloat = 20
+        static let tabViewHeight: CGFloat = 450
+        static let paginationSpacing: CGFloat = 4
+        static let circleSize: CGFloat = 10
+    }
     
     var body: some View {
-        VStack(spacing: 23) {
-            ScrollView {
+        ScrollView {
+            VStack(spacing: 23) {
                 header
                 content
             }
-            .refreshable {
-                await vm.loadInitialData()
-            }
+        }
+        .refreshable {
+            await vm.loadInitialData()
         }
         .disabled(vm.viewStatus == .loading)
         .background(Color.background)
@@ -53,11 +61,11 @@ struct HomeView: View {
                     .frame(width: 36, height: 36)
             }
         }
-        .padding(.horizontal, horizontalPadding)
+        .padding(.horizontal, LayoutConstants.horizontalPadding)
     }
     
     private var content: some View {
-        LazyVStack(spacing: sectionSpacing) {
+        LazyVStack(spacing: LayoutConstants.sectionSpacing) {
             // TODO: 메인 배너 섹션
             popularQuestSection
             recommendQuestSection
@@ -71,41 +79,72 @@ struct HomeView: View {
     private var popularQuestSection: some View {
         TitleWithContentView(
             title: "이번 달 인기 퀘스트 모음",
-            content:
-                VStack(spacing: 26) {
-                    TabView(selection: $vm.selectedPopularTabIndex) {
-                        ForEach(Array(vm.popularQuestList.chunks(of: vm.popularChunkSize).enumerated()), id: \.offset) { idx, chunk in
-                            LazyHGrid(rows: gridItem, alignment: .top, spacing: 9) {
-                                ForEach(chunk) { quest in
-                                    QuestItemView(
-                                        quest: quest,
-                                        style: PopularStyle(repeatType: RepeatType(rawValue: quest.target.lowercased()) ?? RepeatType.daily),
-                                        tagTitle: String(quest.totalRewardXP()) + "XP"
-                                    ) {
-                                        vm.onQuestTapped(quest: quest)
-                                    }
-                                }
-                            }
-                            .padding(.horizontal, horizontalPadding)
-                            .tag(idx)
-                        }
-                    }
-                    .frame(height: 450)
-                    .tabViewStyle(.page(indexDisplayMode: .never))
-                    
-                    HStack(spacing: 4) {
-                        let pageCount = Int(vm.popularQuestList.count / vm.popularChunkSize)
-                        if pageCount >= 2 {
-                            ForEach(0..<Int(pageCount), id: \.self) { circleIdx in
-                                Circle()
-                                    .frame(width: 10, height: 10)
-                                    .foregroundStyle(circleIdx == vm.selectedPopularTabIndex ? Color.gray500 : Color.gray100)
-                                    .animation(.default, value: circleIdx)
-                            }
-                        }
-                    }
-                }
+            content: popularQuestSectionContent
         )
+    }
+    
+    @ViewBuilder
+    private var popularQuestSectionContent: some View {
+        if vm.popularQuestList.count <= vm.popularChunkSize {
+            singlePageContent
+        } else {
+            multiPageContent
+        }
+    }
+    
+    private var singlePageContent: some View {
+        LazyHGrid(rows: gridItem, alignment: .top, spacing: LayoutConstants.lazyHGridSpacing) {
+            ForEach(vm.popularQuestList) { quest in
+                QuestItemView(
+                    quest: quest,
+                    style: PopularStyle(repeatType: RepeatType(rawValue: quest.target.lowercased()) ?? .daily),
+                    tagTitle: "\(quest.totalRewardXP())XP"
+                ) {
+                    vm.onQuestTapped(quest: quest)
+                }
+            }
+        }
+        .padding(.horizontal, LayoutConstants.horizontalPadding)
+    }
+    
+    private var multiPageContent: some View {
+        VStack(spacing: LayoutConstants.vStackSpacing) {
+            TabView(selection: $vm.selectedPopularTabIndex) {
+                ForEach(vm.paginatedPopularQuests.indices, id: \.self) { pageIndex in
+                    LazyHGrid(rows: gridItem, alignment: .top, spacing: LayoutConstants.lazyHGridSpacing) {
+                        ForEach(vm.paginatedPopularQuests[pageIndex]) { quest in
+                            QuestItemView(
+                                quest: quest,
+                                style: PopularStyle(repeatType: RepeatType(rawValue: quest.target.lowercased()) ?? .daily),
+                                tagTitle: "\(quest.totalRewardXP())XP"
+                            ) {
+                                vm.onQuestTapped(quest: quest)
+                            }
+                        }
+                    }
+                    .padding(.horizontal, LayoutConstants.horizontalPadding)
+                    .tag(pageIndex)
+                }
+            }
+            .frame(height: LayoutConstants.tabViewHeight)
+            .tabViewStyle(.page(indexDisplayMode: .never))
+            
+            paginationIndicator
+        }
+    }
+    
+    private var paginationIndicator: some View {
+        HStack(spacing: LayoutConstants.paginationSpacing) {
+            let pageCount = Int(vm.popularQuestList.count / vm.popularChunkSize)
+            if pageCount >= 2 {
+                ForEach(0..<pageCount, id: \.self) { index in
+                    Circle()
+                        .frame(width: LayoutConstants.circleSize, height: LayoutConstants.circleSize)
+                        .foregroundStyle(index == vm.selectedPopularTabIndex ? Color.gray500 : Color.gray100)
+                        .animation(.default, value: index)
+                }
+            }
+        }
     }
     
     private var recommendQuestSection: some View {
@@ -122,7 +161,7 @@ struct HomeView: View {
                                 }
                         }
                     }
-                    .padding(.horizontal, horizontalPadding)
+                    .padding(.horizontal, LayoutConstants.horizontalPadding)
                 }
                 .scrollIndicators(.hidden)
         )
@@ -142,7 +181,7 @@ struct HomeView: View {
                 Group {
                     StatHeaderView(
                         selectedXpStat: $vm.selectedXpStat,
-                        horizontalPadding: horizontalPadding,
+                        horizontalPadding: LayoutConstants.horizontalPadding,
                         height: 30,
                         hasBottomLine: false
                     )
@@ -177,7 +216,7 @@ struct HomeView: View {
                         }
                     }
                     .padding(.bottom, 72)
-                    .padding(.horizontal, horizontalPadding)
+                    .padding(.horizontal, LayoutConstants.horizontalPadding)
                 }
                 .scrollIndicators(.never)
         )

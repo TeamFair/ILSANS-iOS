@@ -39,7 +39,9 @@ final class HomeViewModel: ObservableObject {
     @Published var selectedQuest: QuestViewModelItem = .mockData
     @Published var selectedPopularTabIndex: Int = 0
     let popularChunkSize: Int = 4
-    
+    var paginatedPopularQuests: [[QuestViewModelItem]] {
+        popularQuestList.chunks(of: popularChunkSize)
+    }
     @Published var showSubmitRouterView: Bool = false {
         didSet {
             // TODO: 해당 섹션 데이터만 다시 불러오도록 수정
