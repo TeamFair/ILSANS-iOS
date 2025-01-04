@@ -10,6 +10,8 @@ import SwiftUI
 @main
 struct ILSANGApp: App {
     @AppStorage("isLogin") var isLogin = Bool()
+    
+    @State private var isTutorialVisible = Bool()
     @State private var isSplashScreenVisible = true
     
     init() {
@@ -25,8 +27,16 @@ struct ILSANGApp: App {
                     LoginView(vm: LoginViewModel())
                 } else {
                     MainTabView()
-                }
+                        .fullScreenCover(isPresented: $isTutorialVisible, content: {
+                            TutorialView()
+                        })
+                    }
             }
+            .onChange(of: isLogin, { _, newValue in // 로그인 후 튜토리얼 UI 표시
+                if newValue {
+                    isTutorialVisible = true
+                }
+            })
             .task {
                 await runAppStartup()
             }
