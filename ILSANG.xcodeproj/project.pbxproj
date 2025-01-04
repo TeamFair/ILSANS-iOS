@@ -30,10 +30,12 @@
 		6044B7352C3442E6002C13A0 /* NetworkError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6044B7342C3442E6002C13A0 /* NetworkError.swift */; };
 		604687A32D1FC32E0056E394 /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 604687A22D1FC32E0056E394 /* HomeViewModel.swift */; };
 		604687A52D1FC36A0056E394 /* TitleWithContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 604687A42D1FC36A0056E394 /* TitleWithContentView.swift */; };
-		604687AC2D213B890056E394 /* StatHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 604687AB2D213B890056E394 /* StatHeaderView.swift */; };
-		604687AE2D216EAC0056E394 /* QuestStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 604687AD2D216EAC0056E394 /* QuestStyle.swift */; };
 		604687A82D1FD9E70056E394 /* CGFloat++.swift in Sources */ = {isa = PBXBuildFile; fileRef = 604687A72D1FD9E70056E394 /* CGFloat++.swift */; };
 		604687AA2D1FDA090056E394 /* CarouselAutoSlideView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 604687A92D1FDA090056E394 /* CarouselAutoSlideView.swift */; };
+		604687AC2D213B890056E394 /* StatHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 604687AB2D213B890056E394 /* StatHeaderView.swift */; };
+		604687AE2D216EAC0056E394 /* QuestStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 604687AD2D216EAC0056E394 /* QuestStyle.swift */; };
+		605334552D298A1400599159 /* TutorialView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 605334542D298A1400599159 /* TutorialView.swift */; };
+		605334572D29BE3600599159 /* TutorialViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 605334562D29BE3600599159 /* TutorialViewModel.swift */; };
 		605DA0C92C07097F00CC9450 /* ImagePreviewButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 605DA0C82C07097F00CC9450 /* ImagePreviewButton.swift */; };
 		605DA0CD2C070A0300CC9450 /* Camera.swift in Sources */ = {isa = PBXBuildFile; fileRef = 605DA0CC2C070A0300CC9450 /* Camera.swift */; };
 		605DA0CF2C07118900CC9450 /* SubmitRouterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 605DA0CE2C07118900CC9450 /* SubmitRouterView.swift */; };
@@ -162,10 +164,12 @@
 		6044B7342C3442E6002C13A0 /* NetworkError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkError.swift; sourceTree = "<group>"; };
 		604687A22D1FC32E0056E394 /* HomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
 		604687A42D1FC36A0056E394 /* TitleWithContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitleWithContentView.swift; sourceTree = "<group>"; };
-		604687AB2D213B890056E394 /* StatHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatHeaderView.swift; sourceTree = "<group>"; };
-		604687AD2D216EAC0056E394 /* QuestStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestStyle.swift; sourceTree = "<group>"; };
 		604687A72D1FD9E70056E394 /* CGFloat++.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CGFloat++.swift"; sourceTree = "<group>"; };
 		604687A92D1FDA090056E394 /* CarouselAutoSlideView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarouselAutoSlideView.swift; sourceTree = "<group>"; };
+		604687AB2D213B890056E394 /* StatHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatHeaderView.swift; sourceTree = "<group>"; };
+		604687AD2D216EAC0056E394 /* QuestStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestStyle.swift; sourceTree = "<group>"; };
+		605334542D298A1400599159 /* TutorialView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TutorialView.swift; sourceTree = "<group>"; };
+		605334562D29BE3600599159 /* TutorialViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TutorialViewModel.swift; sourceTree = "<group>"; };
 		605DA0C82C07097F00CC9450 /* ImagePreviewButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePreviewButton.swift; sourceTree = "<group>"; };
 		605DA0CC2C070A0300CC9450 /* Camera.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Camera.swift; sourceTree = "<group>"; };
 		605DA0CE2C07118900CC9450 /* SubmitRouterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubmitRouterView.swift; sourceTree = "<group>"; };
@@ -351,6 +355,15 @@
 			path = MyPageChallenge;
 			sourceTree = "<group>";
 		};
+		605334532D298A0300599159 /* Tutorial */ = {
+			isa = PBXGroup;
+			children = (
+				605334542D298A1400599159 /* TutorialView.swift */,
+				605334562D29BE3600599159 /* TutorialViewModel.swift */,
+			);
+			path = Tutorial;
+			sourceTree = "<group>";
+		};
 		605DA0D42C07122200CC9450 /* Extension */ = {
 			isa = PBXGroup;
 			children = (
@@ -458,6 +471,7 @@
 		607FCBDE2BFA693F00BB2D04 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				605334532D298A0300599159 /* Tutorial */,
 				60B8B9E62BF9EEF1005F6DE3 /* ILSANGApp.swift */,
 				A1AB3D5E2C113A7D001EB9D8 /* Login */,
 				607FCBD22BFA645100BB2D04 /* Router */,
@@ -889,6 +903,7 @@
 				604687AA2D1FDA090056E394 /* CarouselAutoSlideView.swift in Sources */,
 				605DA0C92C07097F00CC9450 /* ImagePreviewButton.swift in Sources */,
 				600211E82C1EED40000CC02E /* Emoji.swift in Sources */,
+				605334572D29BE3600599159 /* TutorialViewModel.swift in Sources */,
 				A18EB9B22C26B62E00405D56 /* LogoutNetwork.swift in Sources */,
 				6044B7332C33F754002C13A0 /* ErrorView.swift in Sources */,
 				605DA0D32C0711E900CC9450 /* CameraViewModel.swift in Sources */,
@@ -943,6 +958,7 @@
 				607FCBE92BFE418600BB2D04 /* QuestViewModel.swift in Sources */,
 				60C6B4E12C2D1C0100926C0E /* SubmitAlertViewModel.swift in Sources */,
 				607FCBE72BFD12B100BB2D04 /* QuestViewModelItem.swift in Sources */,
+				605334552D298A1400599159 /* TutorialView.swift in Sources */,
 				A19628692C0775A70037C53A /* Setting.swift in Sources */,
 				604687A82D1FD9E70056E394 /* CGFloat++.swift in Sources */,
 				A10EF9392C87292C003D78A2 /* OpenSourceInfoView.swift in Sources */,
