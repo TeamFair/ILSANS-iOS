@@ -12,7 +12,7 @@ struct Quest: Codable {
     let status: String
     let creatorRole: String
     let imageId, mainImageId: String?
-    let popularYn: Bool
+    let popularYn: Bool? // v1.3.0 이후 옵셔널 해제
     let rewardList: [Reward]
     let type: String
     let target: String

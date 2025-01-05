@@ -14,7 +14,7 @@ struct LoginView: View {
         ZStack {
             VStack(spacing: 28) {
                 titleView
-                CarouselAutoSlideView(images: [.slide0, .slide1, .slide2])
+                CarouselAutoSlideView(images: [.slide0, .slide1, .slide2, .slide3, .slide4])
                     .shadow(color: .primaryPurple.opacity(0.2), radius: 10, x: 0, y: 4)
             }
             .offset(y: -80)

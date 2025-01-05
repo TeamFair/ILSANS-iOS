@@ -71,6 +71,7 @@ final class Network {
         case .success(let res):
             return .success(res)
         case .failure(let error):
+            Log(error.localizedDescription)
             return .failure(error)
         }
     }
