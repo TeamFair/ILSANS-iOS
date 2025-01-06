@@ -45,5 +45,5 @@ struct MainTabView: View {
 
 class SharedState: ObservableObject {
     @Published var selectedTab: Tab = .home
-    @Published var selectedXpStat: XpStat = .intellect
+    @Published var selectedXpStat: XpStat = .strength
 }

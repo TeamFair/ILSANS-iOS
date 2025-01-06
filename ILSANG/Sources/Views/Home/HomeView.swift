@@ -25,16 +25,23 @@ struct HomeView: View {
     }
     
     var body: some View {
-        ScrollView {
-            VStack(spacing: 23) {
-                header
-                content
+        Group {
+            switch vm.viewStatus {
+            case .loading, .loaded:
+                ScrollView {
+                    VStack(spacing: 23) {
+                        header
+                        content
+                    }
+                }
+                .refreshable {
+                    await vm.loadInitialData()
+                }
+                .disabled(vm.viewStatus == .loading)
+            case .error:
+                networkErrorView
             }
         }
-        .refreshable {
-            await vm.loadInitialData()
-        }
-        .disabled(vm.viewStatus == .loading)
         .background(Color.background)
         .sheet(isPresented: $vm.showQuestSheet) {
             QuestDetailView(quest: vm.selectedQuest) {
@@ -67,11 +74,20 @@ struct HomeView: View {
     private var content: some View {
         LazyVStack(spacing: LayoutConstants.sectionSpacing) {
             // TODO: 메인 배너 섹션
-            popularQuestSection
-            recommendQuestSection
-            largestRewardQuestSection
-            userRankingSection
+            if vm.showPopularRewardQuest {
+                popularQuestSection
+            }
+            if vm.showRecommendRewardQuest {
+                recommendQuestSection
+            }
+            if vm.showLargestRewardQuest {
+                largestRewardQuestSection
+            }
+            if vm.showRankList {
+                userRankingSection
+            }
         }
+        .padding(.bottom, 72)
         .redacted(reason: vm.viewStatus == .loading ? .placeholder : [])
         .foregroundStyle(redactionReasons.contains(.placeholder) ? .clear: Color.gray500)
     }
@@ -215,11 +231,21 @@ struct HomeView: View {
                             RankingItemView(idx: idx + 1, rank: rank, style: .vertical)
                         }
                     }
-                    .padding(.bottom, 72)
                     .padding(.horizontal, LayoutConstants.horizontalPadding)
                 }
                 .scrollIndicators(.never)
         )
+    }
+    
+    private var networkErrorView: some View {
+        ErrorView(
+            systemImageName: "wifi.exclamationmark",
+            title: "네트워크 연결 상태를 확인해주세요",
+            subTitle: "네트워크 연결 상태가 좋지 않아\n정보를 불러올 수 없어요 ",
+            emoticon: "🥲"
+        ) {
+            Task { await vm.loadInitialData() }
+        }
     }
 }
 

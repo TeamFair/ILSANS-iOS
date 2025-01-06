@@ -88,7 +88,7 @@ class QuestViewModel: ObservableObject {
         threshold: 48,
         loadPage: { [weak self] page in
             guard let self = self else { return ([], 0) }
-            return await loadQuestListWithImage(page: page, size: 30, status: .default)
+            return await loadQuestListWithImage(page: page, size: 50, status: .default)
         }
     )
     

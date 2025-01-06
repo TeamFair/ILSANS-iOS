@@ -152,7 +152,7 @@ struct RecommendQuestView<Style: QuestStyleProtocol>: View {
         Button(action: { quest.action?() }) {
             VStack(alignment: .leading, spacing: 0) {
                 Text(quest.title.forceCharWrapping)
-                    .font(.system(size: 13, weight: .bold))
+                    .font(.system(size: 15, weight: .bold))
                     .multilineTextAlignment(.leading)
                     .lineLimit(2)
                     .lineSpacing(4)

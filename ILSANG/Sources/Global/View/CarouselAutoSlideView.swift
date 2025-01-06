@@ -81,7 +81,7 @@ final class CarouselAutoSlideViewModel: ObservableObject {
     @Published var currentIndex: Int = 1
     
     private var slideTimer: Timer?
-    private let slideTimeInterval: TimeInterval = 3.0
+    private let slideTimeInterval: TimeInterval = 2.5
     private let transitionDelay: TimeInterval = 0.4
     
     init(images: [UIImage]) {

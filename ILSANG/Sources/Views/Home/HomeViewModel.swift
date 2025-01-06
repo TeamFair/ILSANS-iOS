@@ -52,6 +52,11 @@ final class HomeViewModel: ObservableObject {
             }
         }
     }
+    var errorCnt = 0
+    @Published var showLargestRewardQuest: Bool = true
+    @Published var showRecommendRewardQuest: Bool = true
+    @Published var showPopularRewardQuest: Bool = true
+    @Published var showRankList = false
     
     private let questNetwork: QuestNetwork
     
@@ -62,14 +67,18 @@ final class HomeViewModel: ObservableObject {
         }
     }
     
+    @MainActor
     func loadInitialData() async {
-        await changeViewStatus(.loading)
+        self.errorCnt = 0
+        changeViewStatus(.loading)
         await withThrowingTaskGroup(of: Void.self) { group in
             group.addTask {
                 do {
                     try await self.loadPopularQuestList()
                 } catch {
                     Log("Failed to load popular quests: \(error.localizedDescription)")
+                    self.errorCnt += 1
+                    self.showPopularRewardQuest = false
                 }
             }
             group.addTask {
@@ -77,6 +86,8 @@ final class HomeViewModel: ObservableObject {
                     try await self.loadRecommendQuestList()
                 } catch {
                     Log("Failed to load recommend quests: \(error.localizedDescription)")
+                    self.errorCnt += 1
+                    self.showRecommendRewardQuest = false
                 }
             }
             group.addTask {
@@ -84,10 +95,22 @@ final class HomeViewModel: ObservableObject {
                     try await self.loadLargeRewardQuestList()
                 } catch {
                     Log("Failed to load large reward quests: \(error.localizedDescription)")
+                    self.errorCnt += 1
+                    self.showLargestRewardQuest = false
                 }
             }
+            
+            // TODO: 랭킹 API 호출
         }
-        await changeViewStatus(.loaded)
+        if errorCnt >= 3 {
+            // changeViewStatus(.error) // v1.3.0 이후 적용
+            // return
+            try? await loadUncompleteQuestList()
+            self.showRecommendRewardQuest = true
+            self.showPopularRewardQuest = true
+
+        }
+        changeViewStatus(.loaded)
     }
     
     @MainActor
@@ -127,6 +150,26 @@ final class HomeViewModel: ObservableObject {
                 await cacheImages(for: &largestRewardQuestList[stat, default: []], getWriterImage: true)
             }
         case .failure(let error):
+            throw error
+        }
+    }
+    
+    @MainActor
+    func loadUncompleteQuestList() async throws {
+        let res = await questNetwork.getDefaultQuest(page: 0, size: 20)
+        
+        switch res {
+        case .success(let response):
+            if response.data.count >= 9 {
+                self.popularQuestList = Array(response.data.map { QuestViewModelItem(quest: $0) }[0..<9])
+                await cacheImages(for: &popularQuestList, getWriterImage: true)
+            }
+            if response.data.count >= 20 {
+                self.recommendQuestList = Array(response.data.map { QuestViewModelItem(quest: $0) }[10..<20])
+                await cacheImages(for: &recommendQuestList, getWriterImage: true)
+            }
+        case .failure(let error):
+            self.changeViewStatus(.error) // v1.3.0 이후 제거
             throw error
         }
     }
