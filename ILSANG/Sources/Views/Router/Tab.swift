@@ -6,6 +6,7 @@
 //
 
 enum Tab: CaseIterable {
+    case home
     case quest
     case approval
     case ranking
@@ -13,6 +14,8 @@ enum Tab: CaseIterable {
     
     var icon: String {
         switch self {
+        case .home:
+            return "home"
         case .quest:
             return "quest"
         case .approval:
@@ -30,6 +33,8 @@ enum Tab: CaseIterable {
     
     var title: String {
         switch self {
+        case .home:
+            return "홈"
         case .quest:
             return "퀘스트"
         case .approval:

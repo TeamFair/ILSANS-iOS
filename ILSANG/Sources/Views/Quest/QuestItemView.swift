@@ -7,93 +7,176 @@
 
 import SwiftUI
 
-struct QuestItemView: View {
-    let quest: QuestViewModelItem
-    let status: QuestStatus
-    private let separatorOffset = 72.0
+/// 공통 데이터 구조
+struct QuestCommonModel {
+    let title: String
+    let writer: String
+    let rewardDic: [XpStat: Int]
+    let writerImage: UIImage?
+    let image: UIImage?
+    let type: String
+    let target: String
+    let tagTitle: String?
+    let action: (() -> Void)?
+}
+
+// 공통 퀘스트 아이템 뷰
+struct QuestItemView<Style: QuestStyleProtocol>: View {
+    let quest: QuestCommonModel
+    let style: Style
+    
+    fileprivate struct Constants {
+        let separatorOffset = 72.0
+    }
+
+    init(quest: QuestViewModelItem, style: Style, tagTitle: String? = nil, action: @escaping () -> Void) {
+        self.quest = QuestCommonModel(
+            title: quest.missionTitle,
+            writer: quest.writer,
+            rewardDic: quest.rewardDic, 
+            writerImage: quest.image,
+            image: quest.image, 
+            type: quest.type,
+            target: quest.target,
+            tagTitle: tagTitle,
+            action: action
+        )
+        self.style = style
+    }
     
     var body: some View {
-        HStack(spacing: 0) {
-            Image(uiImage: quest.image ?? .logo)
-                .resizable()
-                .scaledToFill()
-                .frame(width: 60, height: 60)
-                .background(Color.badgeBlue)
-                .clipShape(Circle())
-                .padding(.leading, 20)
-                .padding(.trailing, 16)
-                .overlay(alignment: .top) {
-                    TagView(title: String(quest.totalRewardXP()) + "XP", tagStyle: .xp)
-                        .offset(x: 20, y: 2)
-                }
-            
-            VStack(alignment: .leading, spacing: 4) {
-                Text(quest.missionTitle.forceCharWrapping)
-                    .font(.system(size: 15, weight: .bold))
-                    .foregroundColor(.black)
-                    .frame(maxWidth: .infinity, alignment: .leading)
-                    .multilineTextAlignment(.leading)
-                    .lineLimit(2)
+        style.viewForQuest(quest: quest)
+    }
+}
+
+// 기본 스타일
+struct DefaultQuestView<Style: DefaultQuestStyleProtocol>: View {
+    let quest: QuestCommonModel
+    let style: Style
+    
+    var body: some View {
+        Button(action: { quest.action?() }) {
+            HStack(spacing: 0) {
+                // 이미지 및 태그 뷰
+                QuestImageWithTagView(
+                    image: quest.writerImage,
+                    tagTitle: quest.tagTitle ?? "",
+                    tagStyle: style.tagStyle ?? .xp,
+                    tagOffset: style.tagOffset, 
+                    imageSize: style.imageSize
+                )
+                .padding(.trailing, 20)
                 
-                Text(quest.writer)
-                    .font(.system(size: 13, weight: .regular))
-                    .foregroundColor(.gray400)
-                    .padding(.bottom, 4)
-                
-                if status == .uncompleted {
-                    HStack(spacing: 4) {
-                        ForEach(Array(XpStat.sortedStat), id: \.rawValue) { stat in
-                            let reward = quest.rewardDic[stat, default: 0]
-                            if reward > 0 {
-                                TagView(title: "\(reward)P", image: stat.image, tagStyle: .xpWithIcon)
-                            }
-                        }
-                    }
+                // 텍스트 정보
+                VStack(alignment: .leading, spacing: 4) {
+                    Text(quest.title.forceCharWrapping)
+                        .font(.system(size: 15, weight: .bold))
+                        .foregroundColor(.black)
+                        .lineLimit(2)
+                        .multilineTextAlignment(.leading)
+                    Text(quest.writer)
+                        .font(.system(size: 13, weight: .regular))
+                        .foregroundColor(.gray400)
+                        .padding(.bottom, 4)
+                    StatGridView(rewardDic: quest.rewardDic)
                 }
+                Spacer(minLength: 0)
+                style.trailingView()
             }
-            
-            Spacer(minLength: 4)
-            
-            Group {
-                switch status {
-                case .uncompleted:
-                    IconView(iconWidth: 6, size: .small, icon: .arrowRight, color: .gray)
-                        .padding(.trailing, 24)
-                case .completed:
-                    VStack(spacing: 7) {
-                        IconView(iconWidth: 13, size: .small, icon: .check, color: .green)
-                        Text("적립완료")
-                            .font(.system(size: 12, weight: .semibold))
-                            .multilineTextAlignment(.center)
-                            .foregroundColor(.green)
-                    }
-                    .frame(width: separatorOffset)
-                }
+            .padding(.vertical, 20)
+            .padding(.leading, 20)
+            .padding(.trailing, style.trailingPadding)
+            .background(style.backgroundColor)
+            .cornerRadius(12)
+            .overlay(alignment: .trailing) {
+                style.overlayView()
             }
+            .shadow(color: .shadow7D.opacity(0.05), radius: 20, x: 0, y: 10)
+            .padding(.horizontal, 20)
         }
-        .padding(.vertical, 24)
-        .background(.white)
-        .overlay(alignment: .trailing) {
-            if status == .completed {
-                VLine()
-                    .stroke(style: StrokeStyle(lineWidth: 0.5, dash: [3.3]))
-                    .frame(width: 0.5)
-                    .foregroundStyle(.gray200)
-                    .offset(x: -separatorOffset)
-                    .padding(.vertical, 12)
-            }
-        }
-        .disabled(status == .uncompleted)
-        .cornerRadius(status == .uncompleted ? 12 : 16)
-        .shadow(color: .shadow7D.opacity(0.05), radius: 20, x: 0, y: 10)
-        .padding(.horizontal, 20)
+        .disabled(style.isDisabled)
     }
 }
 
 
-#Preview {
-    VStack {
-        QuestItemView(quest: QuestViewModelItem.mockData, status: .completed)
-        QuestItemView(quest: QuestViewModelItem.mockData, status: .uncompleted)
+// Popular 스타일
+struct PopularQuestView<Style: QuestStyleProtocol>: View {
+    let quest: QuestCommonModel
+    let style: Style
+    
+    var body: some View {
+        Button(action: { quest.action?() }) {
+            VStack(alignment: .leading, spacing: 0) {
+                Image(uiImage: quest.image ?? .logo)
+                    .resizable()
+                    .scaledToFill()
+                    .frame(width: style.imageSize.width, height:  style.imageSize.height)
+                    .clipped()
+                    .overlay(alignment: .topTrailing) {
+                        if let tagTitle = RepeatType(rawValue: quest.target.lowercased())?.description {
+                            TagView(title: tagTitle, tagStyle: style.tagStyle ?? .xp)
+                                .offset(x: -style.tagOffset.x, y: style.tagOffset.y)
+                        }
+                    }
+                    .padding(.horizontal, -16)
+                    .padding(.bottom, 9)
+                Text(quest.title.forceCharWrapping)
+                    .font(.system(size: 15, weight: .bold))
+                    .multilineTextAlignment(.leading)
+                    .lineLimit(2)
+                    .lineSpacing(4)
+                    .foregroundColor(.black)
+                    .padding(.bottom, 4)
+                Text(quest.writer)
+                    .font(.system(size: 11, weight: .regular))
+                    .foregroundColor(.gray400)
+            }
+            .padding(.bottom, 16)
+            .padding(.horizontal, 16)
+            .frame(width:style.imageSize.width, height: 220, alignment: .top)
+            .background(
+                Rectangle()
+                    .foregroundStyle(style.backgroundColor)
+            )
+            .clipShape(RoundedRectangle(cornerRadius: 12))
+        }
+    }
+}
+
+// Recommend 스타일
+struct RecommendQuestView<Style: QuestStyleProtocol>: View {
+    let quest: QuestCommonModel
+    let style: Style
+
+    var body: some View {
+        Button(action: { quest.action?() }) {
+            VStack(alignment: .leading, spacing: 0) {
+                Text(quest.title.forceCharWrapping)
+                    .font(.system(size: 15, weight: .bold))
+                    .multilineTextAlignment(.leading)
+                    .lineLimit(2)
+                    .lineSpacing(4)
+                    .kerning(-0.3)
+                    .foregroundColor(.black)
+                    .padding(.bottom, 6)
+                Text(quest.writer)
+                    .font(.system(size: 10, weight: .regular))
+                    .foregroundColor(.gray400)
+                    .kerning(-0.3)
+                Spacer(minLength: 0)
+                Image(uiImage: quest.writerImage ?? .logo)
+                    .resizable()
+                    .scaledToFill()
+                    .frame(width: 64, height: 64)
+                    .background(Color.badgeBlue)
+                    .clipShape(Circle())
+            }
+            .padding(16)
+            .padding(.top, 4)
+            .frame(width: 152, height: 172, alignment: .leading)
+            .background(RoundedRectangle(cornerRadius: 12)
+                .fill(style.backgroundColor)
+            )
+        }
     }
 }

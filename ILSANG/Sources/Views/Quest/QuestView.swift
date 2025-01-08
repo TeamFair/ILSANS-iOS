@@ -8,14 +8,18 @@
 import SwiftUI
 
 struct QuestView: View {
-    @StateObject var vm: QuestViewModel = QuestViewModel(questNetwork: QuestNetwork())
-    @Namespace private var namespace
+    @StateObject var vm: QuestViewModel
+    @EnvironmentObject var sharedState: SharedState
 
+    init(initialXpStat: XpStat) {
+        _vm = StateObject(wrappedValue: QuestViewModel(questNetwork: QuestNetwork(), selectedXpStat: initialXpStat))
+    }
+    
     var body: some View {
         VStack(spacing: 0) {
             headerView
                 
-            if vm.selectedHeader == .uncompleted {
+            if vm.selectedHeader == .default || vm.selectedHeader == .repeat {
                 subHeaderView
             }
             
@@ -30,6 +34,9 @@ struct QuestView: View {
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .background(Color.background)
+        .onReceive(sharedState.$selectedXpStat) { newValue in
+            vm.selectedXpStat = newValue
+        }
         .sheet(isPresented: $vm.showQuestSheet) {
             QuestDetailView(quest: vm.selectedQuest) {
                 vm.tappedQuestApprovalBtn()
@@ -45,8 +52,9 @@ struct QuestView: View {
 }
 
 extension QuestView {
+    // 헤더 - 기본/반복/완료
     private var headerView: some View {
-        HStack(spacing: 15) {
+        HStack(spacing: 16) {
             ForEach(QuestStatus.allCases, id: \.headerText) { status in
                 Button {
                     vm.selectedHeader = status
@@ -63,55 +71,49 @@ extension QuestView {
         .padding(.horizontal, 20)
     }
     
+    // 서브헤더 - 5가지 스탯
     private var subHeaderView: some View {
-        HStack(spacing: 0) {
-            ForEach(XpStat.allCases, id: \.headerText) { xpStat in
-                Button {
-                    withAnimation(.easeInOut) {
-                        vm.selectedXpStat = xpStat
-                    }
-                } label: {
-                    Text(xpStat.headerText)
-                        .foregroundColor(xpStat == vm.selectedXpStat ? .gray500 : .gray300)
-                        .font(.system(size: 14, weight: xpStat == vm.selectedXpStat ? .semibold : .medium))
-                        .frame(height: 40)
-                }
-                .padding(.horizontal, 6)
-                .overlay(alignment: .bottom) {
-                    if xpStat == vm.selectedXpStat {
-                        Rectangle()
-                            .frame(height: 3)
-                            .foregroundStyle(.primaryPurple)
-                            .matchedGeometryEffect(id: "XpStat", in: namespace)
-                    }
-                }
-                .frame(maxWidth: .infinity)
-            }
-        }
-        .overlay(alignment: .bottom) {
-            Rectangle()
-                .frame(height: 1)
-                .foregroundStyle(.gray100)
-        }
+        StatHeaderView(
+            selectedXpStat: $vm.selectedXpStat,
+            horizontalPadding: 0,
+            height: 44,
+            hasBottomLine: true
+        )
     }
     
     private var questListView: some View {
         ScrollView {
             LazyVStack(spacing: 12) {
                 switch vm.selectedHeader {
-                case .uncompleted:
-                    ForEach(vm.filteredUncompletedQuestListByXpStat, id: \.id) { quest in
-                        Button {
+                case .default: // 미완료 퀘스트
+                    ForEach(vm.filteredDefaultQuestListByXpStat, id: \.id) { quest in
+                        QuestItemView(
+                            quest: quest,
+                            style: UncompletedStyle(),
+                            tagTitle: String(quest.totalRewardXP())+"XP"
+                        ) {
                             vm.tappedQuestBtn(quest: quest)
-                        } label: {
-                            QuestItemView(quest: quest, status: .uncompleted)
                         }
                     }
-                    
-                case .completed:
-                    ForEach(vm.itemListByStatus[.completed, default: []], id: \.id) { quest in
-                        QuestItemView(quest: quest, status: .completed)
+                case .repeat: // 미완료 반복 퀘스트
+                    ForEach(vm.filteredRepeatQuestListByXpStat, id: \.id) { quest in
+                        QuestItemView(
+                            quest: quest,
+                            style: RepeatStyle(repeatType: vm.selectedRepeatType),
+                            tagTitle: vm.selectedRepeatType.description
+                        ) {
+                            vm.tappedQuestBtn(quest: quest)
+                        }
                     }
+                case .completed: // 완료 퀘스트
+                    ForEach(vm.itemListByStatus[.completed, default: []], id: \.id) { quest in
+                        QuestItemView(
+                            quest: quest,
+                            style: CompletedStyle(),
+                            tagTitle: String(quest.totalRewardXP())+"XP"
+                        ) { }
+                    }
+                    
                     if vm.hasMorePage(status: .completed) {
                         ProgressView()
                             .onAppear {
@@ -122,11 +124,22 @@ extension QuestView {
                     }
                 }
             }
-            .padding(.top, vm.selectedHeader == .uncompleted ? 70 : 0)
+            .padding(.top, vm.selectedHeader == .default || vm.selectedHeader == .repeat ? 70 : 0)
             .overlay(alignment: .top) {
-                if vm.selectedHeader == .uncompleted {
-                    filterPickerView
+                Group {
+                    if (vm.selectedHeader == .default) {
+                        filterPickerDefaultView
+                    } else if (vm.selectedHeader == .repeat) {
+                        HStack(alignment: .top, spacing: 8) {
+                            filterPickerRepeatView
+                            filterPickerDefaultView
+                        }
+                    }
                 }
+                .padding(.top, 13)
+                .padding(.bottom, 16)
+                .padding(.trailing, 20)
+                .frame(maxWidth: .infinity, alignment: .trailing)
             }
             .padding(.bottom, 72)
         }
@@ -141,21 +154,20 @@ extension QuestView {
         }
     }
     
-    private var filterPickerView: some View {
-        PickerView<QuestFilter>(selection: $vm.selectedFilter)
-            .frame(maxWidth: .infinity, alignment: .trailing)
-            .padding(.trailing, 20)
-            .padding(.top, 13)
-            .padding(.bottom, 16)
+    private var filterPickerDefaultView: some View {
+        PickerView<QuestFilter>(selection: $vm.selectedFilter, width: 150)
+    }
+    
+    private var filterPickerRepeatView: some View {
+        PickerView<RepeatType>(selection: $vm.selectedRepeatType, width: 85)
     }
     
     private var questListEmptyView: some View {
         ErrorView(
             title: vm.selectedHeader.emptyTitle,
-            subTitle: vm.selectedHeader.emptySubTitle
-        ) {
-            Task { await vm.loadInitialData() }
-        }
+            subTitle: vm.selectedHeader.emptySubTitle,
+            showButton: false
+        )
     }
     
     private var networkErrorView: some View {
@@ -171,38 +183,5 @@ extension QuestView {
 }
 
 #Preview {
-    QuestView(vm: QuestViewModel(questNetwork: QuestNetwork()))
-}
-
-struct StatView: View {
-    let columns = [GridItem(.flexible(minimum: 60)), GridItem(.flexible(minimum: 60)), GridItem(.flexible(minimum: 60))]
-    let stats: [XpStat] = [.strength, .intellect, .sociability, .charm, .fun]
-    let dic: [XpStat: Int]
-    
-    var body: some View {
-        LazyVGrid(columns: columns, spacing: 8) {
-            ForEach(stats, id: \.self) { stat in
-                HStack {
-                    Text("\(stat.headerText) : \(dic[stat] ?? 0)P")
-                        .frame(height: 22, alignment: .leading)
-                        .font(.system(size: 15, weight: .semibold))
-                        .foregroundStyle(.primaryPurple)
-                    Spacer(minLength: 0)
-                }
-                .frame(maxWidth: .infinity)
-                .padding(.leading, 8)
-            }
-        }
-        .padding(.horizontal, 12)
-        .frame(height: 84)
-        .background(
-            RoundedRectangle(cornerRadius: 14)
-                .foregroundStyle(.primary100.opacity(0.5))
-        )
-    }
-}
-
-#Preview {
-    StatView(dic: [.charm: 225, .fun: 392, .sociability: 0])
-        .padding(.horizontal, 20)
+    QuestView(initialXpStat:  .charm)
 }

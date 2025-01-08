@@ -11,7 +11,16 @@ struct Quest: Codable {
     let missionTitle: String
     let status: String
     let creatorRole: String
-    let imageId: String?
+    let imageId, mainImageId: String?
+    let popularYn: Bool? // v1.3.0 이후 옵셔널 해제
     let rewardList: [Reward]
-    // let score: Int
+    let type: String
+    let target: String
+    let score: Int?
+}
+
+struct Reward: Codable {
+    let quantity: Int
+    let content: String?
+    let type: String
 }

@@ -269,7 +269,8 @@ struct StatPolygon: Shape {
         // 꼭짓점 좌표 계산
         let points = XpStat.allCases.enumerated().map { index, stat -> CGPoint in
             // stat 기본값 + 10, nil일 경우 10으로 고정
-            let value = CGFloat((xpStats[stat] ?? 10) == 0 ? 10 : (xpStats[stat]! + 10))
+            let statValue = xpStats[stat] ?? 0
+            let value = CGFloat(statValue == 0 ? 10 : (statValue + 10))
             let rawRatio = value / maxValue // 비율 계산
             let normalizedValue = max(min(rawRatio, 1.0), minRatio) // 비율을 최소값과 최대값 사이로 제한
             let angle = (CGFloat(index) / CGFloat(XpStat.allCases.count)) * 2 * .pi - .pi / 2
