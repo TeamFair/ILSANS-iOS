@@ -66,4 +66,12 @@ enum XpStat: String, CaseIterable, Identifiable {
     static var sortedStat: [XpStat] {
         return [.strength, .intellect, .fun, .charm, .sociability]
     }
+    
+    static let mockDataDic: [XpStat: Int] = [
+        .strength: 0,
+        .intellect: 0,
+        .fun: 40,
+        .charm: 20,
+        .sociability: 0
+    ]
 }

@@ -36,6 +36,8 @@
 		604687AE2D216EAC0056E394 /* QuestStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 604687AD2D216EAC0056E394 /* QuestStyle.swift */; };
 		605334552D298A1400599159 /* TutorialView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 605334542D298A1400599159 /* TutorialView.swift */; };
 		605334572D29BE3600599159 /* TutorialViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 605334562D29BE3600599159 /* TutorialViewModel.swift */; };
+		6053345C2D31182500599159 /* XpLevelCalculator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6053345B2D31182500599159 /* XpLevelCalculator.swift */; };
+		6053345F2D31272B00599159 /* MyPagePointSectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6053345E2D31272B00599159 /* MyPagePointSectionView.swift */; };
 		605DA0C92C07097F00CC9450 /* ImagePreviewButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 605DA0C82C07097F00CC9450 /* ImagePreviewButton.swift */; };
 		605DA0CD2C070A0300CC9450 /* Camera.swift in Sources */ = {isa = PBXBuildFile; fileRef = 605DA0CC2C070A0300CC9450 /* Camera.swift */; };
 		605DA0CF2C07118900CC9450 /* SubmitRouterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 605DA0CE2C07118900CC9450 /* SubmitRouterView.swift */; };
@@ -92,8 +94,8 @@
 		A13BD3932CA182A0003FF9BE /* XpStats.swift in Sources */ = {isa = PBXBuildFile; fileRef = A13BD3922CA1829A003FF9BE /* XpStats.swift */; };
 		A142E0312C2D9F37004395F8 /* SettingAlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A142E0302C2D9F37004395F8 /* SettingAlertView.swift */; };
 		A1501B082C48C3C6001410E1 /* MyPageActiveList.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1501B072C48C3C6001410E1 /* MyPageActiveList.swift */; };
-		A1501B0A2C48C3E5001410E1 /* MyPageBadgeList.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1501B092C48C3E5001410E1 /* MyPageBadgeList.swift */; };
-		A1678CCE2CF4C59C00843854 /* MypageShareImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1678CCD2CF4C58900843854 /* MypageShareImage.swift */; };
+		A1501B0A2C48C3E5001410E1 /* MyPageInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1501B092C48C3E5001410E1 /* MyPageInfoView.swift */; };
+		A1678CCE2CF4C59C00843854 /* MyPageShareImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1678CCD2CF4C58900843854 /* MyPageShareImage.swift */; };
 		A1868C442C09B6C50020BF16 /* ChallengeDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1868C432C09B6C50020BF16 /* ChallengeDetailView.swift */; };
 		A18EB9B02C26B61C00405D56 /* WithdrawNetwork.swift in Sources */ = {isa = PBXBuildFile; fileRef = A18EB9AF2C26B61C00405D56 /* WithdrawNetwork.swift */; };
 		A18EB9B22C26B62E00405D56 /* LogoutNetwork.swift in Sources */ = {isa = PBXBuildFile; fileRef = A18EB9B12C26B62E00405D56 /* LogoutNetwork.swift */; };
@@ -110,12 +112,12 @@
 		A1AB3D6A2C1141B3001EB9D8 /* AppleLoginButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1AB3D672C1141B3001EB9D8 /* AppleLoginButtonView.swift */; };
 		A1AB3D6C2C1142AA001EB9D8 /* LoginButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1AB3D6B2C1142AA001EB9D8 /* LoginButton.swift */; };
 		A1AB3D6E2C117569001EB9D8 /* Color.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1AB3D6D2C117569001EB9D8 /* Color.swift */; };
-		A1BB60262BFE05B000AAADD4 /* MyPageSegmenet.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1BB60252BFE05B000AAADD4 /* MyPageSegmenet.swift */; };
+		A1BB60262BFE05B000AAADD4 /* MyPageTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1BB60252BFE05B000AAADD4 /* MyPageTabView.swift */; };
 		A1BB60282BFE129000AAADD4 /* MyPageChallengeList.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1BB60272BFE129000AAADD4 /* MyPageChallengeList.swift */; };
 		A1BB602C2BFF145100AAADD4 /* MyPageProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1BB602B2BFF145100AAADD4 /* MyPageProfile.swift */; };
 		A1C6422A2C33F55A004954CA /* QuestNetwork.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1C642292C33F55A004954CA /* QuestNetwork.swift */; };
 		A1F0ADC02CD738C30068E0A6 /* Polygon.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1F0ADBF2CD738A20068E0A6 /* Polygon.swift */; };
-		A1F770642C2AABCE00DB24A0 /* MypageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1F770632C2AABCE00DB24A0 /* MypageViewModel.swift */; };
+		A1F770642C2AABCE00DB24A0 /* MyPageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1F770632C2AABCE00DB24A0 /* MyPageViewModel.swift */; };
 		A1FF916E2C250C3B00F03E4B /* UserNetwork.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1FF916D2C250C3B00F03E4B /* UserNetwork.swift */; };
 		A1FF91702C25119200F03E4B /* XPNetwork.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1FF916F2C25119200F03E4B /* XPNetwork.swift */; };
 		A1FF91722C257E9A00F03E4B /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1FF91712C257E9A00F03E4B /* User.swift */; };
@@ -170,6 +172,8 @@
 		604687AD2D216EAC0056E394 /* QuestStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestStyle.swift; sourceTree = "<group>"; };
 		605334542D298A1400599159 /* TutorialView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TutorialView.swift; sourceTree = "<group>"; };
 		605334562D29BE3600599159 /* TutorialViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TutorialViewModel.swift; sourceTree = "<group>"; };
+		6053345B2D31182500599159 /* XpLevelCalculator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XpLevelCalculator.swift; sourceTree = "<group>"; };
+		6053345E2D31272B00599159 /* MyPagePointSectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPagePointSectionView.swift; sourceTree = "<group>"; };
 		605DA0C82C07097F00CC9450 /* ImagePreviewButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePreviewButton.swift; sourceTree = "<group>"; };
 		605DA0CC2C070A0300CC9450 /* Camera.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Camera.swift; sourceTree = "<group>"; };
 		605DA0CE2C07118900CC9450 /* SubmitRouterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubmitRouterView.swift; sourceTree = "<group>"; };
@@ -232,8 +236,8 @@
 		A13BD3922CA1829A003FF9BE /* XpStats.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XpStats.swift; sourceTree = "<group>"; };
 		A142E0302C2D9F37004395F8 /* SettingAlertView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingAlertView.swift; sourceTree = "<group>"; };
 		A1501B072C48C3C6001410E1 /* MyPageActiveList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageActiveList.swift; sourceTree = "<group>"; };
-		A1501B092C48C3E5001410E1 /* MyPageBadgeList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageBadgeList.swift; sourceTree = "<group>"; };
-		A1678CCD2CF4C58900843854 /* MypageShareImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MypageShareImage.swift; sourceTree = "<group>"; };
+		A1501B092C48C3E5001410E1 /* MyPageInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageInfoView.swift; sourceTree = "<group>"; };
+		A1678CCD2CF4C58900843854 /* MyPageShareImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageShareImage.swift; sourceTree = "<group>"; };
 		A1868C432C09B6C50020BF16 /* ChallengeDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChallengeDetailView.swift; sourceTree = "<group>"; };
 		A18EB9AF2C26B61C00405D56 /* WithdrawNetwork.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WithdrawNetwork.swift; sourceTree = "<group>"; };
 		A18EB9B12C26B62E00405D56 /* LogoutNetwork.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogoutNetwork.swift; sourceTree = "<group>"; };
@@ -250,14 +254,14 @@
 		A1AB3D672C1141B3001EB9D8 /* AppleLoginButtonView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppleLoginButtonView.swift; sourceTree = "<group>"; };
 		A1AB3D6B2C1142AA001EB9D8 /* LoginButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginButton.swift; sourceTree = "<group>"; };
 		A1AB3D6D2C117569001EB9D8 /* Color.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Color.swift; sourceTree = "<group>"; };
-		A1BB60252BFE05B000AAADD4 /* MyPageSegmenet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageSegmenet.swift; sourceTree = "<group>"; };
+		A1BB60252BFE05B000AAADD4 /* MyPageTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageTabView.swift; sourceTree = "<group>"; };
 		A1BB60272BFE129000AAADD4 /* MyPageChallengeList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageChallengeList.swift; sourceTree = "<group>"; };
 		A1BB602B2BFF145100AAADD4 /* MyPageProfile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageProfile.swift; sourceTree = "<group>"; };
 		A1C642292C33F55A004954CA /* QuestNetwork.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestNetwork.swift; sourceTree = "<group>"; };
 		A1EB63392C132AC100B63F9C /* Roboto-Medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Roboto-Medium.ttf"; sourceTree = "<group>"; };
 		A1EB633A2C132B0800B63F9C /* SFPRODISPLAYREGULAR.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = SFPRODISPLAYREGULAR.otf; sourceTree = "<group>"; };
 		A1F0ADBF2CD738A20068E0A6 /* Polygon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Polygon.swift; sourceTree = "<group>"; };
-		A1F770632C2AABCE00DB24A0 /* MypageViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MypageViewModel.swift; sourceTree = "<group>"; };
+		A1F770632C2AABCE00DB24A0 /* MyPageViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageViewModel.swift; sourceTree = "<group>"; };
 		A1FF916D2C250C3B00F03E4B /* UserNetwork.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserNetwork.swift; sourceTree = "<group>"; };
 		A1FF916F2C25119200F03E4B /* XPNetwork.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XPNetwork.swift; sourceTree = "<group>"; };
 		A1FF91712C257E9A00F03E4B /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
@@ -322,6 +326,7 @@
 			isa = PBXGroup;
 			children = (
 				600D83A32C7B1FA4005C93E2 /* PaginationManager.swift */,
+				6053345B2D31182500599159 /* XpLevelCalculator.swift */,
 			);
 			path = Manager;
 			sourceTree = "<group>";
@@ -362,6 +367,16 @@
 				605334562D29BE3600599159 /* TutorialViewModel.swift */,
 			);
 			path = Tutorial;
+			sourceTree = "<group>";
+		};
+		6053345D2D3126F900599159 /* MyPageInfo */ = {
+			isa = PBXGroup;
+			children = (
+				A1501B092C48C3E5001410E1 /* MyPageInfoView.swift */,
+				6053345E2D31272B00599159 /* MyPagePointSectionView.swift */,
+				A1678CCD2CF4C58900843854 /* MyPageShareImage.swift */,
+			);
+			path = MyPageInfo;
 			sourceTree = "<group>";
 		};
 		605DA0D42C07122200CC9450 /* Extension */ = {
@@ -457,13 +472,12 @@
 			isa = PBXGroup;
 			children = (
 				607FCBDC2BFA686700BB2D04 /* MyPageView.swift */,
-				A1BB60252BFE05B000AAADD4 /* MyPageSegmenet.swift */,
 				A1BB602B2BFF145100AAADD4 /* MyPageProfile.swift */,
-				A1F770632C2AABCE00DB24A0 /* MypageViewModel.swift */,
+				A1BB60252BFE05B000AAADD4 /* MyPageTabView.swift */,
+				A1F770632C2AABCE00DB24A0 /* MyPageViewModel.swift */,
 				60299E2F2CBFF8D20039663F /* MyPageChallenge */,
+				6053345D2D3126F900599159 /* MyPageInfo */,
 				A1501B072C48C3C6001410E1 /* MyPageActiveList.swift */,
-				A1501B092C48C3E5001410E1 /* MyPageBadgeList.swift */,
-				A1678CCD2CF4C58900843854 /* MypageShareImage.swift */,
 			);
 			path = MyPage;
 			sourceTree = "<group>";
@@ -870,13 +884,14 @@
 				A142E0312C2D9F37004395F8 /* SettingAlertView.swift in Sources */,
 				601189272C3F00FB0070F2AD /* AuthChannel.swift in Sources */,
 				604687AE2D216EAC0056E394 /* QuestStyle.swift in Sources */,
-				A1BB60262BFE05B000AAADD4 /* MyPageSegmenet.swift in Sources */,
+				A1BB60262BFE05B000AAADD4 /* MyPageTabView.swift in Sources */,
 				9FE63D6C2CB3A58800CA7940 /* RankingView.swift in Sources */,
 				602988202D041D4700903806 /* XpStat.swift in Sources */,
 				9FE63D722CB3AB4F00CA7940 /* RankingItemView.swift in Sources */,
 				9FE63D702CB3AAF100CA7940 /* RankingViewModel.swift in Sources */,
+				6053345F2D31272B00599159 /* MyPagePointSectionView.swift in Sources */,
 				605DA0D62C07123400CC9450 /* View++.swift in Sources */,
-				A1678CCE2CF4C59C00843854 /* MypageShareImage.swift in Sources */,
+				A1678CCE2CF4C59C00843854 /* MyPageShareImage.swift in Sources */,
 				60299E392CC13DEC0039663F /* ImageCacheService.swift in Sources */,
 				6061327B2CDB33FD00830948 /* FilterPicker.swift in Sources */,
 				A19628752C08648C0037C53A /* NavigationTitleView.swift in Sources */,
@@ -935,7 +950,7 @@
 				A19628652C076D7B0037C53A /* SettingView.swift in Sources */,
 				607FCC332C01AA7300BB2D04 /* SubmitAlertView.swift in Sources */,
 				606292D82C19E70A0098B6D2 /* Network.swift in Sources */,
-				A1501B0A2C48C3E5001410E1 /* MyPageBadgeList.swift in Sources */,
+				A1501B0A2C48C3E5001410E1 /* MyPageInfoView.swift in Sources */,
 				608EBFA12C39C5BB00B862CC /* String++.swift in Sources */,
 				600211EA2C1EEE6D000CC02E /* APITarget.swift in Sources */,
 				A1BB60282BFE129000AAADD4 /* MyPageChallengeList.swift in Sources */,
@@ -943,7 +958,7 @@
 				6011891D2C3E8B3B0070F2AD /* UserService.swift in Sources */,
 				A196286D2C0859820037C53A /* TermsAndPolicyView.swift in Sources */,
 				60C0F4242CCE9B2F00DB19AB /* UIDevice++.swift in Sources */,
-				A1F770642C2AABCE00DB24A0 /* MypageViewModel.swift in Sources */,
+				A1F770642C2AABCE00DB24A0 /* MyPageViewModel.swift in Sources */,
 				606132782CD68FE300830948 /* TagView.swift in Sources */,
 				6029881E2D041D3900903806 /* QuestStatus.swift in Sources */,
 				609A76DB2CFC5E90009F4567 /* StatGridView.swift in Sources */,
@@ -952,6 +967,7 @@
 				601189212C3E94A60070F2AD /* AuthService.swift in Sources */,
 				607FCBD62BFA660C00BB2D04 /* MainTabView.swift in Sources */,
 				603F040B2C2416D2008A2332 /* ImageNetwork.swift in Sources */,
+				6053345C2D31182500599159 /* XpLevelCalculator.swift in Sources */,
 				605DA0D12C0711CA00CC9450 /* CameraView.swift in Sources */,
 				A1FF91702C25119200F03E4B /* XPNetwork.swift in Sources */,
 				A1BB602C2BFF145100AAADD4 /* MyPageProfile.swift in Sources */,
