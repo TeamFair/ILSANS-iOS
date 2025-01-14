@@ -81,7 +81,7 @@ extension TagView {
         var padding: EdgeInsets {
             switch self {
             case .level: return EdgeInsets(top: 2, leading: 12, bottom: 2, trailing: 12)
-            case .levelStroke: return EdgeInsets(top: 4, leading: 14.5, bottom: 4, trailing: 14.5)
+            case .levelStroke: return EdgeInsets(top: 5, leading: 12, bottom: 5, trailing: 12)
             case .xp: return EdgeInsets(top: 0, leading: 7, bottom: 0, trailing: 7)
             case .xpWithIcon: return EdgeInsets(top: 0, leading: 4, bottom: 0, trailing: 4)
             case .repeat: return EdgeInsets(top: 0, leading: 11, bottom: 0, trailing: 11)

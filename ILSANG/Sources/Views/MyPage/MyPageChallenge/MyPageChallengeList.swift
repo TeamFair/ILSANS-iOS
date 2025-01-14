@@ -6,10 +6,9 @@
 //
 
 import SwiftUI
-//MARK: 색상 폰트 변경 요청
+
 struct MyPageChallengeList: View {
-    
-    @ObservedObject var vm: MypageViewModel
+    @ObservedObject var vm: MyPageViewModel
     
     var body: some View {
         VStack(alignment: .leading) {
@@ -21,15 +20,16 @@ struct MyPageChallengeList: View {
                 
                 Spacer()
             }
-            // Data List
+
             ScrollView {
                 VStack(spacing: 12) {
                     ForEach(vm.challengeList, id: \.challengeId) { challenge in
                         NavigationLink(destination: ChallengeDetailView(vm: vm, challengeData: challenge)) {
-                            ListStruct(title: challenge.missionTitle ?? "챌린지명", detail: challenge.createdAt.timeAgoCreatedAt(), point: nil)
+                            MyPageListItemView(title: challenge.missionTitle ?? "챌린지명", detail: challenge.createdAt.timeAgoCreatedAt(), point: nil)
                         }
                     }
                 }
+                .padding(.bottom, 60)
             }
             .refreshable {
                 await vm.getChallenges(page: 0)
@@ -44,8 +44,7 @@ struct MyPageChallengeList: View {
     }
 }
 
-struct ListStruct: View {
-    
+struct MyPageListItemView: View {
     let title: String
     let detail: String
     let point: Int?

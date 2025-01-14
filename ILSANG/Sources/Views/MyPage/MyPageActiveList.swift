@@ -9,7 +9,7 @@ import SwiftUI
 
 struct MyPageActiveList: View {
     
-    @ObservedObject var vm: MypageViewModel
+    @ObservedObject var vm: MyPageViewModel
     
     var body: some View {
         VStack(alignment: .leading) {
@@ -23,9 +23,10 @@ struct MyPageActiveList: View {
             ScrollView {
                 VStack(spacing: 12) {
                     ForEach(vm.xpLogList, id: \.recordId) { xpLog in
-                        ListStruct(title: xpLog.title, detail: xpLog.createDate.timeAgoSinceCreation(), point: xpLog.xpPoint)
+                        MyPageListItemView(title: xpLog.title, detail: xpLog.createDate.timeAgoSinceCreation(), point: xpLog.xpPoint)
                     }
                 }
+                .padding(.bottom, 60)
             }
             .refreshable {
                 await vm.getXpLog(page: 0, size: 10)

@@ -10,7 +10,7 @@ import SwiftUI
 struct ChallengeDetailView: View {
     
     @Environment(\.dismiss) var dismiss
-    @ObservedObject var vm: MypageViewModel
+    @ObservedObject var vm: MyPageViewModel
     
     @State private var missionImage: UIImage?
     @State private var questImage: UIImage?
@@ -167,7 +167,15 @@ struct ChallengeImageView: View {
 #Preview {
     TabView {
         NavigationStack {
-            ChallengeDetailView(vm: MypageViewModel(userNetwork: UserNetwork(), challengeNetwork: ChallengeNetwork(), imageNetwork: ImageNetwork(), xpNetwork: XPNetwork()), challengeData: Challenge.challengeMockData)
+            ChallengeDetailView(
+                vm: MyPageViewModel(
+                    userNetwork: UserNetwork(),
+                    challengeNetwork: ChallengeNetwork(),
+                    imageNetwork: ImageNetwork(),
+                    xpNetwork: XPNetwork()
+                ),
+                challengeData: Challenge.challengeMockData
+            )
         }
         .tabItem {
             Label("탭", image: "profile")

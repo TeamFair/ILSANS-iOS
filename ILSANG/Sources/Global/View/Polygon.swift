@@ -245,15 +245,11 @@ public struct Polygon: Shape {
 }
 
 struct StatPolygon: Shape {
-    
     let xpStats: [XpStat: Int]
-    let maxValue: Double
-    let cornerRadius: CGFloat
+    private let cornerRadius: CGFloat = 15.0
     
-    init(xpStats: [XpStat: Int], maxValue: Double = 50.0, cornerRadius: CGFloat = 15.0) {
+    init(xpStats: [XpStat: Int]) {
         self.xpStats = xpStats
-        self.maxValue = maxValue
-        self.cornerRadius = cornerRadius
     }
     
     func path(in rect: CGRect) -> Path {
@@ -264,17 +260,19 @@ struct StatPolygon: Shape {
         
         // 값 정규화 (최소 비율과 최대 비율을 제한) 그래프가 역으로 꺾이는 문제 해결
         let minRatio: CGFloat = 0.2 // 최소 비율 (값이 작아도 최소 이 정도는 확보)
-        let maxValue: CGFloat = max(CGFloat(xpStats.values.max() ?? 0), 50) // 최대값을 동적으로 설정
-        
+        let maxValue: CGFloat = max(CGFloat(xpStats.values.max() ?? 0) + 10, 50) // 최대값 설정
+
         // 꼭짓점 좌표 계산
         let points = XpStat.allCases.enumerated().map { index, stat -> CGPoint in
-            // stat 기본값 + 10, nil일 경우 10으로 고정
+            // stat 기본값 + 5, nil일 경우 5으로 고정
             let statValue = xpStats[stat] ?? 0
-            let value = CGFloat(statValue == 0 ? 10 : (statValue + 10))
+            let value = CGFloat(statValue == 0 ? 5 : (statValue + 5))
             let rawRatio = value / maxValue // 비율 계산
             let normalizedValue = max(min(rawRatio, 1.0), minRatio) // 비율을 최소값과 최대값 사이로 제한
+
             let angle = (CGFloat(index) / CGFloat(XpStat.allCases.count)) * 2 * .pi - .pi / 2
             let adjustedRadius = radius * normalizedValue // 반경 조정
+
             return CGPoint(
                 x: center.x + adjustedRadius * cos(angle),
                 y: center.y + adjustedRadius * sin(angle)
