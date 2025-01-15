@@ -34,6 +34,10 @@ struct QuestView: View {
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .background(Color.background)
+        .onReceive(vm.$selectedHeader
+            .combineLatest(vm.$selectedXpStat, vm.repeatFilterState.$selectedValue, vm.repeatFilterState.$selectedValue)) { _ in
+            vm.closeFilterPicker()
+        }
         .onReceive(sharedState.$selectedXpStat) { newValue in
             vm.selectedXpStat = newValue
         }
@@ -99,8 +103,8 @@ extension QuestView {
                     ForEach(vm.filteredRepeatQuestListByXpStat, id: \.id) { quest in
                         QuestItemView(
                             quest: quest,
-                            style: RepeatStyle(repeatType: vm.selectedRepeatType),
-                            tagTitle: vm.selectedRepeatType.description
+                            style: RepeatStyle(repeatType: vm.repeatFilterState.selectedValue),
+                            tagTitle: vm.repeatFilterState.selectedValue.description
                         ) {
                             vm.tappedQuestBtn(quest: quest)
                         }
@@ -155,11 +159,19 @@ extension QuestView {
     }
     
     private var filterPickerDefaultView: some View {
-        PickerView<QuestFilter>(selection: $vm.selectedFilter, width: 150)
+        PickerView<QuestFilterType>(
+            status: $vm.questFilterState.pickerStatus,
+            selection: $vm.questFilterState.selectedValue,
+            width: 150
+        )
     }
     
     private var filterPickerRepeatView: some View {
-        PickerView<RepeatType>(selection: $vm.selectedRepeatType, width: 85)
+        PickerView<RepeatType>(
+            status: $vm.repeatFilterState.pickerStatus,
+            selection: $vm.repeatFilterState.selectedValue,
+            width: 85
+        )
     }
     
     private var questListEmptyView: some View {

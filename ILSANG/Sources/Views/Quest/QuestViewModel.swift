@@ -6,7 +6,6 @@
 //
 
 import UIKit
-import SwiftUI
 
 class QuestViewModel: ObservableObject {
     // TODO: API 요청 실패 시 에러상태로 변경하기
@@ -17,17 +16,16 @@ class QuestViewModel: ObservableObject {
     }
     
     @Published var viewStatus: ViewStatus = .loading
-    @Published var selectedHeader: QuestStatus = .default  // TODO: 바뀔 때 api 요청하도록 수정 (refresh, init 고려)
-    @Published var selectedRepeatType: RepeatType = .daily {
-        didSet {
-            Task {
-                await repeatPaginationManager.loadData(isRefreshing: true)
-            }
-        }
-    }
+    
+    // TODO: 바뀔 때 api 요청하도록 수정 (refresh, init 고려)
+    @Published var selectedHeader: QuestStatus = .default
     @Published var selectedXpStat: XpStat
-    @Published var selectedFilter: QuestFilter = .popular
 
+    // 필터
+    @Published var repeatFilterState: FilterPickerState<RepeatType>
+    @Published var questFilterState: FilterPickerState<QuestFilterType>
+
+    // 선택된 퀘스트
     @Published var selectedQuest: QuestViewModelItem = .mockData
     @Published var showQuestSheet: Bool = false
     @Published var showSubmitRouterView: Bool = false {
@@ -50,7 +48,7 @@ class QuestViewModel: ObservableObject {
     var repeatQuestListByXpStat: [XpStat: [QuestViewModelItem]] = Dictionary(uniqueKeysWithValues: XpStat.allCases.map { ($0, []) })
 
     var filteredDefaultQuestListByXpStat: [QuestViewModelItem] {
-        switch selectedFilter {
+        switch questFilterState.selectedValue {
         case .pointHighest:
             return defaultQuestListByXpStat[selectedXpStat, default: []].sorted { $0.rewardDic[selectedXpStat, default: 0] > $1.rewardDic[selectedXpStat, default: 0] }
         case .pointLowest:
@@ -61,7 +59,7 @@ class QuestViewModel: ObservableObject {
     }
     
     var filteredRepeatQuestListByXpStat: [QuestViewModelItem] {
-        switch selectedFilter {
+        switch questFilterState.selectedValue  {
         case .pointHighest:
             return repeatQuestListByXpStat[selectedXpStat, default: []].sorted { $0.rewardDic[selectedXpStat, default: 0] > $1.rewardDic[selectedXpStat, default: 0] }
         case .pointLowest:
@@ -81,7 +79,7 @@ class QuestViewModel: ObservableObject {
             return itemListByStatus[.completed, default: []].isEmpty
         }
     }
-    
+    // TODO: 퀘스트 갯수 확인 필요
     // TODO: 현재 0페이지만 불러오며, 임시로 80개 로딩. 스탯 분류&필터링과 관련해서 기획 & API 수정에 따라 페이지네이션 로직 수정 필요
     lazy var defaultPaginationManager = PaginationManager<QuestViewModelItem>(
         size: 50,
@@ -120,6 +118,15 @@ class QuestViewModel: ObservableObject {
     init(questNetwork: QuestNetwork, selectedXpStat: XpStat) {
         self.selectedXpStat = selectedXpStat
         self.questNetwork = questNetwork
+        
+        // 필터 설정
+        questFilterState = FilterPickerState(initialValue: QuestFilterType.popular)
+        repeatFilterState = FilterPickerState(initialValue: RepeatType.daily)
+        repeatFilterState.onSelectionChange = { [weak self] _ in
+            guard let self = self else { return }
+            Task { await self.repeatPaginationManager.loadData(isRefreshing: true) }
+        }
+        
         Task {
             await loadInitialData()
         }
@@ -248,7 +255,7 @@ class QuestViewModel: ObservableObject {
         case .default:
             result = await questNetwork.getDefaultQuest(page: page, size: size)
         case .repeat:
-            result = await questNetwork.getRepeatQuest(status: self.selectedRepeatType, page: page, size: size)
+            result = await questNetwork.getRepeatQuest(status: self.repeatFilterState.selectedValue, page: page, size: size)
         case .completed:
             result = await questNetwork.getCompletedQuest(page: page, size: size)
         }
@@ -274,20 +281,16 @@ class QuestViewModel: ObservableObject {
     
     func tappedQuestBtn(quest: QuestViewModelItem) {
         selectedQuest = quest
-        showQuestSheet.toggle()
+        showQuestSheet = true
     }
     
     func tappedQuestApprovalBtn() {
-        showSubmitRouterView.toggle()
-        showQuestSheet.toggle()
+        showSubmitRouterView = true
+        showQuestSheet = true
     }
-}
-
-struct VLine: Shape {
-    func path(in rect: CGRect) -> Path {
-        var path = Path()
-        path.move(to: CGPoint(x: 0, y: 0))
-        path.addLine(to: CGPoint(x: 0, y: rect.height))
-        return path
+    
+    func closeFilterPicker() {
+        self.questFilterState.pickerStatus  = .close
+        self.repeatFilterState.pickerStatus = .close
     }
 }

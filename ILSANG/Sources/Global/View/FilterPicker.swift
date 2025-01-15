@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct PickerView<SelectionValue>: View where SelectionValue: Hashable & CustomStringConvertible & CaseIterable {
-    @State var status: PickerStatus = .close
+    @Binding var status: PickerStatus
     @Binding var selection: SelectionValue
     let width: CGFloat
     
@@ -73,7 +73,26 @@ struct PickerView<SelectionValue>: View where SelectionValue: Hashable & CustomS
     }
 }
 
-enum QuestFilter: String, Hashable, CustomStringConvertible, CaseIterable {
+class FilterPickerState<SelectionValue>: ObservableObject where SelectionValue: Hashable & CustomStringConvertible & CaseIterable {
+    @Published var selectedValue: SelectionValue {
+        didSet {
+            onSelectionChange?(selectedValue)
+        }
+    }
+    
+    /// 상태 변경 시 실행할 클로저
+    var onSelectionChange: ((SelectionValue) -> Void)?
+    
+    /// Picker의 상태
+    var pickerStatus: PickerStatus = .close
+
+    init(initialValue: SelectionValue, onSelectionChange: ((SelectionValue) -> Void)? = nil) {
+        self.selectedValue = initialValue
+        self.onSelectionChange = onSelectionChange
+    }
+}
+
+enum QuestFilterType: String, Hashable, CustomStringConvertible, CaseIterable {
     case pointHighest = "포인트 높은 순"
     case pointLowest = "포인트 낮은 순"
     case popular = "인기순"
