@@ -7,13 +7,14 @@
 
 import UIKit
 
+@MainActor
 final class MyPageViewModel: ObservableObject {
     @Published var userData: User?
     @Published var selectedTab: MyPageTab = .quest
-
+    
     @Published var xpStats: [XpStat: Int] = [:]
     @Published var xpLogList: [XpLog] = []
-    @Published var challengeList: [Challenge] = []
+    @Published var challengeList: [(challenge: Challenge, image: UIImage?)] = [] // [(Challenge.challengeMockData, nil)]
     
     @Published var challengeDelete = false
     
@@ -72,30 +73,46 @@ final class MyPageViewModel: ObservableObject {
                 .charm: xpData.charmStat,
                 .sociability: xpData.sociabilityStat
             ]
-            Log(xpStats)
-            
-        case .failure:
+        case .failure(let error):
+            Log("XP 스탯 조회 실패: \(error)")
             self.xpStats = [:]
         }
     }
     
     @MainActor
-    func getChallenges(page: Int) async {
-        let res = await challengeNetwork.getChallenges(page: page)
+    func fetchChallengesWithImages(page: Int) async {
+        let response = await challengeNetwork.getChallenges(page: page)
         
-        switch res {
+        switch response {
         case .success(let model):
-            self.challengeList = model.data
-        case .failure:
+            // 데이터 초기화: 이미지가 없는 상태로 미리 표시
+            self.challengeList = model.data.map { ($0, nil as UIImage?) }
+            
+            await withTaskGroup(of: Void.self) { group in
+                for (index, challenge) in model.data.enumerated() {
+                    group.addTask {
+                        let image = await self.getImage(imageId: challenge.receiptImageId)
+                        await self.updateChallengeImage(at: index, with: image)
+                    }
+                }
+            }
+            
+        case .failure(let error):
+            Log("챌린지 조회 실패: \(error)")
             self.challengeList = []
         }
+    }
+    
+    @MainActor
+    private func updateChallengeImage(at index: Int, with image: UIImage?) {
+        self.challengeList[index].1 = image
     }
     
     @MainActor
     func updateChallengeStatus(challengeId: String, ImageId: String) async -> Bool {
         let deleteChallengeRes = await challengeNetwork.deleteChallenge(challengeId: challengeId)
         let deleteImageRes = await imageNetwork.deleteImage(imageId: ImageId)
-                
+        
         return deleteChallengeRes && deleteImageRes
     }
     

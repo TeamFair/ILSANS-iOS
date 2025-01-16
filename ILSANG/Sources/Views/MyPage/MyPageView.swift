@@ -26,7 +26,7 @@ struct MyPageView: View {
             // 2) 도전내역 등록했을 때, 리프레시했을 때 재호출하도록 수정
             await vm.getUser()
             await vm.getXpStat()
-            await vm.getChallenges(page: 0)
+            await vm.fetchChallengesWithImages(page: 0)
             await vm.getXpLog(page: 0, size: 10)
         }
     }
