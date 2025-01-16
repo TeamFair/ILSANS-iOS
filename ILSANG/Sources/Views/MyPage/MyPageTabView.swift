@@ -21,7 +21,7 @@ struct MyPageTabView: View {
                 }
             }
         }
-        .padding(.vertical, 16)
+        .padding(.vertical, 20)
     }
 }
 

@@ -17,6 +17,12 @@ struct ChallengeDetailView: View {
     
     let challengeData : Challenge
     
+    init(vm: MyPageViewModel, missionImage: UIImage?, challengeData: Challenge) {
+        self.vm = vm
+        self._missionImage = State(initialValue: missionImage)
+        self.challengeData = challengeData
+    }
+    
     var body: some View {
         VStack(spacing: 0) {
             NavigationTitleView(title: "챌린지 정보", isSeparatorHidden: false) {
@@ -40,7 +46,6 @@ struct ChallengeDetailView: View {
         .background(Color.background)
         .navigationBarBackButtonHidden()
         .task {
-            missionImage = await vm.getImage(imageId: challengeData.receiptImageId)
             if let questImageId = challengeData.questImageId {
                 self.questImage = await vm.getImage(imageId: questImageId)
             }
@@ -174,7 +179,8 @@ struct ChallengeImageView: View {
                     imageNetwork: ImageNetwork(),
                     xpNetwork: XPNetwork()
                 ),
-                challengeData: Challenge.challengeMockData
+                missionImage: .logo,
+                challengeData: .challengeMockData
             )
         }
         .tabItem {
