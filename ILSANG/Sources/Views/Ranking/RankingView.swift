@@ -72,7 +72,7 @@ extension RankingView {
             LazyVStack(spacing: 12) {
                 if let ranks = vm.userRank[vm.selectedXpStat] {
                     ForEach(Array(ranks.enumerated()), id: \.element.customerId) { idx, rank in
-                        RankingItemView(idx: idx + 1, rank: rank, style: .horizontal)
+                        RankingItemView(idx: idx + 1, statRank: rank, style: .horizontal)
                     }
                 }
             }

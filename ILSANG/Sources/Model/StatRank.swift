@@ -12,8 +12,10 @@ struct StatRank: Decodable {
     let nickname: String
 }
 
-struct TopRank: Decodable {
-    let lank: Int
-    let xpSum: Int
-    let nickname: String
+extension StatRank {
+    static let mockDataList: [StatRank] = [
+        StatRank(xpType: "CHARM", xpPoint: 200, customerId: "1234-5678-91011", nickname: "TestUser1"),
+        StatRank(xpType: "STRENGTH", xpPoint: 150, customerId: "2234-5678-91011", nickname: "TestUser2"),
+        StatRank(xpType: "CHARM", xpPoint: 300, customerId: "3234-5678-91011", nickname: "TestUser3")
+    ]
 }

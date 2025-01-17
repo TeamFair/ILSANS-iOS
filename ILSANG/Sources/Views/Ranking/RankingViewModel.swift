@@ -18,13 +18,8 @@ class RankingViewModel: ObservableObject {
     
     @Published var viewStatus: ViewStatus = .loading
     @Published var selectedXpStat: XpStat = .strength
-    @Published var userRank: [XpStat: [Rank]] = Dictionary(uniqueKeysWithValues: XpStat.allCases.map { ($0, []) })
-    @Published var mokData: [Rank] = [
-        Rank(xpType: "CHARM", xpPoint: 200, customerId: "1234-5678-91011", nickname: "TestUser1"),
-        Rank(xpType: "STRENGTH", xpPoint: 150, customerId: "2234-5678-91011", nickname: "TestUser2"),
-        Rank(xpType: "CHARM", xpPoint: 300, customerId: "3234-5678-91011", nickname: "TestUser3")
-    ]
-    
+    @Published var userRank: [XpStat: [StatRank]] = Dictionary(uniqueKeysWithValues: XpStat.allCases.map { ($0, []) })
+   
     private let userNetwork: UserNetwork
     
     init(userNetwork: UserNetwork) {

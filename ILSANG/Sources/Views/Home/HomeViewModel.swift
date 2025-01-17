@@ -22,7 +22,7 @@ final class HomeViewModel: ObservableObject {
             return "추천 퀘스트"
         }
     }
-    @Published var userRankList: [TopUserRank] = [] // 10개
+    @Published var userRankList: [TopRank] = [] // 10개
     @Published var largestRewardQuestList: [XpStat: [QuestViewModelItem]] = [:] // 3*5개
     @Published var recommendQuestList: [QuestViewModelItem] = [] //QuestViewModelItem.mockQuestList // 10개
     @Published var popularQuestList: [QuestViewModelItem] = QuestViewModelItem.mockQuestList // 4n개
@@ -76,7 +76,6 @@ final class HomeViewModel: ObservableObject {
             group.addTask {
                 do {
                     try await self.loadPopularQuestList()
-                    self.showPopularRewardQuest = true
                 } catch {
                     Log("Failed to load popular quests: \(error.localizedDescription)")
                     self.errorCnt += 1
@@ -199,6 +198,7 @@ final class HomeViewModel: ObservableObject {
     }
     
     /// getWriterImage, getMainImage 중 가져올 이미지 타입을 true로 설정
+    @MainActor
     func cacheImages(for quests: inout [QuestViewModelItem], getWriterImage: Bool = false, getMainImage: Bool = false) async {
         await withTaskGroup(of: (Int, UIImage?).self) { group in
             for (index, quest) in quests.enumerated() {

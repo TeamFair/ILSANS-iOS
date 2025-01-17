@@ -6,3 +6,9 @@
 //
 
 import Foundation
+
+struct TopRank: Decodable {
+    let lank: Int
+    let xpSum: Int
+    let nickname: String
+}
