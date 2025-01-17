@@ -5,10 +5,11 @@
 //  Created by Kim Andrew on 10/7/24.
 //
 
-import UIKit
-import SwiftUI
-import Alamofire
+import Foundation
 
+// [데이터 로드 방식]
+// 초기화될 때, 초기 스탯에 대한 랭킹 불러옴
+// 선택된 스탯이 변경되면, 불러왔던 데이터가 있는지 확인한 후 랭킹 데이터 불러옴
 class RankingViewModel: ObservableObject {
     enum ViewStatus {
         case error
@@ -19,64 +20,41 @@ class RankingViewModel: ObservableObject {
     @Published var viewStatus: ViewStatus = .loading
     @Published var selectedXpStat: XpStat = .strength
     @Published var userRank: [XpStat: [StatRank]] = Dictionary(uniqueKeysWithValues: XpStat.allCases.map { ($0, []) })
-   
-    private let userNetwork: UserNetwork
     
-    init(userNetwork: UserNetwork) {
-        self.userNetwork = userNetwork
-    }
+    private let rankNetwork: RankNetwork
     
-    @MainActor
-    func changeViewStatus(_ viewStatus: ViewStatus) {
-        self.viewStatus = viewStatus
-    }
-    
-    func loadAllUserRank() async {
-        for xpStat in XpStat.allCases {
-            await loadUserRank(xpStat: xpStat)
+    init(rankNetwork: RankNetwork)  {
+        self.rankNetwork = rankNetwork
+        Task {
+            await loadRankIfNeeded(xpStat: selectedXpStat)
         }
     }
     
+    func loadRankIfNeeded(xpStat: XpStat) async {
+        if let users = userRank[xpStat], users.count > 0 {
+            return
+        }
+        await fetchAndStoreUserRank(xpStat: xpStat)
+    }
+    
     @MainActor
-    func loadUserRank(xpStat: XpStat) async {
-        let res = await userNetwork.getUserRank(xpstat: xpStat.parameterText)
+    func fetchAndStoreUserRank(xpStat: XpStat) async {
+        changeViewStatus(.loading)
+        let res = await rankNetwork.getRankByStat(xpstat: xpStat.parameterText)
         
         switch res {
-        case .success(let model):
-            var updatedRank = self.userRank
-            updatedRank[xpStat] = model.data
-            self.userRank = updatedRank
-            
+        case .success(let response):
+            self.userRank[xpStat] = response.data
             changeViewStatus(.loaded)
-            Log(userRank)
-
         case .failure:
             changeViewStatus(.error)
             Log(res)
         }
     }
     
-    //Int -> th, st, nd, rd형태로 변경
-    static func convertToOrdinal(_ number: Int) -> String {
-        let suffix: String
-        
-        let lastTwoDigits = number % 100
-        if lastTwoDigits >= 11 && lastTwoDigits <= 13 {
-            suffix = "th"
-        } else {
-            switch number % 10 {
-            case 1:
-                suffix = "st"
-            case 2:
-                suffix = "nd"
-            case 3:
-                suffix = "rd"
-            default:
-                suffix = "th"
-            }
-        }
-        
-        return "\(number)\(suffix)"
+    @MainActor
+    func changeViewStatus(_ viewStatus: ViewStatus) {
+        self.viewStatus = viewStatus
     }
 }
 
