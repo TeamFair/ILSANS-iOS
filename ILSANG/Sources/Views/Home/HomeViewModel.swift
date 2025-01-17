@@ -22,13 +22,7 @@ final class HomeViewModel: ObservableObject {
             return "추천 퀘스트"
         }
     }
-    @Published var userRankList: [Rank] = [
-        .init(xpType: "", xpPoint: 1220, customerId: "", nickname: "유저ABC"),
-        .init(xpType: "", xpPoint: 20, customerId: "", nickname: "유저123456"),
-        .init(xpType: "",xpPoint: 700, customerId: "", nickname: "일상999"),
-        .init(xpType: "", xpPoint: 50, customerId: "", nickname: "유저939393"),
-        .init(xpType: "", xpPoint: 20, customerId: "", nickname: "일상0213493")
-    ] // 10개
+    @Published var userRankList: [TopRank] = [] // 10개
     @Published var largestRewardQuestList: [XpStat: [QuestViewModelItem]] = [:] // 3*5개
     @Published var recommendQuestList: [QuestViewModelItem] = [] //QuestViewModelItem.mockQuestList // 10개
     @Published var popularQuestList: [QuestViewModelItem] = QuestViewModelItem.mockQuestList // 4n개
@@ -56,12 +50,14 @@ final class HomeViewModel: ObservableObject {
     @Published var showLargestRewardQuest: Bool = true
     @Published var showRecommendRewardQuest: Bool = true
     @Published var showPopularRewardQuest: Bool = true
-    @Published var showRankList = false
+    @Published var showRankList = true
     
     private let questNetwork: QuestNetwork
+    private let rankNetwork: RankNetwork
     
-    init(questNetwork: QuestNetwork) {
+    init(questNetwork: QuestNetwork, rankNetwork: RankNetwork) {
         self.questNetwork = questNetwork
+        self.rankNetwork = rankNetwork
         Task {
             await loadInitialData()
         }
@@ -71,6 +67,11 @@ final class HomeViewModel: ObservableObject {
     func loadInitialData() async {
         self.errorCnt = 0
         changeViewStatus(.loading)
+        self.showPopularRewardQuest = true
+        self.showRecommendRewardQuest = true
+        self.showLargestRewardQuest = true
+        self.showRankList = true
+
         await withThrowingTaskGroup(of: Void.self) { group in
             group.addTask {
                 do {
@@ -100,8 +101,18 @@ final class HomeViewModel: ObservableObject {
                 }
             }
             
-            // TODO: 랭킹 API 호출
+            group.addTask {
+                do {
+                    try await self.loadRankList()
+                } catch {
+                    Log("Failed to load large reward quests: \(error.localizedDescription)")
+                    self.errorCnt += 1
+                    self.showRankList = false
+
+                }
+            }
         }
+        
         if errorCnt >= 3 {
             // changeViewStatus(.error) // v1.3.0 이후 적용
             // return
@@ -152,6 +163,18 @@ final class HomeViewModel: ObservableObject {
         case .failure(let error):
             throw error
         }
+    }  
+    
+    @MainActor
+    func loadRankList() async throws {
+        let res = await rankNetwork.getTopUserRank()
+        
+        switch res {
+        case .success(let rank):
+            self.userRankList = rank.data
+        case .failure(let error):
+            throw error
+        }
     }
     
     @MainActor
@@ -175,6 +198,7 @@ final class HomeViewModel: ObservableObject {
     }
     
     /// getWriterImage, getMainImage 중 가져올 이미지 타입을 true로 설정
+    @MainActor
     func cacheImages(for quests: inout [QuestViewModelItem], getWriterImage: Bool = false, getMainImage: Bool = false) async {
         await withTaskGroup(of: (Int, UIImage?).self) { group in
             for (index, quest) in quests.enumerated() {
