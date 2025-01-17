@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct HomeView: View {
-    @StateObject var vm: HomeViewModel = HomeViewModel(questNetwork: QuestNetwork())
+    @StateObject var vm: HomeViewModel = HomeViewModel(questNetwork: QuestNetwork(), rankNetwork: RankNetwork())
     @EnvironmentObject var sharedState: SharedState
     @Environment(\.redactionReasons) var redactionReasons
     
@@ -228,6 +228,7 @@ struct HomeView: View {
                 ScrollView(.horizontal) {
                     HStack(spacing: 8) {
                         ForEach(Array(vm.userRankList.enumerated()), id: \.offset) { idx, rank in
+                            let rank = Rank(xpType: "", xpPoint: rank.xpSum, customerId: "", nickname: rank.nickname)
                             RankingItemView(idx: idx + 1, rank: rank, style: .vertical)
                         }
                     }
