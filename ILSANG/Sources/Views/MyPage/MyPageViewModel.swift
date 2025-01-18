@@ -105,7 +105,9 @@ final class MyPageViewModel: ObservableObject {
     
     @MainActor
     private func updateChallengeImage(at index: Int, with image: UIImage?) {
-        self.challengeList[index].1 = image
+        if index < self.challengeList.count {
+            self.challengeList[index].1 = image
+        }
     }
     
     @MainActor
