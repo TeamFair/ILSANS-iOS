@@ -67,6 +67,7 @@ struct MyPageChallengeList: View {
                             endPoint: .bottom
                         )
                     )
+                    .opacity(image == nil ? 0.3 : 1)
             }
             .clipShape(RoundedRectangle(cornerRadius: 12))
             
