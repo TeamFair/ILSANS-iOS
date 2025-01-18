@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		60004AD52D3B799700CD2254 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60004AD42D3B799700CD2254 /* Constants.swift */; };
 		600211E82C1EED40000CC02E /* Emoji.swift in Sources */ = {isa = PBXBuildFile; fileRef = 600211E72C1EED40000CC02E /* Emoji.swift */; };
 		600211EA2C1EEE6D000CC02E /* APITarget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 600211E92C1EEE6D000CC02E /* APITarget.swift */; };
 		600211EC2C1EEED7000CC02E /* APIManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 600211EB2C1EEED7000CC02E /* APIManager.swift */; };
@@ -144,6 +145,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		60004AD42D3B799700CD2254 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		600211E72C1EED40000CC02E /* Emoji.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Emoji.swift; sourceTree = "<group>"; };
 		600211E92C1EEE6D000CC02E /* APITarget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APITarget.swift; sourceTree = "<group>"; };
 		600211EB2C1EEED7000CC02E /* APIManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIManager.swift; sourceTree = "<group>"; };
@@ -518,6 +520,7 @@
 		607FCBE52BFD129E00BB2D04 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				60004AD42D3B799700CD2254 /* Constants.swift */,
 				A19628682C0775A70037C53A /* Setting.swift */,
 				A1AB3D6B2C1142AA001EB9D8 /* LoginButton.swift */,
 				601189262C3F00FB0070F2AD /* AuthChannel.swift */,
@@ -914,6 +917,7 @@
 				600211EC2C1EEED7000CC02E /* APIManager.swift in Sources */,
 				60FB50CD2D15CEAE00C55E82 /* HomeView.swift in Sources */,
 				A1FF916E2C250C3B00F03E4B /* UserNetwork.swift in Sources */,
+				60004AD52D3B799700CD2254 /* Constants.swift in Sources */,
 				A1AB3D6E2C117569001EB9D8 /* Color.swift in Sources */,
 				A1501B082C48C3C6001410E1 /* MyPageActiveList.swift in Sources */,
 				A13BD3932CA182A0003FF9BE /* XpStats.swift in Sources */,
@@ -1121,7 +1125,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.3.0;
+				MARKETING_VERSION = 1.3.1;
 				PRODUCT_BUNDLE_IDENTIFIER = "$(APP_BUNDLE_ID)";
 				"PRODUCT_BUNDLE_IDENTIFIER[sdk=iphoneos*]" = com.ilsang240615;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1328,7 +1332,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.3.0;
+				MARKETING_VERSION = 1.3.1;
 				PRODUCT_BUNDLE_IDENTIFIER = "$(APP_BUNDLE_ID)";
 				"PRODUCT_BUNDLE_IDENTIFIER[sdk=iphoneos*]" = com.ilsang240615.dev;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1372,7 +1376,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.3.0;
+				MARKETING_VERSION = 1.3.1;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
