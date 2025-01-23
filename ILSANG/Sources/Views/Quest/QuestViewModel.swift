@@ -285,8 +285,8 @@ class QuestViewModel: ObservableObject {
     }
     
     func tappedQuestApprovalBtn() {
+        showQuestSheet = false
         showSubmitRouterView = true
-        showQuestSheet = true
     }
     
     func closeFilterPicker() {
