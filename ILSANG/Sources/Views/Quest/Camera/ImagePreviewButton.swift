@@ -45,7 +45,7 @@ struct ImagePreviewButton: View {
         .task {
             setPreviewImage()
         }
-        .onChange(of: selectedItem) { newItem in
+        .onChange(of: selectedItem) { _, newItem in
             Task {
                 if let imageDataTransferable = try? await newItem?.loadTransferable(type: ImageDataTransferable.self) {
                     self.submitViewModel.selectedImage = imageDataTransferable.uiImage
