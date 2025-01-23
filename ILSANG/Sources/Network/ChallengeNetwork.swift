@@ -21,7 +21,7 @@ final class ChallengeNetwork {
     }
     
     func getChallenges(page: Int) async -> Result<ResponseWithPage<[Challenge]>, Error> {
-        let parameters: Parameters = ["userDataOnly": true, "page": page, "size": "10"]
+        let parameters: Parameters = ["userDataOnly": true, "page": page, "size": "20"]
         return await Network.requestData(url: url+"challenge", method: .get, parameters: parameters, withToken: true)
     }
     
