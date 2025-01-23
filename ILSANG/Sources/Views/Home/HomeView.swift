@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct HomeView: View {
-    @StateObject var vm: HomeViewModel = HomeViewModel(questNetwork: QuestNetwork(), rankNetwork: RankNetwork())
+    @StateObject var vm: HomeViewModel = HomeViewModel(questNetwork: QuestNetwork(), rankNetwork: RankNetwork(), bannerNetwork: BannerNetwork())
     @EnvironmentObject var sharedState: SharedState
     @Environment(\.redactionReasons) var redactionReasons
     
@@ -73,7 +73,9 @@ struct HomeView: View {
     
     private var content: some View {
         LazyVStack(spacing: LayoutConstants.sectionSpacing) {
-            // TODO: 메인 배너 섹션
+            if vm.showMainBanners {
+                mainBannerSection
+            }
             if vm.showPopularRewardQuest {
                 popularQuestSection
             }
@@ -90,6 +92,29 @@ struct HomeView: View {
         .padding(.bottom, 72)
         .redacted(reason: vm.viewStatus == .loading ? .placeholder : [])
         .foregroundStyle(redactionReasons.contains(.placeholder) ? .clear: Color.gray500)
+    }
+    
+    private var mainBannerSection: some View {
+        let height: CGFloat = .screenWidth / 11 * 10
+        return TabView {
+            ForEach(Array(vm.mainBanners.enumerated()), id: \.offset) { idx, item in
+                if let bannerImage = item.image {
+                    Image(uiImage: bannerImage)
+                        .resizable()
+                        .scaledToFill()
+                        .frame(maxWidth: .infinity)
+                        .frame(height: height)
+                        .clipShape(RoundedRectangle(cornerRadius: 12))
+                        .onTapGesture {
+                            if let tab = vm.getTabFromURL(from: item.description) { /// 해당하는 탭으로 이동
+                                sharedState.selectedTab = tab
+                            }
+                        }
+                }
+            }
+        }
+        .frame(height: height)
+        .tabViewStyle(.page(indexDisplayMode: .never))
     }
     
     private var popularQuestSection: some View {
