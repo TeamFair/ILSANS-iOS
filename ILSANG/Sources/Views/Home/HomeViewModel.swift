@@ -307,7 +307,7 @@ final class HomeViewModel: ObservableObject {
     }
     
     func onQuestApprovalTapped() {
-        showSubmitRouterView.toggle()
-        showQuestSheet.toggle()
+        showQuestSheet = false
+        showSubmitRouterView = true
     }
 }

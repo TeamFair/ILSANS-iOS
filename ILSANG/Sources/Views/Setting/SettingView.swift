@@ -95,7 +95,7 @@ struct SettingView: View {
             let result = await LogoutNetwork().getLogout()
             switch result {
             case .success:
-                await UserService.shared.logout()
+                UserService.shared.logout()
             case .failure(let err):
                 Log("로그아웃 실패 \(err.localizedDescription)")
                 logoutAlert = false

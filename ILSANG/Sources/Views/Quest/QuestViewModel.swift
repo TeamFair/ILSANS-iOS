@@ -82,11 +82,11 @@ class QuestViewModel: ObservableObject {
     // TODO: 퀘스트 갯수 확인 필요
     // TODO: 현재 0페이지만 불러오며, 임시로 80개 로딩. 스탯 분류&필터링과 관련해서 기획 & API 수정에 따라 페이지네이션 로직 수정 필요
     lazy var defaultPaginationManager = PaginationManager<QuestViewModelItem>(
-        size: 50,
-        threshold: 48,
+        size: 60,
+        threshold: 58,
         loadPage: { [weak self] page in
             guard let self = self else { return ([], 0) }
-            return await loadQuestListWithImage(page: page, size: 50, status: .default)
+            return await loadQuestListWithImage(page: page, size: 60, status: .default)
         }
     )
     
@@ -285,8 +285,8 @@ class QuestViewModel: ObservableObject {
     }
     
     func tappedQuestApprovalBtn() {
+        showQuestSheet = false
         showSubmitRouterView = true
-        showQuestSheet = true
     }
     
     func closeFilterPicker() {
