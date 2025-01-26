@@ -88,7 +88,8 @@ struct ApprovalItemContentView: View {
                 .resizable()
                 .scaledToFill()
                 .frame(width: width, height: height)
-                .cornerRadius(12)
+                .clipShape(RoundedRectangle(cornerRadius: 12))
+                .allowsHitTesting(false)
             
             HStack(spacing: 16) {
                 emojiView(imageName: .thumbsUp, count: item.likeCnt, alignment: .top)
