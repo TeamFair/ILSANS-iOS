@@ -22,13 +22,8 @@ final class HomeViewModel: ObservableObject {
             return "추천 퀘스트"
         }
     }
-    @Published var userRankList: [Rank] = [
-        .init(xpType: "", xpPoint: 1220, customerId: "", nickname: "유저ABC"),
-        .init(xpType: "", xpPoint: 20, customerId: "", nickname: "유저123456"),
-        .init(xpType: "",xpPoint: 700, customerId: "", nickname: "일상999"),
-        .init(xpType: "", xpPoint: 50, customerId: "", nickname: "유저939393"),
-        .init(xpType: "", xpPoint: 20, customerId: "", nickname: "일상0213493")
-    ] // 10개
+    @Published var mainBanners: [Banner] = []
+    @Published var userRankList: [TopRank] = [] // 10개
     @Published var largestRewardQuestList: [XpStat: [QuestViewModelItem]] = [:] // 3*5개
     @Published var recommendQuestList: [QuestViewModelItem] = [] //QuestViewModelItem.mockQuestList // 10개
     @Published var popularQuestList: [QuestViewModelItem] = QuestViewModelItem.mockQuestList // 4n개
@@ -53,15 +48,20 @@ final class HomeViewModel: ObservableObject {
         }
     }
     var errorCnt = 0
+    @Published var showMainBanners: Bool = true
     @Published var showLargestRewardQuest: Bool = true
     @Published var showRecommendRewardQuest: Bool = true
     @Published var showPopularRewardQuest: Bool = true
-    @Published var showRankList = false
+    @Published var showRankList = true
     
     private let questNetwork: QuestNetwork
+    private let rankNetwork: RankNetwork
+    private let bannerNetwork: BannerNetwork
     
-    init(questNetwork: QuestNetwork) {
+    init(questNetwork: QuestNetwork, rankNetwork: RankNetwork, bannerNetwork: BannerNetwork) {
         self.questNetwork = questNetwork
+        self.rankNetwork = rankNetwork
+        self.bannerNetwork = bannerNetwork
         Task {
             await loadInitialData()
         }
@@ -71,7 +71,22 @@ final class HomeViewModel: ObservableObject {
     func loadInitialData() async {
         self.errorCnt = 0
         changeViewStatus(.loading)
+        self.showMainBanners = true
+        self.showPopularRewardQuest = true
+        self.showRecommendRewardQuest = true
+        self.showLargestRewardQuest = true
+        self.showRankList = true
+
         await withThrowingTaskGroup(of: Void.self) { group in
+            group.addTask {
+                do {
+                    try await self.loadMainBanners()
+                } catch {
+                    Log("Failed to load banners: \(error.localizedDescription)")
+                    self.errorCnt += 1
+                    self.showMainBanners = false
+                }
+            }
             group.addTask {
                 do {
                     try await self.loadPopularQuestList()
@@ -100,8 +115,17 @@ final class HomeViewModel: ObservableObject {
                 }
             }
             
-            // TODO: 랭킹 API 호출
+            group.addTask {
+                do {
+                    try await self.loadRankList()
+                } catch {
+                    Log("Failed to load large reward quests: \(error.localizedDescription)")
+                    self.errorCnt += 1
+                    self.showRankList = false
+                }
+            }
         }
+        
         if errorCnt >= 3 {
             // changeViewStatus(.error) // v1.3.0 이후 적용
             // return
@@ -111,6 +135,37 @@ final class HomeViewModel: ObservableObject {
 
         }
         changeViewStatus(.loaded)
+    }
+    
+    @MainActor
+    func loadMainBanners() async throws {
+        let res = await bannerNetwork.getMainBanners()
+        
+        switch res {
+        case .success(let res):
+            // 활성화된 배너만 필터링 및 매핑
+            var updatedBanners = res.data.filter { $0.activeYn == "Y" }.map { Banner(from: $0) }
+            
+            // 비동기 이미지 로드 처리
+            await withTaskGroup(of: Void.self) { group in
+                for (index, banner) in updatedBanners.enumerated() {
+                    group.addTask {
+                        let image = await ImageCacheService.shared.loadImageAsync(imageId: banner.imageId)
+                        updatedBanners[index].image = image
+                    }
+                }
+            }
+            
+            // 업데이트된 배너 리스트를 mainBanners에 설정
+            self.mainBanners = updatedBanners
+            
+            // 배너가 없으면 영역을 보여주지 않음
+            if mainBanners.count == 0 {
+                self.showMainBanners = false
+            }
+        case .failure(let error):
+            throw error
+        }
     }
     
     @MainActor
@@ -152,6 +207,18 @@ final class HomeViewModel: ObservableObject {
         case .failure(let error):
             throw error
         }
+    }  
+    
+    @MainActor
+    func loadRankList() async throws {
+        let res = await rankNetwork.getTopUserRank()
+        
+        switch res {
+        case .success(let rank):
+            self.userRankList = rank.data
+        case .failure(let error):
+            throw error
+        }
     }
     
     @MainActor
@@ -175,6 +242,7 @@ final class HomeViewModel: ObservableObject {
     }
     
     /// getWriterImage, getMainImage 중 가져올 이미지 타입을 true로 설정
+    @MainActor
     func cacheImages(for quests: inout [QuestViewModelItem], getWriterImage: Bool = false, getMainImage: Bool = false) async {
         await withTaskGroup(of: (Int, UIImage?).self) { group in
             for (index, quest) in quests.enumerated() {
@@ -202,6 +270,32 @@ final class HomeViewModel: ObservableObject {
         }
     }
     
+    // 메인 배너에서 사용되는 화면 이동 처리
+    func getTabFromURL(from urlString: String) -> Tab? {
+        guard let (host, path) = extractHostAndPath(urlString), host == "tab", let path = path else {
+            print("Invalid or unsupported URL.")
+            return nil
+        }
+        
+        if let tab = Tab(rawValue: path) {
+            return tab
+        } else {
+            print("Tab not found or unsupported: \(path)")
+            return nil
+        }
+        
+    }
+    
+    private func extractHostAndPath(_ urlString: String) -> (String?, String?)? {
+        // "tab"과 "quest or home or ..." 추출
+        guard let url = URL(string: urlString), let host = url.host else { return nil }
+        
+        // path의 첫 번째 "/" 제거
+        let path = url.path.trimmingCharacters(in: CharacterSet(charactersIn: "/"))
+        return (host, path)
+    }
+    
+    
     @MainActor
     func changeViewStatus(_ viewStatus: ViewStatus) {
         self.viewStatus = viewStatus
@@ -213,7 +307,7 @@ final class HomeViewModel: ObservableObject {
     }
     
     func onQuestApprovalTapped() {
-        showSubmitRouterView.toggle()
-        showQuestSheet.toggle()
+        showQuestSheet = false
+        showSubmitRouterView = true
     }
 }

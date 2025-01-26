@@ -7,8 +7,14 @@
 
 import SwiftUI
 
-struct RankingItemView: View {
+struct Rank {
     let idx: Int
+    let nickname: String
+    var xpType: String? = nil
+    let score: Int
+}
+
+struct RankingItemView: View {
     let rank: Rank
     let style: RankingItemStyle
     
@@ -17,23 +23,33 @@ struct RankingItemView: View {
         case vertical
     }
     
+    init(topRank: TopRank, style: RankingItemStyle) {
+        self.rank = Rank(idx: topRank.lank, nickname: topRank.nickname, score: topRank.xpSum)
+        self.style = style
+    }
+    
+    init(idx: Int, statRank: StatRank, style: RankingItemStyle) {
+        self.rank = Rank(idx: idx, nickname: statRank.nickname, xpType: statRank.xpType, score: statRank.xpPoint)
+        self.style = style
+    }
+    
     var body: some View {
         switch style {
         case .horizontal:
-            RankingHorizontalItemView(idx: idx, rank: rank)
+            RankingHorizontalItemView(rank: rank)
         case .vertical:
-            RankingVerticalItemView(idx: idx, rank: rank)
+            RankingVerticalItemView(rank: rank)
         }
     }
 }
 
 fileprivate struct RankingHorizontalItemView: View {
-    let idx: Int
     let rank: Rank
     
     var body: some View {
         HStack(spacing: 0) {
             // 랭킹 아이콘 & 순위
+            let idx = rank.idx
             if idx <= 3 {
                 Image("rank\(idx)")
                     .resizable()
@@ -56,9 +72,16 @@ fileprivate struct RankingHorizontalItemView: View {
             VStack (alignment: .leading, spacing: 4) {
                 Text(rank.nickname)
                     .font(.system(size: 15, weight: .bold))
-                Text("\(convertStat(rank.xpType)): \(rank.xpPoint)p")
-                    .font(.system(size: 13))
-                    .foregroundColor(.gray400)
+                
+                if let xpType = rank.xpType {
+                    Text("\(convertStat(xpType)) : \(rank.score)p")
+                        .font(.system(size: 13))
+                        .foregroundColor(.gray400)
+                } else {
+                    Text("\(rank.score)p")
+                        .font(.system(size: 13))
+                        .foregroundColor(.gray400)
+                }
             }
             
             Spacer(minLength: 0)
@@ -91,7 +114,6 @@ extension RankingHorizontalItemView {
 
 
 fileprivate struct RankingVerticalItemView: View {
-    let idx: Int
     let rank: Rank
     
     var body: some View {
@@ -105,6 +127,7 @@ fileprivate struct RankingVerticalItemView: View {
                 .padding(6)
             
             // 랭킹 아이콘 & 순위
+            let idx = rank.idx
             if idx <= 3 {
                 Image("rank\(idx)")
                     .resizable()
@@ -120,7 +143,7 @@ fileprivate struct RankingVerticalItemView: View {
                 .font(.system(size: 13, weight: .bold))
                 .foregroundColor(.black)
             
-            Text("\(rank.xpPoint)xp")
+            Text("\(rank.score)xp")
                 .font(.system(size: 13))
                 .foregroundColor(.gray500)
         }

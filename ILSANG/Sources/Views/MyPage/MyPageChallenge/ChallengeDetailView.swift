@@ -10,12 +10,18 @@ import SwiftUI
 struct ChallengeDetailView: View {
     
     @Environment(\.dismiss) var dismiss
-    @ObservedObject var vm: MypageViewModel
+    @ObservedObject var vm: MyPageViewModel
     
     @State private var missionImage: UIImage?
     @State private var questImage: UIImage?
     
     let challengeData : Challenge
+    
+    init(vm: MyPageViewModel, missionImage: UIImage?, challengeData: Challenge) {
+        self.vm = vm
+        self._missionImage = State(initialValue: missionImage)
+        self.challengeData = challengeData
+    }
     
     var body: some View {
         VStack(spacing: 0) {
@@ -40,7 +46,6 @@ struct ChallengeDetailView: View {
         .background(Color.background)
         .navigationBarBackButtonHidden()
         .task {
-            missionImage = await vm.getImage(imageId: challengeData.receiptImageId)
             if let questImageId = challengeData.questImageId {
                 self.questImage = await vm.getImage(imageId: questImageId)
             }
@@ -167,7 +172,16 @@ struct ChallengeImageView: View {
 #Preview {
     TabView {
         NavigationStack {
-            ChallengeDetailView(vm: MypageViewModel(userNetwork: UserNetwork(), challengeNetwork: ChallengeNetwork(), imageNetwork: ImageNetwork(), xpNetwork: XPNetwork()), challengeData: Challenge.challengeMockData)
+            ChallengeDetailView(
+                vm: MyPageViewModel(
+                    userNetwork: UserNetwork(),
+                    challengeNetwork: ChallengeNetwork(),
+                    imageNetwork: ImageNetwork(),
+                    xpNetwork: XPNetwork()
+                ),
+                missionImage: .logo,
+                challengeData: .challengeMockData
+            )
         }
         .tabItem {
             Label("탭", image: "profile")

@@ -49,11 +49,20 @@ struct SeparatorView: View {
     }
 }
 
+// TODO: 수정
+struct XmarkButton: View {
+    var body: some View {
+        Image(systemName: "xmark")
+            .foregroundColor(.gray500)
+            .font(.system(size: 22))
+    }
+}
+
 struct DismissButton: View {
     var body: some View {
         Image(systemName: "chevron.left")
             .foregroundColor(.gray500)
-            .font(.custom("SFPRODISPLAYREGULAR", size: 22))
+            .font(.system(size: 22))
     }
 }
 
@@ -61,7 +70,7 @@ struct DeleteButton: View {
     var body: some View {
         Image(systemName: "trash")
             .foregroundColor(.gray500)
-            .font(.custom("SFPRODISPLAYREGULAR", size: 22))
+            .font(.system(size: 22))
             .padding(.top, 10)
             .padding(.horizontal, 15)
     }

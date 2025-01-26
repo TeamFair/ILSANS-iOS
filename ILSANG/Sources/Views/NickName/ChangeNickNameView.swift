@@ -52,7 +52,7 @@ struct ChangeNickNameView: View {
                                 .cornerRadius(12)
                         )
                         .padding(.bottom, 12)
-                        .onChange(of: name) { maxName in
+                        .onChange(of: name) { _, maxName in
                             if maxName.count > characterLimit {
                                 name = String(maxName.prefix(characterLimit))
                             }
@@ -95,5 +95,13 @@ struct ChangeNickNameView: View {
                 SettingAlertView(alertType: .NickName,onCancel: {showAlert = false}, onConfirm: {dismiss()})
             }
         }
+    }
+    
+    private func isValidNickname(_ name: String) -> Bool {
+        let language = ".*[가-힣a-zA-Z0-9]+.*"
+        let isMatche = NSPredicate(format: "SELF MATCHES %@", language).evaluate(with: name)
+        let isValidLength = (2...12).contains(name.count)
+        
+        return isMatche && isValidLength
     }
 }

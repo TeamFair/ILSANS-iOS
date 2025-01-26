@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct Challenge: Decodable {
+struct Challenge: Decodable, Hashable {
     let challengeId: String
     let userNickName: String?
     let missionTitle: String?

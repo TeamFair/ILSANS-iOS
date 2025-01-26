@@ -9,7 +9,7 @@ import SwiftUI
 
 struct MyPageActiveList: View {
     
-    @ObservedObject var vm: MypageViewModel
+    @ObservedObject var vm: MyPageViewModel
     
     var body: some View {
         VStack(alignment: .leading) {
@@ -23,9 +23,10 @@ struct MyPageActiveList: View {
             ScrollView {
                 VStack(spacing: 12) {
                     ForEach(vm.xpLogList, id: \.recordId) { xpLog in
-                        ListStruct(title: xpLog.title, detail: xpLog.createDate.timeAgoSinceCreation(), point: xpLog.xpPoint)
+                        MyPageListItemView(title: xpLog.title, detail: xpLog.createDate.timeAgoSinceCreation(), point: xpLog.xpPoint)
                     }
                 }
+                .padding(.bottom, 60)
             }
             .refreshable {
                 await vm.getXpLog(page: 0, size: 10)
@@ -37,5 +38,37 @@ struct MyPageActiveList: View {
             }
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
+    }
+}
+
+struct MyPageListItemView: View {
+    let title: String
+    let detail: String
+    let point: Int?
+    
+    var body: some View {
+        HStack {
+            VStack(alignment: .leading, spacing: 8) {
+                Text(title)
+                    .font(.system(size: 15, weight: .bold))
+                    .foregroundColor(.black)
+                Text(detail)
+                    .font(.system(size: 13, weight: .regular))
+                    .foregroundColor(.gray500)
+            }
+            
+            Spacer()
+            
+            if let point = point {
+                Text("\(point > 0 ? "+\(point)" : "\(point)")XP")
+                    .font(.system(size: 17, weight: .semibold))
+                    .foregroundColor(Color.accentColor)
+            }
+        }
+        .padding(20)
+        .background(
+            RoundedRectangle(cornerRadius: 12)
+                .foregroundColor(.white)
+        )
     }
 }

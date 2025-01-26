@@ -6,33 +6,30 @@
 //
 
 import SwiftUI
-//MARK: 색상 폰트 변경 요청
+
 struct MyPageChallengeList: View {
-    
-    @ObservedObject var vm: MypageViewModel
+    @ObservedObject var vm: MyPageViewModel
     
     var body: some View {
-        VStack(alignment: .leading) {
-            HStack {
-                Text("수행한 챌린지")
-                    .font(.system(size: 14))
-                    .fontWeight(.medium)
-                    .foregroundColor(.gray400)
-                
-                Spacer()
-            }
-            // Data List
+        VStack(alignment: .leading, spacing: 8) {
+            Text("수행한 챌린지")
+                .font(.system(size: 14, weight: .medium))
+                .foregroundColor(.gray400)
+                .frame(maxWidth: .infinity, alignment: .leading)
+            
             ScrollView {
-                VStack(spacing: 12) {
-                    ForEach(vm.challengeList, id: \.challengeId) { challenge in
-                        NavigationLink(destination: ChallengeDetailView(vm: vm, challengeData: challenge)) {
-                            ListStruct(title: challenge.missionTitle ?? "챌린지명", detail: challenge.createdAt.timeAgoCreatedAt(), point: nil)
+                VStack(spacing: 9) {
+                    ForEach(vm.challengeList, id: \.challenge) { challenge in
+                        NavigationLink(destination: ChallengeDetailView(vm: vm, missionImage: challenge.image, challengeData: challenge.challenge)) {
+                            challengeListItemView(challenge: challenge.challenge, image: challenge.image)
                         }
                     }
                 }
+                .padding(.top, 12)
+                .padding(.bottom, 72)
             }
             .refreshable {
-                await vm.getChallenges(page: 0)
+                await vm.fetchChallengesWithImages(page: 0)
             }
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
@@ -42,37 +39,54 @@ struct MyPageChallengeList: View {
             }
         }
     }
+    
+    private func challengeListItemView(challenge: Challenge, image: UIImage?) -> some View {
+        ZStack {
+            Group {
+                if let image = image {
+                    Image(uiImage: image)
+                        .resizable()
+                        .scaledToFill()
+                } else {
+                    Image(uiImage: .logoWithAlpha)
+                        .resizable()
+                        .scaledToFit()
+                        .frame(width: 100)
+                }
+            }
+            .scaledToFill()
+            .frame(height: 172)
+            .frame(maxWidth: .infinity)
+            .overlay(alignment: .bottom) {
+                Rectangle()
+                    .frame(height: 85)
+                    .foregroundStyle(
+                        .linearGradient(
+                            colors: [.clear, .black.opacity(0.8)],
+                            startPoint: .top,
+                            endPoint: .bottom
+                        )
+                    )
+                    .opacity(image == nil ? 0.3 : 1)
+            }
+            .clipShape(RoundedRectangle(cornerRadius: 12))
+            
+            VStack(alignment: .leading, spacing: 6) {
+                Spacer()
+                Text(challenge.missionTitle ?? "")
+                    .font(.system(size: 23, weight: .bold))
+                    .foregroundColor(.white)
+                
+                Text(challenge.createdAt.timeAgoCreatedAt())
+                    .font(.system(size: 13, weight: .regular))
+                    .foregroundColor(.gray200)
+            }
+            .frame(maxWidth: .infinity, alignment: .leading)
+            .padding(20)
+        }
+    }
 }
 
-struct ListStruct: View {
-    
-    let title: String
-    let detail: String
-    let point: Int?
-    
-    var body: some View {
-        HStack {
-            VStack(alignment: .leading, spacing: 8) {
-                Text(title)
-                    .font(.system(size: 15, weight: .bold))
-                    .foregroundColor(.black)
-                Text(detail)
-                    .font(.system(size: 13, weight: .regular))
-                    .foregroundColor(.gray500)
-            }
-            
-            Spacer()
-            
-            if let point = point {
-                Text("\(point > 0 ? "+\(point)" : "\(point)")XP")
-                    .font(.system(size: 17, weight: .semibold))
-                    .foregroundColor(Color.accentColor)
-            }
-        }
-        .padding(20)
-        .background(
-            RoundedRectangle(cornerRadius: 12)
-                .foregroundColor(.white)
-        )
-    }
+#Preview {
+    MyPageChallengeList(vm: MyPageViewModel(userNetwork: UserNetwork(), challengeNetwork: ChallengeNetwork(), imageNetwork: ImageNetwork(), xpNetwork: XPNetwork()))
 }
