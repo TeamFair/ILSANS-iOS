@@ -6,9 +6,18 @@
 //
 
 import SwiftUI
+/*
+✅ 이모지 에셋 변경
+✅ 이모지 불러오기(idx 0, 1..<)
+✅ 이모지 활성&비활성
+❌ 이모지 카운트 +-
+✅ 공유하기 & 신고하기 UI 추가
+✅ 공유하기 & 신고하기 기능 추가
+✅ 페이지네이션
+✅ 리프레시
+*/
 
 final class ApprovalViewModel: ObservableObject {
-    // TODO: 페이지네이션 시 ViewStatus 고려 필요
     enum ViewStatus {
         case error
         case loading
@@ -17,18 +26,11 @@ final class ApprovalViewModel: ObservableObject {
     
     @Published var viewStatus: ViewStatus = .loading
     @Published var itemList: [ApprovalViewModelItem] = []
-    @Published var currentIdx = 0 {
-        didSet {
-            Task {
-                await self.handleIndexChange(oldValue)
-            }
-        }
-    }
-    @Published var isScrolling = false
-    @Published var emoji: Emoji?
-    @Published var showReportAlert = false
     
-    private lazy var paginationManager = PaginationManager<ApprovalViewModelItem>(
+    @Published var showReportAlert = false
+    @Published var selectedChallenge: ApprovalViewModelItem?
+    
+    lazy var paginationManager = PaginationManager<ApprovalViewModelItem>(
         size: 10,
         threshold: 3,
         loadPage: { [weak self] page in
@@ -40,41 +42,37 @@ final class ApprovalViewModel: ObservableObject {
     private let emojiNetwork: EmojiNetwork
     private let challengeNetwork: ChallengeNetwork
     
+    var lastUpdatedEmojiIdx: Int = 0
+    
     init(emojiNetwork: EmojiNetwork, challengeNetwork: ChallengeNetwork) {
         self.emojiNetwork = emojiNetwork
         self.challengeNetwork = challengeNetwork
     }
     
     @MainActor
-    func getData() async {
+    func loadInitialData() async {
         changeViewStatus(.loading)
         await self.paginationManager.loadData(isRefreshing: true)
-
-        self.currentIdx = 0
-        if let challengeId = itemList.first?.id {
-            await getEmoji(challengeId: challengeId)
+        
+        // 인덱스가 0인 도전내역의 이모지 불러오기
+        if let _ = itemList.first {
+            await getEmoji(idx: 0)
+            lastUpdatedEmojiIdx = 0
         }
+        
         changeViewStatus(.loaded)
+        
+        // 인덱스가 1 이상인 도전내역의 이모지 불러오기
+        await fetchEmojis()
     }
     
     @MainActor
-    func changeViewStatus(_ viewStatus: ViewStatus) {
-        self.viewStatus = viewStatus
+    func loadMoreData() async {
+        guard paginationManager.canLoadMoreData() else { return }
+        await paginationManager.loadData(isRefreshing: false)
+        await fetchEmojis()
     }
-    
-    @MainActor
-    func handleIndexChange(_ previousIdx: Int) async {
-        guard !itemList.isEmpty else { return }
         
-        await getEmoji(challengeId: itemList[currentIdx].id)
-        
-        if previousIdx < currentIdx {
-            if paginationManager.canLoadMoreData(index: currentIdx, currentCount: itemList.count) {
-                await paginationManager.loadData(isRefreshing: false)
-            }
-        }
-    }
-    
     @MainActor
     func getChallengesWithImage(page: Int) async -> ([ApprovalViewModelItem], Int) {
         let getChallengeResult = await getRandomChallenges(page: page, size: paginationManager.size)
@@ -129,11 +127,38 @@ final class ApprovalViewModel: ObservableObject {
         }
     }
     
+    private func fetchEmojis() async {
+        let remainingIndexes = lastUpdatedEmojiIdx..<itemList.count
+        
+        await withTaskGroup(of: Void.self) { group in
+            for idx in remainingIndexes {
+                if itemList[idx].emoji == nil { // 불러온 적 없는 이모지에 대해서만 네트워크 요청
+                    group.addTask {
+                        await self.getEmoji(idx: idx)
+                    }
+                }
+            }
+        }
+        lastUpdatedEmojiIdx = itemList.count - 1
+    }
+    
+    func onLike(for idx: Int) {
+        Task {
+            await updateEmojiWithPrev(emojiType: .like, idx: idx)
+        }
+    }
+    
+    func onHate(for idx: Int) {
+        Task {
+            await updateEmojiWithPrev(emojiType: .hate, idx: idx)
+        }
+    }
+    
     /// 업데이트할 이모지 타입에 따라 이전 이모지 상태의 반대로 서버에 업데이트를 요청하고,
     /// 서버 업데이트가 성공하면 로컬 상태를 업데이트합니다.
     /// - Parameter emojiType: 업데이트할 이모지의 유형 (like 또는 hate).
-    @MainActor func updateEmojiWithPrev(emojiType: EmojiType) async {
-        guard let prevEmoji = self.emoji else { return }
+    @MainActor func updateEmojiWithPrev(emojiType: EmojiType, idx: Int) async {
+        guard let prevEmoji = self.itemList[idx].emoji else { return }
         
         let wasPrevEmojiActive: Bool
         var emojiId: String? = nil
@@ -151,20 +176,20 @@ final class ApprovalViewModel: ObservableObject {
             }
         }
         
-        let challengeId = itemList[currentIdx].id
-        let isServerUpdateSuccessful = await updateEmojiStatus(challengeId: challengeId, emojiType: emojiType, emojiId: emojiId, prevEmojiActive: wasPrevEmojiActive)
+        let challengeId = itemList[idx].id
+        let isServerUpdateSuccessful = await updateEmojiStatus(challengeId: challengeId, emojiType: emojiType, emojiId: emojiId, prevEmojiActive: wasPrevEmojiActive, idx: idx)
         
         if isServerUpdateSuccessful {
             switch emojiType {
             case .like:
-                self.emoji?.isLike.toggle()
-                if let emoji = self.emoji, !emoji.isLike {
-                    self.emoji?.likeId = nil
+                self.itemList[idx].emoji?.isLike.toggle()
+                if let emoji = self.itemList[idx].emoji, !emoji.isLike {
+                    self.itemList[idx].emoji?.likeId = nil
                 }
             case .hate:
-                self.emoji?.isHate.toggle()
-                if let emoji = self.emoji, !emoji.isHate {
-                    self.emoji?.hateId = nil
+                self.itemList[idx].emoji?.isHate.toggle()
+                if let emoji = self.itemList[idx].emoji, !emoji.isHate {
+                    self.itemList[idx].emoji?.hateId = nil
                 }
             }
         }
@@ -172,7 +197,7 @@ final class ApprovalViewModel: ObservableObject {
     
     /// 이모지 등록하면 emojiid받아와서 현재 Emoji에 넣어줌
     @MainActor
-    private func updateEmojiStatus(challengeId: String, emojiType: EmojiType, emojiId: String?, prevEmojiActive: Bool) async -> Bool {
+    private func updateEmojiStatus(challengeId: String, emojiType: EmojiType, emojiId: String?, prevEmojiActive: Bool, idx: Int) async -> Bool {
         var updateSucceeded = false
         if prevEmojiActive {
             guard let emojiId = emojiId else { return false }
@@ -183,12 +208,13 @@ final class ApprovalViewModel: ObservableObject {
             case .success(let emojiId):
                 switch emojiType {
                 case .like:
-                    self.emoji?.likeId = emojiId
+                    self.itemList[idx].emoji?.likeId = emojiId
                 case .hate:
-                    self.emoji?.hateId = emojiId
+                    self.itemList[idx].emoji?.hateId = emojiId
                 }
                 updateSucceeded = true
             case .failure:
+                print(idx, challengeId, "이모지 업데이트 상태 포스트 실패")
                 updateSucceeded = false
             }
         }
@@ -196,95 +222,76 @@ final class ApprovalViewModel: ObservableObject {
     }
     
     @MainActor
-    func getEmoji(challengeId: String) async {
+    func getEmoji(idx: Int) async {
+        let challengeId = self.itemList[idx].id
         let getEmojiResult = await emojiNetwork.getEmoji(challengeId: challengeId)
+        
         switch getEmojiResult {
-        case .success(let model):
-            self.emoji = model.data
+        case .success(let response):
+            self.itemList[idx].emoji = response.data
         case .failure:
-            self.emoji = nil
+            self.itemList[idx].emoji = nil
         }
     }
     
-    func reportChallenge() async {
-        let challengeId = self.itemList[currentIdx].id
+    func confirmReport() async {
+        guard let selectedChallenge = selectedChallenge else { return }
+        await reportChallenge()
+        showReportAlert = false
+    }
+    
+    func dismissReportAlert() {
+        showReportAlert = false
+    }
+    
+    private func reportChallenge() async {
+        guard let challengeId = self.selectedChallenge?.id else { return }
         let result = await challengeNetwork.patchChallenge(challengeId: challengeId)
         switch result {
         case .success:
-            await getData()
+            await loadInitialData()
         case .failure(let err):
             Log("챌린지 신고 실패 \(challengeId) \(err.localizedDescription)")
         }
     }
     
-    func handleDragChange(_ value: DragGesture.Value) {
-        if value.translation.height < 0 && currentIdx != itemList.count-1 {
-            isScrolling = true
-            
-            itemList[currentIdx].offset = value.translation.height
-            
-            /// 다음 이미지 y축 올리는 효과
-            if currentIdx + 1 != itemList.count-1 {
-                itemList[currentIdx + 1].offset = -12
-            }
-        }
-    }
-    
-    func handleDragEnd(_ value: DragGesture.Value, _ viewHeight: CGFloat) {
-        if value.translation.height < 0 {  /// 위로 스크롤
-            if currentIdx != itemList.count-1 {
-                itemList[currentIdx].offset = -viewHeight
-                if currentIdx + 1 != itemList.count-1 {
-                    itemList[currentIdx + 1].offset = 0
-                }
-                currentIdx += 1
-            } else {
-                itemList[currentIdx].offset = 0
-            }
-        } else {  /// 아래로 스크롤
-            if currentIdx > 0 {
-                if value.translation.height > 0 {
-                    itemList[currentIdx - 1].offset = 0
-                    currentIdx -= 1
-                } else {
-                    itemList[currentIdx - 1].offset = -viewHeight
-                }
-            }
-        }
-        isScrolling = false
-    }
-    
-    func calculateOpacity(itemIndex: Int) -> CGFloat {
-        switch abs(itemIndex - currentIdx) {
-        case 0:
-            return isScrolling ? 0.5 : 1 /// 활성화된 아이템이 >> 화면 스크롤 중이면 0.5, 스크롤 중이 아니면 1
-        case 1:
-            return isScrolling ? 1 : 0.5  /// 다음에 보여질 아이템이 >> 화면 스크롤 중이면 1, 스크롤 중이 아니면 0.5
-        case 2:
-            return 0.2
-        default:
-            return 0
-        }
+    @MainActor
+    func changeViewStatus(_ viewStatus: ViewStatus) {
+        self.viewStatus = viewStatus
     }
 }
 
 struct ApprovalViewModelItem: Identifiable {
     let id: String
-    var title: String
+    let title: String
     var image: UIImage?
     var imageId: String
-    var offset: CGFloat
     var nickname: String
     var time: String
+    var likeCnt: Int
+    var hateCnt: Int
+    var emoji: Emoji?
     
-    init(id: String = UUID().uuidString, title: String, image: UIImage? = nil, imageId: String, offset: CGFloat, nickname: String, time: String) {
+    init(
+        id: String = UUID().uuidString,
+        title: String,
+        image: UIImage? = nil,
+        imageId: String,
+        nickname: String,
+        time: String,
+        likeCnt: Int,
+        hateCnt: Int,
+        emoji: Emoji?
+    ) {
         self.id = id
         self.title = title
         self.image = image
         self.imageId = imageId
-        self.offset = offset
         self.nickname = nickname
         self.time = time
+        self.likeCnt = likeCnt
+        self.hateCnt = hateCnt
+        self.emoji = emoji
     }
     
     init(challenge: Challenge) {
@@ -292,20 +299,28 @@ struct ApprovalViewModelItem: Identifiable {
         self.title = challenge.missionTitle ?? ""
         self.image = nil
         self.imageId = challenge.receiptImageId
-        self.offset = 0
         // TODO: nickname 옵셔널 해제
         self.nickname = challenge.userNickName ?? "일상"
         self.time = challenge.createdAt.timeAgoSinceDate()
+        self.likeCnt = challenge.likeCnt
+        self.hateCnt = challenge.hateCnt
+        self.emoji = nil // Emoji(isLike: false, isHate: false) // TODO: 수정
     }
     
-    static var mockData = [
-        ApprovalViewModelItem(title: "바닐라라떼마시기", imageId: "IMRE2024061314275774", offset: 0, nickname: "일상1", time: "3시간 전"),
-        ApprovalViewModelItem(title: "바닐라라떼마시기", imageId: "IMRE2024061314275774", offset: 0, nickname: "일상2", time: "1시간 전"),
-        ApprovalViewModelItem(title: "바닐라라떼마시기", imageId: "IMRE2024061314275774", offset: 0, nickname: "일상3", time: "2시간 전"),
-        ApprovalViewModelItem(title: "바닐라라떼마시기", imageId: "IMRE2024061314275774", offset: 0, nickname: "일상4", time: "2시간 전"),
-        ApprovalViewModelItem(title: "바닐라라떼마시기", imageId: "IMRE2024061314275774", offset: 0, nickname: "일상5", time: "1시간 전"),
-        ApprovalViewModelItem(title: "바닐라라떼마시기", imageId: "IMRE2024061314275774", offset: 0, nickname: "일상6", time: "3시간 전"),
-        ApprovalViewModelItem(title: "바닐라라떼마시기", imageId: "IMRE2024061314275774", offset: 0, nickname: "일상7", time: "2시간 전"),
-        ApprovalViewModelItem(title: "바닐라라떼마시기", imageId: "IMRE2024061314275774", offset: 0, nickname: "일상8", time: "3시간 전")
+    static var failedData = ApprovalViewModelItem(
+        title: "불러올 수 없습니다",
+        imageId: "",
+        nickname: "",
+        time: "",
+        likeCnt: 0,
+        hateCnt: 0,
+        emoji: nil
+    )
+    
+    static var mockDataList = [
+        ApprovalViewModelItem(title: "바닐라라떼마시기", imageId: "IMRE2024061314275774", nickname: "일상1", time: "3시간 전", likeCnt: 0, hateCnt: 0, emoji: Emoji(isLike: false, isHate: false)),
+        ApprovalViewModelItem(title: "바닐라라떼마시기", imageId: "IMRE2024061314275774", nickname: "일상2", time: "1시간 전", likeCnt: 0, hateCnt: 0, emoji: Emoji(isLike: false, isHate: false)),
+        ApprovalViewModelItem(title: "바닐라라떼마시기", imageId: "IMRE2024061314275774", nickname: "일상3", time: "2시간 전", likeCnt: 0, hateCnt: 0, emoji: Emoji(isLike: false, isHate: false)),
+        ApprovalViewModelItem(title: "바닐라라떼마시기", imageId: "IMRE2024061314275774", nickname: "일상4", time: "2시간 전", likeCnt: 0, hateCnt: 0, emoji: Emoji(isLike: false, isHate: false))
     ]
 }
