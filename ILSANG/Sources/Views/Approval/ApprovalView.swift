@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct ApprovalView: View {
-    @StateObject var vm = ApprovalViewModel(
+    @State var vm = ApprovalViewModel(
         emojiNetwork: EmojiNetwork(),
         challengeNetwork: ChallengeNetwork()
     )
@@ -30,10 +30,7 @@ struct ApprovalView: View {
             await vm.loadInitialData()
         }
         .overlay { reportAlertView }
-        
     }
-    
-   
     
     /// 퀘스트 타이틀  + 퀘스트 인증 이미지
     @ViewBuilder
@@ -48,7 +45,7 @@ struct ApprovalView: View {
     private var imageListView: some View {
         ScrollView {
             LazyVStack(spacing: 16) {
-                ForEach(Array(vm.itemList.enumerated()), id: \.offset) { idx, item in
+                ForEach(Array(vm.itemList.enumerated()), id: \.element.id) { idx, item in
                     ApprovalItemView(
                         item: item,
                         width: .screenWidth - 40,
@@ -62,7 +59,7 @@ struct ApprovalView: View {
                     }
                 }
                 
-                if vm.paginationManager.canLoadMoreData() {
+                if let manager = vm.paginationManager, manager.canLoadMoreData() {
                     ProgressView()
                         .task { await vm.loadMoreData() }
                 }
